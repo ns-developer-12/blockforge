@@ -1,124 +1,69 @@
 <div align="center">
 
-# 🚀 My Project
+# HTML2EXE
 
-### یک توضیح کوتاه و جذاب درباره پروژه
-
-[📥 دانلود](#-دانلود) •
-[✨ امکانات](#-امکانات) •
-[🛠️ نصب](#️-نصب)
+Convert HTML files into standalone Windows applications.
 
 <br>
 
-<img src="https://img.shields.io/github/downloads/USERNAME/REPOSITORY/total?style=for-the-badge&logo=github&label=Downloads">
-<img src="https://img.shields.io/github/stars/USERNAME/REPOSITORY?style=for-the-badge&logo=github&label=Stars">
-
-</div>
-
----
-
-## 📖 درباره پروژه
-
-My Project یک برنامه برای انجام ... است.
-
-این پروژه با هدف ... ساخته شده است.
-
----
-
-## ✨ امکانات
-
-- ⚡ سریع و سبک
-- 🎨 رابط کاربری ساده
-- 🪟 پشتیبانی از Windows
-- 📦 بدون نیاز به نصب اضافی
-- 🔄 بروزرسانی منظم
-
----
-
-## 📥 دانلود
-
-### 🪟 Windows
-
-برای دانلود آخرین نسخه روی لینک زیر کلیک کنید:
-
-<p align="center">
-
-<a href="https://github.com/USERNAME/REPOSITORY/releases/latest">
-  <img src="https://img.shields.io/badge/⬇️%20Download-Latest%20Release-blue?style=for-the-badge">
-</a>
-
-</p>
-
-یا می‌توانید از بخش Releases آخرین نسخه را دریافت کنید.
-
----
-
-## 🛠️ نصب
-
-1. آخرین نسخه را از بخش [Releases](https://github.com/USERNAME/REPOSITORY/releases) دانلود کنید.
-2. فایل ZIP را Extract کنید.
-3. فایل برنامه را اجرا کنید.
-
----
-
-## 📸 Screenshots
-
-<p align="center">
-
-<img src="screenshots/1.png" width="700">
+[![GitHub Release](https://img.shields.io/github/v/release/AdRohal/HTML2EXE?style=flat-square)](https://github.com/AdRohal/HTML2EXE/releases)
+[![Downloads](https://img.shields.io/github/downloads/AdRohal/HTML2EXE/total?style=flat-square)](https://github.com/AdRohal/HTML2EXE/releases)
+[![License](https://img.shields.io/github/license/AdRohal/HTML2EXE?style=flat-square)](https://github.com/AdRohal/HTML2EXE)
 
 <br><br>
 
-<img src="screenshots/2.png" width="700">
+<a href="https://github.com/AdRohal/HTML2EXE/releases/latest">
+  <img src="https://img.shields.io/badge/Download-Latest%20Release-2ea44f?style=for-the-badge">
+</a>
 
-</p>
-
----
-
-## 💻 سیستم مورد نیاز
-
-| مورد | نیاز |
-|---|---|
-| سیستم‌عامل | Windows 10 / 11 |
-| RAM | 4 GB |
-| فضای خالی | 100 MB |
-| معماری | x64 |
+</div>
 
 ---
 
-## 📦 نسخه‌ها
+## ✨ Features
 
-| نسخه | وضعیت |
-|---|---|
-| v1.0.0 | 🟢 Stable |
-| v0.9.0 | 🟡 Beta |
-
----
-
-## 📝 تغییرات
-
-### v1.0.0
-
-- 🎉 اولین نسخه رسمی
-- ⚡ بهبود عملکرد
-- 🐛 رفع مشکلات اولیه
+- 🚀 Convert HTML to .exe
+- 📦 Portable
+- ⚡ Fast and lightweight
+- 🪟 Windows support
+- 🎨 Custom application icon
+- 🔧 Simple configuration
 
 ---
 
-## ⭐ حمایت
-
-اگر این پروژه برات مفید بود، با زدن ⭐ روی Repository از پروژه حمایت کن ❤️
-
----
-
-## 📄 License
-
-این پروژه تحت لایسنس MIT منتشر شده است.
-
----
+## 📸 Preview
 
 <div align="center">
 
-### ساخته شده با ❤️ توسط [USERNAME](https://github.com/USERNAME)
+<img src="./screenshots/preview.png" width="800">
 
 </div>
+
+---
+
+## 📥 Download
+
+Get the latest version from:
+
+[→ GitHub Releases](https://github.com/AdRohal/HTML2EXE/releases/latest)
+
+---
+
+<details>
+<summary>🛠️ Installation</summary>
+
+<br>
+
+1. Download the latest release.
+2. Extract the ZIP file.
+3. Run the executable.
+
+</details>
+
+<details>
+<summary>📋 Usage</summary>
+
+<br>
+
+`text
+html2exe input.html output.exe
