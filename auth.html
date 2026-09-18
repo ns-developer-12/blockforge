@@ -1,0 +1,3805 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#07080b">
+
+<title>ورود / ثبت‌نام | BlockForge</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    min-height:100%;
+    font-size:15px;
+}
+
+body{
+    min-height:100dvh;
+    font-family:"Vazirmatn",sans-serif;
+    color:#e9e9ed;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(255,255,255,.07),
+            transparent 35%
+        ),
+        #07080b;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    overflow-x:hidden;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    border:0;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.auth-card{
+    width:100%;
+    max-width:430px;
+
+    position:relative;
+
+    padding:30px 22px;
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.012)
+        ),
+        rgba(15,16,21,.88);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.6),
+        inset 0 1px 0 rgba(255,255,255,.04);
+
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+
+    animation:cardIn .5s ease;
+}
+
+@keyframes cardIn{
+    from{
+        opacity:0;
+        transform:translateY(18px) scale(.97);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand{
+    text-align:center;
+
+    font-size:1.55rem;
+    font-weight:900;
+
+    margin-bottom:22px;
+
+    color:#d7a94f;
+}
+
+.brand span{
+    color:#fff;
+}
+
+.brand i{
+    margin-left:6px;
+}
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.tabs{
+    display:flex;
+    gap:5px;
+
+    padding:4px;
+    margin-bottom:22px;
+
+    background:#090a0e;
+
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:12px;
+}
+
+.tab{
+    flex:1;
+
+    min-height:42px;
+
+    border-radius:9px;
+
+    background:transparent;
+
+    color:#777;
+
+    font-size:.7rem;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+}
+
+.tab.active{
+    color:#d7a94f;
+
+    background:rgba(215,169,79,.1);
+
+    box-shadow:
+        inset 0 0 0 1px rgba(215,169,79,.08);
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.tab-content{
+    display:none;
+}
+
+.tab-content.active{
+    display:block;
+    animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.input-group{
+    margin-bottom:15px;
+    text-align:right;
+}
+
+.input-label{
+    min-height:20px;
+
+    display:flex;
+    align-items:center;
+
+    gap:6px;
+
+    margin-bottom:6px;
+
+    color:#96969c;
+
+    font-size:.62rem;
+    font-weight:600;
+}
+
+.input-label i{
+    width:15px;
+    color:#d7a94f;
+    text-align:center;
+}
+
+.input-wrap{
+    position:relative;
+}
+
+.input-field{
+    width:100%;
+    height:48px;
+
+    padding:0 14px;
+
+    border-radius:11px;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    background:#0b0c10;
+
+    color:#fff;
+
+    outline:none;
+
+    font-size:.72rem;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+.input-field:focus{
+    border-color:rgba(215,169,79,.7);
+
+    background:#0d0e12;
+
+    box-shadow:
+        0 0 0 3px rgba(215,169,79,.08);
+}
+
+.input-field.error{
+    border-color:#ef5350;
+
+    box-shadow:
+        0 0 0 3px rgba(239,83,80,.08);
+}
+
+.input-ltr{
+    direction:ltr;
+    text-align:left;
+}
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.password-wrap{
+    position:relative;
+}
+
+.password-wrap .input-field{
+    padding-left:45px;
+}
+
+.password-toggle{
+    position:absolute;
+
+    left:7px;
+    top:50%;
+
+    width:35px;
+    height:35px;
+
+    transform:translateY(-50%);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:transparent;
+
+    color:#777;
+
+    cursor:pointer;
+
+    border-radius:8px;
+
+    transition:.2s;
+}
+
+.password-toggle:hover{
+    color:#d7a94f;
+    background:rgba(255,255,255,.04);
+}
+
+/* =========================================================
+   STRENGTH
+========================================================= */
+
+.strength{
+    height:3px;
+
+    margin-top:5px;
+
+    overflow:hidden;
+
+    border-radius:5px;
+
+    background:rgba(255,255,255,.05);
+}
+
+.strength-fill{
+    width:0;
+    height:100%;
+
+    border-radius:5px;
+
+    transition:.35s;
+}
+
+/* =========================================================
+   CAPTCHA
+========================================================= */
+
+.captcha-box{
+    position:relative;
+
+    margin:18px 0;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    background:#f8f9fa;
+
+    color:#202124;
+
+    border:1px solid #dadce0;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.25);
+}
+
+/*
+   نور بسیار ظریف اطراف CAPTCHA
+*/
+
+.captcha-box::before{
+    content:"";
+
+    position:absolute;
+
+    inset:-2px;
+
+    z-index:-1;
+
+    border-radius:16px;
+
+    background:conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(120,140,255,.35),
+        transparent,
+        rgba(80,220,190,.3),
+        transparent
+    );
+
+    animation:captchaGlow 7s linear infinite;
+}
+
+@keyframes captchaGlow{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================================================
+   CAPTCHA CHECKBOX
+========================================================= */
+
+.captcha-check{
+    display:flex;
+    align-items:center;
+
+    gap:13px;
+
+    min-height:64px;
+
+    cursor:pointer;
+
+    user-select:none;
+}
+
+.fake-checkbox{
+    width:28px;
+    height:28px;
+
+    flex:0 0 28px;
+
+    border:2px solid #72757a;
+
+    background:#fff;
+
+    border-radius:4px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:.25s;
+}
+
+.fake-checkbox i{
+    opacity:0;
+
+    transform:scale(.4);
+
+    color:#1a73e8;
+
+    font-size:20px;
+
+    transition:.25s;
+}
+
+.captcha-check.checked .fake-checkbox{
+    border-color:#1a73e8;
+}
+
+.captcha-check.checked .fake-checkbox i{
+    opacity:1;
+    transform:scale(1);
+}
+
+.captcha-check.loading .fake-checkbox{
+    animation:checkPulse .8s infinite;
+}
+
+@keyframes checkPulse{
+    50%{
+        transform:scale(.9);
+        opacity:.65;
+    }
+}
+
+.captcha-main-text{
+    font-family:Arial,sans-serif;
+
+    font-size:15px;
+    font-weight:500;
+
+    color:#202124;
+}
+
+.captcha-brand{
+    margin-right:auto;
+
+    text-align:center;
+
+    font-family:Arial,sans-serif;
+
+    color:#5f6368;
+
+    font-size:10px;
+}
+
+.captcha-brand i{
+    display:block;
+
+    font-size:25px;
+
+    margin-bottom:3px;
+
+    color:#4285f4;
+}
+
+/* =========================================================
+   CAPTCHA CHALLENGE
+========================================================= */
+
+.captcha-challenge{
+    display:none;
+
+    margin-top:13px;
+
+    padding-top:13px;
+
+    border-top:1px solid #dadce0;
+
+    animation:challengeIn .35s ease;
+}
+
+.captcha-challenge.show{
+    display:block;
+}
+
+@keyframes challengeIn{
+    from{
+        opacity:0;
+        transform:translateY(-8px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.challenge-title{
+    font-family:Arial,sans-serif;
+
+    font-size:14px;
+    font-weight:700;
+
+    margin-bottom:5px;
+}
+
+.challenge-subtitle{
+    font-family:Arial,sans-serif;
+
+    font-size:11px;
+
+    color:#5f6368;
+
+    margin-bottom:12px;
+}
+
+.challenge-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:6px;
+}
+
+.challenge-item{
+    position:relative;
+
+    aspect-ratio:1;
+
+    border-radius:7px;
+
+    overflow:hidden;
+
+    background:#e9eaed;
+
+    border:2px solid transparent;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:30px;
+
+    transition:
+        transform .18s,
+        border-color .18s,
+        box-shadow .18s,
+        background .18s;
+}
+
+.challenge-item:hover{
+    transform:scale(.97);
+    background:#e0e1e4;
+}
+
+.challenge-item.selected{
+    border-color:#1a73e8;
+
+    box-shadow:
+        inset 0 0 0 2px #fff,
+        0 0 0 1px #1a73e8;
+
+    animation:itemSelect .25s ease;
+}
+
+@keyframes itemSelect{
+    0%{
+        transform:scale(.85);
+    }
+    70%{
+        transform:scale(1.04);
+    }
+    100%{
+        transform:scale(1);
+    }
+}
+
+.challenge-item.correct{
+    border-color:#20a464;
+
+    background:#e8f5ee;
+
+    animation:correctAnim .45s ease;
+}
+
+@keyframes correctAnim{
+    0%{
+        transform:scale(.8);
+    }
+    50%{
+        transform:scale(1.08);
+    }
+    100%{
+        transform:scale(1);
+    }
+}
+
+.challenge-item.wrong{
+    border-color:#ea4335;
+
+    background:#fdecea;
+
+    animation:wrongAnim .45s ease;
+}
+
+@keyframes wrongAnim{
+    0%,100%{
+        transform:translateX(0);
+    }
+    25%{
+        transform:translateX(-6px);
+    }
+    50%{
+        transform:translateX(6px);
+    }
+    75%{
+        transform:translateX(-4px);
+    }
+}
+
+.challenge-result{
+    display:none;
+
+    margin-top:9px;
+
+    padding:9px;
+
+    border-radius:7px;
+
+    text-align:center;
+
+    font-family:Arial,sans-serif;
+
+    font-size:12px;
+    font-weight:600;
+}
+
+.challenge-result.success{
+    display:block;
+
+    color:#137333;
+
+    background:#e6f4ea;
+
+    animation:resultIn .3s ease;
+}
+
+.challenge-result.error{
+    display:block;
+
+    color:#c5221f;
+
+    background:#fce8e6;
+
+    animation:resultIn .3s ease;
+}
+
+@keyframes resultIn{
+    from{
+        opacity:0;
+        transform:scale(.95);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.captcha-actions{
+    display:flex;
+
+    gap:7px;
+
+    margin-top:10px;
+}
+
+.captcha-btn{
+    flex:1;
+
+    min-height:38px;
+
+    border-radius:7px;
+
+    cursor:pointer;
+
+    font-size:11px;
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.captcha-confirm{
+    background:#1a73e8;
+    color:white;
+}
+
+.captcha-confirm:hover{
+    background:#1769d0;
+}
+
+.captcha-new{
+    background:#fff;
+
+    border:1px solid #dadce0;
+
+    color:#5f6368;
+}
+
+.captcha-new:hover{
+    background:#f1f3f4;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.main-btn{
+    width:100%;
+
+    min-height:48px;
+
+    margin-top:8px;
+
+    border-radius:11px;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d7a94f,
+            #a87827
+        );
+
+    color:#080808;
+
+    font-size:.72rem;
+    font-weight:800;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:7px;
+
+    box-shadow:
+        0 8px 25px rgba(210,160,60,.18);
+
+    transition:.25s;
+}
+
+.main-btn:hover:not(:disabled){
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 11px 30px rgba(210,160,60,.28);
+}
+
+.main-btn:active:not(:disabled){
+    transform:scale(.98);
+}
+
+.main-btn:disabled{
+    cursor:not-allowed;
+    opacity:.55;
+}
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.alert{
+    display:none;
+
+    margin:9px 0;
+
+    padding:9px 11px;
+
+    border-radius:8px;
+
+    text-align:center;
+
+    font-size:.57rem;
+
+    line-height:1.8;
+}
+
+.alert.show{
+    display:block;
+}
+
+.alert.error{
+    color:#ff6b63;
+
+    background:rgba(231,76,60,.09);
+
+    border:1px solid rgba(231,76,60,.2);
+}
+
+.alert.success{
+    color:#35d17c;
+
+    background:rgba(46,204,113,.09);
+
+    border:1px solid rgba(46,204,113,.2);
+}
+
+.alert.info{
+    color:#64b5f6;
+
+    background:rgba(52,152,219,.08);
+
+    border:1px solid rgba(52,152,219,.18);
+}
+
+/* =========================================================
+   OTP
+========================================================= */
+
+.otp-title{
+    text-align:center;
+
+    font-size:.72rem;
+    font-weight:700;
+
+    margin-bottom:6px;
+}
+
+.otp-description{
+    text-align:center;
+
+    color:#85858b;
+
+    font-size:.56rem;
+
+    margin-bottom:16px;
+}
+
+.otp-email{
+    color:#d7a94f;
+    direction:ltr;
+}
+
+.otp-container{
+    direction:ltr;
+
+    display:flex;
+    justify-content:center;
+
+    gap:7px;
+
+    margin:15px 0;
+}
+
+.otp-input{
+    width:48px;
+    height:53px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    background:#0a0b0f;
+
+    color:#fff;
+
+    outline:none;
+
+    text-align:center;
+
+    font-family:monospace;
+
+    font-size:1.15rem;
+    font-weight:800;
+
+    transition:.2s;
+}
+
+.otp-input:focus{
+    border-color:#d7a94f;
+
+    box-shadow:
+        0 0 0 3px rgba(215,169,79,.08);
+}
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+.timer{
+    text-align:center;
+
+    margin:8px 0;
+
+    color:#777;
+
+    font-size:.52rem;
+}
+
+.timer span{
+    color:#d7a94f;
+    font-weight:800;
+}
+
+.resend{
+    width:100%;
+
+    min-height:40px;
+
+    margin-top:6px;
+
+    border-radius:9px;
+
+    background:transparent;
+
+    color:#999;
+
+    border:1px solid rgba(255,255,255,.09);
+
+    cursor:pointer;
+
+    font-size:.58rem;
+}
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.security{
+    margin-top:18px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:6px;
+
+    color:#555;
+
+    font-size:.45rem;
+}
+
+.security-dot{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:#2ecc71;
+
+    box-shadow:
+        0 0 8px rgba(46,204,113,.5);
+}
+
+/* =========================================================
+   HIDDEN
+========================================================= */
+
+.hidden{
+    display:none!important;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:390px){
+
+    body{
+        padding:12px;
+    }
+
+    .auth-card{
+        padding:24px 15px;
+    }
+
+    .otp-input{
+        width:43px;
+        height:50px;
+    }
+
+    .challenge-item{
+        font-size:25px;
+    }
+
+    .captcha-main-text{
+        font-size:14px;
+    }
+}
+  /* =========================================================
+   RGB FOCUS EFFECT — فقط برای کادرهای قابل پر کردن
+   CAPTCHA کاملاً دست نخورده
+   ========================================================= */
+
+@keyframes inputRGB {
+    0% {
+        border-color: #ff003c;
+        box-shadow:
+            0 0 3px #ff003c,
+            0 0 8px rgba(255, 0, 60, .55),
+            0 0 18px rgba(255, 0, 60, .25);
+    }
+
+    16% {
+        border-color: #ff00a8;
+        box-shadow:
+            0 0 3px #ff00a8,
+            0 0 9px rgba(255, 0, 168, .6),
+            0 0 20px rgba(255, 0, 168, .28);
+    }
+
+    32% {
+        border-color: #8a00ff;
+        box-shadow:
+            0 0 3px #8a00ff,
+            0 0 10px rgba(138, 0, 255, .65),
+            0 0 22px rgba(138, 0, 255, .3);
+    }
+
+    48% {
+        border-color: #0055ff;
+        box-shadow:
+            0 0 3px #0055ff,
+            0 0 10px rgba(0, 85, 255, .65),
+            0 0 22px rgba(0, 85, 255, .3);
+    }
+
+    64% {
+        border-color: #00d9ff;
+        box-shadow:
+            0 0 3px #00d9ff,
+            0 0 10px rgba(0, 217, 255, .65),
+            0 0 22px rgba(0, 217, 255, .3);
+    }
+
+    80% {
+        border-color: #00ff9d;
+        box-shadow:
+            0 0 3px #00ff9d,
+            0 0 10px rgba(0, 255, 157, .65),
+            0 0 22px rgba(0, 255, 157, .28);
+    }
+
+    92% {
+        border-color: #ffe600;
+        box-shadow:
+            0 0 3px #ffe600,
+            0 0 9px rgba(255, 230, 0, .6),
+            0 0 18px rgba(255, 230, 0, .25);
+    }
+
+    100% {
+        border-color: #ff003c;
+        box-shadow:
+            0 0 3px #ff003c,
+            0 0 8px rgba(255, 0, 60, .55),
+            0 0 18px rgba(255, 0, 60, .25);
+    }
+}
+
+
+/* =========================================================
+   فقط Inputهای فرم
+   ========================================================= */
+
+.input-field:focus-within {
+
+    border-color: #ff003c !important;
+
+    animation:
+        inputRGB 4s linear infinite !important;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+
+/* =========================================================
+   خود input داخل کادر
+   ========================================================= */
+
+.input-field:focus-within input {
+
+    outline: none !important;
+}
+
+
+/* =========================================================
+   OTP — فقط وقتی روی OTP کلیک می‌شود
+   ========================================================= */
+
+.otp-input:focus {
+
+    outline: none !important;
+
+    animation:
+        inputRGB 4s linear infinite !important;
+
+    border-color: #ff003c !important;
+}
+
+
+/* =========================================================
+   حالت عادی: RGB خاموش
+   ========================================================= */
+
+.input-field:not(:focus-within) {
+
+    animation: none !important;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   Hover بدون کلیک — خیلی ظریف
+   ========================================================= */
+
+.input-field:hover:not(:focus-within) {
+
+    box-shadow:
+        0 0 5px rgba(255, 190, 70, .18);
+}
+
+
+/* =========================================================
+   IMPORTANT:
+   CAPTCHA را عمداً اصلاً انتخاب نکردیم.
+   ========================================================= */
+
+</style>
+</head>
+
+<body>
+
+<div class="auth-card">
+
+    <div class="brand">
+        <i class="fa-solid fa-cubes"></i>
+        Block<span>Forge</span>
+    </div>
+
+    <!-- TABS -->
+
+    <div class="tabs">
+
+        <button
+            class="tab active"
+            onclick="switchTab('login')"
+        >
+            <i class="fa-solid fa-right-to-bracket"></i>
+            ورود
+        </button>
+
+        <button
+            class="tab"
+            onclick="switchTab('register')"
+        >
+            <i class="fa-solid fa-user-plus"></i>
+            ثبت‌نام
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         LOGIN
+    ====================================================== -->
+
+    <div
+        id="tab-login"
+        class="tab-content active"
+    >
+
+        <div class="input-group">
+
+            <div class="input-label">
+                <i class="fa-solid fa-user"></i>
+                ایمیل یا نام کاربری
+            </div>
+
+            <input
+                id="loginIdentity"
+                class="input-field input-ltr"
+                type="text"
+                maxlength="100"
+                autocomplete="username"
+                placeholder="example@gmail.com"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <div class="input-label">
+                <i class="fa-solid fa-lock"></i>
+                رمز عبور
+            </div>
+
+            <div class="password-wrap">
+
+                <input
+                    id="loginPassword"
+                    class="input-field input-ltr"
+                    type="password"
+                    maxlength="128"
+                    autocomplete="current-password"
+                    placeholder="رمز عبور"
+                >
+
+                <button
+                    type="button"
+                    class="password-toggle"
+                    onclick="togglePassword('loginPassword',this)"
+                >
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGIN CAPTCHA -->
+
+        <div
+            id="loginCaptcha"
+            class="captcha-box"
+        >
+
+            <div
+                id="loginCaptchaCheck"
+                class="captcha-check"
+                onclick="openCaptcha('login')"
+            >
+
+                <div class="fake-checkbox">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <div class="captcha-main-text">
+                    من ربات نیستم
+                </div>
+
+                <div class="captcha-brand">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    CAPTCHA
+                    <br>
+                    Privacy - Terms
+                </div>
+
+            </div>
+
+
+            <div
+                id="loginChallenge"
+                class="captcha-challenge"
+            >
+
+                <div class="challenge-title">
+                    تصاویر موردنظر را انتخاب کنید
+                </div>
+
+                <div
+                    id="loginChallengeSubtitle"
+                    class="challenge-subtitle"
+                ></div>
+
+                <div
+                    id="loginGrid"
+                    class="challenge-grid"
+                ></div>
+
+                <div
+                    id="loginCaptchaResult"
+                    class="challenge-result"
+                ></div>
+
+                <div class="captcha-actions">
+
+                    <button
+                        type="button"
+                        class="captcha-btn captcha-new"
+                        onclick="newCaptcha('login')"
+                    >
+                        <i class="fa-solid fa-rotate"></i>
+                        چالش جدید
+                    </button>
+
+                    <button
+                        type="button"
+                        class="captcha-btn captcha-confirm"
+                        onclick="confirmCaptcha('login')"
+                    >
+                        <i class="fa-solid fa-check"></i>
+                        تأیید
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="loginAlert"
+            class="alert"
+        ></div>
+
+
+        <button
+            id="loginBtn"
+            class="main-btn"
+            onclick="doLogin()"
+        >
+            <i class="fa-solid fa-right-to-bracket"></i>
+            ورود به حساب
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         REGISTER
+    ====================================================== -->
+
+    <div
+        id="tab-register"
+        class="tab-content"
+    >
+
+        <div
+            id="registerStep1"
+        >
+
+            <div class="input-group">
+
+                <div class="input-label">
+                    <i class="fa-solid fa-user"></i>
+                    نام کاربری
+                </div>
+
+                <input
+                    id="regUsername"
+                    class="input-field"
+                    type="text"
+                    maxlength="32"
+                    autocomplete="username"
+                    placeholder="حداقل ۳ کاراکتر"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <div class="input-label">
+                    <i class="fa-solid fa-envelope"></i>
+                    ایمیل
+                </div>
+
+                <input
+                    id="regEmail"
+                    class="input-field input-ltr"
+                    type="email"
+                    maxlength="120"
+                    autocomplete="email"
+                    placeholder="example@gmail.com"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <div class="input-label">
+                    <i class="fa-solid fa-key"></i>
+                    رمز عبور
+                </div>
+
+                <div class="password-wrap">
+
+                    <input
+                        id="regPassword"
+                        class="input-field input-ltr"
+                        type="password"
+                        maxlength="128"
+                        autocomplete="new-password"
+                        placeholder="حداقل ۸ کاراکتر"
+                        oninput="checkPasswordStrength()"
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('regPassword',this)"
+                    >
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+
+                </div>
+
+                <div class="strength">
+                    <div
+                        id="strengthFill"
+                        class="strength-fill"
+                    ></div>
+                </div>
+
+            </div>
+
+
+            <!-- REGISTER CAPTCHA -->
+
+            <div
+                id="registerCaptcha"
+                class="captcha-box"
+            >
+
+                <div
+                    id="registerCaptchaCheck"
+                    class="captcha-check"
+                    onclick="openCaptcha('register')"
+                >
+
+                    <div class="fake-checkbox">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+
+                    <div class="captcha-main-text">
+                        من ربات نیستم
+                    </div>
+
+                    <div class="captcha-brand">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        CAPTCHA
+                        <br>
+                        Privacy - Terms
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="registerChallenge"
+                    class="captcha-challenge"
+                >
+
+                    <div class="challenge-title">
+                        تصاویر موردنظر را انتخاب کنید
+                    </div>
+
+                    <div
+                        id="registerChallengeSubtitle"
+                        class="challenge-subtitle"
+                    ></div>
+
+                    <div
+                        id="registerGrid"
+                        class="challenge-grid"
+                    ></div>
+
+                    <div
+                        id="registerCaptchaResult"
+                        class="challenge-result"
+                    ></div>
+
+                    <div class="captcha-actions">
+
+                        <button
+                            type="button"
+                            class="captcha-btn captcha-new"
+                            onclick="newCaptcha('register')"
+                        >
+                            <i class="fa-solid fa-rotate"></i>
+                            چالش جدید
+                        </button>
+
+                        <button
+                            type="button"
+                            class="captcha-btn captcha-confirm"
+                            onclick="confirmCaptcha('register')"
+                        >
+                            <i class="fa-solid fa-check"></i>
+                            تأیید
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="regAlert"
+                class="alert"
+            ></div>
+
+
+            <button
+                id="regBtn"
+                class="main-btn"
+                onclick="sendRegisterCode()"
+            >
+                <i class="fa-solid fa-paper-plane"></i>
+                ارسال کد تأیید
+            </button>
+
+        </div>
+
+
+        <!-- REGISTER STEP 2 -->
+
+        <div
+            id="registerStep2"
+            class="hidden"
+        >
+
+            <div
+                style="
+                text-align:center;
+                font-size:3rem;
+                margin-bottom:10px;
+                "
+            >
+                📩
+            </div>
+
+            <div class="otp-title">
+                کد تأیید ارسال شد
+            </div>
+
+            <div class="otp-description">
+
+                کد ۵ رقمی به
+
+                <strong
+                    id="regEmailShow"
+                    class="otp-email"
+                >
+                    ---
+                </strong>
+
+                ارسال شد.
+
+            </div>
+
+
+            <div
+                id="regOtp"
+                class="otp-container"
+            ></div>
+
+
+            <div
+                id="regOtpAlert"
+                class="alert"
+            ></div>
+
+
+            <button
+                id="verifyBtn"
+                class="main-btn"
+                onclick="verifyRegisterCode()"
+            >
+                <i class="fa-solid fa-check-circle"></i>
+                تأیید و ثبت‌نام
+            </button>
+
+
+            <div class="timer">
+                ارسال مجدد تا
+                <span id="timer">60</span>
+                ثانیه
+            </div>
+
+
+            <button
+                id="resendBtn"
+                class="resend hidden"
+                onclick="sendRegisterCode(true)"
+            >
+                <i class="fa-solid fa-rotate-left"></i>
+                ارسال مجدد کد
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="security">
+
+        <span class="security-dot"></span>
+
+        اتصال امن فعال است
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const CONFIG = Object.freeze({
+
+    EMAILJS_PUBLIC_KEY:
+        "zWp4KfIT2IljGPxwV",
+
+    SERVICE_ID:
+        "Black_foge",
+
+    TEMPLATE_ID:
+        "template_hfk7wc6",
+
+    OTP_LENGTH:
+        5,
+
+    OTP_EXPIRY:
+        5 * 60 * 1000,
+
+    OTP_COOLDOWN:
+        60,
+
+    OTP_MAX_ATTEMPTS:
+        5,
+
+    PASSWORD_MIN:
+        8,
+
+    PBKDF2_ITERATIONS:
+        120000
+
+});
+
+
+/* =========================================================
+   EMAILJS
+========================================================= */
+
+try{
+
+    if(
+        window.emailjs &&
+        typeof emailjs.init === "function"
+    ){
+
+        emailjs.init(
+            CONFIG.EMAILJS_PUBLIC_KEY
+        );
+
+    }
+
+}catch(error){
+
+    console.warn(
+        "EmailJS initialization failed",
+        error
+    );
+
+}
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let captchaState = {
+
+    login:{
+        opened:false,
+        verified:false,
+        challenge:null,
+        selected:[]
+    },
+
+    register:{
+        opened:false,
+        verified:false,
+        challenge:null,
+        selected:[]
+    }
+
+};
+
+
+let regCode = "";
+let regEmail = "";
+let regUsername = "";
+let regPassword = "";
+
+let otpExpiry = 0;
+let otpAttempts = 0;
+
+let timerInterval = null;
+
+
+/* =========================================================
+   CAPTCHA DATA
+========================================================= */
+
+const CAPTCHA_DATA = [
+
+    {
+        title:"همه تصاویر دارای خودرو را انتخاب کنید",
+
+        type:"خودرو",
+
+        items:[
+            ["🚗",true],
+            ["🍎",false],
+            ["🚕",true],
+            ["🌳",false],
+            ["🚙",true],
+            ["📱",false],
+            ["🚓",true],
+            ["🍕",false],
+            ["🚑",true]
+        ]
+    },
+
+    {
+        title:"همه تصاویر دارای حیوان را انتخاب کنید",
+
+        type:"حیوان",
+
+        items:[
+            ["🐶",true],
+            ["🏠",false],
+            ["🐱",true],
+            ["💻",false],
+            ["🦊",true],
+            ["🎮",false],
+            ["🐼",true],
+            ["📚",false],
+            ["🐸",true]
+        ]
+    },
+
+    {
+        title:"همه تصاویر دارای غذا را انتخاب کنید",
+
+        type:"غذا",
+
+        items:[
+            ["🍕",true],
+            ["🚗",false],
+            ["🍔",true],
+            ["🌳",false],
+            ["🍎",true],
+            ["💡",false],
+            ["🍩",true],
+            ["🎧",false],
+            ["🍓",true]
+        ]
+    },
+
+    {
+        title:"همه تصاویر مربوط به طبیعت را انتخاب کنید",
+
+        type:"طبیعت",
+
+        items:[
+            ["🌳",true],
+            ["📱",false],
+            ["🌲",true],
+            ["🎮",false],
+            ["🌴",true],
+            ["💻",false],
+            ["🏔️",true],
+            ["🚗",false],
+            ["🌵",true]
+        ]
+    },
+
+    {
+        title:"همه تصاویر مربوط به وسایل دیجیتال را انتخاب کنید",
+
+        type:"دستگاه دیجیتال",
+
+        items:[
+            ["📱",true],
+            ["🌳",false],
+            ["💻",true],
+            ["🍕",false],
+            ["🎧",true],
+            ["🐶",false],
+            ["⌨️",true],
+            ["🍎",false],
+            ["🖥️",true]
+        ]
+    }
+
+];
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function readJSON(key,fallback){
+
+    try{
+
+        const value =
+            localStorage.getItem(key);
+
+        if(!value)
+            return fallback;
+
+        const parsed =
+            JSON.parse(value);
+
+        return parsed ?? fallback;
+
+    }catch{
+
+        return fallback;
+
+    }
+
+}
+
+
+function writeJSON(key,value){
+
+    try{
+
+        localStorage.setItem(
+            key,
+            JSON.stringify(value)
+        );
+
+        return true;
+
+    }catch{
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+function switchTab(tab){
+
+    document
+        .querySelectorAll(".tab")
+        .forEach((button,index)=>{
+
+            button.classList.toggle(
+                "active",
+
+                (
+                    tab === "login" &&
+                    index === 0
+                ) ||
+                (
+                    tab === "register" &&
+                    index === 1
+                )
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(".tab-content")
+        .forEach(content=>{
+
+            content.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById("tab-"+tab)
+        ?.classList.add("active");
+
+
+    if(tab === "login"){
+
+        resetCaptcha("login");
+
+    }else{
+
+        resetCaptcha("register");
+
+    }
+
+}
+
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+function togglePassword(id,button){
+
+    const input =
+        document.getElementById(id);
+
+    if(!input)
+        return;
+
+    if(input.type === "password"){
+
+        input.type = "text";
+
+        button.innerHTML =
+            '<i class="fa-solid fa-eye-slash"></i>';
+
+    }else{
+
+        input.type = "password";
+
+        button.innerHTML =
+            '<i class="fa-solid fa-eye"></i>';
+
+    }
+
+}
+
+
+function checkPasswordStrength(){
+
+    const password =
+        document
+            .getElementById("regPassword")
+            ?.value || "";
+
+    let score = 0;
+
+    if(password.length >= 8)
+        score += 25;
+
+    if(password.length >= 12)
+        score += 15;
+
+    if(/[A-Z]/.test(password))
+        score += 20;
+
+    if(/[0-9]/.test(password))
+        score += 20;
+
+    if(/[^A-Za-z0-9]/.test(password))
+        score += 20;
+
+
+    const fill =
+        document.getElementById("strengthFill");
+
+    if(!fill)
+        return;
+
+
+    fill.style.width =
+        Math.min(score,100)+"%";
+
+
+    if(score < 35){
+
+        fill.style.background =
+            "#ea4335";
+
+    }else if(score < 60){
+
+        fill.style.background =
+            "#fbbc04";
+
+    }else if(score < 80){
+
+        fill.style.background =
+            "#f9ab00";
+
+    }else{
+
+        fill.style.background =
+            "#34a853";
+
+    }
+
+}
+
+
+/* =========================================================
+   CRYPTO
+========================================================= */
+
+function cryptoAvailable(){
+
+    return !!(
+        window.crypto &&
+        window.crypto.subtle &&
+        window.crypto.getRandomValues
+    );
+
+}
+
+
+function randomBytes(length){
+
+    const bytes =
+        new Uint8Array(length);
+
+    crypto.getRandomValues(bytes);
+
+    return bytes;
+
+}
+
+
+function bytesToBase64(bytes){
+
+    let binary = "";
+
+    for(let i=0;i<bytes.length;i++){
+
+        binary +=
+            String.fromCharCode(bytes[i]);
+
+    }
+
+    return btoa(binary);
+
+}
+
+
+function base64ToBytes(base64){
+
+    const binary =
+        atob(base64);
+
+    const bytes =
+        new Uint8Array(binary.length);
+
+    for(let i=0;i<binary.length;i++){
+
+        bytes[i] =
+            binary.charCodeAt(i);
+
+    }
+
+    return bytes;
+
+}
+
+
+async function hashPassword(
+    password,
+    existingSalt = null
+){
+
+    const salt =
+        existingSalt
+        ?
+        base64ToBytes(existingSalt)
+        :
+        randomBytes(16);
+
+
+    const encoder =
+        new TextEncoder();
+
+
+    const key =
+        await crypto.subtle.importKey(
+            "raw",
+            encoder.encode(password),
+            {
+                name:"PBKDF2"
+            },
+            false,
+            ["deriveBits"]
+        );
+
+
+    const bits =
+        await crypto.subtle.deriveBits(
+            {
+                name:"PBKDF2",
+                salt:salt,
+                iterations:
+                    CONFIG.PBKDF2_ITERATIONS,
+                hash:"SHA-256"
+            },
+            key,
+            256
+        );
+
+
+    return {
+
+        hash:
+            bytesToBase64(
+                new Uint8Array(bits)
+            ),
+
+        salt:
+            bytesToBase64(salt)
+
+    };
+
+}
+
+
+/* =========================================================
+   CAPTCHA
+========================================================= */
+
+function resetCaptcha(type){
+
+    const state =
+        captchaState[type];
+
+    state.opened = false;
+    state.verified = false;
+    state.challenge = null;
+    state.selected = [];
+
+    const check =
+        document.getElementById(
+            type+"CaptchaCheck"
+        );
+
+    const challenge =
+        document.getElementById(
+            type+"Challenge"
+        );
+
+    const result =
+        document.getElementById(
+            type+"CaptchaResult"
+        );
+
+    if(check){
+
+        check.classList.remove(
+            "checked",
+            "loading"
+        );
+
+    }
+
+    if(challenge){
+
+        challenge.classList.remove(
+            "show"
+        );
+
+    }
+
+    if(result){
+
+        result.className =
+            "challenge-result";
+
+        result.textContent = "";
+
+    }
+
+}
+
+
+/*
+   ابتدا فقط «من ربات نیستم»
+   نمایش داده می‌شود.
+*/
+
+function openCaptcha(type){
+
+    const state =
+        captchaState[type];
+
+    if(state.verified)
+        return;
+
+
+    if(!state.opened){
+
+        state.opened = true;
+
+        const check =
+            document.getElementById(
+                type+"CaptchaCheck"
+            );
+
+        check?.classList.add("loading");
+
+
+        setTimeout(()=>{
+
+            check?.classList.remove(
+                "loading"
+            );
+
+            document
+                .getElementById(
+                    type+"Challenge"
+                )
+                ?.classList.add("show");
+
+            generateCaptcha(type);
+
+        },500);
+
+    }
+
+}
+
+
+function generateCaptcha(type){
+
+    const state =
+        captchaState[type];
+
+    const challenge =
+        CAPTCHA_DATA[
+            Math.floor(
+                Math.random() *
+                CAPTCHA_DATA.length
+            )
+        ];
+
+
+    state.challenge = challenge;
+    state.selected = [];
+
+
+    const grid =
+        document.getElementById(
+            type+"Grid"
+        );
+
+
+    const subtitle =
+        document.getElementById(
+            type+"ChallengeSubtitle"
+        );
+
+
+    const result =
+        document.getElementById(
+            type+"CaptchaResult"
+        );
+
+
+    if(!grid)
+        return;
+
+
+    grid.innerHTML = "";
+
+    result.className =
+        "challenge-result";
+
+    result.textContent = "";
+
+
+    subtitle.textContent =
+        challenge.title;
+
+
+    challenge.items.forEach(
+        (item,index)=>{
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.type =
+                "button";
+
+            button.className =
+                "challenge-item";
+
+            button.textContent =
+                item[0];
+
+            button.dataset.index =
+                index;
+
+            button.addEventListener(
+                "click",
+                ()=>{
+
+                    selectCaptchaItem(
+                        type,
+                        index,
+                        button
+                    );
+
+                }
+            );
+
+            grid.appendChild(button);
+
+        }
+    );
+
+}
+
+
+function selectCaptchaItem(
+    type,
+    index,
+    element
+){
+
+    const state =
+        captchaState[type];
+
+    if(state.verified)
+        return;
+
+
+    const exists =
+        state.selected.includes(index);
+
+
+    if(exists){
+
+        state.selected =
+            state.selected.filter(
+                item => item !== index
+            );
+
+        element.classList.remove(
+            "selected"
+        );
+
+    }else{
+
+        state.selected.push(index);
+
+        element.classList.add(
+            "selected"
+        );
+
+    }
+
+}
+
+
+/*
+   دکمه تأیید:
+   اگر اشتباه باشد قبول نمی‌شود.
+*/
+
+function confirmCaptcha(type){
+
+    const state =
+        captchaState[type];
+
+    if(!state.opened)
+        return;
+
+
+    const challenge =
+        state.challenge;
+
+    if(!challenge)
+        return;
+
+
+    const correct = [];
+
+    challenge.items.forEach(
+        (item,index)=>{
+
+            if(item[1])
+                correct.push(index);
+
+        }
+    );
+
+
+    const selected =
+        [...state.selected].sort(
+            (a,b)=>a-b
+        );
+
+
+    const expected =
+        [...correct].sort(
+            (a,b)=>a-b
+        );
+
+
+    const valid =
+        selected.length === expected.length &&
+        selected.every(
+            (value,index)=>
+                value === expected[index]
+        );
+
+
+    const result =
+        document.getElementById(
+            type+"CaptchaResult"
+        );
+
+
+    const items =
+        document.querySelectorAll(
+            "#"+type+"Grid .challenge-item"
+        );
+
+
+    if(valid){
+
+        items.forEach(
+            (item,index)=>{
+
+                if(
+                    correct.includes(
+                        Number(item.dataset.index)
+                    )
+                ){
+
+                    item.classList.add(
+                        "correct"
+                    );
+
+                }
+
+            }
+        );
+
+
+        result.textContent =
+            "✓ تأیید شد — شما ربات نیستید.";
+
+        result.className =
+            "challenge-result success";
+
+
+        state.verified = true;
+
+
+        const check =
+            document.getElementById(
+                type+"CaptchaCheck"
+            );
+
+        check?.classList.add(
+            "checked"
+        );
+
+
+        setTimeout(()=>{
+
+            document
+                .getElementById(
+                    type+"Challenge"
+                )
+                ?.classList.remove("show");
+
+        },650);
+
+
+    }else{
+
+        items.forEach(
+            item=>{
+
+                if(
+                    state.selected.includes(
+                        Number(item.dataset.index)
+                    )
+                ){
+
+                    item.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+
+        result.textContent =
+            "✕ انتخاب اشتباه است. گزینه‌های صحیح را انتخاب کنید.";
+
+        result.className =
+            "challenge-result error";
+
+
+        /*
+           بعد از نمایش خطا،
+           چالش جدید تولید نمی‌کنیم.
+           کاربر می‌تواند اصلاح کند.
+        */
+
+        setTimeout(()=>{
+
+            items.forEach(
+                item=>{
+
+                    item.classList.remove(
+                        "wrong"
+                    );
+
+                }
+            );
+
+        },700);
+
+    }
+
+}
+
+
+function newCaptcha(type){
+
+    const state =
+        captchaState[type];
+
+    state.verified = false;
+
+    const check =
+        document.getElementById(
+            type+"CaptchaCheck"
+        );
+
+    check?.classList.remove(
+        "checked"
+    );
+
+    generateCaptcha(type);
+
+}
+
+
+/* =========================================================
+   OTP
+========================================================= */
+
+function generateOTP(){
+
+    const array =
+        new Uint32Array(1);
+
+    crypto.getRandomValues(array);
+
+    return String(
+        10000 +
+        (array[0] % 90000)
+    );
+
+}
+
+
+function buildOTP(){
+
+    const container =
+        document.getElementById(
+            "regOtp"
+        );
+
+    container.innerHTML = "";
+
+
+    for(let i=0;i<5;i++){
+
+        const input =
+            document.createElement(
+                "input"
+            );
+
+        input.className =
+            "otp-input";
+
+        input.type =
+            "text";
+
+        input.inputMode =
+            "numeric";
+
+        input.maxLength =
+            1;
+
+        input.autocomplete =
+            "one-time-code";
+
+
+        input.addEventListener(
+            "input",
+            ()=>{
+
+                input.value =
+                    input.value.replace(
+                        /[^0-9]/g,
+                        ""
+                    );
+
+                if(
+                    input.value &&
+                    i < 4
+                ){
+
+                    container
+                        .children[i+1]
+                        ?.focus();
+
+                }
+
+            }
+        );
+
+
+        input.addEventListener(
+            "keydown",
+            event=>{
+
+                if(
+                    event.key === "Backspace" &&
+                    !input.value &&
+                    i > 0
+                ){
+
+                    container
+                        .children[i-1]
+                        ?.focus();
+
+                }
+
+                if(
+                    event.key === "Enter"
+                ){
+
+                    verifyRegisterCode();
+
+                }
+
+            }
+        );
+
+
+        container.appendChild(input);
+
+    }
+
+
+    setTimeout(
+        ()=>{
+            container
+                .children[0]
+                ?.focus();
+        },
+        150
+    );
+
+}
+
+
+function getOTP(){
+
+    let code = "";
+
+    document
+        .querySelectorAll(
+            "#regOtp .otp-input"
+        )
+        .forEach(
+            input=>{
+                code += input.value;
+            }
+        );
+
+    return code;
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer(){
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    let seconds =
+        CONFIG.OTP_COOLDOWN;
+
+
+    const timer =
+        document.getElementById(
+            "timer"
+        );
+
+    const resend =
+        document.getElementById(
+            "resendBtn"
+        );
+
+
+    resend.classList.add(
+        "hidden"
+    );
+
+
+    timer.textContent =
+        seconds;
+
+
+    timerInterval =
+        setInterval(
+            ()=>{
+
+                seconds--;
+
+                timer.textContent =
+                    seconds;
+
+
+                if(seconds <= 0){
+
+                    clearInterval(
+                        timerInterval
+                    );
+
+                    resend.classList.remove(
+                        "hidden"
+                    );
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+function showAlert(
+    id,
+    message,
+    type
+){
+
+    const alert =
+        document.getElementById(id);
+
+    if(!alert)
+        return;
+
+
+    alert.textContent =
+        message;
+
+    alert.className =
+        "alert show "+type;
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+async function doLogin(){
+
+    const identity =
+        document
+            .getElementById(
+                "loginIdentity"
+            )
+            .value
+            .trim();
+
+
+    const password =
+        document
+            .getElementById(
+                "loginPassword"
+            )
+            .value;
+
+
+    const button =
+        document.getElementById(
+            "loginBtn"
+        );
+
+
+    if(!identity){
+
+        showAlert(
+            "loginAlert",
+            "ایمیل یا نام کاربری را وارد کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!password){
+
+        showAlert(
+            "loginAlert",
+            "رمز عبور را وارد کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !captchaState.login.verified
+    ){
+
+        showAlert(
+            "loginAlert",
+            "لطفاً ابتدا کپچا را تکمیل کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const users =
+        readJSON(
+            "bf_users",
+            []
+        );
+
+
+    if(!Array.isArray(users)){
+
+        showAlert(
+            "loginAlert",
+            "اطلاعات کاربران قابل خواندن نیست.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const normalized =
+        identity.toLowerCase();
+
+
+    const user =
+        users.find(
+            item=>
+
+            (
+                typeof item.email === "string" &&
+                item.email.toLowerCase() === normalized
+            )
+
+            ||
+
+            (
+                typeof item.username === "string" &&
+                item.username.toLowerCase() === normalized
+            )
+        );
+
+
+    if(!user){
+
+        showAlert(
+            "loginAlert",
+            "اطلاعات ورود صحیح نیست.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin"></i> بررسی...';
+
+
+    try{
+
+        let valid = false;
+
+
+        if(
+            user.passwordHash &&
+            user.passwordSalt
+        ){
+
+            const result =
+                await hashPassword(
+                    password,
+                    user.passwordSalt
+                );
+
+            valid =
+                result.hash ===
+                user.passwordHash;
+
+        }
+
+
+        /*
+           سازگاری با نسخه قدیمی
+        */
+
+        else if(user.password){
+
+            try{
+
+                valid =
+                    atob(user.password) ===
+                    password;
+
+            }catch{
+
+                valid =
+                    user.password ===
+                    password;
+
+            }
+
+        }
+
+
+        if(!valid){
+
+            showAlert(
+                "loginAlert",
+                "اطلاعات ورود صحیح نیست.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        createSession(user);
+
+
+        showAlert(
+            "loginAlert",
+            "ورود موفق بود! در حال انتقال...",
+            "success"
+        );
+
+
+        setTimeout(
+            goHome,
+            600
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showAlert(
+            "loginAlert",
+            "خطایی هنگام ورود رخ داد.",
+            "error"
+        );
+
+    }finally{
+
+        button.disabled = false;
+
+        button.innerHTML =
+            '<i class="fa-solid fa-right-to-bracket"></i> ورود به حساب';
+
+    }
+
+}
+
+
+/* =========================================================
+   REGISTER
+========================================================= */
+
+async function sendRegisterCode(isResend=false){
+
+    const username =
+        document
+            .getElementById(
+                "regUsername"
+            )
+            .value
+            .trim();
+
+
+    const email =
+        document
+            .getElementById(
+                "regEmail"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const password =
+        document
+            .getElementById(
+                "regPassword"
+            )
+            .value;
+
+
+    if(!username || username.length < 3){
+
+        showAlert(
+            "regAlert",
+            "نام کاربری باید حداقل ۳ کاراکتر باشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !/^[\p{L}\p{N}_.-]+$/u.test(
+            username
+        )
+    ){
+
+        showAlert(
+            "regAlert",
+            "نام کاربری فقط می‌تواند شامل حروف، عدد، _، - و . باشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    if(!emailRegex.test(email)){
+
+        showAlert(
+            "regAlert",
+            "یک ایمیل معتبر وارد کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(password.length < CONFIG.PASSWORD_MIN){
+
+        showAlert(
+            "regAlert",
+            "رمز عبور باید حداقل ۸ کاراکتر باشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !captchaState.register.verified
+    ){
+
+        showAlert(
+            "regAlert",
+            "لطفاً ابتدا کپچا را تکمیل کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!cryptoAvailable()){
+
+        showAlert(
+            "regAlert",
+            "مرورگر شما از Web Crypto پشتیبانی نمی‌کند.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const users =
+        readJSON(
+            "bf_users",
+            []
+        );
+
+
+    if(
+        users.some(
+            user=>
+                user.email &&
+                user.email.toLowerCase() === email
+        )
+    ){
+
+        showAlert(
+            "regAlert",
+            "این ایمیل قبلاً ثبت شده است.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        users.some(
+            user=>
+                user.username &&
+                user.username.toLowerCase() ===
+                username.toLowerCase()
+        )
+    ){
+
+        showAlert(
+            "regAlert",
+            "این نام کاربری قبلاً انتخاب شده است.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    regUsername =
+        username;
+
+    regEmail =
+        email;
+
+    regPassword =
+        password;
+
+    regCode =
+        generateOTP();
+
+    otpExpiry =
+        Date.now() +
+        CONFIG.OTP_EXPIRY;
+
+    otpAttempts =
+        0;
+
+
+    const button =
+        document.getElementById(
+            isResend
+            ?
+            "resendBtn"
+            :
+            "regBtn"
+        );
+
+
+    try{
+
+        if(
+            !window.emailjs ||
+            typeof emailjs.send !== "function"
+        ){
+
+            throw new Error(
+                "EmailJS unavailable"
+            );
+
+        }
+
+
+        if(!isResend){
+
+            button.disabled = true;
+
+            button.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> ارسال...';
+
+        }
+
+
+        await emailjs.send(
+            CONFIG.SERVICE_ID,
+            CONFIG.TEMPLATE_ID,
+            {
+                username:
+                    regUsername,
+
+                email:
+                    regEmail,
+
+                code:
+                    regCode
+            }
+        );
+
+
+        document
+            .getElementById(
+                "registerStep1"
+            )
+            .classList.add(
+                "hidden"
+            );
+
+
+        document
+            .getElementById(
+                "registerStep2"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
+
+        document
+            .getElementById(
+                "regEmailShow"
+            )
+            .textContent =
+            regEmail;
+
+
+        buildOTP();
+
+        startTimer();
+
+
+        showAlert(
+            "regOtpAlert",
+            "کد تأیید ارسال شد و ۵ دقیقه اعتبار دارد.",
+            "info"
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "EmailJS error:",
+            error
+        );
+
+
+        showAlert(
+            "regAlert",
+            "ارسال کد انجام نشد. تنظیمات EmailJS و اتصال اینترنت را بررسی کنید.",
+            "error"
+        );
+
+    }finally{
+
+        if(!isResend){
+
+            button.disabled = false;
+
+            button.innerHTML =
+                '<i class="fa-solid fa-paper-plane"></i> ارسال کد تأیید';
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   VERIFY OTP
+========================================================= */
+
+async function verifyRegisterCode(){
+
+    const code =
+        getOTP();
+
+
+    if(code.length !== 5){
+
+        showAlert(
+            "regOtpAlert",
+            "کد ۵ رقمی را کامل وارد کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(Date.now() > otpExpiry){
+
+        showAlert(
+            "regOtpAlert",
+            "کد منقضی شده است. دوباره درخواست کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        otpAttempts >=
+        CONFIG.OTP_MAX_ATTEMPTS
+    ){
+
+        showAlert(
+            "regOtpAlert",
+            "تعداد تلاش‌های مجاز تمام شده است.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    otpAttempts++;
+
+
+    if(code !== regCode){
+
+        showAlert(
+            "regOtpAlert",
+            "کد واردشده صحیح نیست.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "verifyBtn"
+        );
+
+
+    button.disabled = true;
+
+    button.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin"></i> ساخت حساب...';
+
+
+    try{
+
+        const secure =
+            await hashPassword(
+                regPassword
+            );
+
+
+        const users =
+            readJSON(
+                "bf_users",
+                []
+            );
+
+
+        if(
+            users.some(
+                user=>
+                    user.email &&
+                    user.email.toLowerCase() ===
+                    regEmail.toLowerCase()
+            )
+        ){
+
+            throw new Error(
+                "EMAIL_EXISTS"
+            );
+
+        }
+
+
+        if(
+            users.some(
+                user=>
+                    user.username &&
+                    user.username.toLowerCase() ===
+                    regUsername.toLowerCase()
+            )
+        ){
+
+            throw new Error(
+                "USERNAME_EXISTS"
+            );
+
+        }
+
+
+        const newUser = {
+
+            username:
+                regUsername,
+
+            email:
+                regEmail,
+
+            passwordHash:
+                secure.hash,
+
+            passwordSalt:
+                secure.salt,
+
+            passwordAlgorithm:
+                "PBKDF2-SHA256",
+
+            passwordIterations:
+                CONFIG.PBKDF2_ITERATIONS,
+
+            tokens:
+                2000,
+
+            premium:
+                false,
+
+            createdAt:
+                new Date().toISOString(),
+
+            authVersion:
+                2
+
+        };
+
+
+        users.push(
+            newUser
+        );
+
+
+        if(
+            !writeJSON(
+                "bf_users",
+                users
+            )
+        ){
+
+            throw new Error(
+                "STORAGE_FAILED"
+            );
+
+        }
+
+
+        createSession(
+            newUser
+        );
+
+
+        showAlert(
+            "regOtpAlert",
+            "ثبت‌نام موفق بود! در حال ورود...",
+            "success"
+        );
+
+
+        regPassword = "";
+        regCode = "";
+
+        clearInterval(
+            timerInterval
+        );
+
+
+        setTimeout(
+            goHome,
+            700
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        let message =
+            "ثبت‌نام انجام نشد.";
+
+        if(error.message === "EMAIL_EXISTS"){
+
+            message =
+                "این ایمیل قبلاً ثبت شده است.";
+
+        }
+
+        if(error.message === "USERNAME_EXISTS"){
+
+            message =
+                "این نام کاربری قبلاً انتخاب شده است.";
+
+        }
+
+        if(error.message === "STORAGE_FAILED"){
+
+            message =
+                "ذخیره اطلاعات در مرورگر انجام نشد.";
+
+        }
+
+
+        showAlert(
+            "regOtpAlert",
+            message,
+            "error"
+        );
+
+
+    }finally{
+
+        button.disabled = false;
+
+        button.innerHTML =
+            '<i class="fa-solid fa-check-circle"></i> تأیید و ثبت‌نام';
+
+    }
+
+}
+
+
+/* =========================================================
+   SESSION
+========================================================= */
+
+function createSession(user){
+
+    const bytes =
+        randomBytes(32);
+
+
+    const token =
+        bytesToBase64(bytes);
+
+
+    const now =
+        Date.now();
+
+
+    writeJSON(
+        "bf_auth",
+        {
+
+            username:
+                user.username,
+
+            email:
+                user.email,
+
+            token:
+                token,
+
+            loggedIn:
+                true,
+
+            time:
+                now,
+
+            expiresAt:
+                now +
+                30 * 24 * 60 * 60 * 1000,
+
+            version:
+                2
+
+        }
+    );
+
+}
+
+
+function getSession(){
+
+    const session =
+        readJSON(
+            "bf_auth",
+            null
+        );
+
+
+    if(!session)
+        return null;
+
+
+    if(
+        !session.loggedIn ||
+        !session.token ||
+        !session.expiresAt
+    ){
+
+        localStorage.removeItem(
+            "bf_auth"
+        );
+
+        return null;
+
+    }
+
+
+    if(
+        Date.now() >=
+        session.expiresAt
+    ){
+
+        localStorage.removeItem(
+            "bf_auth"
+        );
+
+        return null;
+
+    }
+
+
+    return session;
+
+}
+
+
+/* =========================================================
+   REDIRECT
+========================================================= */
+
+function goHome(){
+
+    window.location.replace(
+        "index.html"
+    );
+
+}
+
+
+/* =========================================================
+   ENTER
+========================================================= */
+
+document
+    .getElementById(
+        "loginPassword"
+    )
+    .addEventListener(
+        "keydown",
+        event=>{
+
+            if(event.key === "Enter"){
+
+                doLogin();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "loginIdentity"
+    )
+    .addEventListener(
+        "keydown",
+        event=>{
+
+            if(event.key === "Enter"){
+
+                document
+                    .getElementById(
+                        "loginPassword"
+                    )
+                    .focus();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   AUTO LOGIN
+========================================================= */
+
+(function(){
+
+    try{
+
+        const session =
+            getSession();
+
+        if(session){
+
+            goHome();
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "Auto login error:",
+            error
+        );
+
+    }
+
+})();
+
+</script>
+
+</body>
+</html>
