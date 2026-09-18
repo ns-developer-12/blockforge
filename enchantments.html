@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=yes">
+<meta name="theme-color" content="#07080c">
+<title>راهنمای انچنت‌ها | BlockForge</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root{
+    --bg:#07080c;
+    --bg-soft:#0d0f14;
+    --panel:#11141b;
+    --panel2:#151922;
+    --border:rgba(255,255,255,.075);
+    --border-hover:rgba(255,255,255,.14);
+
+    --text:#f2f3f5;
+    --muted:#9499a5;
+    --dim:#626875;
+
+    --purple:#9b6cff;
+    --purple-soft:rgba(155,108,255,.13);
+
+    --green:#38d996;
+    --red:#ff5964;
+    --yellow:#e9bd54;
+
+    --radius:18px;
+    --radius-sm:12px;
+
+    --shadow:0 18px 55px rgba(0,0,0,.35);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+    font-size:15px;
+}
+
+body{
+    min-height:100vh;
+    font-family:"Vazirmatn",sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 20% 0%,rgba(155,108,255,.055),transparent 32%),
+        radial-gradient(circle at 90% 60%,rgba(80,110,255,.035),transparent 35%),
+        var(--bg);
+    line-height:1.7;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:58px;
+    padding:0 15px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:rgba(7,8,12,.82);
+    backdrop-filter:blur(22px) saturate(150%);
+    -webkit-backdrop-filter:blur(22px) saturate(150%);
+
+    border-bottom:1px solid var(--border);
+}
+
+.back-btn{
+    width:36px;
+    height:36px;
+    border-radius:11px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#bfc3cc;
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--border);
+
+    text-decoration:none;
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+.back-btn:active{
+    transform:scale(.91);
+}
+
+.back-btn:hover{
+    color:white;
+    background:rgba(255,255,255,.07);
+    border-color:var(--border-hover);
+}
+
+.header-title{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    color:#fff;
+    font-size:.92rem;
+    font-weight:800;
+}
+
+.header-title i{
+    color:var(--purple);
+    filter:drop-shadow(0 0 9px rgba(155,108,255,.35));
+}
+
+/* ================= MAIN ================= */
+
+.container{
+    width:100%;
+    max-width:720px;
+    margin:auto;
+    padding:18px 15px 45px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    margin-bottom:17px;
+}
+
+.hero-title{
+    font-size:1.38rem;
+    font-weight:900;
+    letter-spacing:-.5px;
+    color:#fff;
+}
+
+.hero-subtitle{
+    margin-top:4px;
+    color:var(--muted);
+    font-size:.68rem;
+}
+
+/* ================= SEARCH ================= */
+
+.search-wrap{
+    position:relative;
+    margin-bottom:12px;
+}
+
+.search-input{
+    width:100%;
+    height:48px;
+
+    padding:0 43px 0 42px;
+
+    border-radius:14px;
+    border:1px solid var(--border);
+
+    outline:none;
+
+    color:#fff;
+    background:rgba(255,255,255,.035);
+
+    font-family:inherit;
+    font-size:.72rem;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.search-input::placeholder{
+    color:#646975;
+}
+
+.search-input:focus{
+    background:rgba(255,255,255,.05);
+    border-color:rgba(155,108,255,.42);
+    box-shadow:
+        0 0 0 3px rgba(155,108,255,.07),
+        0 10px 30px rgba(0,0,0,.2);
+}
+
+.search-icon{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#666c77;
+    pointer-events:none;
+}
+
+.clear-search{
+    position:absolute;
+    left:9px;
+    top:50%;
+    transform:translateY(-50%);
+
+    width:30px;
+    height:30px;
+
+    border:0;
+    border-radius:9px;
+
+    color:#777d88;
+    background:transparent;
+
+    cursor:pointer;
+    display:none;
+}
+
+.clear-search.visible{
+    display:block;
+}
+
+/* ================= FILTER BAR ================= */
+
+.filter-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:15px 1px 8px;
+}
+
+.filter-title{
+    color:#858b97;
+    font-size:.61rem;
+    font-weight:700;
+}
+
+.result-count{
+    color:#707681;
+    font-size:.59rem;
+}
+
+.cat-scroll{
+    display:flex;
+    gap:7px;
+
+    overflow-x:auto;
+    padding:2px 1px 8px;
+
+    scrollbar-width:none;
+    overscroll-behavior-x:contain;
+}
+
+.cat-scroll::-webkit-scrollbar{
+    display:none;
+}
+
+.cat-chip{
+    height:35px;
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    padding:0 13px;
+
+    border-radius:11px;
+
+    color:#858b96;
+    background:rgba(255,255,255,.027);
+
+    border:1px solid var(--border);
+
+    font-family:inherit;
+    font-size:.61rem;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        color .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+.cat-chip:active{
+    transform:scale(.94);
+}
+
+.cat-chip:hover{
+    color:#ddd;
+    border-color:var(--border-hover);
+}
+
+.cat-chip.active{
+    color:#fff;
+    background:var(--purple-soft);
+    border-color:rgba(155,108,255,.38);
+    box-shadow:0 5px 18px rgba(155,108,255,.08);
+}
+
+.chip-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    flex-shrink:0;
+}
+
+.chip-dot.all{background:#9298a3}
+.chip-dot.sword{background:#ff5964}
+.chip-dot.armor{background:#5da9ff}
+.chip-dot.tool{background:#e9bd54}
+.chip-dot.bow{background:#ed9851}
+.chip-dot.trident{background:#43d2e3}
+.chip-dot.special{background:#a675ff}
+
+/* ================= GRID ================= */
+
+.ench-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+}
+
+/* ================= CARD ================= */
+
+.ench-card{
+    position:relative;
+    overflow:hidden;
+
+    min-width:0;
+    padding:15px 13px 13px;
+
+    border-radius:var(--radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.018)
+        );
+
+    border:1px solid var(--border);
+
+    cursor:pointer;
+
+    opacity:0;
+    transform:translateY(13px) scale(.985);
+
+    animation:cardIn .42s cubic-bezier(.2,.7,.2,1) forwards;
+
+    transition:
+        transform .22s ease,
+        border-color .22s ease,
+        background .22s ease,
+        box-shadow .22s ease;
+}
+
+@keyframes cardIn{
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.ench-card:hover{
+    transform:translateY(-3px);
+    border-color:var(--border-hover);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.025)
+        );
+    box-shadow:0 13px 34px rgba(0,0,0,.25);
+}
+
+.ench-card:active{
+    transform:scale(.975);
+}
+
+/* subtle shine */
+
+.ench-card::after{
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+
+    top:-45px;
+    left:-45px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.035);
+    filter:blur(15px);
+
+    pointer-events:none;
+}
+
+/* category line */
+
+.ench-card::before{
+    content:"";
+    position:absolute;
+
+    top:0;
+    right:13px;
+    left:13px;
+
+    height:2px;
+
+    border-radius:0 0 5px 5px;
+
+    opacity:.75;
+}
+
+.category-sword::before{background:#ff5964}
+.category-armor::before{background:#5da9ff}
+.category-tool::before{background:#e9bd54}
+.category-bow::before{background:#ed9851}
+.category-trident::before{background:#43d2e3}
+.category-special::before{background:#a675ff}
+
+/* ================= CARD CONTENT ================= */
+
+.card-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:8px;
+
+    min-width:0;
+}
+
+.ench-icon{
+    width:42px;
+    height:42px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    color:#fff;
+
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.065);
+
+    font-size:1.05rem;
+
+    transition:
+        transform .25s ease,
+        background .25s ease;
+}
+
+.ench-card:hover .ench-icon{
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.075);
+}
+
+.ench-incompat{
+    width:24px;
+    height:24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:8px;
+
+    color:#ff6973;
+    background:rgba(255,89,100,.08);
+    border:1px solid rgba(255,89,100,.16);
+
+    font-size:.62rem;
+}
+
+.ench-main{
+    min-width:0;
+    flex:1;
+}
+
+.ench-name-fa{
+    color:#f5f5f7;
+    font-size:.74rem;
+    font-weight:800;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.ench-name-en{
+    margin-top:2px;
+
+    color:#686e79;
+    font-size:.51rem;
+    font-family:monospace;
+
+    direction:ltr;
+    text-align:right;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.ench-description{
+    min-height:37px;
+    margin-top:10px;
+
+    color:#858b96;
+    font-size:.56rem;
+    line-height:1.9;
+
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+
+.card-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:6px;
+
+    margin-top:11px;
+    padding-top:9px;
+
+    border-top:1px solid rgba(255,255,255,.045);
+}
+
+.applies{
+    min-width:0;
+
+    color:#707681;
+    font-size:.5rem;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.ench-max{
+    flex-shrink:0;
+
+    padding:3px 7px;
+
+    color:#e9bd54;
+    background:rgba(233,189,84,.075);
+
+    border:1px solid rgba(233,189,84,.14);
+    border-radius:7px;
+
+    font-size:.5rem;
+    font-weight:700;
+}
+
+/* ================= EMPTY ================= */
+
+.no-results{
+    grid-column:1/-1;
+
+    padding:60px 20px;
+
+    text-align:center;
+
+    border:1px dashed rgba(255,255,255,.08);
+    border-radius:18px;
+
+    color:#626875;
+
+    animation:fadeEmpty .3s ease;
+}
+
+@keyframes fadeEmpty{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+.no-results-icon{
+    width:54px;
+    height:54px;
+
+    margin:0 auto 12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.035);
+    color:#505661;
+
+    font-size:1.25rem;
+}
+
+.no-results p{
+    font-size:.7rem;
+}
+
+/* ================= MODAL ================= */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+
+    z-index:500;
+
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+
+    padding:0;
+
+    background:rgba(0,0,0,.72);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:
+        opacity .28s ease,
+        visibility .28s ease;
+}
+
+.modal-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal{
+    position:relative;
+
+    width:min(720px,100%);
+
+    max-height:88vh;
+
+    overflow-y:auto;
+    overscroll-behavior:contain;
+
+    padding:11px 15px 28px;
+
+    border-radius:23px 23px 0 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #151820,
+            #101217
+        );
+
+    border:1px solid rgba(255,255,255,.08);
+    border-bottom:0;
+
+    box-shadow:var(--shadow);
+
+    transform:translateY(100%);
+
+    transition:
+        transform .42s cubic-bezier(.2,.8,.2,1);
+}
+
+.modal-overlay.active .modal{
+    transform:translateY(0);
+}
+
+.modal::-webkit-scrollbar{
+    width:4px;
+}
+
+.modal::-webkit-scrollbar-thumb{
+    background:#333842;
+    border-radius:5px;
+}
+
+.modal-handle{
+    width:38px;
+    height:4px;
+
+    margin:0 auto 14px;
+
+    border-radius:5px;
+
+    background:#3c414b;
+}
+
+.modal-close{
+    position:absolute;
+    top:13px;
+    left:13px;
+
+    width:34px;
+    height:34px;
+
+    border-radius:10px;
+
+    color:#9ba0aa;
+    background:rgba(255,255,255,.04);
+
+    border:1px solid var(--border);
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.modal-close:hover{
+    color:#fff;
+    background:rgba(255,255,255,.08);
+}
+
+.modal-close:active{
+    transform:scale(.9);
+}
+
+/* modal header */
+
+.modal-ench-header{
+    text-align:center;
+    padding:5px 45px 18px;
+}
+
+.modal-ench-icon{
+    width:62px;
+    height:62px;
+
+    margin:0 auto 10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.075);
+
+    color:#fff;
+
+    font-size:1.55rem;
+
+    animation:modalIcon .45s ease;
+}
+
+@keyframes modalIcon{
+    from{
+        opacity:0;
+        transform:scale(.8) translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+.modal-ench-name{
+    color:#fff;
+    font-size:1.05rem;
+    font-weight:900;
+}
+
+.modal-ench-en{
+    margin-top:2px;
+
+    color:#686e79;
+    font-size:.59rem;
+    font-family:monospace;
+
+    direction:ltr;
+}
+
+/* info */
+
+.modal-info-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+
+    margin-bottom:11px;
+}
+
+.modal-info-item{
+    min-width:0;
+
+    padding:11px 6px;
+
+    text-align:center;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--border);
+}
+
+.modal-info-item i{
+    display:block;
+    margin-bottom:5px;
+
+    font-size:.82rem;
+}
+
+.modal-info-label{
+    color:#666c77;
+    font-size:.48rem;
+}
+
+.modal-info-value{
+    margin-top:1px;
+
+    color:#e8e9ec;
+    font-size:.59rem;
+    font-weight:800;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* boxes */
+
+.modal-desc-box{
+    margin-top:9px;
+    padding:13px;
+
+    border-radius:13px;
+
+    background:rgba(255,255,255,.022);
+    border:1px solid var(--border);
+}
+
+.modal-desc-title{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    margin-bottom:8px;
+
+    color:#c1c5cd;
+    font-size:.61rem;
+    font-weight:800;
+}
+
+.modal-desc-title i{
+    color:var(--purple);
+}
+
+.modal-desc-text{
+    color:#9da2ac;
+    font-size:.64rem;
+    line-height:2;
+}
+
+/* tags */
+
+.modal-applies-to,
+.modal-incompat-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+}
+
+.modal-applies-tag,
+.modal-incompat-tag{
+    display:inline-flex;
+    align-items:center;
+
+    max-width:100%;
+
+    padding:4px 8px;
+
+    border-radius:8px;
+
+    font-size:.5rem;
+}
+
+.modal-applies-tag{
+    color:#ae8bff;
+    background:rgba(155,108,255,.08);
+    border:1px solid rgba(155,108,255,.15);
+}
+
+.modal-incompat-tag{
+    color:#ff6973;
+    background:rgba(255,89,100,.07);
+    border:1px solid rgba(255,89,100,.14);
+}
+
+.modal-none{
+    color:#5f6570;
+    font-size:.54rem;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+
+    left:50%;
+    bottom:18px;
+
+    z-index:900;
+
+    transform:translate(-50%,20px);
+
+    padding:9px 14px;
+
+    color:#e9eaf0;
+    background:#191c23;
+
+    border:1px solid var(--border);
+    border-radius:11px;
+
+    font-size:.58rem;
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:.3s ease;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.4);
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:390px){
+
+    .container{
+        padding-left:11px;
+        padding-right:11px;
+    }
+
+    .ench-grid{
+        gap:7px;
+    }
+
+    .ench-card{
+        padding:13px 11px 11px;
+    }
+
+    .ench-icon{
+        width:38px;
+        height:38px;
+    }
+
+    .ench-name-fa{
+        font-size:.68rem;
+    }
+
+    .ench-description{
+        font-size:.52rem;
+    }
+}
+
+@media(min-width:600px){
+
+    .ench-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:11px;
+    }
+
+    .container{
+        padding-top:24px;
+    }
+}
+
+@media(min-width:900px){
+
+    .modal{
+        margin-bottom:20px;
+        border-radius:22px;
+        border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .modal-overlay{
+        align-items:center;
+        padding:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="index.html" class="back-btn" aria-label="بازگشت">
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
+
+    <div class="header-title">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        راهنمای انچنت‌ها
+    </div>
+
+    <div style="width:36px"></div>
+
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+        <h1 class="hero-title">راهنمای Enchantment</h1>
+        <p class="hero-subtitle">
+            انچنت موردنظر را جستجو کن یا از دسته‌بندی‌ها استفاده کن.
+        </p>
+    </section>
+
+
+    <!-- Search -->
+
+    <div class="search-wrap">
+
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+        <input
+            id="searchInput"
+            class="search-input"
+            type="search"
+            autocomplete="off"
+            placeholder="جستجوی نام فارسی، انگلیسی یا کاربرد..."
+        >
+
+        <button
+            id="clearSearch"
+            class="clear-search"
+            aria-label="پاک کردن جستجو"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+    </div>
+
+
+    <!-- Filters -->
+
+    <div class="filter-header">
+
+        <span class="filter-title">
+            دسته‌بندی
+        </span>
+
+        <span id="resultCount" class="result-count">
+            0 نتیجه
+        </span>
+
+    </div>
+
+
+    <div class="cat-scroll" id="catScroll">
+
+        <button class="cat-chip active" data-cat="all">
+            <span class="chip-dot all"></span>
+            همه
+        </button>
+
+        <button class="cat-chip" data-cat="sword">
+            <span class="chip-dot sword"></span>
+            شمشیر
+        </button>
+
+        <button class="cat-chip" data-cat="armor">
+            <span class="chip-dot armor"></span>
+            زره
+        </button>
+
+        <button class="cat-chip" data-cat="tool">
+            <span class="chip-dot tool"></span>
+            ابزار
+        </button>
+
+        <button class="cat-chip" data-cat="bow">
+            <span class="chip-dot bow"></span>
+            کمان
+        </button>
+
+        <button class="cat-chip" data-cat="trident">
+            <span class="chip-dot trident"></span>
+            سه‌شاخ
+        </button>
+
+        <button class="cat-chip" data-cat="special">
+            <span class="chip-dot special"></span>
+            خاص
+        </button>
+
+    </div>
+
+
+    <!-- Grid -->
+
+    <div class="ench-grid" id="enchGrid"></div>
+
+</main>
+
+
+<!-- Modal -->
+
+<div class="modal-overlay" id="modalOverlay">
+
+    <div class="modal" id="modalContent"></div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+const enchantments = [
+
+    /* SWORD */
+
+    {
+        id:'sharpness',
+        icon:'fa-solid fa-khanda',
+        nameFa:'تیزی',
+        nameEn:'Sharpness',
+        category:'sword',
+        max:5,
+        applies:['شمشیر','تبر'],
+        desc:'افزایش آسیب حمله. هر سطح ۱.۲۵ آسیب اضافه می‌کند.',
+        incompatible:[]
+    },
+
+    {
+        id:'smite',
+        icon:'fa-solid fa-skull',
+        nameFa:'ضربه مقدس',
+        nameEn:'Smite',
+        category:'sword',
+        max:5,
+        applies:['شمشیر','تبر'],
+        desc:'افزایش آسیب به موجودات undead مانند زامبی، اسکلت و ویزر. هر سطح ۲.۵ آسیب اضافه می‌کند.',
+        incompatible:['sharpness','bane_of_arthropods']
+    },
+
+    {
+        id:'bane_of_arthropods',
+        icon:'fa-solid fa-spider',
+        nameFa:'نابودی بندپایان',
+        nameEn:'Bane of Arthropods',
+        category:'sword',
+        max:5,
+        applies:['شمشیر','تبر'],
+        desc:'افزایش آسیب به عنکبوت، Cave Spider و Silverfish.',
+        incompatible:['sharpness','smite']
+    },
+
+    {
+        id:'knockback',
+        icon:'fa-solid fa-wind',
+        nameFa:'پرتاب',
+        nameEn:'Knockback',
+        category:'sword',
+        max:2,
+        applies:['شمشیر'],
+        desc:'دشمن را به عقب پرتاب می‌کند. هر سطح قدرت پرتاب را بیشتر می‌کند.',
+        incompatible:[]
+    },
+
+    {
+        id:'fire_aspect',
+        icon:'fa-solid fa-fire',
+        nameFa:'جنبه آتش',
+        nameEn:'Fire Aspect',
+        category:'sword',
+        max:2,
+        applies:['شمشیر'],
+        desc:'هدف را آتش می‌زند. سطح بالاتر مدت زمان سوختن را افزایش می‌دهد.',
+        incompatible:[]
+    },
+
+    {
+        id:'looting',
+        icon:'fa-solid fa-gem',
+        nameFa:'غارت',
+        nameEn:'Looting',
+        category:'sword',
+        max:3,
+        applies:['شمشیر'],
+        desc:'مقدار و شانس دریافت آیتم از موجودات را افزایش می‌دهد.',
+        incompatible:[]
+    },
+
+
+    /* ARMOR */
+
+    {
+        id:'protection',
+        icon:'fa-solid fa-shield-halved',
+        nameFa:'محافظت',
+        nameEn:'Protection',
+        category:'armor',
+        max:4,
+        applies:['کلاه','chestplate','شلوار','بوت'],
+        desc:'کاهش کلی آسیب‌های دریافتی.',
+        incompatible:['fire_protection','blast_protection','projectile_protection']
+    },
+
+    {
+        id:'fire_protection',
+        icon:'fa-solid fa-temperature-high',
+        nameFa:'محافظت آتش',
+        nameEn:'Fire Protection',
+        category:'armor',
+        max:4,
+        applies:['کلاه','chestplate','شلوار','بوت'],
+        desc:'کاهش آسیب ناشی از آتش و Lava.',
+        incompatible:['protection','blast_protection','projectile_protection']
+    },
+
+    {
+        id:'blast_protection',
+        icon:'fa-solid fa-burst',
+        nameFa:'محافظت انفجار',
+        nameEn:'Blast Protection',
+        category:'armor',
+        max:4,
+        applies:['کلاه','chestplate','شلوار','بوت'],
+        desc:'کاهش آسیب ناشی از انفجارهایی مانند Creeper و TNT.',
+        incompatible:['protection','fire_protection','projectile_protection']
+    },
+
+    {
+        id:'projectile_protection',
+        icon:'fa-solid fa-bullseye',
+        nameFa:'محافظت پرتابه',
+        nameEn:'Projectile Protection',
+        category:'armor',
+        max:4,
+        applies:['کلاه','chestplate','شلوار','بوت'],
+        desc:'کاهش آسیب ناشی از تیر، Fireball و سایر پرتابه‌ها.',
+        incompatible:['protection','fire_protection','blast_protection']
+    },
+
+    {
+        id:'thorns',
+        icon:'fa-solid fa-spikes',
+        nameFa:'خار',
+        nameEn:'Thorns',
+        category:'armor',
+        max:3,
+        applies:['کلاه','chestplate','شلوار','بوت'],
+        desc:'هنگام دریافت ضربه، شانس آسیب زدن به مهاجم را ایجاد می‌کند.',
+        incompatible:[]
+    },
+
+    {
+        id:'feather_falling',
+        icon:'fa-solid fa-feather',
+        nameFa:'سبکبالی',
+        nameEn:'Feather Falling',
+        category:'armor',
+        max:4,
+        applies:['بوت'],
+        desc:'آسیب ناشی از سقوط را کاهش می‌دهد.',
+        incompatible:[]
+    },
+
+    {
+        id:'depth_strider',
+        icon:'fa-solid fa-water',
+        nameFa:'راه‌روی عمیق',
+        nameEn:'Depth Strider',
+        category:'armor',
+        max:3,
+        applies:['بوت'],
+        desc:'سرعت حرکت در آب را افزایش می‌دهد.',
+        incompatible:['frost_walker']
+    },
+
+    {
+        id:'frost_walker',
+        icon:'fa-regular fa-snowflake',
+        nameFa:'یخ‌ساز',
+        nameEn:'Frost Walker',
+        category:'armor',
+        max:2,
+        applies:['بوت'],
+        desc:'آب زیر پای بازیکن را به یخ تبدیل می‌کند.',
+        incompatible:['depth_strider']
+    },
+
+    {
+        id:'respiration',
+        icon:'fa-solid fa-lungs',
+        nameFa:'تنفس',
+        nameEn:'Respiration',
+        category:'armor',
+        max:3,
+        applies:['کلاه'],
+        desc:'زمان ماندن زیر آب را افزایش می‌دهد.',
+        incompatible:[]
+    },
+
+    {
+        id:'aqua_affinity',
+        icon:'fa-solid fa-droplet',
+        nameFa:'وابستگی آبی',
+        nameEn:'Aqua Affinity',
+        category:'armor',
+        max:1,
+        applies:['کلاه'],
+        desc:'سرعت شکستن بلاک‌ها زیر آب را افزایش می‌دهد.',
+        incompatible:[]
+    },
+
+    {
+        id:'swift_sneak',
+        icon:'fa-solid fa-person-walking',
+        nameFa:'حرکت مخفیانه',
+        nameEn:'Swift Sneak',
+        category:'armor',
+        max:3,
+        applies:['شلوار'],
+        desc:'سرعت حرکت هنگام Sneaking را افزایش می‌دهد.',
+        incompatible:[]
+    },
+
+
+    /* TOOLS */
+
+    {
+        id:'efficiency',
+        icon:'fa-solid fa-hammer',
+        nameFa:'کارایی',
+        nameEn:'Efficiency',
+        category:'tool',
+        max:5,
+        applies:['کلنگ','تبر','بیل','Hoe','Shears'],
+        desc:'سرعت شکستن بلاک‌ها را افزایش می‌دهد.',
+        incompatible:[]
+    },
+
+    {
+        id:'fortune',
+        icon:'fa-solid fa-clover',
+        nameFa:'ثروت',
+        nameEn:'Fortune',
+        category:'tool',
+        max:3,
+        applies:['کلنگ','تبر','بیل','Hoe'],
+        desc:'مقدار Drop برخی بلاک‌ها مانند الماس، زغال و رداستون را افزایش می‌دهد.',
+        incompatible:['silk_touch']
+    },
+
+    {
+        id:'silk_touch',
+        icon:'fa-solid fa-hand-sparkles',
+        nameFa:'لمس ابریشمی',
+        nameEn:'Silk Touch',
+        category:'tool',
+        max:1,
+        applies:['کلنگ','تبر','بیل','Hoe'],
+        desc:'بلاک را به شکل اصلی خودش جمع می‌کند؛ برای مثال Stone به جای Cobblestone.',
+        incompatible:['fortune']
+    },
+
+
+    /* BOW */
+
+    {
+        id:'power',
+        icon:'fa-solid fa-bolt',
+        nameFa:'قدرت',
+        nameEn:'Power',
+        category:'bow',
+        max:5,
+        applies:['کمان'],
+        desc:'آسیب تیرهای کمان را افزایش می‌دهد.',
+        incompatible:[]
+    },
+
+    {
+        id:'punch',
+        icon:'fa-solid fa-hand-back-fist',
+        nameFa:'مشت',
+        nameEn:'Punch',
+        category:'bow',
+        max:2,
+        applies:['کمان'],
+        desc:'هدف را هنگام برخورد تیر به عقب پرتاب می‌کند.',
+        incompatible:[]
+    },
+
+    {
+        id:'flame',
+        icon:'fa-solid fa-fire-flame-curved',
+        nameFa:'شعله',
+        nameEn:'Flame',
+        category:'bow',
+        max:1,
+        applies:['کمان'],
+        desc:'تیرهای کمان را آتشین می‌کند و هدف را به آتش می‌کشد.',
+        incompatible:[]
+    },
+
+    {
+        id:'infinity',
+        icon:'fa-solid fa-infinity',
+        nameFa:'بی‌نهایت',
+        nameEn:'Infinity',
+        category:'bow',
+        max:1,
+        applies:['کمان'],
+        desc:'تا زمانی که حداقل یک تیر در Inventory داشته باشید، تیرهای معمولی مصرف نمی‌شوند.',
+        incompatible:['mending']
+    },
+
+
+    /* TRIDENT */
+
+    {
+        id:'loyalty',
+        icon:'fa-solid fa-rotate-left',
+        nameFa:'وفاداری',
+        nameEn:'Loyalty',
+        category:'trident',
+        max:3,
+        applies:['سه‌شاخ'],
+        desc:'سه‌شاخ پس از پرتاب دوباره به سمت بازیکن برمی‌گردد.',
+        incompatible:['riptide']
+    },
+
+    {
+        id:'impaling',
+        icon:'fa-solid fa-location-crosshairs',
+        nameFa:'فرورفتن',
+        nameEn:'Impaling',
+        category:'trident',
+        max:5,
+        applies:['سه‌شاخ'],
+        desc:'آسیب سه‌شاخ را علیه موجودات آبی افزایش می‌دهد.',
+        incompatible:[]
+    },
+
+    {
+        id:'riptide',
+        icon:'fa-solid fa-water',
+        nameFa:'جریان',
+        nameEn:'Riptide',
+        category:'trident',
+        max:3,
+        applies:['سه‌شاخ'],
+        desc:'در آب یا هنگام باران، پرتاب سه‌شاخ باعث حرکت سریع بازیکن می‌شود.',
+        incompatible:['loyalty','channeling']
+    },
+
+    {
+        id:'channeling',
+        icon:'fa-solid fa-cloud-bolt',
+        nameFa:'هدایت',
+        nameEn:'Channeling',
+        category:'trident',
+        max:1,
+        applies:['سه‌شاخ'],
+        desc:'هنگام طوفان می‌تواند صاعقه را به هدف برخورد دهد.',
+        incompatible:['riptide']
+    },
+
+
+    /* SPECIAL */
+
+    {
+        id:'unbreaking',
+        icon:'fa-solid fa-shield',
+        nameFa:'تخریب‌ناپذیری',
+        nameEn:'Unbreaking',
+        category:'special',
+        max:3,
+        applies:['همه آیتم‌ها'],
+        desc:'دوام آیتم را افزایش می‌دهد و احتمال مصرف شدن Durability را کاهش می‌دهد.',
+        incompatible:[]
+    },
+
+    {
+        id:'mending',
+        icon:'fa-solid fa-wand-magic-sparkles',
+        nameFa:'ترمیم',
+        nameEn:'Mending',
+        category:'special',
+        max:1,
+        applies:['همه آیتم‌ها'],
+        desc:'با استفاده از XP، دوام آیتم را بازیابی می‌کند.',
+        incompatible:['infinity']
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentCategory = 'all';
+let searchQuery = '';
+
+const grid = document.getElementById('enchGrid');
+const searchInput = document.getElementById('searchInput');
+const clearSearch = document.getElementById('clearSearch');
+const resultCount = document.getElementById('resultCount');
+const overlay = document.getElementById('modalOverlay');
+const modal = document.getElementById('modalContent');
+const toast = document.getElementById('toast');
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+const categoryNames = {
+    sword:'شمشیر',
+    armor:'زره',
+    tool:'ابزار',
+    bow:'کمان',
+    trident:'سه‌شاخ',
+    special:'خاص'
+};
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#039;');
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderEnchants(){
+
+    let filtered = [...enchantments];
+
+    if(currentCategory !== 'all'){
+
+        filtered = filtered.filter(item =>
+            item.category === currentCategory
+        );
+
+    }
+
+    const q = searchQuery.trim().toLowerCase();
+
+    if(q){
+
+        filtered = filtered.filter(item => {
+
+            const searchable = [
+
+                item.nameFa,
+                item.nameEn,
+                item.desc,
+                item.category,
+                categoryNames[item.category],
+                ...item.applies
+
+            ]
+            .join(' ')
+            .toLowerCase();
+
+            return searchable.includes(q);
+
+        });
+
+    }
+
+
+    resultCount.textContent =
+        `${filtered.length} نتیجه`;
+
+
+    if(!filtered.length){
+
+        grid.innerHTML = `
+
+            <div class="no-results">
+
+                <div class="no-results-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+
+                <p>
+                    انچنتی با این مشخصات پیدا نشد.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML = filtered.map((item,index) => {
+
+        const incompat =
+            item.incompatible.length > 0;
+
+        return `
+
+        <article
+            class="ench-card category-${item.category}"
+            style="animation-delay:${Math.min(index * 0.035,0.35)}s"
+            data-id="${item.id}"
+            tabindex="0"
+            role="button"
+            aria-label="${escapeHTML(item.nameFa)}"
+        >
+
+            <div class="card-top">
+
+                <div class="ench-icon">
+                    <i class="${item.icon}"></i>
+                </div>
+
+                <div class="ench-main">
+
+                    <div class="ench-name-fa">
+                        ${escapeHTML(item.nameFa)}
+                    </div>
+
+                    <div class="ench-name-en">
+                        ${escapeHTML(item.nameEn)}
+                    </div>
+
+                </div>
+
+                ${
+                    incompat
+                    ?
+                    `
+                    <span
+                        class="ench-incompat"
+                        title="ناسازگاری دارد"
+                    >
+                        <i class="fa-solid fa-ban"></i>
+                    </span>
+                    `
+                    :
+                    ''
+                }
+
+            </div>
+
+
+            <div class="ench-description">
+                ${escapeHTML(item.desc)}
+            </div>
+
+
+            <div class="card-footer">
+
+                <span class="applies">
+                    ${escapeHTML(item.applies.join('، '))}
+                </span>
+
+                <span class="ench-max">
+                    سطح ${item.max}
+                </span>
+
+            </div>
+
+        </article>
+
+        `;
+
+    }).join('');
+
+}
+
+
+/* =========================================================
+   CATEGORY EVENTS
+========================================================= */
+
+document.querySelectorAll('.cat-chip').forEach(button => {
+
+    button.addEventListener('click',()=>{
+
+        currentCategory =
+            button.dataset.cat;
+
+        document.querySelectorAll('.cat-chip')
+            .forEach(btn =>
+                btn.classList.remove('active')
+            );
+
+        button.classList.add('active');
+
+        button.scrollIntoView({
+            behavior:'smooth',
+            block:'nearest',
+            inline:'center'
+        });
+
+        renderEnchants();
+
+    });
+
+});
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener('input',()=>{
+
+    searchQuery =
+        searchInput.value;
+
+    clearSearch.classList.toggle(
+        'visible',
+        Boolean(searchQuery)
+    );
+
+    renderEnchants();
+
+});
+
+
+clearSearch.addEventListener('click',()=>{
+
+    searchInput.value = '';
+    searchQuery = '';
+
+    clearSearch.classList.remove('visible');
+
+    searchInput.focus();
+
+    renderEnchants();
+
+});
+
+
+/* =========================================================
+   OPEN MODAL
+========================================================= */
+
+function openEnchantModal(id){
+
+    const item =
+        enchantments.find(
+            enchantment => enchantment.id === id
+        );
+
+    if(!item) return;
+
+
+    const incompatibleHTML =
+        item.incompatible.length
+
+        ?
+
+        item.incompatible.map(id=>{
+
+            const target =
+                enchantments.find(
+                    e => e.id === id
+                );
+
+            if(!target) return '';
+
+            return `
+
+                <span class="modal-incompat-tag">
+
+                    <i class="fa-solid fa-ban"></i>
+
+                    ${escapeHTML(target.nameFa)}
+
+                </span>
+
+            `;
+
+        }).join('')
+
+        :
+
+        `<span class="modal-none">
+            موردی ندارد
+        </span>`;
+
+
+    const appliesHTML =
+        item.applies.map(value=>`
+
+            <span class="modal-applies-tag">
+                ${escapeHTML(value)}
+            </span>
+
+        `).join('');
+
+
+    const colorMap = {
+
+        sword:'#ff5964',
+        armor:'#5da9ff',
+        tool:'#e9bd54',
+        bow:'#ed9851',
+        trident:'#43d2e3',
+        special:'#a675ff'
+
+    };
+
+
+    const accent =
+        colorMap[item.category] || '#9b6cff';
+
+
+    modal.innerHTML = `
+
+        <div class="modal-handle"></div>
+
+
+        <button
+            class="modal-close"
+            id="modalClose"
+            aria-label="بستن"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+
+        <div class="modal-ench-header">
+
+            <div
+                class="modal-ench-icon"
+                style="
+                    color:${accent};
+                    box-shadow:
+                    0 10px 30px ${accent}18;
+                "
+            >
+
+                <i class="${item.icon}"></i>
+
+            </div>
+
+
+            <div class="modal-ench-name">
+                ${escapeHTML(item.nameFa)}
+            </div>
+
+
+            <div class="modal-ench-en">
+                ${escapeHTML(item.nameEn)}
+            </div>
+
+        </div>
+
+
+        <div class="modal-info-grid">
+
+            <div class="modal-info-item">
+
+                <i
+                    class="fa-solid fa-layer-group"
+                    style="color:${accent}"
+                ></i>
+
+                <div class="modal-info-label">
+                    حداکثر سطح
+                </div>
+
+                <div class="modal-info-value">
+                    ${item.max}
+                </div>
+
+            </div>
+
+
+            <div class="modal-info-item">
+
+                <i
+                    class="fa-solid fa-shapes"
+                    style="color:${accent}"
+                ></i>
+
+                <div class="modal-info-label">
+                    دسته‌بندی
+                </div>
+
+                <div class="modal-info-value">
+                    ${categoryNames[item.category]}
+                </div>
+
+            </div>
+
+
+            <div class="modal-info-item">
+
+                <i
+                    class="fa-solid fa-ban"
+                    style="
+                        color:
+                        ${item.incompatible.length
+                        ? '#ff5964'
+                        : '#38d996'}
+                    "
+                ></i>
+
+                <div class="modal-info-label">
+                    ناسازگاری
+                </div>
+
+                <div class="modal-info-value">
+                    ${item.incompatible.length
+                    ? item.incompatible.length + ' مورد'
+                    : 'ندارد'}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-desc-box">
+
+            <div class="modal-desc-title">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                توضیحات
+
+            </div>
+
+            <p class="modal-desc-text">
+                ${escapeHTML(item.desc)}
+            </p>
+
+        </div>
+
+
+        <div class="modal-desc-box">
+
+            <div class="modal-desc-title">
+
+                <i class="fa-solid fa-cube"></i>
+
+                قابل اعمال روی
+
+            </div>
+
+            <div class="modal-applies-to">
+                ${appliesHTML}
+            </div>
+
+        </div>
+
+
+        <div class="modal-desc-box">
+
+            <div class="modal-desc-title">
+
+                <i class="fa-solid fa-ban"></i>
+
+                ناسازگار با
+
+            </div>
+
+            <div class="modal-incompat-list">
+                ${incompatibleHTML}
+            </div>
+
+        </div>
+
+    `;
+
+
+    overlay.classList.add('active');
+
+    document.body.style.overflow = 'hidden';
+
+
+    document.getElementById('modalClose')
+        .addEventListener('click',closeModal);
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+function closeModal(){
+
+    overlay.classList.remove('active');
+
+    document.body.style.overflow = '';
+
+}
+
+
+overlay.addEventListener('click',event=>{
+
+    if(event.target === overlay){
+
+        closeModal();
+
+    }
+
+});
+
+
+document.addEventListener('keydown',event=>{
+
+    if(event.key === 'Escape'){
+
+        closeModal();
+
+    }
+
+});
+
+
+/* =========================================================
+   CARD CLICK / KEYBOARD
+========================================================= */
+
+grid.addEventListener('click',event=>{
+
+    const card =
+        event.target.closest('.ench-card');
+
+    if(!card) return;
+
+    openEnchantModal(card.dataset.id);
+
+});
+
+
+grid.addEventListener('keydown',event=>{
+
+    if(
+        event.key !== 'Enter' &&
+        event.key !== ' '
+    ) return;
+
+
+    const card =
+        event.target.closest('.ench-card');
+
+    if(!card) return;
+
+    event.preventDefault();
+
+    openEnchantModal(card.dataset.id);
+
+});
+
+
+/* =========================================================
+   TOUCH FEEDBACK
+========================================================= */
+
+grid.addEventListener(
+    'touchstart',
+    event=>{
+
+        const card =
+            event.target.closest('.ench-card');
+
+        if(!card) return;
+
+        card.style.transition =
+            'transform .08s ease';
+
+    },
+    {passive:true}
+);
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+renderEnchants();
+
+</script>
+
+</body>
+</html>

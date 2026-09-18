@@ -1,0 +1,3157 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+
+    <meta name="theme-color" content="#060606">
+    <meta name="description" content="مقایسه حرفه‌ای آیتم‌های BlockForge">
+
+    <title>مقایسه حرفه‌ای | BlockForge</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #050505;
+            --bg2: #0b0b0d;
+            --bg3: #111114;
+            --bg4: #17171a;
+
+            --gold: #d4a54a;
+            --gold2: #f0c46b;
+
+            --green: #2ecc71;
+            --red: #e74c3c;
+            --blue: #3498db;
+            --purple: #9b59b6;
+            --orange: #ff9800;
+
+            --text: #eeeeee;
+            --text2: #aaaaaa;
+            --text3: #666666;
+
+            --border: rgba(255,255,255,.07);
+            --border2: rgba(255,255,255,.12);
+
+            --radius: 16px;
+            --safe-bottom: env(safe-area-inset-bottom, 16px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 15px;
+        }
+
+        body {
+            font-family: "Vazirmatn", sans-serif;
+            background:
+                radial-gradient(
+                    circle at 20% 0%,
+                    rgba(212,165,74,.07),
+                    transparent 35%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: calc(85px + var(--safe-bottom));
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            -webkit-appearance: none;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 9px 15px;
+
+            background: rgba(5,5,5,.88);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e0b55b,
+                    #765624
+                );
+
+            box-shadow:
+                0 5px 20px rgba(212,165,74,.2);
+        }
+
+        .logo-text {
+            color: #fff;
+            font-weight: 900;
+            font-size: 1.05rem;
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        .back-btn {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            color: #aaa;
+            background: var(--bg3);
+
+            border: 1px solid var(--border);
+
+            text-decoration: none;
+
+            transition: .2s;
+        }
+
+        .back-btn:hover {
+            background: var(--gold);
+            color: #000;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+            padding: 16px;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            padding: 18px 5px 14px;
+        }
+
+        .hero h1 {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero h1 i {
+            color: var(--gold);
+        }
+
+        .hero p {
+            margin-top: 4px;
+            font-size: .65rem;
+            color: var(--text3);
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 7px;
+            margin-bottom: 12px;
+        }
+
+        .stat {
+            background: linear-gradient(
+                145deg,
+                rgba(255,255,255,.045),
+                rgba(255,255,255,.015)
+            );
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            padding: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: .85rem;
+            font-weight: 900;
+            color: var(--gold2);
+        }
+
+        .stat-label {
+            color: var(--text3);
+            font-size: .48rem;
+        }
+
+        /* ================= PANEL ================= */
+
+        .panel {
+            background: rgba(12,12,14,.8);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 13px;
+            margin-bottom: 12px;
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+
+            margin-bottom: 10px;
+
+            font-size: .76rem;
+            font-weight: 800;
+        }
+
+        .panel-title i {
+            color: var(--gold);
+        }
+
+        /* ================= BASKET ================= */
+
+        .basket-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .counter {
+            color: var(--gold);
+        }
+
+        .basket-items {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+
+            min-height: 42px;
+            margin-top: 8px;
+        }
+
+        .basket-empty {
+            width: 100%;
+            padding: 10px;
+
+            text-align: center;
+
+            color: var(--text3);
+            font-size: .62rem;
+
+            border: 1px dashed var(--border2);
+            border-radius: 10px;
+        }
+
+        .basket-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 5px 7px;
+
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 11px;
+
+            max-width: 100%;
+        }
+
+        .basket-item img {
+            width: 30px;
+            height: 30px;
+
+            object-fit: cover;
+            border-radius: 7px;
+
+            background: #000;
+        }
+
+        .basket-item-name {
+            max-width: 120px;
+
+            color: #ddd;
+            font-size: .58rem;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .basket-remove {
+            width: 20px;
+            height: 20px;
+
+            border: none;
+            border-radius: 50%;
+
+            color: #ff7777;
+            background: rgba(231,76,60,.12);
+
+            cursor: pointer;
+        }
+
+        .basket-actions {
+            display: flex;
+            gap: 7px;
+            margin-top: 9px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+
+            padding: 9px 13px;
+
+            cursor: pointer;
+
+            font-size: .62rem;
+            font-weight: 700;
+
+            transition: .2s;
+        }
+
+        .btn-primary {
+            flex: 1;
+
+            color: #000;
+
+            background: linear-gradient(
+                135deg,
+                var(--gold2),
+                var(--gold)
+            );
+
+            box-shadow:
+                0 5px 20px rgba(212,165,74,.12);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            color: #555;
+            background: #181818;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .btn-secondary {
+            color: #aaa;
+            background: transparent;
+            border: 1px solid var(--border2);
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-row {
+            display: grid;
+            grid-template-columns: 1fr 130px;
+            gap: 7px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            top: 50%;
+            right: 13px;
+            transform: translateY(-50%);
+
+            color: #555;
+            font-size: .7rem;
+        }
+
+        .search-input,
+        .select {
+            width: 100%;
+
+            background: var(--bg3);
+            color: #fff;
+
+            border: 1px solid var(--border);
+            border-radius: 11px;
+
+            padding: 10px 35px 10px 11px;
+
+            outline: none;
+
+            font-size: .65rem;
+        }
+
+        .select {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .search-input:focus,
+        .select:focus {
+            border-color: var(--gold);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+
+            margin-top: 8px;
+            padding-bottom: 2px;
+
+            scrollbar-width: none;
+        }
+
+        .filter-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter {
+            flex-shrink: 0;
+
+            border: 1px solid var(--border);
+            border-radius: 20px;
+
+            background: var(--bg3);
+            color: #777;
+
+            padding: 5px 10px;
+
+            font-size: .53rem;
+            cursor: pointer;
+        }
+
+        .filter.active {
+            color: #000;
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+
+        /* ================= ITEMS GRID ================= */
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fill,
+                minmax(185px,1fr)
+            );
+
+            gap: 8px;
+        }
+
+        .item-card {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 9px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.035),
+                    rgba(255,255,255,.01)
+                );
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            transition:
+                transform .18s,
+                border-color .18s,
+                background .18s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-1px);
+            border-color: rgba(212,165,74,.4);
+        }
+
+        .item-card.selected {
+            border-color: var(--green);
+            background: rgba(46,204,113,.05);
+        }
+
+        .item-img {
+            width: 48px;
+            height: 48px;
+
+            flex-shrink: 0;
+
+            border-radius: 9px;
+
+            object-fit: cover;
+
+            background: #050505;
+
+            border: 1px solid rgba(255,255,255,.05);
+        }
+
+        .item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-name {
+            font-size: .66rem;
+            font-weight: 800;
+
+            color: #fff;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+
+            margin-top: 3px;
+        }
+
+        .tag {
+            padding: 2px 5px;
+
+            border-radius: 4px;
+
+            color: #777;
+            background: rgba(255,255,255,.04);
+
+            font-size: .45rem;
+        }
+
+        .item-size {
+            margin-top: 3px;
+            color: var(--blue);
+            font-size: .5rem;
+        }
+
+        .check {
+            width: 22px;
+            height: 22px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            color: transparent;
+
+            border: 1px solid #333;
+
+            font-size: .5rem;
+        }
+
+        .selected .check {
+            color: #fff;
+            background: var(--green);
+            border-color: var(--green);
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            text-align: center;
+            padding: 35px 15px;
+
+            color: #555;
+        }
+
+        .empty i {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .empty div {
+            font-size: .65rem;
+        }
+
+        /* ================= COMPARISON ================= */
+
+        .comparison {
+            display: none;
+        }
+
+        .comparison.show {
+            display: block;
+            animation: fadeUp .3s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .comparison-summary {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(150px,1fr)
+            );
+
+            gap: 8px;
+
+            margin-bottom: 10px;
+        }
+
+        .summary-card {
+            padding: 11px;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.025);
+            border: 1px solid var(--border);
+        }
+
+        .summary-label {
+            color: #666;
+            font-size: .48rem;
+        }
+
+        .summary-value {
+            margin-top: 2px;
+
+            color: #fff;
+            font-size: .68rem;
+            font-weight: 800;
+        }
+
+        .summary-value.green {
+            color: var(--green);
+        }
+
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+
+            border-radius: 13px;
+
+            border: 1px solid var(--border);
+
+            scrollbar-width: thin;
+        }
+
+        .compare-table {
+            width: max-content;
+            min-width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        .compare-table th,
+        .compare-table td {
+            padding: 12px 10px;
+
+            min-width: 145px;
+
+            text-align: center;
+
+            font-size: .6rem;
+
+            border-bottom: 1px solid rgba(255,255,255,.045);
+            border-left: 1px solid rgba(255,255,255,.035);
+
+            vertical-align: middle;
+        }
+
+        .compare-table th:first-child,
+        .compare-table td:first-child {
+            min-width: 110px;
+
+            position: sticky;
+            right: 0;
+
+            z-index: 3;
+
+            text-align: right;
+
+            color: #777;
+
+            background: #0b0b0d;
+        }
+
+        .compare-table th {
+            color: #fff;
+            background: #101013;
+        }
+
+        .product-head img {
+            width: 65px;
+            height: 65px;
+
+            object-fit: cover;
+
+            border-radius: 10px;
+
+            border: 1px solid var(--border);
+
+            margin-bottom: 5px;
+        }
+
+        .product-name {
+            color: #fff;
+            font-weight: 800;
+            font-size: .62rem;
+
+            max-width: 125px;
+            margin: auto;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-cat {
+            margin-top: 2px;
+            color: #666;
+            font-size: .48rem;
+        }
+
+        .best {
+            color: var(--green) !important;
+            font-weight: 900 !important;
+        }
+
+        .best-badge {
+            display: inline-block;
+
+            margin-top: 3px;
+
+            padding: 2px 5px;
+
+            border-radius: 4px;
+
+            color: #fff;
+            background: rgba(46,204,113,.18);
+
+            font-size: .42rem;
+        }
+
+        .size-main {
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .size-sub {
+            color: #666;
+            font-size: .45rem;
+            margin-top: 2px;
+        }
+
+        .difference {
+            color: #777;
+            font-size: .44rem;
+            margin-top: 2px;
+        }
+
+        /* ================= RECOMMENDATION ================= */
+
+        .recommendation {
+            margin-top: 10px;
+
+            padding: 13px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(46,204,113,.08),
+                    rgba(212,165,74,.03)
+                );
+
+            border: 1px solid rgba(46,204,113,.15);
+        }
+
+        .recommendation-title {
+            color: var(--green);
+            font-size: .68rem;
+            font-weight: 900;
+        }
+
+        .recommendation-text {
+            color: #aaa;
+            font-size: .56rem;
+            margin-top: 3px;
+        }
+
+        /* ================= TOAST ================= */
+
+        .toast {
+            position: fixed;
+
+            left: 50%;
+            bottom: calc(75px + var(--safe-bottom));
+
+            transform: translateX(-50%) translateY(20px);
+
+            z-index: 5000;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            padding: 9px 15px;
+
+            border-radius: 12px;
+
+            color: #fff;
+            background: rgba(22,22,26,.95);
+
+            border: 1px solid var(--border2);
+
+            backdrop-filter: blur(20px);
+
+            font-size: .6rem;
+            font-weight: 700;
+
+            transition: .25s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ================= BOTTOM NAV ================= */
+
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            z-index: 1000;
+
+            display: flex;
+            justify-content: space-around;
+
+            padding:
+                7px
+                5px
+                calc(7px + var(--safe-bottom));
+
+            background: rgba(5,5,5,.95);
+
+            backdrop-filter: blur(22px);
+
+            border-top: 1px solid var(--border);
+        }
+
+        .bottom-nav a {
+            min-width: 65px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            gap: 2px;
+
+            color: #555;
+
+            text-decoration: none;
+
+            font-size: .48rem;
+        }
+
+        .bottom-nav a i {
+            font-size: 1rem;
+        }
+
+        .bottom-nav a.active {
+            color: var(--gold);
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 12px;
+            }
+
+            .search-row {
+                grid-template-columns: 1fr;
+            }
+
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(3,1fr);
+            }
+
+            .stat {
+                padding: 8px 4px;
+            }
+
+            .comparison-summary {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 360px) {
+
+            .stats {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .basket-item-name {
+                max-width: 80px;
+            }
+
+            .bottom-nav a {
+                min-width: 55px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
+
+    <a href="index.html" class="logo">
+        <div class="logo-icon">
+            <i class="fa-solid fa-cubes"></i>
+        </div>
+
+        <div class="logo-text">
+            Block<span>Forge</span>
+        </div>
+    </a>
+
+    <div style="width:36px;"></div>
+
+</header>
+
+
+<main class="container">
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <h1>
+            <i class="fa-solid fa-scale-balanced"></i>
+            مقایسه حرفه‌ای آیتم‌ها
+        </h1>
+
+        <p>
+            آیتم‌ها را کنار هم قرار بده و قیمت، امتیاز، نسخه و حجم را مقایسه کن.
+        </p>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="stat">
+            <div class="stat-value" id="totalItems">0</div>
+            <div class="stat-label">آیتم موجود</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-value" id="selectedCount">0/4</div>
+            <div class="stat-label">انتخاب شده</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-value" id="categoryCount">0</div>
+            <div class="stat-label">دسته‌بندی</div>
+        </div>
+
+    </section>
+
+
+    <!-- BASKET -->
+
+    <section class="panel" id="basketPanel">
+
+        <div class="basket-top">
+
+            <div class="panel-title" style="margin:0;">
+                <span>
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    سبد مقایسه
+                </span>
+
+                <span class="counter">
+                    <span id="basketCount">0</span>/4
+                </span>
+            </div>
+
+            <span style="font-size:.5rem;color:#555;">
+                حداکثر ۴ آیتم
+            </span>
+
+        </div>
+
+
+        <div class="basket-items" id="basketItems">
+
+            <div class="basket-empty">
+                هنوز آیتمی انتخاب نشده
+            </div>
+
+        </div>
+
+
+        <div class="basket-actions">
+
+            <button
+                class="btn btn-primary"
+                id="compareBtn"
+                disabled
+                onclick="showComparison()">
+
+                <i class="fa-solid fa-scale-balanced"></i>
+                مقایسه آیتم‌ها
+
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="clearBasket()">
+
+                <i class="fa-solid fa-trash"></i>
+                پاک کردن
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- SELECT SECTION -->
+
+    <section id="selectSection">
+
+        <div class="panel">
+
+            <div class="panel-title">
+
+                <span>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    انتخاب آیتم
+                </span>
+
+                <span
+                    id="resultCount"
+                    style="font-size:.5rem;color:#555;">
+                    0 نتیجه
+                </span>
+
+            </div>
+
+
+            <div class="search-row">
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        id="searchInput"
+                        class="search-input"
+                        type="search"
+                        placeholder="نام، دسته‌بندی یا سازنده..."
+                        autocomplete="off">
+
+                </div>
+
+
+                <select
+                    id="sortSelect"
+                    class="select">
+
+                    <option value="default">
+                        مرتب‌سازی پیش‌فرض
+                    </option>
+
+                    <option value="priceLow">
+                        ارزان‌ترین
+                    </option>
+
+                    <option value="priceHigh">
+                        گران‌ترین
+                    </option>
+
+                    <option value="rating">
+                        بالاترین امتیاز
+                    </option>
+
+                    <option value="sizeLow">
+                        کمترین حجم
+                    </option>
+
+                    <option value="sizeHigh">
+                        بیشترین حجم
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                class="filter-row"
+                id="categoryFilters">
+            </div>
+
+        </div>
+
+
+        <div
+            class="items-grid"
+            id="itemsGrid">
+        </div>
+
+    </section>
+
+
+    <!-- COMPARISON -->
+
+    <section
+        class="comparison"
+        id="comparisonSection">
+
+        <div class="panel">
+
+            <div class="panel-title">
+
+                <span>
+                    <i class="fa-solid fa-chart-column"></i>
+                    نتیجه مقایسه
+                </span>
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="hideComparison()"
+                    style="padding:6px 10px;">
+
+                    <i class="fa-solid fa-arrow-right"></i>
+                    بازگشت
+
+                </button>
+
+            </div>
+
+
+            <div
+                class="comparison-summary"
+                id="comparisonSummary">
+            </div>
+
+
+            <div class="table-scroll">
+
+                <table
+                    class="compare-table"
+                    id="compareTable">
+                </table>
+
+            </div>
+
+
+            <div
+                class="recommendation"
+                id="recommendation">
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+    <a href="index.html">
+
+        <i class="fa-solid fa-house"></i>
+
+        خانه
+
+    </a>
+
+
+    <a href="premium.html">
+
+        <i
+            class="fa-solid fa-crown"
+            style="color:var(--gold2);">
+        </i>
+
+        پرمیوم
+
+    </a>
+
+
+    <a
+        href="#"
+        onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"
+        class="active">
+
+        <i class="fa-solid fa-scale-balanced"></i>
+
+        مقایسه
+
+    </a>
+
+</nav>
+
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<!-- دیتای اصلی سایت -->
+<script src="mods.js"></script>
+
+
+<script>
+
+"use strict";
+
+
+/* =========================================================
+   تنظیمات
+========================================================= */
+
+const MAX_COMPARE = 4;
+
+const STORAGE_KEY = "blockforge_compare_v3";
+
+let items = [];
+
+let compareBasket = [];
+
+let currentCategory = "all";
+
+
+/* =========================================================
+   ابزارهای عمومی
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function toast(message) {
+
+    const el = document.getElementById("toast");
+
+    el.textContent = message;
+
+    el.classList.add("show");
+
+    clearTimeout(el._timer);
+
+    el._timer = setTimeout(() => {
+
+        el.classList.remove("show");
+
+    }, 2400);
+
+}
+
+
+/* =========================================================
+   تبدیل حجم
+========================================================= */
+
+function getSizeBytes(item) {
+
+    if (!item) return 0;
+
+    /*
+        پشتیبانی از:
+
+        size: 25
+        size: "25 MB"
+        size: "512 KB"
+        sizeKB: 512
+        sizeMB: 25
+        bytes: 123456
+    */
+
+    if (typeof item.bytes === "number") {
+
+        return Math.max(0, item.bytes);
+
+    }
+
+
+    if (typeof item.sizeKB === "number") {
+
+        return Math.max(0, item.sizeKB * 1024);
+
+    }
+
+
+    if (typeof item.sizeMB === "number") {
+
+        return Math.max(0, item.sizeMB * 1024 * 1024);
+
+    }
+
+
+    if (typeof item.size === "number") {
+
+        /*
+            اگر عدد خالی باشد، آن را MB در نظر می‌گیریم.
+        */
+
+        return Math.max(
+            0,
+            item.size * 1024 * 1024
+        );
+
+    }
+
+
+    if (typeof item.size === "string") {
+
+        const text = item.size
+            .trim()
+            .replace(",", ".")
+            .toLowerCase();
+
+        const value = parseFloat(text);
+
+        if (!Number.isFinite(value)) {
+            return 0;
+        }
+
+        if (text.includes("gb")) {
+            return value * 1024 * 1024 * 1024;
+        }
+
+        if (text.includes("mb")) {
+            return value * 1024 * 1024;
+        }
+
+        if (text.includes("kb")) {
+            return value * 1024;
+        }
+
+        if (text.includes("b")) {
+            return value;
+        }
+
+        return value * 1024 * 1024;
+
+    }
+
+
+    return 0;
+
+}
+
+
+function formatBytes(bytes) {
+
+    bytes = Math.max(
+        0,
+        Number(bytes) || 0
+    );
+
+
+    if (bytes < 1024) {
+
+        return bytes.toFixed(0) + " B";
+
+    }
+
+
+    if (bytes < 1024 * 1024) {
+
+        return (
+            bytes / 1024
+        ).toFixed(
+            bytes < 10 * 1024 ? 2 : 1
+        ) + " KB";
+
+    }
+
+
+    if (bytes < 1024 * 1024 * 1024) {
+
+        return (
+            bytes / (1024 * 1024)
+        ).toFixed(
+            bytes < 10 * 1024 * 1024 ? 2 : 1
+        ) + " MB";
+
+    }
+
+
+    return (
+        bytes / (1024 * 1024 * 1024)
+    ).toFixed(2) + " GB";
+
+}
+
+
+function formatKB(bytes) {
+
+    return (
+        Math.max(0, bytes) / 1024
+    ).toFixed(1) + " KB";
+
+}
+
+
+/* =========================================================
+   قیمت
+========================================================= */
+
+function getPrice(item) {
+
+    const original =
+        Number(item?.price) || 0;
+
+    const discount =
+        Math.max(
+            0,
+            Number(item?.discount) || 0
+        );
+
+    const finalPrice =
+        Math.max(
+            0,
+            Math.round(
+                original -
+                (original * discount / 100)
+            )
+        );
+
+    return {
+
+        original,
+
+        discount,
+
+        final: finalPrice,
+
+        free: finalPrice === 0
+
+    };
+
+}
+
+
+/* =========================================================
+   ساخت دیتای آیتم
+========================================================= */
+
+function buildItems() {
+
+    if (
+        typeof MY_CONTENT === "undefined" ||
+        !Array.isArray(MY_CONTENT)
+    ) {
+
+        return [];
+
+    }
+
+
+    return MY_CONTENT.map(
+        (item, index) => {
+
+            const safe = item || {};
+
+            return {
+
+                ...safe,
+
+                id:
+                    safe.id ??
+                    index + 1,
+
+                title:
+                    safe.title ||
+                    "آیتم بدون نام",
+
+                cat:
+                    safe.cat ||
+                    "نامشخص",
+
+                author:
+                    safe.author ||
+                    "نامشخص",
+
+                version:
+                    safe.version ||
+                    "-",
+
+                rating:
+                    Number(safe.rating) || 0,
+
+                img:
+                    safe.img ||
+                    "https://picsum.photos/seed/blockforge-" +
+                    (index + 1) +
+                    "/300/300"
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ذخیره سبد
+========================================================= */
+
+function saveBasket() {
+
+    try {
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(compareBasket)
+        );
+
+    } catch (e) {
+
+        console.warn(
+            "Cannot save compare basket",
+            e
+        );
+
+    }
+
+}
+
+
+function loadBasket() {
+
+    try {
+
+        const saved =
+            JSON.parse(
+                localStorage.getItem(STORAGE_KEY) ||
+                "[]"
+            );
+
+        if (!Array.isArray(saved)) {
+
+            compareBasket = [];
+
+            return;
+
+        }
+
+        compareBasket =
+            saved
+                .filter(id =>
+                    items.some(
+                        item =>
+                            String(item.id) === String(id)
+                    )
+                )
+                .slice(0, MAX_COMPARE);
+
+    } catch (e) {
+
+        compareBasket = [];
+
+    }
+
+}
+
+
+/* =========================================================
+   دسته‌بندی
+========================================================= */
+
+function buildCategoryFilters() {
+
+    const container =
+        document.getElementById(
+            "categoryFilters"
+        );
+
+    const categories = [
+        "all",
+        ...new Set(
+            items
+                .map(item => item.cat)
+                .filter(Boolean)
+        )
+    ];
+
+
+    container.innerHTML =
+        categories.map(cat => {
+
+            const active =
+                cat === currentCategory;
+
+            return `
+
+                <button
+                    class="filter ${active ? "active" : ""}"
+                    onclick="selectCategory(${JSON.stringify(cat)})">
+
+                    ${
+                        cat === "all"
+                        ? "همه"
+                        : escapeHTML(cat)
+                    }
+
+                </button>
+
+            `;
+
+        }).join("");
+
+}
+
+
+function selectCategory(category) {
+
+    currentCategory = category;
+
+    buildCategoryFilters();
+
+    renderItems();
+
+}
+
+
+/* =========================================================
+   سبد
+========================================================= */
+
+function toggleItem(id) {
+
+    const index =
+        compareBasket.findIndex(
+            x => String(x) === String(id)
+        );
+
+
+    if (index !== -1) {
+
+        compareBasket.splice(index, 1);
+
+        saveBasket();
+
+        updateBasketUI();
+
+        renderItems();
+
+        return;
+
+    }
+
+
+    if (compareBasket.length >= MAX_COMPARE) {
+
+        toast(
+            "⚠️ حداکثر ۴ آیتم قابل مقایسه است"
+        );
+
+        return;
+
+    }
+
+
+    compareBasket.push(id);
+
+    saveBasket();
+
+    updateBasketUI();
+
+    renderItems();
+
+    toast("✓ آیتم به سبد مقایسه اضافه شد");
+
+}
+
+
+function removeItem(id) {
+
+    compareBasket =
+        compareBasket.filter(
+            x => String(x) !== String(id)
+        );
+
+    saveBasket();
+
+    updateBasketUI();
+
+    renderItems();
+
+}
+
+
+function clearBasket() {
+
+    compareBasket = [];
+
+    saveBasket();
+
+    updateBasketUI();
+
+    renderItems();
+
+    hideComparison();
+
+    toast("سبد مقایسه پاک شد");
+
+}
+
+
+/* =========================================================
+   UI سبد
+========================================================= */
+
+function updateBasketUI() {
+
+    const count =
+        document.getElementById(
+            "basketCount"
+        );
+
+    const selectedCount =
+        document.getElementById(
+            "selectedCount"
+        );
+
+    const basket =
+        document.getElementById(
+            "basketItems"
+        );
+
+    const compareBtn =
+        document.getElementById(
+            "compareBtn"
+        );
+
+
+    count.textContent =
+        compareBasket.length;
+
+
+    selectedCount.textContent =
+        compareBasket.length +
+        "/" +
+        MAX_COMPARE;
+
+
+    compareBtn.disabled =
+        compareBasket.length < 2;
+
+
+    if (!compareBasket.length) {
+
+        basket.innerHTML = `
+
+            <div class="basket-empty">
+
+                <i class="fa-solid fa-scale-balanced"></i>
+                هنوز آیتمی انتخاب نشده
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    basket.innerHTML =
+        compareBasket.map(id => {
+
+            const item =
+                items.find(
+                    x =>
+                        String(x.id) === String(id)
+                );
+
+            if (!item) return "";
+
+
+            return `
+
+                <div class="basket-item">
+
+                    <img
+                        src="${escapeHTML(item.img)}"
+                        alt="">
+
+                    <span class="basket-item-name">
+                        ${escapeHTML(item.title)}
+                    </span>
+
+                    <button
+                        class="basket-remove"
+                        onclick="removeItem(${JSON.stringify(item.id)})">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   مرتب‌سازی
+========================================================= */
+
+function sortItems(list) {
+
+    const type =
+        document.getElementById(
+            "sortSelect"
+        ).value;
+
+
+    const arr = [...list];
+
+
+    if (type === "priceLow") {
+
+        return arr.sort(
+            (a,b) =>
+                getPrice(a).final -
+                getPrice(b).final
+        );
+
+    }
+
+
+    if (type === "priceHigh") {
+
+        return arr.sort(
+            (a,b) =>
+                getPrice(b).final -
+                getPrice(a).final
+        );
+
+    }
+
+
+    if (type === "rating") {
+
+        return arr.sort(
+            (a,b) =>
+                b.rating - a.rating
+        );
+
+    }
+
+
+    if (type === "sizeLow") {
+
+        return arr.sort(
+            (a,b) =>
+                getSizeBytes(a) -
+                getSizeBytes(b)
+        );
+
+    }
+
+
+    if (type === "sizeHigh") {
+
+        return arr.sort(
+            (a,b) =>
+                getSizeBytes(b) -
+                getSizeBytes(a)
+        );
+
+    }
+
+
+    return arr;
+
+}
+
+
+/* =========================================================
+   نمایش آیتم‌ها
+========================================================= */
+
+function renderItems() {
+
+    const grid =
+        document.getElementById(
+            "itemsGrid"
+        );
+
+    const query =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    let filtered =
+        items.filter(item => {
+
+            const matchesSearch =
+                !query ||
+                String(item.title)
+                    .toLowerCase()
+                    .includes(query) ||
+
+                String(item.cat)
+                    .toLowerCase()
+                    .includes(query) ||
+
+                String(item.author)
+                    .toLowerCase()
+                    .includes(query);
+
+
+            const matchesCategory =
+                currentCategory === "all" ||
+                item.cat === currentCategory;
+
+
+            return (
+                matchesSearch &&
+                matchesCategory
+            );
+
+        });
+
+
+    filtered =
+        sortItems(filtered);
+
+
+    document.getElementById(
+        "resultCount"
+    ).textContent =
+        filtered.length +
+        " نتیجه";
+
+
+    if (!filtered.length) {
+
+        grid.innerHTML = `
+
+            <div class="panel empty"
+                 style="grid-column:1/-1;">
+
+                <i class="fa-solid fa-box-open"></i>
+
+                <div>
+                    آیتمی پیدا نشد
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML =
+        filtered.map(item => {
+
+            const selected =
+                compareBasket.some(
+                    id =>
+                        String(id) ===
+                        String(item.id)
+                );
+
+
+            const price =
+                getPrice(item);
+
+
+            const size =
+                getSizeBytes(item);
+
+
+            return `
+
+                <div
+                    class="item-card ${selected ? "selected" : ""}"
+                    onclick="toggleItem(${JSON.stringify(item.id)})">
+
+                    <img
+                        class="item-img"
+                        src="${escapeHTML(item.img)}"
+                        alt="${escapeHTML(item.title)}"
+                        loading="lazy">
+
+                    <div class="item-info">
+
+                        <div class="item-name">
+                            ${escapeHTML(item.title)}
+                        </div>
+
+                        <div class="item-meta">
+
+                            <span class="tag">
+                                ${escapeHTML(item.cat)}
+                            </span>
+
+                            <span class="tag">
+                                ⭐ ${item.rating || "-"}
+                            </span>
+
+                        </div>
+
+                        <div class="item-size">
+
+                            <i class="fa-solid fa-hard-drive"></i>
+
+                            ${
+                                size
+                                ? formatBytes(size)
+                                : "حجم نامشخص"
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <div class="check">
+
+                        <i class="fa-solid fa-check"></i>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   بهترین مقدار
+========================================================= */
+
+function getBestIndex(values, mode = "min") {
+
+    if (!values.length) return -1;
+
+
+    let best = 0;
+
+
+    for (
+        let i = 1;
+        i < values.length;
+        i++
+    ) {
+
+        if (
+            mode === "max"
+            ? values[i] > values[best]
+            : values[i] < values[best]
+        ) {
+
+            best = i;
+
+        }
+
+    }
+
+
+    return best;
+
+}
+
+
+/* =========================================================
+   جدول مقایسه
+========================================================= */
+
+function showComparison() {
+
+    if (compareBasket.length < 2) {
+
+        toast("حداقل ۲ آیتم انتخاب کن");
+
+        return;
+
+    }
+
+
+    const selected =
+        compareBasket
+            .map(id =>
+                items.find(
+                    x =>
+                        String(x.id) ===
+                        String(id)
+                )
+            )
+            .filter(Boolean);
+
+
+    if (selected.length < 2) return;
+
+
+    document.getElementById(
+        "selectSection"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "basketPanel"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "comparisonSection"
+    ).classList.add("show");
+
+
+    buildComparison(selected);
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================================================
+   ساخت مقایسه
+========================================================= */
+
+function buildComparison(selected) {
+
+    const prices =
+        selected.map(
+            item =>
+                getPrice(item).final
+        );
+
+
+    const ratings =
+        selected.map(
+            item =>
+                Number(item.rating) || 0
+        );
+
+
+    const sizes =
+        selected.map(
+            item =>
+                getSizeBytes(item)
+        );
+
+
+    const bestPrice =
+        getBestIndex(
+            prices,
+            "min"
+        );
+
+
+    const bestRating =
+        getBestIndex(
+            ratings,
+            "max"
+        );
+
+
+    const bestSize =
+        getBestIndex(
+            sizes,
+            "min"
+        );
+
+
+    /* ================= SUMMARY ================= */
+
+    const summary =
+        document.getElementById(
+            "comparisonSummary"
+        );
+
+
+    const recommendedIndex =
+        calculateRecommended(
+            selected,
+            prices,
+            ratings,
+            sizes
+        );
+
+
+    summary.innerHTML = `
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                بهترین قیمت
+            </div>
+
+            <div class="summary-value green">
+
+                ${
+                    bestPrice >= 0
+                    ? escapeHTML(
+                        selected[bestPrice].title
+                    )
+                    : "-"
+                }
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                بهترین امتیاز
+            </div>
+
+            <div class="summary-value green">
+
+                ${
+                    bestRating >= 0
+                    ? escapeHTML(
+                        selected[bestRating].title
+                    )
+                    : "-"
+                }
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                کمترین حجم
+            </div>
+
+            <div class="summary-value">
+
+                ${
+                    bestSize >= 0
+                    ? formatBytes(
+                        sizes[bestSize]
+                    )
+                    : "-"
+                }
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                پیشنهاد سیستم
+            </div>
+
+            <div class="summary-value green">
+
+                ${
+                    recommendedIndex >= 0
+                    ? escapeHTML(
+                        selected[
+                            recommendedIndex
+                        ].title
+                    )
+                    : "-"
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /* ================= TABLE ================= */
+
+    const table =
+        document.getElementById(
+            "compareTable"
+        );
+
+
+    table.innerHTML = `
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    ویژگی
+                </th>
+
+                ${selected.map(
+                    (item,index) => `
+
+                    <th>
+
+                        <div class="product-head">
+
+                            <img
+                                src="${escapeHTML(item.img)}"
+                                alt=""
+                                loading="lazy">
+
+                            <div class="product-name">
+
+                                ${escapeHTML(item.title)}
+
+                            </div>
+
+                            <div class="product-cat">
+
+                                ${escapeHTML(item.cat)}
+
+                            </div>
+
+                            <button
+                                class="btn btn-secondary"
+                                style="margin-top:6px;padding:4px 7px;font-size:.45rem;"
+                                onclick="removeItem(${JSON.stringify(item.id)});showComparison();">
+
+                                حذف
+
+                            </button>
+
+                        </div>
+
+                    </th>
+
+                `).join("")}
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            ${buildPriceRow(
+                selected,
+                prices,
+                bestPrice
+            )}
+
+            ${buildDiscountRow(
+                selected
+            )}
+
+            ${buildRatingRow(
+                selected,
+                ratings,
+                bestRating
+            )}
+
+            ${buildSizeRow(
+                selected,
+                sizes,
+                bestSize
+            )}
+
+            ${buildVersionRow(
+                selected
+            )}
+
+            ${buildAuthorRow(
+                selected
+            )}
+
+            ${buildCategoryRow(
+                selected
+            )}
+
+        </tbody>
+
+    `;
+
+
+    /* ================= RECOMMENDATION ================= */
+
+    const rec =
+        document.getElementById(
+            "recommendation"
+        );
+
+
+    if (recommendedIndex >= 0) {
+
+        const item =
+            selected[recommendedIndex];
+
+
+        rec.innerHTML = `
+
+            <div class="recommendation-title">
+
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                پیشنهاد BlockForge
+
+            </div>
+
+            <div class="recommendation-text">
+
+                بر اساس ترکیب قیمت، امتیاز و حجم،
+                <strong style="color:#fff;">
+                    ${escapeHTML(item.title)}
+                </strong>
+                بهترین تعادل را بین گزینه‌های انتخاب‌شده دارد.
+
+            </div>
+
+        `;
+
+    } else {
+
+        rec.innerHTML = "";
+
+    }
+
+}
+
+
+/* =========================================================
+   ردیف قیمت
+========================================================= */
+
+function buildPriceRow(
+    selected,
+    prices,
+    bestIndex
+) {
+
+    const min =
+        Math.min(...prices.filter(x => x > 0));
+
+
+    return `
+
+        <tr>
+
+            <td>
+                💰 قیمت
+            </td>
+
+            ${selected.map(
+                (item,index) => {
+
+                    const price =
+                        getPrice(item);
+
+                    const isBest =
+                        index === bestIndex &&
+                        price.final > 0;
+
+
+                    return `
+
+                        <td class="${
+                            isBest
+                            ? "best"
+                            : ""
+                        }">
+
+                            ${
+                                price.free
+                                ? "رایگان"
+                                : price.final.toLocaleString("fa") +
+                                  " توکن"
+                            }
+
+                            ${
+                                price.discount
+                                ? `
+                                    <div
+                                        style="color:#e74c3c;font-size:.45rem;">
+                                        ${price.discount}% تخفیف
+                                    </div>
+                                  `
+                                : ""
+                            }
+
+                            ${
+                                isBest
+                                ? `<div class="best-badge">
+                                    بهترین قیمت
+                                   </div>`
+                                : ""
+                            }
+
+                        </td>
+
+                    `;
+
+                }
+            ).join("")}
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =========================================================
+   ردیف تخفیف
+========================================================= */
+
+function buildDiscountRow(selected) {
+
+    return `
+
+        <tr>
+
+            <td>
+                🏷️ تخفیف
+            </td>
+
+            ${selected.map(item => {
+
+                const discount =
+                    getPrice(item).discount;
+
+
+                return `
+
+                    <td>
+
+                        ${
+                            discount
+                            ? `<span style="color:#e74c3c;">
+                                ${discount}%
+                               </span>`
+                            : `<span style="color:#555;">
+                                بدون تخفیف
+                               </span>`
+                        }
+
+                    </td>
+
+                `;
+
+            }).join("")}
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =========================================================
+   ردیف امتیاز
+========================================================= */
+
+function buildRatingRow(
+    selected,
+    ratings,
+    bestIndex
+) {
+
+    return `
+
+        <tr>
+
+            <td>
+                ⭐ امتیاز
+            </td>
+
+            ${selected.map(
+                (item,index) => {
+
+                    const rating =
+                        ratings[index];
+
+                    const best =
+                        index === bestIndex &&
+                        rating > 0;
+
+
+                    return `
+
+                        <td
+                            class="${
+                                best
+                                ? "best"
+                                : ""
+                            }">
+
+                            ${
+                                rating
+                                ? "⭐ " + rating
+                                : "-"
+                            }
+
+                            ${
+                                best
+                                ? `<div class="best-badge">
+                                    بالاترین
+                                   </div>`
+                                : ""
+                            }
+
+                        </td>
+
+                    `;
+
+                }
+            ).join("")}
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =========================================================
+   ردیف حجم
+========================================================= */
+
+function buildSizeRow(
+    selected,
+    sizes,
+    bestIndex
+) {
+
+    const maxSize =
+        Math.max(
+            ...sizes.filter(x => x > 0)
+        );
+
+
+    return `
+
+        <tr>
+
+            <td>
+                📦 حجم
+            </td>
+
+            ${selected.map(
+                (item,index) => {
+
+                    const bytes =
+                        sizes[index];
+
+                    const best =
+                        index === bestIndex &&
+                        bytes > 0;
+
+
+                    let difference = "";
+
+                    if (
+                        bytes > 0 &&
+                        maxSize > 0 &&
+                        bytes !== maxSize
+                    ) {
+
+                        const percent =
+                            (
+                                (1 - bytes / maxSize) *
+                                100
+                            ).toFixed(0);
+
+
+                        difference =
+                            percent > 0
+                            ? `▼ ${percent}% کوچک‌تر`
+                            : "";
+
+                    }
+
+
+                    return `
+
+                        <td
+                            class="${
+                                best
+                                ? "best"
+                                : ""
+                            }">
+
+                            <div class="size-main">
+
+                                ${
+                                    bytes
+                                    ? formatBytes(bytes)
+                                    : "نامشخص"
+                                }
+
+                            </div>
+
+                            ${
+                                bytes
+                                ? `
+                                    <div class="size-sub">
+                                        ${formatKB(bytes)}
+                                    </div>
+                                  `
+                                : ""
+                            }
+
+                            ${
+                                difference
+                                ? `
+                                    <div class="difference">
+                                        ${difference}
+                                    </div>
+                                  `
+                                : ""
+                            }
+
+                            ${
+                                best
+                                ? `<div class="best-badge">
+                                    کمترین حجم
+                                   </div>`
+                                : ""
+                            }
+
+                        </td>
+
+                    `;
+
+                }
+            ).join("")}
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =========================================================
+   نسخه
+========================================================= */
+
+function buildVersionRow(selected) {
+
+    return `
+
+        <tr>
+
+            <td>
+                🔧 نسخه
+            </td>
+
+            ${selected.map(item => `
+
+                <td>
+                    ${escapeHTML(
+                        item.version || "-"
+                    )}
+                </td>
+
+            `).join("")}
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =========================================================
+   سازنده
+========================================================= */
+
+function buildAuthorRow(selected) {
+
+    return `
+
+        <tr>
+
+            <td>
+                👤 سازنده
+            </td>
+
+            ${selected.map(item => `
+
+                <td>
+                    ${escapeHTML(
+                        item.author || "-"
+                    )}
+                </td>
+
+            `).join("")}
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =========================================================
+   دسته‌بندی
+========================================================= */
+
+function buildCategoryRow(selected) {
+
+    return `
+
+        <tr>
+
+            <td>
+                📂 دسته‌بندی
+            </td>
+
+            ${selected.map(item => `
+
+                <td>
+                    ${escapeHTML(
+                        item.cat || "-"
+                    )}
+                </td>
+
+            `).join("")}
+
+        </tr>
+
+    `;
+
+}
+
+
+/* =========================================================
+   سیستم امتیازدهی
+========================================================= */
+
+function calculateRecommended(
+    selected,
+    prices,
+    ratings,
+    sizes
+) {
+
+    if (!selected.length) {
+        return -1;
+    }
+
+
+    const maxPrice =
+        Math.max(
+            1,
+            ...prices
+        );
+
+
+    const maxRating =
+        Math.max(
+            1,
+            ...ratings
+        );
+
+
+    const validSizes =
+        sizes.filter(
+            x => x > 0
+        );
+
+
+    const maxSize =
+        Math.max(
+            1,
+            ...validSizes
+        );
+
+
+    const scores =
+        selected.map(
+            (item,index) => {
+
+                /*
+                    امتیاز قیمت
+                    ارزان‌تر = بهتر
+                */
+
+                const priceScore =
+                    prices[index] > 0
+                    ? 1 -
+                      (
+                          prices[index] /
+                          maxPrice
+                      )
+                    : 1;
+
+
+                /*
+                    امتیاز Rating
+                */
+
+                const ratingScore =
+                    ratings[index] /
+                    maxRating;
+
+
+                /*
+                    امتیاز حجم
+                    کم‌تر = بهتر
+                */
+
+                const sizeScore =
+                    sizes[index] > 0
+                    ? 1 -
+                      (
+                          sizes[index] /
+                          maxSize
+                      )
+                    : .5;
+
+
+                return (
+                    priceScore * .40 +
+                    ratingScore * .40 +
+                    sizeScore * .20
+                );
+
+            }
+        );
+
+
+    return getBestIndex(
+        scores,
+        "max"
+    );
+
+}
+
+
+/* =========================================================
+   مخفی کردن مقایسه
+========================================================= */
+
+function hideComparison() {
+
+    document.getElementById(
+        "selectSection"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "basketPanel"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "comparisonSection"
+    ).classList.remove("show");
+
+}
+
+
+/* =========================================================
+   رویدادها
+========================================================= */
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "input",
+        renderItems
+    );
+
+
+document
+    .getElementById("sortSelect")
+    .addEventListener(
+        "change",
+        renderItems
+    );
+
+
+/* =========================================================
+   شروع برنامه
+========================================================= */
+
+function init() {
+
+    items =
+        buildItems();
+
+
+    document.getElementById(
+        "totalItems"
+    ).textContent =
+        items.length;
+
+
+    const categories =
+        new Set(
+            items
+                .map(item => item.cat)
+                .filter(Boolean)
+        );
+
+
+    document.getElementById(
+        "categoryCount"
+    ).textContent =
+        categories.size;
+
+
+    loadBasket();
+
+    buildCategoryFilters();
+
+    updateBasketUI();
+
+    renderItems();
+
+
+    if (!items.length) {
+
+        document.getElementById(
+            "itemsGrid"
+        ).innerHTML = `
+
+            <div
+                class="panel empty"
+                style="grid-column:1/-1;">
+
+                <i class="fa-solid fa-database"></i>
+
+                <div>
+                    داده‌ای در mods.js پیدا نشد.
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>

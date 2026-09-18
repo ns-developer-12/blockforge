@@ -1,0 +1,2638 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover">
+<meta name="theme-color" content="#060606">
+<meta name="description" content="جستجوی پیشرفته BlockForge">
+<title>جستجوی پیشرفته | BlockForge</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root{
+    --bg:#060606;
+    --bg2:#0c0c0c;
+    --bg3:#121212;
+    --bg4:#181818;
+    --gold:#c8963e;
+    --gold2:#f0c040;
+    --text:#ededed;
+    --text2:#9d9d9d;
+    --text3:#5d5d5d;
+    --border:#202020;
+    --border2:#292929;
+    --green:#2ecc71;
+    --blue:#3498db;
+    --purple:#9b59b6;
+    --red:#e74c3c;
+    --radius:15px;
+    --safe-bottom:env(safe-area-inset-bottom,16px);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+    font-size:15px;
+}
+
+body{
+    font-family:'Vazirmatn',sans-serif;
+    background:
+        radial-gradient(circle at 50% -15%,rgba(200,150,62,.08),transparent 35%),
+        var(--bg);
+    color:var(--text);
+    line-height:1.7;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:calc(82px + var(--safe-bottom));
+}
+
+button,input{
+    font-family:inherit;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:10px 14px;
+    background:rgba(6,6,6,.88);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.back-btn{
+    width:39px;
+    height:39px;
+    flex:0 0 39px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:linear-gradient(145deg,#151515,#0c0c0c);
+    border:1px solid var(--border2);
+    color:#aaa;
+    text-decoration:none;
+    transition:.25s;
+}
+
+.back-btn:active{
+    transform:scale(.92);
+}
+
+.back-btn:hover{
+    color:#000;
+    background:var(--gold);
+    border-color:var(--gold);
+}
+
+/* ================= SEARCH BOX ================= */
+
+.search-area{
+    position:relative;
+    flex:1;
+}
+
+.search-input-wrap{
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:7px 12px;
+    background:linear-gradient(145deg,#151515,#0e0e0e);
+    border:1px solid var(--border2);
+    border-radius:24px;
+    transition:.25s;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+.search-input-wrap:focus-within{
+    border-color:rgba(200,150,62,.65);
+    box-shadow:
+        0 0 0 3px rgba(200,150,62,.06),
+        0 8px 30px rgba(0,0,0,.25);
+}
+
+.search-icon{
+    width:28px;
+    height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--gold);
+    font-size:.9rem;
+    flex-shrink:0;
+}
+
+.search-input-wrap input{
+    flex:1;
+    min-width:0;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:#fff;
+    font-size:.82rem;
+}
+
+.search-input-wrap input::placeholder{
+    color:#555;
+}
+
+.search-shortcut{
+    font-size:.56rem;
+    color:#555;
+    background:#191919;
+    border:1px solid #292929;
+    padding:2px 7px;
+    border-radius:6px;
+    white-space:nowrap;
+}
+
+.clear-btn{
+    width:28px;
+    height:28px;
+    border:0;
+    border-radius:50%;
+    background:rgba(255,255,255,.06);
+    color:#777;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+
+.clear-btn.visible{
+    display:flex;
+}
+
+/* ================= AUTOCOMPLETE ================= */
+
+.suggestions{
+    position:absolute;
+    top:52px;
+    right:0;
+    left:0;
+    display:none;
+    overflow:hidden;
+    background:rgba(17,17,17,.98);
+    border:1px solid #292929;
+    border-radius:14px;
+    box-shadow:0 18px 45px rgba(0,0,0,.6);
+    z-index:200;
+}
+
+.suggestions.show{
+    display:block;
+    animation:dropIn .18s ease;
+}
+
+@keyframes dropIn{
+    from{
+        opacity:0;
+        transform:translateY(-5px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.suggestion-title{
+    padding:10px 13px 6px;
+    font-size:.62rem;
+    color:#666;
+    font-weight:700;
+}
+
+.suggestion-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 13px;
+    color:#ccc;
+    cursor:pointer;
+    transition:.15s;
+}
+
+.suggestion-item:hover,
+.suggestion-item:active{
+    background:#1b1b1b;
+    color:#fff;
+}
+
+.suggestion-item i{
+    color:var(--gold);
+    width:18px;
+    text-align:center;
+}
+
+.suggestion-item span{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+/* ================= CONTENT ================= */
+
+.search-content{
+    max-width:1000px;
+    margin:auto;
+    padding:16px 14px 25px;
+}
+
+/* ================= SEARCH STATUS ================= */
+
+.search-status{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.status-text{
+    font-size:.7rem;
+    color:#777;
+}
+
+.status-text strong{
+    color:var(--gold);
+}
+
+.active-filter-count{
+    display:none;
+    align-items:center;
+    gap:5px;
+    padding:5px 9px;
+    border-radius:10px;
+    background:rgba(200,150,62,.08);
+    border:1px solid rgba(200,150,62,.18);
+    color:var(--gold);
+    font-size:.6rem;
+    font-weight:700;
+}
+
+.active-filter-count.show{
+    display:flex;
+}
+
+/* ================= SECTIONS ================= */
+
+.filter-section,
+.price-range-section,
+.switch-section{
+    margin-bottom:17px;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+}
+
+.filter-label{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:.7rem;
+    font-weight:800;
+    color:#888;
+}
+
+.filter-label i{
+    color:var(--gold);
+}
+
+.section-action{
+    border:0;
+    background:none;
+    color:#555;
+    font-size:.6rem;
+    cursor:pointer;
+}
+
+.section-action:hover{
+    color:var(--gold);
+}
+
+/* ================= CHIPS ================= */
+
+.filter-chips{
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    padding:2px 1px 5px;
+}
+
+.filter-chips::-webkit-scrollbar{
+    display:none;
+}
+
+.filter-chip{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:7px 13px;
+    border-radius:18px;
+    background:linear-gradient(145deg,#151515,#101010);
+    border:1px solid var(--border2);
+    color:#777;
+    font-size:.62rem;
+    font-weight:650;
+    cursor:pointer;
+    user-select:none;
+    transition:.2s;
+}
+
+.filter-chip i{
+    font-size:.65rem;
+}
+
+.filter-chip:hover{
+    border-color:#444;
+    color:#ddd;
+}
+
+.filter-chip.active{
+    color:#090909;
+    background:linear-gradient(135deg,var(--gold2),var(--gold));
+    border-color:var(--gold);
+    box-shadow:0 5px 18px rgba(200,150,62,.15);
+}
+
+.filter-chip.green.active{
+    background:var(--green);
+    border-color:var(--green);
+    color:#fff;
+}
+
+.filter-chip.blue.active{
+    background:var(--blue);
+    border-color:var(--blue);
+    color:#fff;
+}
+
+.filter-chip.purple.active{
+    background:var(--purple);
+    border-color:var(--purple);
+    color:#fff;
+}
+
+/* ================= CATEGORY ================= */
+
+.category-wrap{
+    position:relative;
+}
+
+.category-select{
+    width:100%;
+    appearance:none;
+    -webkit-appearance:none;
+    background:linear-gradient(145deg,#151515,#101010);
+    color:#aaa;
+    border:1px solid var(--border2);
+    border-radius:12px;
+    padding:11px 13px;
+    outline:none;
+    font-size:.68rem;
+}
+
+.category-select:focus{
+    border-color:var(--gold);
+}
+
+.category-arrow{
+    position:absolute;
+    left:13px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#555;
+    pointer-events:none;
+}
+
+/* ================= PRICE ================= */
+
+.price-range-section{
+    padding:14px;
+    background:linear-gradient(145deg,rgba(20,20,20,.95),rgba(12,12,12,.95));
+    border:1px solid var(--border);
+    border-radius:14px;
+}
+
+.price-range-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:7px;
+}
+
+.price-range-header .label{
+    color:#888;
+    font-size:.68rem;
+    font-weight:700;
+}
+
+.price-range-header .label i{
+    color:var(--gold);
+    margin-left:5px;
+}
+
+.price-range-header .value{
+    color:var(--gold);
+    background:rgba(200,150,62,.08);
+    border:1px solid rgba(200,150,62,.18);
+    padding:4px 9px;
+    border-radius:10px;
+    font-size:.65rem;
+    font-weight:800;
+}
+
+.price-range-slider{
+    height:36px;
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.price-range-slider input{
+    width:100%;
+    position:absolute;
+    z-index:3;
+    appearance:none;
+    -webkit-appearance:none;
+    background:transparent;
+    outline:none;
+}
+
+.price-range-slider input::-webkit-slider-runnable-track{
+    height:5px;
+    border-radius:5px;
+    background:#222;
+}
+
+.price-range-slider input::-webkit-slider-thumb{
+    appearance:none;
+    -webkit-appearance:none;
+    width:23px;
+    height:23px;
+    margin-top:-9px;
+    border-radius:50%;
+    background:var(--gold2);
+    border:3px solid #fff;
+    box-shadow:0 3px 14px rgba(200,150,62,.45);
+}
+
+.price-range-slider input::-moz-range-track{
+    height:5px;
+    border-radius:5px;
+    background:#222;
+}
+
+.price-range-slider input::-moz-range-thumb{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:var(--gold2);
+    border:3px solid #fff;
+}
+
+.price-range-track{
+    position:absolute;
+    right:0;
+    height:5px;
+    border-radius:5px;
+    background:linear-gradient(90deg,var(--gold),var(--gold2));
+    pointer-events:none;
+    z-index:1;
+}
+
+.price-range-labels{
+    display:flex;
+    justify-content:space-between;
+    color:#505050;
+    font-size:.54rem;
+}
+
+/* ================= SWITCHES ================= */
+
+.switch-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    min-height:54px;
+    padding:9px 13px;
+    margin-bottom:7px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:linear-gradient(145deg,#111,#0c0c0c);
+    transition:.2s;
+}
+
+.switch-row.active{
+    border-color:rgba(46,204,113,.45);
+    background:rgba(46,204,113,.035);
+}
+
+.switch-row.purple-active{
+    border-color:rgba(155,89,182,.45);
+    background:rgba(155,89,182,.035);
+}
+
+.switch-info{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.switch-icon{
+    width:31px;
+    height:31px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:9px;
+    background:#181818;
+    color:var(--gold);
+    font-size:.8rem;
+}
+
+.switch-label{
+    color:#ddd;
+    font-size:.68rem;
+    font-weight:650;
+}
+
+.switch-toggle{
+    width:45px;
+    height:25px;
+    position:relative;
+    border-radius:20px;
+    background:#1d1d1d;
+    border:1px solid #292929;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.switch-toggle::after{
+    content:"";
+    position:absolute;
+    top:3px;
+    right:3px;
+    width:17px;
+    height:17px;
+    border-radius:50%;
+    background:#777;
+    transition:.25s;
+}
+
+.switch-toggle.active{
+    background:var(--green);
+    border-color:var(--green);
+}
+
+.switch-toggle.active::after{
+    right:23px;
+    background:#fff;
+}
+
+/* ================= RESULTS ================= */
+
+.result-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin:22px 0 11px;
+}
+
+.result-header .count{
+    color:#777;
+    font-size:.7rem;
+}
+
+.result-header .count span{
+    color:var(--gold);
+    font-size:.85rem;
+    font-weight:900;
+}
+
+.sort-btn{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:7px 10px;
+    border-radius:10px;
+    background:#121212;
+    border:1px solid var(--border2);
+    color:#777;
+    font-size:.59rem;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.sort-btn:hover{
+    color:#fff;
+    border-color:var(--gold);
+}
+
+/* ================= GRID ================= */
+
+.results-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
+    gap:10px;
+}
+
+.card{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(145deg,#101010,#0b0b0b);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    cursor:pointer;
+    opacity:0;
+    animation:cardIn .35s ease forwards;
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(200,150,62,.55);
+    box-shadow:0 14px 30px rgba(0,0,0,.45);
+}
+
+@keyframes cardIn{
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.card-img{
+    height:105px;
+    background-size:cover;
+    background-position:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.card-img::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,rgba(0,0,0,.7),transparent 55%);
+    pointer-events:none;
+}
+
+.c-badge{
+    position:absolute;
+    top:7px;
+    right:7px;
+    z-index:2;
+    width:22px;
+    height:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:7px;
+    background:rgba(46,204,113,.18);
+    border:1px solid rgba(46,204,113,.35);
+    color:var(--green);
+    font-size:.55rem;
+}
+
+.c-ver{
+    position:absolute;
+    bottom:7px;
+    left:7px;
+    z-index:2;
+    padding:3px 7px;
+    border-radius:6px;
+    background:rgba(0,0,0,.72);
+    color:#ddd;
+    font-size:.5rem;
+}
+
+.c-discount-badge{
+    position:absolute;
+    top:36px;
+    right:7px;
+    z-index:3;
+    padding:2px 6px;
+    border-radius:5px;
+    background:var(--red);
+    color:#fff;
+    font-size:.48rem;
+    font-weight:800;
+}
+
+.card-body{
+    padding:9px;
+}
+
+.card-body h4{
+    color:#fff;
+    font-size:.7rem;
+    font-weight:800;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.c-author{
+    color:#555;
+    font-size:.55rem;
+    margin-bottom:4px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.c-price-row{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    margin-bottom:3px;
+    font-size:.58rem;
+}
+
+.c-price-original{
+    color:#555;
+    text-decoration:line-through;
+    font-size:.52rem;
+}
+
+.c-price-final{
+    color:var(--green);
+    font-weight:800;
+}
+
+.c-rating{
+    color:#f1c40f;
+    font-size:.52rem;
+    margin-bottom:3px;
+}
+
+.c-meta{
+    display:flex;
+    justify-content:space-between;
+    color:#4d4d4d;
+    font-size:.5rem;
+    margin-bottom:7px;
+}
+
+.c-dl-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    padding:8px;
+    border:0;
+    border-radius:8px;
+    background:linear-gradient(135deg,#c8963e,#a67c2e);
+    color:#050505;
+    font-size:.59rem;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.c-dl-btn:active{
+    transform:scale(.97);
+}
+
+.c-dl-btn.free,
+.c-dl-btn.purchased{
+    background:linear-gradient(135deg,#1a6b2a,#0f4a1a);
+    color:#fff;
+}
+
+/* ================= EMPTY ================= */
+
+.no-result{
+    grid-column:1/-1;
+    text-align:center;
+    padding:65px 20px;
+    border:1px dashed #222;
+    border-radius:16px;
+    background:rgba(255,255,255,.01);
+}
+
+.no-result-icon{
+    width:65px;
+    height:65px;
+    margin:0 auto 13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#111;
+    color:#292929;
+    font-size:1.6rem;
+}
+
+.no-result h3{
+    color:#888;
+    font-size:.8rem;
+    margin-bottom:4px;
+}
+
+.no-result p{
+    color:#4d4d4d;
+    font-size:.62rem;
+}
+
+/* ================= LOADING ================= */
+
+.loading{
+    grid-column:1/-1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:180px;
+    color:#555;
+}
+
+.spinner{
+    width:30px;
+    height:30px;
+    border:3px solid #222;
+    border-top-color:var(--gold);
+    border-radius:50%;
+    animation:spin .7s linear infinite;
+    margin-bottom:10px;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    z-index:9999;
+    right:50%;
+    bottom:calc(92px + var(--safe-bottom));
+    transform:translateX(50%) translateY(15px);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    max-width:calc(100% - 30px);
+    padding:11px 15px;
+    border-radius:12px;
+    background:#171717;
+    border:1px solid #2a2a2a;
+    box-shadow:0 15px 35px rgba(0,0,0,.65);
+    color:#eee;
+    font-size:.65rem;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(50%) translateY(0);
+}
+
+.toast.success i{color:var(--green)}
+.toast.error i{color:var(--red)}
+.toast.info i{color:var(--gold)}
+
+/* ================= BOTTOM NAV ================= */
+
+.bottom-nav{
+    position:fixed;
+    z-index:50;
+    bottom:0;
+    left:0;
+    right:0;
+    display:flex;
+    justify-content:space-around;
+    padding:7px 0 calc(7px + var(--safe-bottom));
+    background:rgba(6,6,6,.96);
+    backdrop-filter:blur(20px);
+    border-top:1px solid var(--border);
+}
+
+.bottom-nav a{
+    min-width:65px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px;
+    padding:4px 8px;
+    color:#555;
+    text-decoration:none;
+    font-size:.57rem;
+    transition:.2s;
+}
+
+.bottom-nav a i{
+    font-size:1.1rem;
+}
+
+.bottom-nav a:hover,
+.bottom-nav a.active{
+    color:var(--gold);
+}
+
+/* ================= DESKTOP ================= */
+
+@media(min-width:700px){
+    .header{
+        padding-left:max(18px,calc((100% - 970px)/2));
+        padding-right:max(18px,calc((100% - 970px)/2));
+    }
+
+    .search-area{
+        max-width:700px;
+    }
+
+    .search-content{
+        padding-top:22px;
+    }
+
+    .results-grid{
+        grid-template-columns:repeat(auto-fill,minmax(175px,1fr));
+    }
+
+    .card-img{
+        height:120px;
+    }
+}
+
+@media(max-width:430px){
+    .search-shortcut{
+        display:none;
+    }
+
+    .results-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:8px;
+    }
+
+    .card-img{
+        height:100px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms!important;
+        transition-duration:.01ms!important;
+        scroll-behavior:auto!important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="index.html" class="back-btn" aria-label="بازگشت">
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
+
+    <div class="search-area">
+
+        <div class="search-input-wrap" id="searchWrap">
+
+            <div class="search-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <input
+                id="searchInput"
+                type="search"
+                inputmode="search"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="جستجو در BlockForge..."
+                aria-label="جستجو"
+            >
+
+            <span class="search-shortcut">ESC</span>
+
+            <button
+                type="button"
+                class="clear-btn"
+                id="clearBtn"
+                aria-label="پاک کردن"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div class="suggestions" id="suggestions"></div>
+
+    </div>
+
+</header>
+
+
+<main class="search-content">
+
+    <div class="search-status">
+
+        <div class="status-text" id="statusText">
+            آماده جستجو در <strong>BlockForge</strong>
+        </div>
+
+        <div class="active-filter-count" id="activeFilterCount">
+            <i class="fa-solid fa-sliders"></i>
+            <span>۰ فیلتر</span>
+        </div>
+
+    </div>
+
+
+    <!-- مرتب سازی -->
+
+    <section class="filter-section">
+
+        <div class="section-head">
+
+            <div class="filter-label">
+                <i class="fa-solid fa-arrow-down-wide-short"></i>
+                مرتب‌سازی
+            </div>
+
+        </div>
+
+        <div class="filter-chips" id="sortChips">
+
+            <button class="filter-chip active" data-sort="default">
+                <i class="fa-solid fa-list"></i>
+                پیش‌فرض
+            </button>
+
+            <button class="filter-chip" data-sort="cheap">
+                <i class="fa-solid fa-coins"></i>
+                ارزان‌ترین
+            </button>
+
+            <button class="filter-chip" data-sort="expensive">
+                <i class="fa-solid fa-sack-dollar"></i>
+                گران‌ترین
+            </button>
+
+            <button class="filter-chip" data-sort="rated">
+                <i class="fa-solid fa-star"></i>
+                محبوب‌ترین
+            </button>
+
+            <button class="filter-chip" data-sort="newest">
+                <i class="fa-solid fa-clock"></i>
+                جدیدترین
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- دسته بندی -->
+
+    <section class="filter-section">
+
+        <div class="section-head">
+
+            <div class="filter-label">
+                <i class="fa-solid fa-layer-group"></i>
+                دسته‌بندی
+            </div>
+
+        </div>
+
+        <div class="category-wrap">
+
+            <select id="categorySelect" class="category-select">
+                <option value="all">همه دسته‌بندی‌ها</option>
+            </select>
+
+            <i class="fa-solid fa-chevron-down category-arrow"></i>
+
+        </div>
+
+    </section>
+
+
+    <!-- قیمت -->
+
+    <section class="price-range-section">
+
+        <div class="price-range-header">
+
+            <span class="label">
+                <i class="fa-solid fa-coins"></i>
+                محدوده قیمت
+            </span>
+
+            <span class="value" id="priceDisplay">
+                ۰ تا ∞
+            </span>
+
+        </div>
+
+        <div class="price-range-slider">
+
+            <input
+                type="range"
+                min="0"
+                max="5000"
+                value="5000"
+                step="50"
+                id="priceSlider"
+            >
+
+            <div class="price-range-track" id="priceTrack"></div>
+
+        </div>
+
+        <div class="price-range-labels">
+            <span>۰</span>
+            <span>۱۰۰۰</span>
+            <span>۲۰۰۰</span>
+            <span>۳۰۰۰</span>
+            <span>۴۰۰۰</span>
+            <span>۵۰۰۰+</span>
+        </div>
+
+    </section>
+
+
+    <!-- فیلترها -->
+
+    <section class="switch-section">
+
+        <div class="switch-row" id="switchFree">
+
+            <div class="switch-info">
+
+                <div class="switch-icon">
+                    <i class="fa-solid fa-gift"></i>
+                </div>
+
+                <span class="switch-label">
+                    فقط رایگان
+                </span>
+
+            </div>
+
+            <div class="switch-toggle" id="toggleFree"></div>
+
+        </div>
+
+
+        <div class="switch-row" id="switchDiscount">
+
+            <div class="switch-info">
+
+                <div class="switch-icon">
+                    <i class="fa-solid fa-tag"></i>
+                </div>
+
+                <span class="switch-label">
+                    فقط تخفیف‌دار
+                </span>
+
+            </div>
+
+            <div class="switch-toggle" id="toggleDiscount"></div>
+
+        </div>
+
+
+        <div class="switch-row" id="switchHighRate">
+
+            <div class="switch-info">
+
+                <div class="switch-icon">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+
+                <span class="switch-label">
+                    امتیاز بالای ۴.۵
+                </span>
+
+            </div>
+
+            <div class="switch-toggle" id="toggleHighRate"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- نتایج -->
+
+    <div class="result-header">
+
+        <div class="count">
+            <span id="resultCount">۰</span>
+            آیتم پیدا شد
+        </div>
+
+        <button class="sort-btn" id="resetBtn">
+            <i class="fa-solid fa-rotate"></i>
+            حذف فیلترها
+        </button>
+
+    </div>
+
+
+    <div class="results-grid" id="resultsGrid">
+
+        <div class="loading">
+            <div class="spinner"></div>
+            <span>در حال آماده‌سازی...</span>
+        </div>
+
+    </div>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+    <a href="index.html">
+        <i class="fa-solid fa-house"></i>
+        خانه
+    </a>
+
+    <a href="premium.html">
+        <i class="fa-solid fa-crown" style="color:var(--gold2)"></i>
+        پرمیوم
+    </a>
+
+    <a href="index.html#saved">
+        <i class="fa-solid fa-bookmark"></i>
+        ذخیره‌شده
+    </a>
+
+</nav>
+
+
+<div class="toast" id="toast">
+    <i class="fa-solid fa-circle-info"></i>
+    <span></span>
+</div>
+
+
+<script src="mods.js"></script>
+
+<script>
+"use strict";
+
+/* =========================================================
+   BLOCKFORGE ADVANCED SEARCH
+   ========================================================= */
+
+const $ = id => document.getElementById(id);
+
+let items = [];
+let searchQuery = "";
+
+let filters = {
+    free: false,
+    discount: false,
+    highrate: false,
+    maxPrice: Infinity,
+    sort: "default",
+    category: "all"
+};
+
+let debounceTimer = null;
+let toastTimer = null;
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function safeString(value){
+    return value == null ? "" : String(value);
+}
+
+function normalizeText(value){
+
+    return safeString(value)
+        .toLowerCase()
+        .replace(/[يى]/g,"ی")
+        .replace(/ك/g,"ک")
+        .replace(/ۀ/g,"ه")
+        .replace(/ة/g,"ه")
+        .replace(/ؤ/g,"و")
+        .replace(/إ|أ|آ/g,"ا")
+        .replace(/ـ/g,"")
+        .replace(/[\u200c\u200d]/g," ")
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+function faNumber(value){
+
+    return Number(value || 0).toLocaleString("fa-IR");
+
+}
+
+function escapeHTML(value){
+
+    return safeString(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   DATA
+   ========================================================= */
+
+function build(){
+
+    if(typeof MY_CONTENT === "undefined" || !Array.isArray(MY_CONTENT)){
+        return [];
+    }
+
+    return MY_CONTENT.map((item,index)=>{
+
+        const data = item && typeof item === "object" ? item : {};
+
+        return {
+            id:index + 1,
+            ...data,
+
+            title:safeString(data.title || "بدون عنوان"),
+            author:safeString(data.author || "نامشخص"),
+            cat:safeString(data.cat || "سایر"),
+            desc:safeString(data.desc || ""),
+            version:safeString(data.version || "-"),
+            size:safeString(data.size || "-"),
+            img:safeString(
+                data.img ||
+                "https://picsum.photos/seed/blockforge-" + (index + 1) + "/500/300"
+            )
+        };
+
+    });
+
+}
+
+
+function getPrice(item){
+
+    const original = Number(item?.price) || 0;
+    const discount = Math.max(
+        0,
+        Math.min(100,Number(item?.discount) || 0)
+    );
+
+    const finalPrice = Math.max(
+        0,
+        Math.round(original - original * discount / 100)
+    );
+
+    return {
+        og:original,
+        fn:finalPrice,
+        hasD:discount > 0 && original > 0,
+        d:discount
+    };
+
+}
+
+
+function getCost(item){
+
+    return getPrice(item).fn;
+
+}
+
+
+/* =========================================================
+   CATEGORY
+   ========================================================= */
+
+function buildCategories(){
+
+    const select = $("categorySelect");
+
+    if(!select) return;
+
+    const categories = [...new Set(
+        items
+            .map(item=>safeString(item.cat).trim())
+            .filter(Boolean)
+    )].sort((a,b)=>a.localeCompare(b,"fa"));
+
+    select.innerHTML =
+        `<option value="all">همه دسته‌بندی‌ها</option>` +
+        categories.map(cat=>
+            `<option value="${escapeHTML(cat)}">${escapeHTML(cat)}</option>`
+        ).join("");
+
+}
+
+
+/* =========================================================
+   SEARCH SCORE
+   ========================================================= */
+
+function scoreItem(item,q){
+
+    if(!q) return 0;
+
+    const title = normalizeText(item.title);
+    const author = normalizeText(item.author);
+    const cat = normalizeText(item.cat);
+    const desc = normalizeText(item.desc);
+
+    let score = 0;
+
+    if(title === q) score += 1000;
+
+    if(title.startsWith(q)) score += 500;
+
+    if(title.includes(q)) score += 300;
+
+    if(cat === q) score += 250;
+
+    if(cat.includes(q)) score += 150;
+
+    if(author.includes(q)) score += 100;
+
+    if(desc.includes(q)) score += 50;
+
+    const words = q.split(" ").filter(Boolean);
+
+    for(const word of words){
+
+        if(title.includes(word)) score += 80;
+        if(cat.includes(word)) score += 50;
+        if(author.includes(word)) score += 30;
+        if(desc.includes(word)) score += 10;
+
+    }
+
+    return score;
+
+}
+
+
+/* =========================================================
+   FILTER + SEARCH
+   ========================================================= */
+
+function filterItems(){
+
+    let result = items.slice();
+
+    const q = normalizeText(searchQuery);
+
+    /* Search */
+
+    if(q){
+
+        result = result
+            .map(item=>({
+                item,
+                score:scoreItem(item,q)
+            }))
+            .filter(x=>x.score > 0)
+            .sort((a,b)=>b.score-a.score)
+            .map(x=>x.item);
+
+    }
+
+
+    /* Category */
+
+    if(filters.category !== "all"){
+
+        const category = normalizeText(filters.category);
+
+        result = result.filter(item=>
+            normalizeText(item.cat) === category
+        );
+
+    }
+
+
+    /* Free */
+
+    if(filters.free){
+
+        result = result.filter(item=>
+            getCost(item) === 0
+        );
+
+    }
+
+
+    /* Discount */
+
+    if(filters.discount){
+
+        result = result.filter(item=>
+            getPrice(item).hasD
+        );
+
+    }
+
+
+    /* Rating */
+
+    if(filters.highrate){
+
+        result = result.filter(item=>
+            Number(item.rating) >= 4.5
+        );
+
+    }
+
+
+    /* Price */
+
+    if(filters.maxPrice !== Infinity){
+
+        result = result.filter(item=>
+            getCost(item) <= filters.maxPrice
+        );
+
+    }
+
+
+    /* Sort */
+
+    switch(filters.sort){
+
+        case "cheap":
+            result.sort((a,b)=>getCost(a)-getCost(b));
+            break;
+
+        case "expensive":
+            result.sort((a,b)=>getCost(b)-getCost(a));
+            break;
+
+        case "rated":
+            result.sort((a,b)=>
+                (Number(b.rating)||0)-(Number(a.rating)||0)
+            );
+            break;
+
+        case "newest":
+            result.reverse();
+            break;
+
+    }
+
+    return result;
+
+}
+
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+
+function render(){
+
+    const grid = $("resultsGrid");
+
+    if(!grid) return;
+
+    grid.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <span>در حال جستجو...</span>
+        </div>
+    `;
+
+    requestAnimationFrame(()=>{
+
+        const result = filterItems();
+
+        $("resultCount").textContent = faNumber(result.length);
+
+        updateStatus(result.length);
+        updateActiveFilterCount();
+
+        if(!result.length){
+
+            grid.innerHTML = `
+                <div class="no-result">
+
+                    <div class="no-result-icon">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+
+                    <h3>نتیجه‌ای پیدا نشد</h3>
+
+                    <p>
+                        عبارت جستجو یا فیلترها را تغییر بده.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+
+        }
+
+        grid.innerHTML = result
+            .map((item,index)=>cardHTML(item,index))
+            .join("");
+
+    });
+
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+function cardHTML(item,index){
+
+    const price = getPrice(item);
+    const cost = getCost(item);
+
+    const delay = Math.min(index * 0.025,.3);
+
+    let priceHTML = "";
+
+    if(price.hasD){
+
+        priceHTML = `
+            <div class="c-price-row">
+
+                <span class="c-price-original">
+                    ${faNumber(price.og)}
+                </span>
+
+                <span class="c-price-final">
+                    ${faNumber(price.fn)}
+                    <i class="fa-solid fa-coins"></i>
+                </span>
+
+            </div>
+        `;
+
+    }else if(cost > 0){
+
+        priceHTML = `
+            <div class="c-price-row">
+
+                <span class="c-price-final">
+                    <i class="fa-solid fa-coins"></i>
+                    ${faNumber(cost)}
+                </span>
+
+            </div>
+        `;
+
+    }else{
+
+        priceHTML = `
+            <div class="c-price-row">
+
+                <span class="c-price-final">
+                    رایگان
+                </span>
+
+            </div>
+        `;
+
+    }
+
+
+    return `
+        <article
+            class="card"
+            data-id="${item.id}"
+            style="animation-delay:${delay}s"
+            onclick="openItem(${item.id})"
+        >
+
+            <div
+                class="card-img"
+                style="background-image:url('${escapeHTML(item.img)}')"
+            >
+
+                <span class="c-badge">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+
+                <span class="c-ver">
+                    ${escapeHTML(item.version)}
+                </span>
+
+                ${
+                    price.hasD
+                    ?
+                    `<span class="c-discount-badge">-${faNumber(price.d)}%</span>`
+                    :
+                    ""
+                }
+
+            </div>
+
+
+            <div class="card-body">
+
+                <h4 title="${escapeHTML(item.title)}">
+                    ${escapeHTML(item.title)}
+                </h4>
+
+                <div class="c-author">
+                    <i class="fa-solid fa-user"></i>
+                    ${escapeHTML(item.author)}
+                </div>
+
+                ${priceHTML}
+
+                ${
+                    item.rating
+                    ?
+                    `
+                    <div class="c-rating">
+                        <i class="fa-solid fa-star"></i>
+                        ${escapeHTML(item.rating)}
+                    </div>
+                    `
+                    :
+                    ""
+                }
+
+                <div class="c-meta">
+
+                    <span>
+                        <i class="fa-solid fa-weight-hanging"></i>
+                        ${escapeHTML(item.size)}
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-code-branch"></i>
+                        ${escapeHTML(item.version)}
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="c-dl-btn${cost===0?" free":""}"
+                    type="button"
+                    onclick="event.stopPropagation();downloadItem(${item.id})"
+                >
+
+                    ${
+                        cost===0
+                        ?
+                        `<i class="fa-solid fa-download"></i> دانلود رایگان`
+                        :
+                        `<i class="fa-solid fa-cart-shopping"></i> خرید (${faNumber(cost)})`
+                    }
+
+                </button>
+
+            </div>
+
+        </article>
+    `;
+
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+function updateStatus(count){
+
+    const el = $("statusText");
+
+    if(!el) return;
+
+    if(searchQuery){
+
+        el.innerHTML = `
+            نتیجه برای
+            <strong>«${escapeHTML(searchQuery)}»</strong>
+        `;
+
+    }else{
+
+        el.innerHTML = `
+            جستجوی سریع در
+            <strong>BlockForge</strong>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   ACTIVE FILTER COUNT
+   ========================================================= */
+
+function updateActiveFilterCount(){
+
+    let count = 0;
+
+    if(filters.free) count++;
+    if(filters.discount) count++;
+    if(filters.highrate) count++;
+    if(filters.maxPrice !== Infinity) count++;
+    if(filters.category !== "all") count++;
+
+    const el = $("activeFilterCount");
+
+    if(count){
+
+        el.classList.add("show");
+
+        el.querySelector("span").textContent =
+            faNumber(count) + " فیلتر فعال";
+
+    }else{
+
+        el.classList.remove("show");
+
+    }
+
+}
+
+
+/* =========================================================
+   SORT
+   ========================================================= */
+
+$("sortChips").addEventListener("click",event=>{
+
+    const chip = event.target.closest(".filter-chip");
+
+    if(!chip) return;
+
+    document
+        .querySelectorAll("#sortChips .filter-chip")
+        .forEach(el=>el.classList.remove("active"));
+
+    chip.classList.add("active");
+
+    filters.sort = chip.dataset.sort;
+
+    render();
+
+});
+
+
+/* =========================================================
+   SWITCH
+   ========================================================= */
+
+function toggleSwitch(type){
+
+    filters[type] = !filters[type];
+
+    updateSwitchUI();
+    render();
+
+}
+
+
+function updateSwitchUI(){
+
+    const configs = [
+        ["free","toggleFree","switchFree"],
+        ["discount","toggleDiscount","switchDiscount"],
+        ["highrate","toggleHighRate","switchHighRate"]
+    ];
+
+    configs.forEach(([type,toggle,row])=>{
+
+        const toggleEl = $(toggle);
+        const rowEl = $(row);
+
+        toggleEl.classList.toggle("active",filters[type]);
+        rowEl.classList.toggle("active",filters[type]);
+
+        if(type==="highrate"){
+            rowEl.classList.toggle("purple-active",filters[type]);
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   SWITCH EVENTS
+   ========================================================= */
+
+$("switchFree").addEventListener("click",()=>toggleSwitch("free"));
+$("switchDiscount").addEventListener("click",()=>toggleSwitch("discount"));
+$("switchHighRate").addEventListener("click",()=>toggleSwitch("highrate"));
+
+
+/* =========================================================
+   PRICE
+   ========================================================= */
+
+function updatePriceSlider(){
+
+    const slider = $("priceSlider");
+
+    const value = Number(slider.value);
+    const max = Number(slider.max);
+
+    const percentage = Math.max(
+        0,
+        Math.min(100,(value/max)*100)
+    );
+
+    $("priceTrack").style.width = percentage + "%";
+
+    if(value >= max){
+
+        filters.maxPrice = Infinity;
+
+        $("priceDisplay").textContent = "۰ تا ∞";
+
+    }else{
+
+        filters.maxPrice = value;
+
+        $("priceDisplay").textContent =
+            "۰ تا " + faNumber(value);
+
+    }
+
+    render();
+
+}
+
+$("priceSlider").addEventListener(
+    "input",
+    updatePriceSlider
+);
+
+
+/* =========================================================
+   CATEGORY
+   ========================================================= */
+
+$("categorySelect").addEventListener("change",function(){
+
+    filters.category = this.value;
+
+    render();
+
+});
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+$("searchInput").addEventListener("input",function(){
+
+    searchQuery = this.value.trim();
+
+    $("clearBtn").classList.toggle(
+        "visible",
+        searchQuery.length > 0
+    );
+
+    clearTimeout(debounceTimer);
+
+    debounceTimer = setTimeout(()=>{
+
+        saveSearch(searchQuery);
+        updateURL();
+        render();
+
+    },120);
+
+    showSuggestions();
+
+});
+
+
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+
+$("searchInput").addEventListener("keydown",event=>{
+
+    if(event.key==="Escape"){
+
+        clearSearch();
+
+        $("suggestions").classList.remove("show");
+
+        return;
+
+    }
+
+    if(event.key==="Enter"){
+
+        saveSearch(searchQuery);
+
+        $("suggestions").classList.remove("show");
+
+        updateURL();
+
+        render();
+
+    }
+
+});
+
+
+/* =========================================================
+   CLEAR
+   ========================================================= */
+
+$("clearBtn").addEventListener("click",clearSearch);
+
+function clearSearch(){
+
+    $("searchInput").value = "";
+
+    searchQuery = "";
+
+    $("clearBtn").classList.remove("visible");
+
+    $("suggestions").classList.remove("show");
+
+    updateURL();
+
+    render();
+
+    $("searchInput").focus();
+
+}
+
+
+/* =========================================================
+   RECENT SEARCH
+   ========================================================= */
+
+function getRecentSearches(){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem("bf_recent_searches") || "[]"
+            );
+
+        return Array.isArray(data) ? data : [];
+
+    }catch{
+
+        return [];
+
+    }
+
+}
+
+
+function saveSearch(query){
+
+    const q = safeString(query).trim();
+
+    if(q.length < 2) return;
+
+    let searches = getRecentSearches();
+
+    searches = searches.filter(
+        item=>normalizeText(item)!==normalizeText(q)
+    );
+
+    searches.unshift(q);
+
+    searches = searches.slice(0,6);
+
+    try{
+
+        localStorage.setItem(
+            "bf_recent_searches",
+            JSON.stringify(searches)
+        );
+
+    }catch{}
+
+}
+
+
+/* =========================================================
+   SUGGESTIONS
+   ========================================================= */
+
+function showSuggestions(){
+
+    const box = $("suggestions");
+
+    const q = normalizeText(searchQuery);
+
+    if(!q){
+
+        const recent = getRecentSearches();
+
+        if(!recent.length){
+
+            box.classList.remove("show");
+            return;
+
+        }
+
+        box.innerHTML = `
+            <div class="suggestion-title">
+                جستجوهای اخیر
+            </div>
+
+            ${recent.map(item=>`
+                <div
+                    class="suggestion-item"
+                    data-query="${escapeHTML(item)}"
+                >
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>${escapeHTML(item)}</span>
+                </div>
+            `).join("")}
+        `;
+
+        box.classList.add("show");
+
+        return;
+
+    }
+
+
+    const suggestions = [];
+
+    const seen = new Set();
+
+    for(const item of items){
+
+        const values = [
+            item.title,
+            item.author,
+            item.cat
+        ];
+
+        for(const value of values){
+
+            const text = safeString(value);
+            const normalized = normalizeText(text);
+
+            if(
+                normalized.includes(q) &&
+                !seen.has(normalized)
+            ){
+
+                seen.add(normalized);
+
+                suggestions.push(text);
+
+            }
+
+        }
+
+        if(suggestions.length>=6) break;
+
+    }
+
+
+    if(!suggestions.length){
+
+        box.classList.remove("show");
+        return;
+
+    }
+
+
+    box.innerHTML = `
+        <div class="suggestion-title">
+            پیشنهاد جستجو
+        </div>
+
+        ${suggestions.slice(0,6).map(item=>`
+            <div
+                class="suggestion-item"
+                data-query="${escapeHTML(item)}"
+            >
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>${escapeHTML(item)}</span>
+            </div>
+        `).join("")}
+    `;
+
+    box.classList.add("show");
+
+}
+
+
+$("suggestions").addEventListener("click",event=>{
+
+    const item = event.target.closest(".suggestion-item");
+
+    if(!item) return;
+
+    const query = item.dataset.query || "";
+
+    $("searchInput").value = query;
+
+    searchQuery = query;
+
+    $("clearBtn").classList.add("visible");
+
+    $("suggestions").classList.remove("show");
+
+    saveSearch(query);
+    updateURL();
+    render();
+
+});
+
+
+document.addEventListener("click",event=>{
+
+    if(
+        !event.target.closest(".search-area")
+    ){
+
+        $("suggestions").classList.remove("show");
+
+    }
+
+});
+
+
+/* =========================================================
+   URL STATE
+   ========================================================= */
+
+function updateURL(){
+
+    try{
+
+        const url = new URL(window.location.href);
+
+        if(searchQuery){
+
+            url.searchParams.set("q",searchQuery);
+
+        }else{
+
+            url.searchParams.delete("q");
+
+        }
+
+        if(filters.category !== "all"){
+
+            url.searchParams.set(
+                "cat",
+                filters.category
+            );
+
+        }else{
+
+            url.searchParams.delete("cat");
+
+        }
+
+        history.replaceState(
+            {},
+            "",
+            url.pathname +
+            (url.searchParams.toString()
+                ? "?" + url.searchParams.toString()
+                : "") +
+            url.hash
+        );
+
+    }catch{}
+
+}
+
+
+function loadURLState(){
+
+    try{
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const q = params.get("q");
+
+        const cat = params.get("cat");
+
+        if(q){
+
+            searchQuery = q;
+
+            $("searchInput").value = q;
+
+            $("clearBtn").classList.add("visible");
+
+        }
+
+        if(
+            cat &&
+            [...$("categorySelect").options]
+                .some(option=>option.value===cat)
+        ){
+
+            filters.category = cat;
+
+            $("categorySelect").value = cat;
+
+        }
+
+    }catch{}
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+$("resetBtn").addEventListener("click",resetAll);
+
+function resetAll(){
+
+    filters = {
+        free:false,
+        discount:false,
+        highrate:false,
+        maxPrice:Infinity,
+        sort:"default",
+        category:"all"
+    };
+
+    $("priceSlider").value = 5000;
+
+    $("priceTrack").style.width = "100%";
+
+    $("priceDisplay").textContent = "۰ تا ∞";
+
+    $("categorySelect").value = "all";
+
+    document
+        .querySelectorAll("#sortChips .filter-chip")
+        .forEach(el=>el.classList.remove("active"));
+
+    document
+        .querySelector(
+            '#sortChips .filter-chip[data-sort="default"]'
+        )
+        .classList.add("active");
+
+    updateSwitchUI();
+
+    updateURL();
+
+    render();
+
+    showToast(
+        "فیلترها پاک شدند",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   OPEN ITEM
+   ========================================================= */
+
+function openItem(id){
+
+    const item = items.find(x=>x.id===Number(id));
+
+    if(!item) return;
+
+    window.location.href =
+        "index.html?open=" + encodeURIComponent(id);
+
+}
+
+
+/* =========================================================
+   DOWNLOAD
+   ========================================================= */
+
+function downloadItem(id){
+
+    const item =
+        items.find(x=>x.id===Number(id));
+
+    if(!item){
+
+        showToast(
+            "آیتم پیدا نشد.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!item.downloadUrl){
+
+        showToast(
+            "لینک دانلود برای این آیتم ثبت نشده است.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const cost = getCost(item);
+
+
+    let data;
+
+    try{
+
+        data = JSON.parse(
+            localStorage.getItem("bf_tokens") ||
+            '{"tokens":2000,"last":0}'
+        );
+
+    }catch{
+
+        data = {
+            tokens:2000,
+            last:0
+        };
+
+    }
+
+
+    const tokens =
+        Number(data.tokens) || 0;
+
+
+    if(cost > 0 && tokens < cost){
+
+        showToast(
+            "توکن کافی نیست. نیاز: " +
+            faNumber(cost) +
+            " توکن",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(cost > 0){
+
+        data.tokens = tokens - cost;
+
+        localStorage.setItem(
+            "bf_tokens",
+            JSON.stringify(data)
+        );
+
+    }
+
+
+    const total =
+        Number(
+            localStorage.getItem("bf_totaldl") || 0
+        ) + 1;
+
+    localStorage.setItem(
+        "bf_totaldl",
+        String(total)
+    );
+
+
+    window.open(
+        item.downloadUrl,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+
+    showToast(
+        "دانلود شروع شد!",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function showToast(message,type="info"){
+
+    const toast = $("toast");
+
+    clearTimeout(toastTimer);
+
+    toast.className =
+        "toast " +
+        (type || "info");
+
+    const icon =
+        toast.querySelector("i");
+
+    const icons = {
+        success:"fa-solid fa-circle-check",
+        error:"fa-solid fa-circle-exclamation",
+        info:"fa-solid fa-circle-info"
+    };
+
+    icon.className =
+        icons[type] || icons.info;
+
+    toast.querySelector("span").textContent =
+        message;
+
+    requestAnimationFrame(()=>{
+        toast.classList.add("show");
+    });
+
+    toastTimer = setTimeout(()=>{
+        toast.classList.remove("show");
+    },2300);
+
+}
+
+
+/* =========================================================
+   INIT
+   ========================================================= */
+
+function init(){
+
+    items = build();
+
+    buildCategories();
+
+    loadURLState();
+
+    updateSwitchUI();
+
+    updatePriceSlider();
+
+    render();
+
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>

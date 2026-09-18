@@ -1,0 +1,4204 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#080808">
+    <meta name="color-scheme" content="dark">
+
+    <title>پست‌ها | BlockForge</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* =========================================================
+           ROOT
+        ========================================================= */
+
+        :root {
+            --bg: #050505;
+            --bg-soft: #090909;
+            --bg-card: #0d0d0f;
+            --bg-card-2: #121214;
+            --bg-hover: #171719;
+
+            --gold: #c8963e;
+            --gold-light: #f0c45a;
+            --gold-soft: rgba(200, 150, 62, .12);
+
+            --text: #f1f1f3;
+            --text-soft: #b4b4bb;
+            --text-muted: #777780;
+            --text-dim: #4f4f57;
+
+            --border: rgba(255,255,255,.075);
+            --border-strong: rgba(200,150,62,.25);
+
+            --green: #2ecc71;
+            --blue: #3498db;
+            --purple: #9b59b6;
+            --orange: #e67e22;
+            --pink: #e91e63;
+            --red: #e74c3c;
+
+            --premium: #f0c040;
+
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+            --shadow:
+                0 20px 60px rgba(0,0,0,.45);
+
+            --transition:
+                180ms cubic-bezier(.2,.8,.2,1);
+        }
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 15px;
+            background: var(--bg);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Vazirmatn',
+                         -apple-system,
+                         BlinkMacSystemFont,
+                         'Segoe UI',
+                         sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 50% -10%,
+                    rgba(200,150,62,.07),
+                    transparent 35%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: calc(84px + var(--safe-bottom));
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+        }
+
+        button,
+        a {
+            -webkit-touch-callout: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        ::selection {
+            background: rgba(200,150,62,.25);
+            color: #fff;
+        }
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            min-height: 60px;
+            padding:
+                9px
+                14px
+                9px
+                14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+
+            background: rgba(5,5,5,.88);
+            border-bottom: 1px solid var(--border);
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(200,150,62,.22),
+                    transparent
+                );
+
+            pointer-events: none;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+            min-width: 0;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+
+            flex: 0 0 35px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            color: #fff;
+            font-size: .95rem;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #d4a044,
+                    #785624
+                );
+
+            box-shadow:
+                0 5px 18px rgba(200,150,62,.25);
+        }
+
+        .logo-text {
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .icon-btn,
+        .back-btn,
+        .following-btn {
+            width: 36px;
+            height: 36px;
+
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,.035);
+            border: 1px solid var(--border);
+
+            color: #aaa;
+
+            cursor: pointer;
+            text-decoration: none;
+
+            transition:
+                background var(--transition),
+                border-color var(--transition),
+                color var(--transition),
+                transform var(--transition);
+
+            position: relative;
+        }
+
+        .icon-btn:hover,
+        .back-btn:hover,
+        .following-btn:hover {
+            background: var(--gold-soft);
+            border-color: var(--border-strong);
+            color: var(--gold-light);
+        }
+
+        .icon-btn:active,
+        .back-btn:active,
+        .following-btn:active {
+            transform: scale(.94);
+        }
+
+        .following-btn .badge {
+            position: absolute;
+
+            top: -4px;
+            right: -4px;
+
+            min-width: 16px;
+            height: 16px;
+
+            padding: 0 4px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 999px;
+
+            background: var(--gold);
+            color: #000;
+
+            border: 2px solid var(--bg);
+
+            font-size: .46rem;
+            line-height: 1;
+            font-weight: 900;
+        }
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .posts-container {
+            width: min(100% - 28px, 720px);
+            margin: 0 auto;
+            padding: 18px 0 30px;
+        }
+
+        /* =========================================================
+           FILTERS
+        ========================================================= */
+
+        .filter-area {
+            margin-bottom: 15px;
+        }
+
+        .filter-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 9px;
+        }
+
+        .filter-title h1 {
+            font-size: .95rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .filter-title span {
+            font-size: .62rem;
+            color: var(--text-muted);
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 7px;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            padding: 2px 1px 5px;
+
+            scrollbar-width: none;
+            scroll-snap-type: x proximity;
+        }
+
+        .filter-chips::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-chip {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            min-height: 34px;
+
+            padding: 6px 13px;
+
+            border-radius: 999px;
+
+            background: rgba(255,255,255,.035);
+            border: 1px solid var(--border);
+
+            color: #85858c;
+
+            font-size: .67rem;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background var(--transition),
+                border-color var(--transition),
+                color var(--transition),
+                transform var(--transition);
+        }
+
+        .filter-chip i {
+            font-size: .68rem;
+        }
+
+        .filter-chip:hover {
+            border-color: var(--border-strong);
+            color: #ddd;
+        }
+
+        .filter-chip:active {
+            transform: scale(.96);
+        }
+
+        .filter-chip.active {
+            background: var(--gold-soft);
+            border-color: rgba(200,150,62,.45);
+            color: var(--gold-light);
+            box-shadow: 0 4px 18px rgba(200,150,62,.06);
+        }
+
+        .filter-chip.exam.active {
+            background: rgba(233,30,99,.1);
+            border-color: rgba(233,30,99,.45);
+            color: #ff4d91;
+        }
+
+        /* =========================================================
+           FOLLOWED SECTION
+        ========================================================= */
+
+        .followed-section {
+            display: none;
+
+            padding: 15px;
+
+            margin-bottom: 16px;
+
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(52,152,219,.075),
+                    rgba(52,152,219,.025)
+                );
+
+            border: 1px solid rgba(52,152,219,.18);
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,.2);
+
+            animation: sectionIn .25s ease both;
+        }
+
+        .followed-section.show {
+            display: block;
+        }
+
+        @keyframes sectionIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .followed-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+
+            margin-bottom: 12px;
+        }
+
+        .followed-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #54aee8;
+            font-size: .78rem;
+            font-weight: 800;
+        }
+
+        .section-close {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
+            color: #777;
+            background: rgba(255,255,255,.025);
+
+            cursor: pointer;
+        }
+
+        .section-close:hover {
+            color: #fff;
+        }
+
+        .followed-list {
+            display: flex;
+            gap: 8px;
+
+            overflow-x: auto;
+
+            padding-bottom: 3px;
+
+            scrollbar-width: none;
+        }
+
+        .followed-list::-webkit-scrollbar {
+            display: none;
+        }
+
+        .followed-author-chip {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            flex: 0 0 auto;
+
+            padding: 6px 11px;
+
+            border-radius: 999px;
+
+            background: rgba(255,255,255,.035);
+            border: 1px solid var(--border);
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+        .followed-author-chip:hover {
+            border-color: rgba(200,150,62,.35);
+        }
+
+        .followed-author-chip img {
+            width: 25px;
+            height: 25px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 1px solid rgba(255,255,255,.1);
+        }
+
+        .followed-author-chip span {
+            color: #bbb;
+            font-size: .64rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .followed-posts {
+            margin-top: 12px;
+        }
+
+        .followed-post-item {
+            padding: 11px 13px;
+            margin-bottom: 6px;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,.025);
+            border: 1px solid var(--border);
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+        .followed-post-item:hover {
+            border-color: rgba(200,150,62,.3);
+            background: rgba(255,255,255,.04);
+        }
+
+        .fp-title {
+            color: #eee;
+            font-size: .74rem;
+            font-weight: 700;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .fp-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            margin-top: 3px;
+
+            color: #606068;
+            font-size: .57rem;
+        }
+
+        /* =========================================================
+           POSTS
+        ========================================================= */
+
+        .posts-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .post-card {
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: var(--radius-lg);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.025),
+                    rgba(255,255,255,.008)
+                ),
+                var(--bg-card);
+
+            border: 1px solid var(--border);
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 40px rgba(0,0,0,.25);
+
+            transition:
+                transform .25s cubic-bezier(.2,.8,.2,1),
+                border-color .25s ease,
+                box-shadow .25s ease;
+
+            animation: cardIn .35s ease both;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(200,150,62,.28);
+
+            box-shadow:
+                0 20px 55px rgba(0,0,0,.45),
+                0 0 35px rgba(200,150,62,.025);
+        }
+
+        .post-card:active {
+            transform: scale(.992);
+        }
+
+        .post-card.featured {
+            border-color: rgba(240,192,64,.55);
+
+            box-shadow:
+                0 14px 45px rgba(240,192,64,.08);
+        }
+
+        .post-card.exam-card {
+            border-color: rgba(233,30,99,.2);
+        }
+
+        .post-card.exam-card:hover {
+            border-color: rgba(233,30,99,.5);
+        }
+
+        .post-cover-wrap {
+            position: relative;
+            overflow: hidden;
+
+            height: 205px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #151515,
+                    #090909
+                );
+        }
+
+        .post-cover {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            transition:
+                transform .5s cubic-bezier(.2,.8,.2,1),
+                filter .4s ease;
+        }
+
+        .post-card:hover .post-cover {
+            transform: scale(1.035);
+            filter: brightness(1.05);
+        }
+
+        .post-cover-overlay {
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(0,0,0,.02),
+                    rgba(0,0,0,.08) 40%,
+                    rgba(0,0,0,.7)
+                );
+
+            pointer-events: none;
+        }
+
+        .post-featured-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 3;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+
+            padding: 5px 10px;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f6ce63,
+                    #c8963e
+                );
+
+            color: #080808;
+
+            font-size: .57rem;
+            font-weight: 900;
+
+            box-shadow:
+                0 5px 20px rgba(240,192,64,.3);
+        }
+
+        .post-body {
+            padding: 16px;
+        }
+
+        .post-category {
+            display: inline-flex;
+            align-items: center;
+
+            min-height: 23px;
+
+            padding: 3px 9px;
+
+            border-radius: 999px;
+
+            font-size: .58rem;
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+        .post-category.news {
+            color: #54aee8;
+            background: rgba(52,152,219,.12);
+        }
+
+        .post-category.tutorial {
+            color: #42dc82;
+            background: rgba(46,204,113,.11);
+        }
+
+        .post-category.update {
+            color: #c184e0;
+            background: rgba(155,89,182,.12);
+        }
+
+        .post-category.event {
+            color: #f0a14c;
+            background: rgba(230,126,34,.12);
+        }
+
+        .post-category.exam {
+            color: #ff4c91;
+            background: rgba(233,30,99,.12);
+        }
+
+        .post-exam-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+
+            margin-right: 5px;
+
+            padding: 3px 8px;
+
+            border-radius: 999px;
+
+            background: rgba(233,30,99,.12);
+            color: #ff4c91;
+
+            font-size: .55rem;
+            font-weight: 800;
+        }
+
+        .post-title {
+            color: #fff;
+
+            font-size: 1rem;
+            font-weight: 850;
+
+            line-height: 1.7;
+
+            margin-bottom: 7px;
+        }
+
+        .post-excerpt {
+            color: #92929a;
+
+            font-size: .76rem;
+
+            line-height: 2;
+
+            margin-bottom: 13px;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 11px;
+
+            color: #606068;
+
+            font-size: .61rem;
+        }
+
+        .post-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .post-meta i {
+            color: var(--gold);
+            font-size: .63rem;
+        }
+
+        .post-author-link {
+            color: #5faee5 !important;
+            font-weight: 700;
+            text-decoration: none;
+
+            cursor: pointer;
+        }
+
+        .post-author-link:hover {
+            color: #82c8f5 !important;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+
+            margin-top: 11px;
+        }
+
+        .post-tag {
+            padding: 3px 8px;
+
+            border-radius: 999px;
+
+            background: rgba(255,255,255,.025);
+            border: 1px solid rgba(255,255,255,.055);
+
+            color: #676770;
+
+            font-size: .54rem;
+        }
+
+        /* =========================================================
+           DETAIL
+        ========================================================= */
+
+        .post-detail,
+        .author-profile {
+            display: none;
+        }
+
+        .post-detail.active,
+        .author-profile.active {
+            display: block;
+
+            animation: pageIn .3s ease both;
+        }
+
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post-detail-cover {
+            width: 100%;
+            height: 240px;
+
+            display: block;
+
+            object-fit: cover;
+
+            border-radius: var(--radius-lg);
+
+            margin-bottom: 17px;
+
+            border: 1px solid var(--border);
+
+            box-shadow:
+                0 18px 50px rgba(0,0,0,.35);
+        }
+
+        .detail-head {
+            padding: 0 2px;
+        }
+
+        .post-detail h2 {
+            color: #fff;
+
+            font-size: clamp(1.25rem, 5vw, 1.65rem);
+            font-weight: 900;
+
+            line-height: 1.65;
+
+            margin: 8px 0 12px;
+        }
+
+        .post-detail .content {
+            color: #bcbcc4;
+
+            font-size: .83rem;
+            line-height: 2.35;
+
+            margin-top: 20px;
+        }
+
+        .post-detail .content h2,
+        .post-detail .content h3 {
+            color: var(--gold-light);
+
+            margin:
+                24px 0
+                10px;
+
+            line-height: 1.7;
+        }
+
+        .post-detail .content h4 {
+            color: #ddd;
+            margin: 18px 0 8px;
+        }
+
+        .post-detail .content p {
+            margin-bottom: 14px;
+        }
+
+        .post-detail .content ul,
+        .post-detail .content ol {
+            padding-right: 20px;
+            margin: 12px 0 18px;
+        }
+
+        .post-detail .content li {
+            margin-bottom: 7px;
+        }
+
+        .post-detail .content strong {
+            color: #fff;
+        }
+
+        .post-detail .content a {
+            color: #65b8f1;
+        }
+
+        .post-detail .content blockquote {
+            margin: 18px 0;
+            padding: 12px 15px;
+
+            border-right: 3px solid var(--gold);
+
+            background: rgba(200,150,62,.05);
+
+            border-radius: 10px;
+
+            color: #ccc;
+        }
+
+        .post-detail .content pre {
+            direction: ltr;
+            text-align: left;
+
+            overflow-x: auto;
+
+            margin: 16px 0;
+
+            padding: 14px;
+
+            border-radius: 12px;
+
+            background: #08080a;
+            border: 1px solid var(--border);
+
+            color: #ddd;
+
+            font-family:
+                'SFMono-Regular',
+                Consolas,
+                monospace;
+
+            font-size: .72rem;
+            line-height: 1.8;
+        }
+
+        /* =========================================================
+           EXAM
+        ========================================================= */
+
+        .exam-section {
+            margin-top: 24px;
+            padding: 18px;
+
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(233,30,99,.075),
+                    rgba(233,30,99,.025)
+                );
+
+            border: 1px solid rgba(233,30,99,.24);
+        }
+
+        .exam-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: #ff4c91;
+
+            font-size: .95rem;
+            font-weight: 850;
+
+            margin-bottom: 10px;
+        }
+
+        .exam-question {
+            margin-top: 18px;
+        }
+
+        .exam-question p {
+            color: #fff;
+
+            font-size: .78rem;
+            font-weight: 750;
+
+            line-height: 1.9;
+
+            margin-bottom: 9px;
+        }
+
+        .exam-options {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .exam-opt {
+            width: 100%;
+
+            padding: 11px 13px;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,.025);
+            border: 1px solid var(--border);
+
+            color: #a8a8b0;
+
+            text-align: right;
+
+            font-size: .73rem;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+        .exam-opt:hover {
+            border-color: rgba(233,30,99,.5);
+            color: #fff;
+            background: rgba(233,30,99,.06);
+        }
+
+        .exam-opt.selected {
+            border-color: #e91e63;
+            color: #fff;
+            background: rgba(233,30,99,.13);
+        }
+
+        .exam-opt.correct,
+        .exam-opt.saved-correct {
+            border-color: rgba(46,204,113,.65) !important;
+            background: rgba(46,204,113,.11) !important;
+            color: #42dc82 !important;
+        }
+
+        .exam-opt.wrong,
+        .exam-opt.saved-wrong {
+            border-color: rgba(231,76,60,.65) !important;
+            background: rgba(231,76,60,.11) !important;
+            color: #ff6255 !important;
+        }
+
+        .exam-opt:disabled {
+            cursor: default;
+            opacity: .9;
+        }
+
+        .exam-submit-btn {
+            width: 100%;
+
+            margin-top: 18px;
+
+            padding: 12px 14px;
+
+            border: 0;
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e91e63,
+                    #b71552
+                );
+
+            color: #fff;
+
+            font-size: .78rem;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 25px rgba(233,30,99,.2);
+
+            transition: var(--transition);
+        }
+
+        .exam-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 12px 30px rgba(233,30,99,.28);
+        }
+
+        .exam-submit-btn:disabled {
+            background: #171719;
+            color: #555;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .exam-result {
+            text-align: center;
+
+            padding: 14px;
+
+            margin-top: 12px;
+
+            border-radius: 12px;
+
+            font-size: .78rem;
+            font-weight: 800;
+        }
+
+        .exam-locked-notice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+
+            margin-top: 13px;
+            padding: 11px;
+
+            border-radius: 11px;
+
+            background: rgba(241,196,15,.06);
+            border: 1px solid rgba(241,196,15,.2);
+
+            color: #d9b52b;
+
+            font-size: .67rem;
+            text-align: center;
+        }
+
+        /* =========================================================
+           AUTHOR
+        ========================================================= */
+
+        .author-header {
+            position: relative;
+
+            padding: 25px 17px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+
+            border-radius: var(--radius-lg);
+
+            background:
+                radial-gradient(
+                    circle at 50% 0,
+                    rgba(200,150,62,.07),
+                    transparent 55%
+                ),
+                var(--bg-card);
+
+            border: 1px solid var(--border);
+
+            box-shadow: var(--shadow);
+        }
+
+        .author-avatar {
+            width: 86px;
+            height: 86px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            border: 2px solid var(--gold);
+
+            box-shadow:
+                0 8px 30px rgba(200,150,62,.2);
+
+            margin-bottom: 12px;
+        }
+
+        .author-name {
+            color: #fff;
+
+            font-size: 1.18rem;
+            font-weight: 900;
+
+            margin-bottom: 5px;
+        }
+
+        .author-bio {
+            max-width: 430px;
+
+            margin:
+                0 auto
+                13px;
+
+            color: #888890;
+
+            font-size: .74rem;
+            line-height: 2;
+        }
+
+        .author-stats {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+
+            margin-bottom: 15px;
+        }
+
+        .author-stat {
+            min-width: 50px;
+        }
+
+        .author-stat .num {
+            color: var(--gold-light);
+            font-size: 1.1rem;
+            font-weight: 900;
+        }
+
+        .author-stat .lbl {
+            color: #707078;
+            font-size: .58rem;
+        }
+
+        .follow-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+
+            min-width: 125px;
+
+            padding: 9px 20px;
+
+            border-radius: 999px;
+
+            border: 1px solid var(--gold);
+
+            background: transparent;
+            color: var(--gold-light);
+
+            font-size: .72rem;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+        .follow-btn:hover {
+            transform: translateY(-1px);
+            background: var(--gold-soft);
+        }
+
+        .follow-btn.following {
+            background: var(--gold);
+            color: #000;
+        }
+
+        .author-posts-title {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            margin-bottom: 12px;
+
+            color: #ddd;
+
+            font-size: .85rem;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           EMPTY / ERROR / LOADING
+        ========================================================= */
+
+        .state-box {
+            padding: 50px 20px;
+
+            text-align: center;
+
+            border-radius: var(--radius-lg);
+
+            background: rgba(255,255,255,.018);
+            border: 1px solid var(--border);
+        }
+
+        .state-icon {
+            width: 54px;
+            height: 54px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 13px;
+
+            border-radius: 17px;
+
+            background: rgba(200,150,62,.07);
+            color: var(--gold);
+
+            font-size: 1.2rem;
+        }
+
+        .state-box h3 {
+            color: #ddd;
+            font-size: .9rem;
+            margin-bottom: 5px;
+        }
+
+        .state-box p {
+            color: #62626a;
+            font-size: .68rem;
+        }
+
+        /* =========================================================
+           BOTTOM NAV
+        ========================================================= */
+
+        .bottom-nav {
+            position: fixed;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            z-index: 900;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            min-height: 64px;
+
+            padding:
+                6px 8px
+                calc(6px + var(--safe-bottom));
+
+            background: rgba(5,5,5,.91);
+
+            border-top: 1px solid var(--border);
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+        }
+
+        .bottom-nav::before {
+            content: "";
+
+            position: absolute;
+
+            top: -1px;
+            left: 20%;
+            right: 20%;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(200,150,62,.2),
+                    transparent
+                );
+        }
+
+        .bottom-nav a {
+            position: relative;
+
+            min-width: 60px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+
+            padding: 5px 9px;
+
+            color: #55555d;
+
+            text-decoration: none;
+
+            font-size: .56rem;
+            font-weight: 600;
+
+            border-radius: 10px;
+
+            transition: var(--transition);
+        }
+
+        .bottom-nav a i {
+            font-size: 1.05rem;
+        }
+
+        .bottom-nav a:hover,
+        .bottom-nav a.active {
+            color: var(--gold-light);
+            background: rgba(200,150,62,.045);
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 600px) {
+
+            .posts-container {
+                width: min(100% - 20px, 720px);
+                padding-top: 14px;
+            }
+
+            .header {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .post-cover-wrap {
+                height: 185px;
+            }
+
+            .post-detail-cover {
+                height: 200px;
+            }
+
+            .post-body {
+                padding: 14px;
+            }
+
+            .post-title {
+                font-size: .94rem;
+            }
+
+            .post-excerpt {
+                font-size: .73rem;
+            }
+        }
+
+        @media (max-width: 390px) {
+
+            html {
+                font-size: 14px;
+            }
+
+            .posts-container {
+                width: calc(100% - 16px);
+            }
+
+            .logo-text {
+                font-size: .96rem;
+            }
+
+            .logo-icon {
+                width: 33px;
+                height: 33px;
+                flex-basis: 33px;
+            }
+
+            .post-cover-wrap {
+                height: 165px;
+            }
+
+            .post-detail-cover {
+                height: 180px;
+            }
+
+            .post-body {
+                padding: 13px;
+            }
+
+            .author-stats {
+                gap: 24px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+    <a
+        href="index.html"
+        class="back-btn"
+        id="headerBackBtn"
+        aria-label="بازگشت"
+        title="بازگشت"
+    >
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
+
+    <a href="index.html" class="logo" aria-label="BlockForge">
+
+        <div class="logo-icon">
+            <i class="fa-solid fa-cubes"></i>
+        </div>
+
+        <div class="logo-text">
+            Block<span>Forge</span>
+        </div>
+
+    </a>
+
+    <div class="header-right">
+
+        <button
+            class="following-btn"
+            id="followingBtn"
+            type="button"
+            onclick="toggleFollowedSection()"
+            title="دنبال شده‌ها"
+            aria-label="دنبال شده‌ها"
+        >
+            <i class="fa-solid fa-users"></i>
+
+            <span
+                class="badge"
+                id="followBadge"
+                style="display:none;"
+            >0</span>
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="posts-container">
+
+    <!-- دنبال شده‌ها -->
+
+    <section
+        class="followed-section"
+        id="followedSection"
+        aria-label="نویسنده‌های دنبال شده"
+    >
+
+        <div class="followed-header">
+
+            <h3>
+                <i class="fa-solid fa-users"></i>
+                نویسنده‌های دنبال شده
+            </h3>
+
+            <button
+                type="button"
+                class="section-close"
+                onclick="closeFollowedSection()"
+                aria-label="بستن"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div
+            class="followed-list"
+            id="followedList"
+        ></div>
+
+        <div
+            class="followed-posts"
+            id="followedPosts"
+        ></div>
+
+    </section>
+
+
+    <!-- فیلتر -->
+
+    <section
+        class="filter-area"
+        id="filterArea"
+    >
+
+        <div class="filter-title">
+
+            <h1>
+                <i
+                    class="fa-solid fa-layer-group"
+                    style="color:var(--gold);font-size:.75rem;"
+                ></i>
+
+                آخرین مطالب
+            </h1>
+
+            <span id="postCount">
+                0 مطلب
+            </span>
+
+        </div>
+
+        <div
+            class="filter-chips"
+            id="filterChips"
+        >
+
+            <button
+                type="button"
+                class="filter-chip active"
+                data-filter="all"
+            >
+                <i class="fa-solid fa-list"></i>
+                همه
+            </button>
+
+            <button
+                type="button"
+                class="filter-chip"
+                data-filter="news"
+            >
+                <i class="fa-solid fa-newspaper"></i>
+                اخبار
+            </button>
+
+            <button
+                type="button"
+                class="filter-chip"
+                data-filter="tutorial"
+            >
+                <i class="fa-solid fa-graduation-cap"></i>
+                آموزش
+            </button>
+
+            <button
+                type="button"
+                class="filter-chip"
+                data-filter="update"
+            >
+                <i class="fa-solid fa-rotate"></i>
+                آپدیت
+            </button>
+
+            <button
+                type="button"
+                class="filter-chip"
+                data-filter="event"
+            >
+                <i class="fa-solid fa-calendar"></i>
+                رویداد
+            </button>
+
+            <button
+                type="button"
+                class="filter-chip exam"
+                data-filter="exam"
+            >
+                <i class="fa-solid fa-pen-to-square"></i>
+                آزمون
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- لیست -->
+
+    <section
+        class="posts-grid"
+        id="postsList"
+        aria-live="polite"
+    ></section>
+
+
+    <!-- جزئیات -->
+
+    <section
+        class="post-detail"
+        id="postDetail"
+    ></section>
+
+
+    <!-- نویسنده -->
+
+    <section
+        class="author-profile"
+        id="authorProfile"
+    ></section>
+
+</main>
+
+
+<!-- =========================================================
+     BOTTOM NAV
+========================================================= -->
+
+<nav class="bottom-nav" aria-label="ناوبری اصلی">
+
+    <a href="index.html">
+        <i class="fa-solid fa-house"></i>
+        خانه
+    </a>
+
+    <a href="premium.html">
+        <i
+            class="fa-solid fa-crown"
+            style="color:var(--premium);"
+        ></i>
+        پرمیوم
+    </a>
+
+    <a
+        href="index.html"
+        id="savedNav"
+    >
+        <i class="fa-solid fa-bookmark"></i>
+        ذخیره‌شده
+    </a>
+
+</nav>
+
+
+<!-- =========================================================
+     DATA
+========================================================= -->
+
+<script src="posts.js"></script>
+
+
+<!-- =========================================================
+     APP
+========================================================= -->
+
+<script>
+
+'use strict';
+
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
+
+let posts = [];
+let activeFilter = 'all';
+
+let currentView = 'list';
+let currentAuthorSlug = null;
+
+let examAnswers = {};
+
+
+/* =========================================================
+   SAFE HELPERS
+========================================================= */
+
+function safeJSONParse(value, fallback) {
+
+    try {
+
+        const parsed = JSON.parse(value);
+
+        return parsed ?? fallback;
+
+    } catch (error) {
+
+        return fallback;
+
+    }
+
+}
+
+
+function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+        return '';
+    }
+
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+
+}
+
+
+function safeText(value, fallback = '') {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ''
+    ) {
+        return fallback;
+    }
+
+    return String(value);
+
+}
+
+
+function safeArray(value) {
+
+    return Array.isArray(value) ? value : [];
+
+}
+
+
+function safeCover(value) {
+
+    return value ||
+        'data:image/svg+xml;charset=UTF-8,' +
+        encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="900"
+                 height="500"
+                 viewBox="0 0 900 500">
+
+                <rect width="900"
+                      height="500"
+                      fill="#101012"/>
+
+                <circle
+                    cx="450"
+                    cy="250"
+                    r="120"
+                    fill="none"
+                    stroke="#c8963e"
+                    stroke-opacity=".25"
+                    stroke-width="2"/>
+
+                <text
+                    x="450"
+                    y="260"
+                    text-anchor="middle"
+                    fill="#c8963e"
+                    font-family="Arial"
+                    font-size="28">
+                    BLOCKFORGE
+                </text>
+
+            </svg>
+        `);
+
+}
+
+
+function safeImageError(img) {
+
+    if (!img) return;
+
+    img.onerror = null;
+
+    img.src = safeCover('');
+
+}
+
+
+/* =========================================================
+   LOCAL STORAGE
+========================================================= */
+
+function getFollows() {
+
+    const value = safeJSONParse(
+        localStorage.getItem('bf_follows'),
+        []
+    );
+
+    return Array.isArray(value) ? value : [];
+
+}
+
+
+function saveFollows(arr) {
+
+    try {
+
+        localStorage.setItem(
+            'bf_follows',
+            JSON.stringify(arr)
+        );
+
+    } catch (error) {
+
+        console.warn(
+            'Unable to save follows:',
+            error
+        );
+
+    }
+
+}
+
+
+function getSavedExams() {
+
+    const value = safeJSONParse(
+        localStorage.getItem('bf_exams'),
+        {}
+    );
+
+    return value &&
+           typeof value === 'object' &&
+           !Array.isArray(value)
+        ? value
+        : {};
+
+}
+
+
+function saveExams(data) {
+
+    try {
+
+        localStorage.setItem(
+            'bf_exams',
+            JSON.stringify(data)
+        );
+
+    } catch (error) {
+
+        console.warn(
+            'Unable to save exams:',
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   FOLLOW
+========================================================= */
+
+function isFollowing(slug) {
+
+    if (!slug) return false;
+
+    return getFollows().includes(slug);
+
+}
+
+
+function toggleFollow(slug) {
+
+    if (!slug) return;
+
+    const follows = getFollows();
+
+    const index = follows.indexOf(slug);
+
+    if (index >= 0) {
+
+        follows.splice(index, 1);
+
+    } else {
+
+        follows.push(slug);
+
+    }
+
+    saveFollows(follows);
+
+    updateFollowBadge();
+    updateFollowedSection();
+
+    if (currentView === 'author') {
+
+        updateAuthorUI();
+
+    }
+
+}
+
+
+function updateFollowBadge() {
+
+    const follows = getFollows();
+
+    const badge =
+        document.getElementById('followBadge');
+
+    if (!badge) return;
+
+    if (follows.length > 0) {
+
+        badge.style.display = 'flex';
+
+        badge.textContent =
+            follows.length > 99
+                ? '99+'
+                : String(follows.length);
+
+    } else {
+
+        badge.style.display = 'none';
+
+    }
+
+}
+
+
+function toggleFollowedSection() {
+
+    const section =
+        document.getElementById('followedSection');
+
+    if (!section) return;
+
+    section.classList.toggle('show');
+
+    if (section.classList.contains('show')) {
+
+        updateFollowedSection();
+
+    }
+
+}
+
+
+function closeFollowedSection() {
+
+    const section =
+        document.getElementById('followedSection');
+
+    if (section) {
+
+        section.classList.remove('show');
+
+    }
+
+}
+
+
+function updateFollowedSection() {
+
+    const follows = getFollows();
+
+    const list =
+        document.getElementById('followedList');
+
+    const postsList =
+        document.getElementById('followedPosts');
+
+    if (!list || !postsList) return;
+
+
+    if (follows.length === 0) {
+
+        list.innerHTML = `
+            <span style="
+                color:#777;
+                font-size:.68rem;
+            ">
+                هنوز نویسنده‌ای رو دنبال نکردی.
+            </span>
+        `;
+
+        postsList.innerHTML = '';
+
+        return;
+
+    }
+
+
+    if (
+        typeof AUTHORS === 'undefined' ||
+        !AUTHORS
+    ) {
+
+        list.innerHTML = '';
+
+        postsList.innerHTML = `
+            <div style="
+                color:#777;
+                font-size:.68rem;
+                padding:8px 0;
+            ">
+                اطلاعات نویسنده‌ها در دسترس نیست.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML = follows
+        .map(slug => {
+
+            const author = AUTHORS[slug];
+
+            if (!author) return '';
+
+            return `
+                <div
+                    class="followed-author-chip"
+                    onclick="showAuthor(${JSON.stringify(slug)})"
+                >
+
+                    <img
+                        src="${safeCover(author.avatar)}"
+                        alt="${escapeHTML(author.name || 'نویسنده')}"
+                        loading="lazy"
+                        onerror="safeImageError(this)"
+                    >
+
+                    <span>
+                        ${escapeHTML(
+                            safeText(author.name, 'نویسنده')
+                        )}
+                    </span>
+
+                </div>
+            `;
+
+        })
+        .filter(Boolean)
+        .join('');
+
+
+    const followedPosts = posts
+        .filter(post =>
+            follows.includes(post.authorSlug)
+        )
+        .slice(0, 5);
+
+
+    if (followedPosts.length === 0) {
+
+        postsList.innerHTML = `
+            <div style="
+                color:#777;
+                font-size:.68rem;
+                padding:8px 0;
+            ">
+                هنوز مطلبی از نویسنده‌های دنبال‌شده پیدا نشد.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    postsList.innerHTML = `
+        <h4 style="
+            font-size:.68rem;
+            color:#777;
+            margin-bottom:8px;
+        ">
+            آخرین مطالب
+        </h4>
+
+        ${followedPosts.map(post => `
+            <div
+                class="followed-post-item"
+                onclick="showPost(${Number(post.id)})"
+            >
+
+                <div class="fp-title">
+                    ${escapeHTML(
+                        safeText(post.title, 'بدون عنوان')
+                    )}
+                </div>
+
+                <div class="fp-meta">
+
+                    <span>
+                        <i class="fa-solid fa-user"></i>
+                        ${escapeHTML(
+                            safeText(post.author, 'نویسنده')
+                        )}
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-calendar"></i>
+                        ${escapeHTML(
+                            safeText(post.date, '')
+                        )}
+                    </span>
+
+                </div>
+
+            </div>
+        `).join('')}
+    `;
+
+}
+
+
+/* =========================================================
+   STATE UI
+========================================================= */
+
+function showState(
+    container,
+    icon,
+    title,
+    description
+) {
+
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="state-box">
+
+            <div class="state-icon">
+                <i class="fa-solid ${icon}"></i>
+            </div>
+
+            <h3>
+                ${escapeHTML(title)}
+            </h3>
+
+            <p>
+                ${escapeHTML(description)}
+            </p>
+
+        </div>
+    `;
+
+}
+
+
+/* =========================================================
+   LOAD POSTS
+========================================================= */
+
+function loadPosts() {
+
+    const grid =
+        document.getElementById('postsList');
+
+    if (
+        typeof POSTS === 'undefined' ||
+        !Array.isArray(POSTS)
+    ) {
+
+        showState(
+            grid,
+            'fa-box-open',
+            'هنوز پستی منتشر نشده',
+            'به‌زودی مطالب جدید اینجا نمایش داده می‌شوند.'
+        );
+
+        updatePostCount(0);
+
+        return;
+
+    }
+
+
+    posts = POSTS
+        .filter(post =>
+            post &&
+            typeof post === 'object'
+        )
+        .map(post => ({
+            ...post,
+
+            id:
+                Number.isFinite(Number(post.id))
+                    ? Number(post.id)
+                    : 0,
+
+            tags:
+                safeArray(post.tags),
+
+            examQuestions:
+                safeArray(post.examQuestions)
+        }))
+        .sort((a, b) => b.id - a.id);
+
+
+    updateFollowBadge();
+
+    updateFollowedSection();
+
+    showList();
+
+}
+
+
+/* =========================================================
+   VIEW MANAGEMENT
+========================================================= */
+
+function showList() {
+
+    currentView = 'list';
+
+    currentAuthorSlug = null;
+
+    examAnswers = {};
+
+    const filterArea =
+        document.getElementById('filterArea');
+
+    const grid =
+        document.getElementById('postsList');
+
+    const detail =
+        document.getElementById('postDetail');
+
+    const author =
+        document.getElementById('authorProfile');
+
+    const back =
+        document.getElementById('headerBackBtn');
+
+
+    if (filterArea)
+        filterArea.style.display = 'block';
+
+    if (grid)
+        grid.style.display = 'flex';
+
+    if (detail)
+        detail.classList.remove('active');
+
+    if (author)
+        author.classList.remove('active');
+
+
+    if (back) {
+
+        back.href = 'index.html';
+        back.onclick = null;
+
+    }
+
+
+    renderPosts();
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+
+}
+
+
+/* =========================================================
+   RENDER POSTS
+========================================================= */
+
+function renderPosts() {
+
+    const grid =
+        document.getElementById('postsList');
+
+    if (!grid) return;
+
+
+    let filtered =
+        activeFilter === 'all'
+            ? [...posts]
+            : posts.filter(
+                post =>
+                    post.category === activeFilter
+            );
+
+
+    filtered.sort((a, b) => {
+
+        if (a.featured && !b.featured)
+            return -1;
+
+        if (!a.featured && b.featured)
+            return 1;
+
+        return Number(b.id) - Number(a.id);
+
+    });
+
+
+    updatePostCount(filtered.length);
+
+
+    if (filtered.length === 0) {
+
+        showState(
+            grid,
+            'fa-filter-circle-xmark',
+            'مطلبی پیدا نشد',
+            'در این دسته‌بندی هنوز پستی وجود ندارد.'
+        );
+
+        return;
+
+    }
+
+
+    grid.innerHTML = filtered
+        .map((post, index) => {
+
+            const tags =
+                safeArray(post.tags);
+
+            const category =
+                safeText(
+                    post.category,
+                    'news'
+                );
+
+            const title =
+                safeText(
+                    post.title,
+                    'بدون عنوان'
+                );
+
+            const excerpt =
+                safeText(
+                    post.excerpt,
+                    'توضیحی برای این مطلب ثبت نشده است.'
+                );
+
+            const author =
+                safeText(
+                    post.author,
+                    'نویسنده'
+                );
+
+            const authorSlug =
+                safeText(
+                    post.authorSlug,
+                    ''
+                );
+
+            return `
+                <article
+                    class="
+                        post-card
+                        ${post.featured ? 'featured' : ''}
+                        ${category === 'exam' ? 'exam-card' : ''}
+                    "
+                    onclick="showPost(${Number(post.id)})"
+                    style="animation-delay:${Math.min(index * 35, 250)}ms"
+                >
+
+                    ${
+                        post.featured
+                            ? `
+                                <span class="post-featured-badge">
+                                    <i class="fa-solid fa-star"></i>
+                                    ویژه
+                                </span>
+                              `
+                            : ''
+                    }
+
+
+                    <div class="post-cover-wrap">
+
+                        <img
+                            class="post-cover"
+                            src="${safeCover(post.cover)}"
+                            alt="${escapeHTML(title)}"
+                            loading="lazy"
+                            onerror="safeImageError(this)"
+                        >
+
+                        <div class="post-cover-overlay"></div>
+
+                    </div>
+
+
+                    <div class="post-body">
+
+                        <span class="post-category ${escapeHTML(category)}">
+                            ${escapeHTML(
+                                getCatName(category)
+                            )}
+                        </span>
+
+
+                        ${
+                            category === 'exam'
+                                ? `
+                                    <span class="post-exam-badge">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        آزمون
+                                    </span>
+                                  `
+                                : ''
+                        }
+
+
+                        <h2 class="post-title">
+                            ${escapeHTML(title)}
+                        </h2>
+
+
+                        <p class="post-excerpt">
+                            ${escapeHTML(excerpt)}
+                        </p>
+
+
+                        <div class="post-meta">
+
+                            ${
+                                authorSlug
+                                    ? `
+                                        <span
+                                            class="post-author-link"
+                                            onclick="
+                                                event.stopPropagation();
+                                                showAuthor(${JSON.stringify(authorSlug)});
+                                            "
+                                        >
+                                            <i class="fa-solid fa-user"></i>
+                                            ${escapeHTML(author)}
+                                        </span>
+                                      `
+                                    : `
+                                        <span>
+                                            <i class="fa-solid fa-user"></i>
+                                            ${escapeHTML(author)}
+                                        </span>
+                                      `
+                            }
+
+
+                            ${
+                                post.date
+                                    ? `
+                                        <span>
+                                            <i class="fa-solid fa-calendar"></i>
+                                            ${escapeHTML(post.date)}
+                                        </span>
+                                      `
+                                    : ''
+                            }
+
+
+                            ${
+                                post.readTime
+                                    ? `
+                                        <span>
+                                            <i class="fa-solid fa-clock"></i>
+                                            ${escapeHTML(post.readTime)}
+                                        </span>
+                                      `
+                                    : ''
+                            }
+
+                        </div>
+
+
+                        ${
+                            tags.length
+                                ? `
+                                    <div class="post-tags">
+
+                                        ${tags
+                                            .slice(0, 8)
+                                            .map(tag => `
+                                                <span class="post-tag">
+                                                    #${escapeHTML(tag)}
+                                                </span>
+                                            `)
+                                            .join('')
+                                        }
+
+                                    </div>
+                                  `
+                                : ''
+                        }
+
+                    </div>
+
+                </article>
+            `;
+
+        })
+        .join('');
+
+}
+
+
+function updatePostCount(count) {
+
+    const element =
+        document.getElementById('postCount');
+
+    if (!element) return;
+
+    element.textContent =
+        `${count.toLocaleString('fa-IR')} مطلب`;
+
+}
+
+
+/* =========================================================
+   SHOW POST
+========================================================= */
+
+function showPost(id) {
+
+    const post =
+        posts.find(
+            item =>
+                Number(item.id) === Number(id)
+        );
+
+
+    if (!post) {
+
+        console.warn(
+            'Post not found:',
+            id
+        );
+
+        return;
+
+    }
+
+
+    currentView = 'detail';
+
+    currentAuthorSlug =
+        post.authorSlug || null;
+
+    examAnswers = {};
+
+
+    const filterArea =
+        document.getElementById('filterArea');
+
+    const grid =
+        document.getElementById('postsList');
+
+    const detail =
+        document.getElementById('postDetail');
+
+    const author =
+        document.getElementById('authorProfile');
+
+    const followed =
+        document.getElementById('followedSection');
+
+    const back =
+        document.getElementById('headerBackBtn');
+
+
+    if (filterArea)
+        filterArea.style.display = 'none';
+
+    if (grid)
+        grid.style.display = 'none';
+
+    if (author)
+        author.classList.remove('active');
+
+    if (followed)
+        followed.classList.remove('show');
+
+    if (detail)
+        detail.classList.add('active');
+
+
+    if (back) {
+
+        back.href = '#';
+
+        back.onclick = function(event) {
+
+            event.preventDefault();
+
+            showList();
+
+        };
+
+    }
+
+
+    let examHTML = '';
+
+
+    if (
+        post.category === 'exam' &&
+        post.examQuestions.length
+    ) {
+
+        const savedExams =
+            getSavedExams();
+
+        const savedExam =
+            savedExams[
+                'exam_' + post.id
+            ];
+
+
+        if (savedExam) {
+
+            examHTML =
+                renderSavedExam(
+                    post,
+                    savedExam
+                );
+
+        } else {
+
+            examHTML =
+                renderNewExam(post);
+
+        }
+
+    }
+
+
+    const tags =
+        safeArray(post.tags);
+
+
+    if (detail) {
+
+        detail.innerHTML = `
+
+            <img
+                class="post-detail-cover"
+                src="${safeCover(post.cover)}"
+                alt="${escapeHTML(
+                    safeText(post.title, 'پست')
+                )}"
+                onerror="safeImageError(this)"
+            >
+
+
+            <div class="detail-head">
+
+                <div>
+
+                    <span class="post-category ${escapeHTML(
+                        safeText(post.category, 'news')
+                    )}">
+                        ${escapeHTML(
+                            getCatName(
+                                safeText(
+                                    post.category,
+                                    'news'
+                                )
+                            )
+                        )}
+                    </span>
+
+
+                    ${
+                        post.featured
+                            ? `
+                                <span
+                                    class="post-featured-badge"
+                                    style="
+                                        position:static;
+                                        display:inline-flex;
+                                        margin-right:5px;
+                                    "
+                                >
+                                    <i class="fa-solid fa-star"></i>
+                                    ویژه
+                                </span>
+                              `
+                            : ''
+                    }
+
+                </div>
+
+
+                <h2>
+                    ${escapeHTML(
+                        safeText(
+                            post.title,
+                            'بدون عنوان'
+                        )
+                    )}
+                </h2>
+
+
+                <div
+                    class="post-meta"
+                    style="margin-bottom:10px;"
+                >
+
+                    ${
+                        post.authorSlug
+                            ? `
+                                <span
+                                    class="post-author-link"
+                                    onclick="showAuthor(${JSON.stringify(post.authorSlug)})"
+                                >
+                                    <i class="fa-solid fa-user"></i>
+                                    ${escapeHTML(
+                                        safeText(
+                                            post.author,
+                                            'نویسنده'
+                                        )
+                                    )}
+                                </span>
+                              `
+                            : ''
+                    }
+
+
+                    ${
+                        post.date
+                            ? `
+                                <span>
+                                    <i class="fa-solid fa-calendar"></i>
+                                    ${escapeHTML(post.date)}
+                                </span>
+                              `
+                            : ''
+                    }
+
+
+                    ${
+                        post.readTime
+                            ? `
+                                <span>
+                                    <i class="fa-solid fa-clock"></i>
+                                    ${escapeHTML(post.readTime)}
+                                </span>
+                              `
+                            : ''
+                    }
+
+                </div>
+
+            </div>
+
+
+            <div class="content">
+                ${post.content || ''}
+            </div>
+
+
+            ${examHTML}
+
+
+            ${
+                tags.length
+                    ? `
+                        <div
+                            class="post-tags"
+                            style="margin-top:18px;"
+                        >
+                            ${tags
+                                .map(tag => `
+                                    <span class="post-tag">
+                                        #${escapeHTML(tag)}
+                                    </span>
+                                `)
+                                .join('')
+                            }
+                        </div>
+                      `
+                    : ''
+            }
+
+
+            <button
+                type="button"
+                onclick="showList()"
+                style="
+                    margin-top:22px;
+                    width:100%;
+                    padding:11px 18px;
+                    background:rgba(255,255,255,.035);
+                    border:1px solid var(--border);
+                    color:#aaa;
+                    border-radius:12px;
+                    cursor:pointer;
+                    font-family:inherit;
+                    font-size:.76rem;
+                    font-weight:700;
+                "
+            >
+                <i class="fa-solid fa-arrow-right"></i>
+                برگشت به لیست
+            </button>
+
+        `;
+
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+
+}
+
+
+/* =========================================================
+   SAVED EXAM
+========================================================= */
+
+function renderSavedExam(post, savedExam) {
+
+    const total =
+        Number(savedExam.total) ||
+        post.examQuestions.length;
+
+    const correct =
+        Number(savedExam.correct) || 0;
+
+    const pct =
+        total > 0
+            ? Math.round(
+                (correct / total) * 100
+              )
+            : 0;
+
+
+    return `
+        <div class="exam-section">
+
+            <h3>
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                نتیجه آزمون
+            </h3>
+
+
+            <div
+                class="exam-result"
+                style="
+                    display:block;
+                    color:${pct >= 50 ? '#42dc82' : '#ff6255'};
+                    background:${pct >= 50
+                        ? 'rgba(46,204,113,.07)'
+                        : 'rgba(231,76,60,.07)'
+                    };
+                    border:1px solid ${pct >= 50
+                        ? 'rgba(46,204,113,.25)'
+                        : 'rgba(231,76,60,.25)'
+                    };
+                "
+            >
+
+                ${correct} از ${total}
+                (${pct}%)
+
+                ${
+                    pct >= 50
+                        ? '✅ قبول شدی!'
+                        : '❌ بیشتر تمرین کن!'
+                }
+
+                <div
+                    style="
+                        font-size:.62rem;
+                        color:#777;
+                        margin-top:4px;
+                    "
+                >
+                    تاریخ:
+                    ${escapeHTML(
+                        savedExam.date || 'نامشخص'
+                    )}
+                </div>
+
+            </div>
+
+
+            ${post.examQuestions.map(
+                (question, index) => {
+
+                    const selected =
+                        savedExam.answers
+                            ? savedExam.answers[index]
+                            : undefined;
+
+                    return `
+                        <div class="exam-question">
+
+                            <p>
+                                ${index + 1}.
+                                ${escapeHTML(
+                                    safeText(
+                                        question.q,
+                                        'سؤال'
+                                    )
+                                )}
+                            </p>
+
+                            <div class="exam-options">
+
+                                ${safeArray(
+                                    question.opts
+                                )
+                                .map((option, optionIndex) => {
+
+                                    let cls = '';
+
+                                    if (
+                                        optionIndex ===
+                                        Number(question.ans)
+                                    ) {
+
+                                        cls =
+                                            ' saved-correct';
+
+                                    } else if (
+                                        optionIndex ===
+                                        Number(selected)
+                                    ) {
+
+                                        cls =
+                                            ' saved-wrong';
+
+                                    }
+
+                                    return `
+                                        <button
+                                            type="button"
+                                            class="exam-opt${cls}"
+                                            disabled
+                                        >
+                                            ${escapeHTML(option)}
+                                        </button>
+                                    `;
+
+                                })
+                                .join('')}
+
+                            </div>
+
+                        </div>
+                    `;
+
+                }
+            ).join('')}
+
+
+            <div class="exam-locked-notice">
+
+                <i class="fa-solid fa-lock"></i>
+
+                این آزمون قبلاً ثبت شده
+                و قابل تغییر نیست.
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+/* =========================================================
+   NEW EXAM
+========================================================= */
+
+function renderNewExam(post) {
+
+    return `
+        <div class="exam-section">
+
+            <h3>
+                <i class="fa-solid fa-pen-to-square"></i>
+                به سوالات جواب بده!
+            </h3>
+
+
+            <p
+                style="
+                    color:#888;
+                    font-size:.68rem;
+                    margin-bottom:12px;
+                "
+            >
+                ⚠️ بعد از ثبت نهایی، پاسخ‌ها
+                قابل تغییر نیستند.
+            </p>
+
+
+            ${post.examQuestions.map(
+                (question, questionIndex) => {
+
+                    return `
+                        <div class="exam-question">
+
+                            <p>
+                                ${questionIndex + 1}.
+                                ${escapeHTML(
+                                    safeText(
+                                        question.q,
+                                        'سؤال'
+                                    )
+                                )}
+                            </p>
+
+
+                            <div class="exam-options">
+
+                                ${safeArray(
+                                    question.opts
+                                )
+                                .map(
+                                    (option, optionIndex) => `
+                                        <button
+                                            type="button"
+                                            class="exam-opt"
+                                            data-q="${questionIndex}"
+                                            data-ans="${optionIndex}"
+                                            onclick="
+                                                selectExamAnswer(
+                                                    this,
+                                                    ${questionIndex},
+                                                    ${optionIndex}
+                                                )
+                                            "
+                                        >
+                                            ${escapeHTML(option)}
+                                        </button>
+                                    `
+                                )
+                                .join('')}
+
+                            </div>
+
+                        </div>
+                    `;
+
+                }
+            ).join('')}
+
+
+            <button
+                type="button"
+                class="exam-submit-btn"
+                id="examSubmitBtn"
+                onclick="
+                    submitExam(
+                        ${Number(post.id)},
+                        ${post.examQuestions.length}
+                    )
+                "
+            >
+                <i class="fa-solid fa-check"></i>
+                ثبت نهایی
+            </button>
+
+
+            <div
+                class="exam-result"
+                id="examResult"
+                style="display:none;"
+            ></div>
+
+        </div>
+    `;
+
+}
+
+
+/* =========================================================
+   EXAM ANSWER
+========================================================= */
+
+function selectExamAnswer(
+    btn,
+    questionIndex,
+    optionIndex
+) {
+
+    if (!btn) return;
+
+    const parent =
+        btn.closest('.exam-options');
+
+    if (!parent) return;
+
+
+    parent
+        .querySelectorAll('.exam-opt')
+        .forEach(option => {
+
+            option.classList.remove(
+                'selected'
+            );
+
+        });
+
+
+    btn.classList.add('selected');
+
+    examAnswers[questionIndex] =
+        optionIndex;
+
+}
+
+
+/* =========================================================
+   SUBMIT EXAM
+========================================================= */
+
+function submitExam(
+    postId,
+    total
+) {
+
+    const post =
+        posts.find(
+            item =>
+                Number(item.id) === Number(postId)
+        );
+
+
+    if (
+        !post ||
+        !post.examQuestions ||
+        !post.examQuestions.length
+    ) {
+
+        return;
+
+    }
+
+
+    const savedExams =
+        getSavedExams();
+
+
+    if (
+        savedExams[
+            'exam_' + postId
+        ]
+    ) {
+
+        showMessage(
+            'این آزمون قبلاً ثبت شده است.'
+        );
+
+        return;
+
+    }
+
+
+    for (
+        let i = 0;
+        i < total;
+        i++
+    ) {
+
+        if (
+            examAnswers[i] === undefined
+        ) {
+
+            const result =
+                document.getElementById(
+                    'examResult'
+                );
+
+            if (result) {
+
+                result.style.display =
+                    'block';
+
+                result.style.color =
+                    '#ff6255';
+
+                result.style.background =
+                    'rgba(231,76,60,.07)';
+
+                result.style.border =
+                    '1px solid rgba(231,76,60,.25)';
+
+                result.textContent =
+                    'لطفاً به همه سوالات جواب بده!';
+
+            }
+
+            return;
+
+        }
+
+    }
+
+
+    let correct = 0;
+
+
+    const questions =
+        document.querySelectorAll(
+            '.exam-question'
+        );
+
+
+    for (
+        let i = 0;
+        i < total;
+        i++
+    ) {
+
+        const questionElement =
+            questions[i];
+
+        if (!questionElement)
+            continue;
+
+
+        const buttons =
+            questionElement.querySelectorAll(
+                '.exam-opt'
+            );
+
+
+        buttons.forEach(
+            (button, optionIndex) => {
+
+                button.disabled = true;
+                button.style.pointerEvents =
+                    'none';
+
+
+                if (
+                    optionIndex ===
+                    Number(
+                        post.examQuestions[i].ans
+                    )
+                ) {
+
+                    button.classList.add(
+                        'correct'
+                    );
+
+                } else if (
+                    optionIndex ===
+                    examAnswers[i]
+                ) {
+
+                    button.classList.add(
+                        'wrong'
+                    );
+
+                }
+
+            }
+        );
+
+
+        if (
+            examAnswers[i] ===
+            Number(
+                post.examQuestions[i].ans
+            )
+        ) {
+
+            correct++;
+
+        }
+
+    }
+
+
+    savedExams[
+        'exam_' + postId
+    ] = {
+
+        answers: {
+            ...examAnswers
+        },
+
+        correct,
+
+        total,
+
+        date:
+            new Date()
+                .toLocaleDateString(
+                    'fa-IR'
+                ),
+
+        locked: true
+
+    };
+
+
+    saveExams(savedExams);
+
+
+    const submitButton =
+        document.getElementById(
+            'examSubmitBtn'
+        );
+
+
+    if (submitButton) {
+
+        submitButton.disabled = true;
+
+        submitButton.innerHTML =
+            '<i class="fa-solid fa-check"></i> ثبت شد';
+
+    }
+
+
+    const percentage =
+        total > 0
+            ? Math.round(
+                (correct / total) * 100
+              )
+            : 0;
+
+
+    const result =
+        document.getElementById(
+            'examResult'
+        );
+
+
+    if (result) {
+
+        result.style.display =
+            'block';
+
+        result.style.color =
+            percentage >= 50
+                ? '#42dc82'
+                : '#ff6255';
+
+        result.style.background =
+            percentage >= 50
+                ? 'rgba(46,204,113,.07)'
+                : 'rgba(231,76,60,.07)';
+
+        result.style.border =
+            percentage >= 50
+                ? '1px solid rgba(46,204,113,.25)'
+                : '1px solid rgba(231,76,60,.25)';
+
+        result.textContent =
+            `نتیجه: ${correct} از ${total} (${percentage}%) ${
+                percentage >= 50
+                    ? '✅ قبول شدی!'
+                    : '❌ بیشتر تمرین کن!'
+            }`;
+
+    }
+
+
+    const section =
+        document.querySelector(
+            '.exam-section'
+        );
+
+
+    if (section) {
+
+        const lockNotice =
+            document.createElement(
+                'div'
+            );
+
+        lockNotice.className =
+            'exam-locked-notice';
+
+        lockNotice.innerHTML = `
+            <i class="fa-solid fa-lock"></i>
+            این آزمون ثبت شده و قابل تغییر نیست.
+        `;
+
+        section.appendChild(
+            lockNotice
+        );
+
+    }
+
+
+    examAnswers = {};
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(message) {
+
+    const existing =
+        document.getElementById(
+            'bfMessage'
+        );
+
+    if (existing)
+        existing.remove();
+
+
+    const box =
+        document.createElement(
+            'div'
+        );
+
+    box.id = 'bfMessage';
+
+    box.textContent = message;
+
+    box.style.cssText = `
+        position:fixed;
+        left:50%;
+        bottom:90px;
+        transform:translateX(-50%);
+        z-index:9999;
+        max-width:calc(100% - 30px);
+        padding:10px 16px;
+        border-radius:12px;
+        background:#171719;
+        border:1px solid rgba(200,150,62,.3);
+        color:#ddd;
+        box-shadow:0 12px 35px rgba(0,0,0,.5);
+        font-family:inherit;
+        font-size:.72rem;
+        font-weight:700;
+        text-align:center;
+    `;
+
+    document.body.appendChild(box);
+
+
+    setTimeout(() => {
+
+        box.style.opacity = '0';
+
+        box.style.transition =
+            'opacity .2s ease';
+
+        setTimeout(() => {
+
+            box.remove();
+
+        }, 220);
+
+    }, 2200);
+
+}
+
+
+/* =========================================================
+   AUTHOR
+========================================================= */
+
+function showAuthor(slug) {
+
+    if (
+        typeof AUTHORS === 'undefined' ||
+        !AUTHORS ||
+        !AUTHORS[slug]
+    ) {
+
+        showMessage(
+            'اطلاعات این نویسنده پیدا نشد.'
+        );
+
+        return;
+
+    }
+
+
+    currentView = 'author';
+
+    currentAuthorSlug = slug;
+
+    examAnswers = {};
+
+
+    const filterArea =
+        document.getElementById('filterArea');
+
+    const grid =
+        document.getElementById('postsList');
+
+    const detail =
+        document.getElementById('postDetail');
+
+    const authorProfile =
+        document.getElementById('authorProfile');
+
+    const followed =
+        document.getElementById('followedSection');
+
+    const back =
+        document.getElementById('headerBackBtn');
+
+
+    if (filterArea)
+        filterArea.style.display = 'none';
+
+    if (grid)
+        grid.style.display = 'none';
+
+    if (detail)
+        detail.classList.remove('active');
+
+    if (followed)
+        followed.classList.remove('show');
+
+    if (authorProfile)
+        authorProfile.classList.add('active');
+
+
+    if (back) {
+
+        back.href = '#';
+
+        back.onclick = function(event) {
+
+            event.preventDefault();
+
+            showList();
+
+        };
+
+    }
+
+
+    updateAuthorUI();
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+
+}
+
+
+/* =========================================================
+   AUTHOR UI
+========================================================= */
+
+function updateAuthorUI() {
+
+    if (
+        currentView !== 'author' ||
+        !currentAuthorSlug
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        typeof AUTHORS === 'undefined' ||
+        !AUTHORS ||
+        !AUTHORS[currentAuthorSlug]
+    ) {
+
+        return;
+
+    }
+
+
+    const author =
+        AUTHORS[currentAuthorSlug];
+
+
+    const authorPosts =
+        posts.filter(
+            post =>
+                post.authorSlug ===
+                currentAuthorSlug
+        );
+
+
+    const following =
+        isFollowing(
+            currentAuthorSlug
+        );
+
+
+    const profile =
+        document.getElementById(
+            'authorProfile'
+        );
+
+
+    if (!profile) return;
+
+
+    profile.innerHTML = `
+
+        <div class="author-header">
+
+            <img
+                class="author-avatar"
+                src="${safeCover(author.avatar)}"
+                alt="${escapeHTML(
+                    safeText(
+                        author.name,
+                        'نویسنده'
+                    )
+                )}"
+                loading="lazy"
+                onerror="safeImageError(this)"
+            >
+
+
+            <div class="author-name">
+                ${escapeHTML(
+                    safeText(
+                        author.name,
+                        'نویسنده'
+                    )
+                )}
+            </div>
+
+
+            <div class="author-bio">
+                ${escapeHTML(
+                    safeText(
+                        author.bio,
+                        'توضیحی برای این نویسنده ثبت نشده است.'
+                    )
+                )}
+            </div>
+
+
+            <div class="author-stats">
+
+                <div class="author-stat">
+
+                    <div class="num">
+                        ${Number(
+                            author.totalPosts ||
+                            authorPosts.length
+                        ).toLocaleString('fa-IR')}
+                    </div>
+
+                    <div class="lbl">
+                        مطلب
+                    </div>
+
+                </div>
+
+
+                <div class="author-stat">
+
+                    <div class="num">
+                        ${Number(
+                            author.totalExams || 0
+                        ).toLocaleString('fa-IR')}
+                    </div>
+
+                    <div class="lbl">
+                        آزمون
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="follow-btn ${
+                    following
+                        ? 'following'
+                        : ''
+                }"
+                onclick="
+                    toggleFollow(
+                        ${JSON.stringify(currentAuthorSlug)}
+                    )
+                "
+            >
+
+                <i
+                    class="fa-solid ${
+                        following
+                            ? 'fa-check'
+                            : 'fa-plus'
+                    }"
+                ></i>
+
+                ${
+                    following
+                        ? 'دنبال شده'
+                        : 'دنبال کردن'
+                }
+
+            </button>
+
+        </div>
+
+
+        <h3 class="author-posts-title">
+
+            <i
+                class="fa-solid fa-newspaper"
+                style="color:var(--gold);"
+            ></i>
+
+            مطالب
+            ${escapeHTML(
+                safeText(
+                    author.name,
+                    'این نویسنده'
+                )
+            )}
+
+        </h3>
+
+
+        ${
+            authorPosts.length
+                ? authorPosts.map(post => `
+
+                    <article
+                        class="
+                            post-card
+                            ${
+                                post.category === 'exam'
+                                    ? 'exam-card'
+                                    : ''
+                            }
+                        "
+                        onclick="showPost(${Number(post.id)})"
+                    >
+
+                        <div class="post-body">
+
+                            <span
+                                class="
+                                    post-category
+                                    ${escapeHTML(
+                                        safeText(
+                                            post.category,
+                                            'news'
+                                        )
+                                    )}
+                                "
+                            >
+                                ${escapeHTML(
+                                    getCatName(
+                                        safeText(
+                                            post.category,
+                                            'news'
+                                        )
+                                    )
+                                )}
+                            </span>
+
+
+                            <h3
+                                class="post-title"
+                                style="
+                                    font-size:.86rem;
+                                "
+                            >
+                                ${escapeHTML(
+                                    safeText(
+                                        post.title,
+                                        'بدون عنوان'
+                                    )
+                                )}
+                            </h3>
+
+
+                            <p
+                                class="post-excerpt"
+                                style="
+                                    font-size:.69rem;
+                                "
+                            >
+                                ${escapeHTML(
+                                    safeText(
+                                        post.excerpt,
+                                        ''
+                                    ).slice(0, 120)
+                                )}
+                                ${
+                                    safeText(
+                                        post.excerpt,
+                                        ''
+                                    ).length > 120
+                                        ? '...'
+                                        : ''
+                                }
+                            </p>
+
+
+                            <div class="post-meta">
+
+                                ${
+                                    post.date
+                                        ? `
+                                            <span>
+                                                <i class="fa-solid fa-calendar"></i>
+                                                ${escapeHTML(post.date)}
+                                            </span>
+                                          `
+                                        : ''
+                                }
+
+
+                                ${
+                                    post.readTime
+                                        ? `
+                                            <span>
+                                                <i class="fa-solid fa-clock"></i>
+                                                ${escapeHTML(post.readTime)}
+                                            </span>
+                                          `
+                                        : ''
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                `).join('')
+                : `
+                    <div class="state-box">
+
+                        <div class="state-icon">
+                            <i class="fa-solid fa-newspaper"></i>
+                        </div>
+
+                        <h3>
+                            هنوز مطلبی ندارد
+                        </h3>
+
+                        <p>
+                            مطالب این نویسنده به‌زودی اینجا نمایش داده می‌شود.
+                        </p>
+
+                    </div>
+                  `
+        }
+
+    `;
+
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+function getCatName(category) {
+
+    const names = {
+
+        news: 'اخبار',
+
+        tutorial: 'آموزش',
+
+        update: 'آپدیت',
+
+        event: 'رویداد',
+
+        exam: 'آزمون'
+
+    };
+
+
+    return names[category] ||
+           category ||
+           'مطالب';
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+const filterChips =
+    document.getElementById(
+        'filterChips'
+    );
+
+
+if (filterChips) {
+
+    filterChips.addEventListener(
+        'click',
+        function(event) {
+
+            const chip =
+                event.target.closest(
+                    '.filter-chip'
+                );
+
+
+            if (!chip) return;
+
+
+            document
+                .querySelectorAll(
+                    '.filter-chip'
+                )
+                .forEach(item => {
+
+                    item.classList.remove(
+                        'active'
+                    );
+
+                });
+
+
+            chip.classList.add(
+                'active'
+            );
+
+
+            activeFilter =
+                chip.dataset.filter ||
+                'all';
+
+
+            renderPosts();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SAVED NAV
+========================================================= */
+
+const savedNav =
+    document.getElementById(
+        'savedNav'
+    );
+
+
+if (savedNav) {
+
+    savedNav.addEventListener(
+        'click',
+        function(event) {
+
+            /*
+             * صفحه مقصد index.html است.
+             * اگر index.js تابع showSaved داشته باشد،
+             * بعد از لود صفحه فراخوانی می‌شود.
+             */
+
+            try {
+
+                sessionStorage.setItem(
+                    'bf_open_saved',
+                    '1'
+                );
+
+            } catch (error) {}
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE SAVED SECTION ON INDEX
+   در صورت پشتیبانی index.html
+========================================================= */
+
+window.addEventListener(
+    'pageshow',
+    function() {
+
+        /*
+         * اینجا عمداً هیچ تابعی از index.html
+         * مستقیماً صدا زده نمی‌شود تا خطای
+         * parent/window ایجاد نشود.
+         */
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD BACK / ESC
+========================================================= */
+
+document.addEventListener(
+    'keydown',
+    function(event) {
+
+        if (
+            event.key === 'Escape' &&
+            currentView !== 'list'
+        ) {
+
+            showList();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+loadPosts();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover"
+    >
+
+    <meta name="theme-color" content="#070708">
+
+    <title>وضعیت | BlockForge</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+    <style>
+
+        /* =========================================================
+           ROOT
+        ========================================================= */
+
+        :root {
+            --bg: #050506;
+            --bg-soft: #09090b;
+
+            --gold: #d4a54a;
+            --gold-light: #f0c86a;
+
+            --text: #f2f2f2;
+            --text-soft: #a5a5aa;
+            --text-muted: #65656b;
+
+            --green: #2ecc71;
+            --red: #e74c3c;
+            --orange: #ff9800;
+            --blue: #3498db;
+
+            --glass: rgba(18, 18, 22, 0.68);
+            --glass-light: rgba(255,255,255,0.045);
+            --glass-border: rgba(255,255,255,0.08);
+
+            --radius: 24px;
+
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 15px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            font-family: 'Vazirmatn', sans-serif;
+
+            color: var(--text);
+
+            overflow-x: hidden;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding:
+                calc(20px + var(--safe-top))
+                18px
+                calc(20px + var(--safe-bottom));
+
+            background:
+                radial-gradient(
+                    circle at 50% 20%,
+                    rgba(212,165,74,0.10),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 10% 90%,
+                    rgba(52,152,219,0.06),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(155,89,182,0.05),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            -webkit-font-smoothing: antialiased;
+        }
+
+
+        /* =========================================================
+           BACKGROUND
+        ========================================================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            overflow: hidden;
+
+            z-index: 0;
+        }
+
+        .background::before {
+            content: '';
+
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.025);
+
+            box-shadow:
+                0 0 0 60px rgba(255,255,255,0.008),
+                0 0 0 120px rgba(255,255,255,0.005);
+
+            animation: backgroundPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0.95);
+                opacity: .5;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                opacity: 1;
+            }
+        }
+
+
+        /* =========================================================
+           FLOATING LIGHTS
+        ========================================================= */
+
+        .orb {
+            position: absolute;
+
+            border-radius: 50%;
+
+            filter: blur(45px);
+
+            opacity: .12;
+
+            animation: orbFloat 8s ease-in-out infinite;
+        }
+
+        .orb.one {
+            width: 160px;
+            height: 160px;
+
+            background: var(--gold);
+
+            top: 8%;
+            left: -70px;
+        }
+
+        .orb.two {
+            width: 130px;
+            height: 130px;
+
+            background: #8e44ad;
+
+            bottom: 5%;
+            right: -50px;
+
+            animation-delay: -3s;
+        }
+
+        .orb.three {
+            width: 90px;
+            height: 90px;
+
+            background: var(--blue);
+
+            top: 45%;
+            right: 12%;
+
+            opacity: .06;
+
+            animation-delay: -5s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(20px, -30px);
+            }
+        }
+
+
+        /* =========================================================
+           STATUS CARD
+        ========================================================= */
+
+        .status-card {
+            position: relative;
+
+            z-index: 5;
+
+            width: 100%;
+            max-width: 440px;
+
+            padding: 30px 22px 22px;
+
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.018)
+                ),
+                var(--glass);
+
+            border: 1px solid var(--glass-border);
+
+            backdrop-filter: blur(35px) saturate(140%);
+            -webkit-backdrop-filter: blur(35px) saturate(140%);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.045);
+
+            text-align: center;
+
+            overflow: hidden;
+
+            animation:
+                cardEnter .75s cubic-bezier(.2,.8,.2,1) both;
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform:
+                    translateY(30px)
+                    scale(.94);
+                filter: blur(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0)
+                    scale(1);
+                filter: blur(0);
+            }
+        }
+
+
+        /* Top shine */
+
+        .status-card::before {
+            content: '';
+
+            position: absolute;
+
+            top: 0;
+            left: 8%;
+            right: 8%;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,.25),
+                    transparent
+                );
+        }
+
+        /* Bottom glow */
+
+        .status-card::after {
+            content: '';
+
+            position: absolute;
+
+            width: 180px;
+            height: 80px;
+
+            left: 50%;
+            bottom: -55px;
+
+            transform: translateX(-50%);
+
+            background: var(--status-color, var(--gold));
+
+            opacity: .08;
+
+            filter: blur(30px);
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================================
+           BRAND
+        ========================================================= */
+
+        .brand {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            margin-bottom: 22px;
+
+            font-size: .78rem;
+
+            font-weight: 800;
+
+            color: #777;
+        }
+
+        .brand-icon {
+            width: 28px;
+            height: 28px;
+
+            border-radius: 8px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--gold),
+                    #7c5b27
+                );
+
+            color: #fff;
+
+            box-shadow:
+                0 5px 18px rgba(212,165,74,.25);
+        }
+
+        .brand span {
+            color: var(--gold);
+        }
+
+
+        /* =========================================================
+           STATUS ICON
+        ========================================================= */
+
+        .icon-zone {
+            position: relative;
+
+            width: 128px;
+            height: 128px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-ring {
+            position: absolute;
+
+            inset: 0;
+
+            border-radius: 50%;
+
+            border: 1px solid
+                color-mix(
+                    in srgb,
+                    var(--status-color, var(--gold)) 30%,
+                    transparent
+                );
+
+            opacity: .8;
+
+            animation:
+                ringPulse 3s ease-in-out infinite;
+        }
+
+        .icon-ring::before,
+        .icon-ring::after {
+            content: '';
+
+            position: absolute;
+
+            inset: 10px;
+
+            border-radius: 50%;
+
+            border: 1px solid
+                color-mix(
+                    in srgb,
+                    var(--status-color, var(--gold)) 14%,
+                    transparent
+                );
+        }
+
+        .icon-ring::after {
+            inset: 22px;
+        }
+
+        @keyframes ringPulse {
+            0%, 100% {
+                transform: scale(.95);
+                opacity: .35;
+            }
+
+            50% {
+                transform: scale(1.04);
+                opacity: .9;
+            }
+        }
+
+        .status-icon {
+            position: relative;
+
+            z-index: 2;
+
+            width: 76px;
+            height: 76px;
+
+            border-radius: 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 2.35rem;
+
+            color: var(--status-color, var(--gold));
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,.06),
+                    rgba(255,255,255,.015)
+                );
+
+            border: 1px solid rgba(255,255,255,.07);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.35),
+                inset 0 1px 0 rgba(255,255,255,.06);
+
+            transition:
+                color .4s ease,
+                transform .4s ease;
+        }
+
+        .status-icon i {
+            transition: transform .4s ease;
+        }
+
+        .status-icon.loading i {
+            animation:
+                loadingSpin 1s linear infinite;
+        }
+
+        @keyframes loadingSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* =========================================================
+           STATUS TEXT
+        ========================================================= */
+
+        .status-title {
+            font-size: 1.35rem;
+
+            font-weight: 900;
+
+            color: #fff;
+
+            margin-bottom: 7px;
+
+            letter-spacing: -.3px;
+
+            animation: textIn .5s ease both;
+        }
+
+        .status-desc {
+            max-width: 320px;
+
+            margin: 0 auto 22px;
+
+            font-size: .72rem;
+
+            line-height: 2;
+
+            color: var(--text-soft);
+
+            animation: textIn .6s .05s ease both;
+        }
+
+        @keyframes textIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================================================
+           STATUS DOT
+        ========================================================= */
+
+        .status-line {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            margin-bottom: 18px;
+
+            font-size: .58rem;
+
+            color: #666;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--status-color, var(--gold));
+
+            box-shadow:
+                0 0 0 4px
+                color-mix(
+                    in srgb,
+                    var(--status-color, var(--gold)) 10%,
+                    transparent
+                );
+
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes dotPulse {
+            0%, 100% {
+                opacity: .55;
+                transform: scale(.9);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.15);
+            }
+        }
+
+
+        /* =========================================================
+           COUNTDOWN
+        ========================================================= */
+
+        .countdown-box {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.035),
+                    rgba(255,255,255,.012)
+                );
+
+            border: 1px solid rgba(255,255,255,.07);
+
+            border-radius: 16px;
+
+            padding: 14px;
+
+            margin-bottom: 18px;
+
+            overflow: hidden;
+
+            animation: countdownIn .5s ease both;
+        }
+
+        .countdown-box::before {
+            content: '';
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--gold),
+                    transparent
+                );
+
+            animation: countdownScan 2s linear infinite;
+        }
+
+        @keyframes countdownScan {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes countdownIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .countdown-text {
+            font-size: .55rem;
+
+            color: #777;
+
+            margin-bottom: 3px;
+        }
+
+        .countdown-timer {
+            font-size: 1.8rem;
+
+            font-weight: 900;
+
+            color: var(--gold);
+
+            font-family: monospace;
+
+            direction: ltr;
+
+            line-height: 1.2;
+
+            text-shadow:
+                0 0 18px rgba(212,165,74,.25);
+
+            transition:
+                transform .2s ease,
+                color .2s ease;
+        }
+
+        .countdown-timer.tick {
+            transform: scale(1.18);
+        }
+
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
+        .actions {
+            display: flex;
+
+            gap: 9px;
+
+            width: 100%;
+        }
+
+        .btn {
+            position: relative;
+
+            flex: 1;
+
+            min-height: 46px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 10px 14px;
+
+            border-radius: 13px;
+
+            font-family: inherit;
+
+            font-size: .7rem;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            border: 1px solid transparent;
+
+            overflow: hidden;
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease,
+                background .25s ease,
+                border-color .25s ease;
+        }
+
+        .btn::after {
+            content: '';
+
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+
+            width: 35%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,.2),
+                    transparent
+                );
+
+            transform: translateX(-150%) skewX(-20deg);
+
+            transition: .6s;
+        }
+
+        .btn:hover::after {
+            transform: translateX(350%) skewX(-20deg);
+        }
+
+        .btn:active {
+            transform: scale(.96);
+        }
+
+        .btn-primary {
+            color: #080808;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--gold-light),
+                    #a9782b
+                );
+
+            box-shadow:
+                0 8px 25px rgba(212,165,74,.22);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 32px rgba(212,165,74,.38);
+        }
+
+        .btn-outline {
+            color: #aaa;
+
+            background:
+                rgba(255,255,255,.025);
+
+            border-color:
+                rgba(255,255,255,.09);
+        }
+
+        .btn-outline:hover {
+            color: #fff;
+
+            border-color:
+                rgba(255,255,255,.18);
+
+            background:
+                rgba(255,255,255,.055);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================================
+           LINKS
+        ========================================================= */
+
+        .links-row {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            margin-top: 20px;
+        }
+
+        .link-btn {
+            position: relative;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #777;
+
+            background:
+                rgba(255,255,255,.025);
+
+            border: 1px solid
+                rgba(255,255,255,.07);
+
+            text-decoration: none;
+
+            transition:
+                transform .25s ease,
+                color .25s ease,
+                background .25s ease,
+                border-color .25s ease;
+        }
+
+        .link-btn:hover {
+            color: #fff;
+
+            background:
+                rgba(255,255,255,.065);
+
+            border-color:
+                rgba(255,255,255,.15);
+
+            transform:
+                translateY(-3px)
+                rotate(-2deg);
+        }
+
+
+        /* =========================================================
+           VERSION
+        ========================================================= */
+
+        .version-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 4px 10px;
+
+            margin-top: 17px;
+
+            border-radius: 8px;
+
+            color: #555;
+
+            background:
+                rgba(255,255,255,.018);
+
+            border:
+                1px solid rgba(255,255,255,.05);
+
+            font-size: .46rem;
+
+            direction: ltr;
+        }
+
+
+        /* =========================================================
+           HIDDEN
+        ========================================================= */
+
+        .hidden {
+            display: none !important;
+        }
+
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        .toast {
+            position: fixed;
+
+            left: 50%;
+            bottom: calc(20px + var(--safe-bottom));
+
+            transform:
+                translate(-50%, 30px)
+                scale(.95);
+
+            z-index: 100;
+
+            padding: 10px 15px;
+
+            border-radius: 12px;
+
+            color: #ddd;
+
+            background:
+                rgba(15,15,18,.9);
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            backdrop-filter: blur(15px);
+
+            font-size: .65rem;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition:
+                opacity .3s ease,
+                transform .3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+
+            transform:
+                translate(-50%, 0)
+                scale(1);
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 380px) {
+
+            body {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .status-card {
+                padding: 25px 17px 18px;
+            }
+
+            .icon-zone {
+                width: 112px;
+                height: 112px;
+            }
+
+            .status-icon {
+                width: 68px;
+                height: 68px;
+                border-radius: 21px;
+                font-size: 2rem;
+            }
+
+            .status-title {
+                font-size: 1.2rem;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+
+        /* =========================================================
+           REDUCED MOTION
+        ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         BACKGROUND
+    ========================================================= -->
+
+    <div class="background" aria-hidden="true">
+        <div class="orb one"></div>
+        <div class="orb two"></div>
+        <div class="orb three"></div>
+    </div>
+
+
+    <!-- =========================================================
+         MAIN CARD
+    ========================================================= -->
+
+    <main class="status-card" id="statusCard">
+
+        <div class="brand">
+            <div class="brand-icon">
+                <i class="fa-solid fa-cubes"></i>
+            </div>
+
+            <span>Block</span>Forge
+        </div>
+
+
+        <!-- Status Icon -->
+
+        <div class="icon-zone">
+
+            <div class="icon-ring"></div>
+
+            <div class="status-icon loading" id="statusIcon">
+                <i class="fa-solid fa-circle-notch"></i>
+            </div>
+
+        </div>
+
+
+        <!-- Text -->
+
+        <h1 class="status-title" id="statusTitle">
+            در حال بررسی...
+        </h1>
+
+        <p class="status-desc" id="statusDesc">
+            لطفاً چند لحظه صبر کنید
+        </p>
+
+
+        <!-- Small Status -->
+
+        <div class="status-line">
+
+            <span class="status-dot"></span>
+
+            <span id="statusLineText">
+                در حال بررسی وضعیت سرویس
+            </span>
+
+        </div>
+
+
+        <!-- Countdown -->
+
+        <div
+            class="countdown-box hidden"
+            id="countdownBox"
+        >
+
+            <div class="countdown-text">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                انتقال خودکار به BlockForge
+            </div>
+
+            <div
+                class="countdown-timer"
+                id="countdownTimer"
+            >
+                3
+            </div>
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="actions">
+
+            <a
+                href="index.html"
+                class="btn btn-primary"
+                id="retryBtn"
+            >
+                <i class="fa-solid fa-rotate-left"></i>
+                تلاش مجدد
+            </a>
+
+            <a
+                href="index.html"
+                class="btn btn-outline"
+                id="homeBtn"
+            >
+                <i class="fa-solid fa-house"></i>
+                صفحه اصلی
+            </a>
+
+        </div>
+
+
+        <!-- Social / External -->
+
+        <div class="links-row">
+
+            <a
+                href="https://rubika.ir/zolbiao"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link-btn"
+                title="روبیکا"
+                aria-label="روبیکا"
+            >
+                <i class="fa-solid fa-comment"></i>
+            </a>
+
+            <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link-btn"
+                title="یوتیوب"
+                aria-label="یوتیوب"
+            >
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+
+        </div>
+
+
+        <!-- Version -->
+
+        <div
+            class="version-badge"
+            id="versionBadge"
+        >
+            v1.0.0
+        </div>
+
+    </main>
+
+
+    <!-- Toast -->
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+    <!-- =========================================================
+         NET.JS
+    ========================================================= -->
+
+    <script src="net.js"></script>
+
+
+    <script>
+
+        /* =========================================================
+           ELEMENTS
+        ========================================================= */
+
+        const statusCard =
+            document.getElementById('statusCard');
+
+        const statusIcon =
+            document.getElementById('statusIcon');
+
+        const statusIconInner =
+            statusIcon.querySelector('i');
+
+        const statusTitle =
+            document.getElementById('statusTitle');
+
+        const statusDesc =
+            document.getElementById('statusDesc');
+
+        const statusLineText =
+            document.getElementById('statusLineText');
+
+        const statusDot =
+            document.querySelector('.status-dot');
+
+        const retryBtn =
+            document.getElementById('retryBtn');
+
+        const countdownBox =
+            document.getElementById('countdownBox');
+
+        const countdownTimer =
+            document.getElementById('countdownTimer');
+
+        const versionBadge =
+            document.getElementById('versionBadge');
+
+        const toast =
+            document.getElementById('toast');
+
+
+        /* =========================================================
+           STATE
+        ========================================================= */
+
+        let currentStatus = null;
+
+        let redirectTimer = null;
+        let countdownInterval = null;
+
+        let lastRenderTime = 0;
+
+
+        /* =========================================================
+           HELPERS
+        ========================================================= */
+
+        function getSiteStatus() {
+
+            if (
+                typeof SITE_STATUS !== 'undefined' &&
+                SITE_STATUS
+            ) {
+                return SITE_STATUS;
+            }
+
+            return null;
+        }
+
+
+        function getStatusMessage(status) {
+
+            const site = getSiteStatus();
+
+            if (
+                site &&
+                site.messages &&
+                site.messages[status]
+            ) {
+                return site.messages[status];
+            }
+
+
+            const defaults = {
+
+                offline: {
+                    icon: 'fa-wifi',
+                    title: 'شما آفلاین هستید!',
+                    desc: 'اتصال اینترنتت رو بررسی کن و دوباره تلاش کن.',
+                    color: '#e74c3c',
+                    line: 'اتصال اینترنت در دسترس نیست'
+                },
+
+                maintenance: {
+                    icon: 'fa-screwdriver-wrench',
+                    title: 'در حال بروزرسانی',
+                    desc: 'داریم BlockForge رو بهتر و پایدارتر می‌کنیم.',
+                    color: '#ff9800',
+                    line: 'سرویس موقتاً در دست تعمیر است'
+                },
+
+                error: {
+                    icon: 'fa-triangle-exclamation',
+                    title: 'یه مشکلی پیش اومده',
+                    desc: 'سیستم با مشکل مواجه شده. لطفاً کمی بعد دوباره امتحان کن.',
+                    color: '#e74c3c',
+                    line: 'خطا در سرویس'
+                },
+
+                online: {
+                    icon: 'fa-circle-check',
+                    title: 'همه‌چی آماده‌ست!',
+                    desc: 'اتصال برقرار است. در حال ورود به BlockForge...',
+                    color: '#2ecc71',
+                    line: 'تمام سرویس‌ها فعال هستند'
+                }
+
+            };
+
+
+            return defaults[status] || defaults.online;
+        }
+
+
+        /* =========================================================
+           DETECT STATUS
+        ========================================================= */
+
+        function detectStatus() {
+
+            if (!navigator.onLine) {
+                return 'offline';
+            }
+
+
+            const site = getSiteStatus();
+
+            if (site && site.status) {
+                return site.status;
+            }
+
+
+            return 'online';
+        }
+
+
+        /* =========================================================
+           CLEAR REDIRECT
+        ========================================================= */
+
+        function clearRedirectTimers() {
+
+            if (redirectTimer) {
+                clearTimeout(redirectTimer);
+                redirectTimer = null;
+            }
+
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+
+            countdownBox.classList.add('hidden');
+        }
+
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        function showToast(message) {
+
+            toast.textContent = message;
+
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+
+        /* =========================================================
+           UPDATE VERSION
+        ========================================================= */
+
+        function updateVersion() {
+
+            const site = getSiteStatus();
+
+            if (
+                site &&
+                site.version
+            ) {
+
+                const update =
+                    site.lastUpdate
+                    ? ' | ' + site.lastUpdate
+                    : '';
+
+                versionBadge.textContent =
+                    'v' + site.version + update;
+
+            }
+
+        }
+
+
+        /* =========================================================
+           UPDATE ICON
+        ========================================================= */
+
+        function updateIcon(message) {
+
+            statusIcon.style.setProperty(
+                '--status-color',
+                message.color
+            );
+
+            statusCard.style.setProperty(
+                '--status-color',
+                message.color
+            );
+
+
+            statusIcon.classList.remove('loading');
+
+
+            statusIconInner.className =
+                'fa-solid ' + message.icon;
+
+
+            if (
+                message.icon === 'fa-circle-notch' ||
+                message.icon === 'fa-spinner'
+            ) {
+                statusIcon.classList.add('loading');
+            }
+
+
+            statusIcon.animate(
+                [
+                    {
+                        transform: 'scale(.8) rotate(-8deg)',
+                        opacity: .3
+                    },
+
+                    {
+                        transform: 'scale(1.08) rotate(2deg)',
+                        opacity: 1
+                    },
+
+                    {
+                        transform: 'scale(1) rotate(0)',
+                        opacity: 1
+                    }
+                ],
+                {
+                    duration: 500,
+                    easing: 'cubic-bezier(.2,.8,.2,1)'
+                }
+            );
+
+        }
+
+
+        /* =========================================================
+           SHOW STATUS
+        ========================================================= */
+
+        function showStatus(status, force = false) {
+
+            const now = Date.now();
+
+            /*
+             * جلوگیری از رندرهای خیلی سریع پشت سر هم
+             */
+
+            if (
+                !force &&
+                now - lastRenderTime < 150
+            ) {
+                return;
+            }
+
+            lastRenderTime = now;
+
+
+            /*
+             * اگر وضعیت تغییر نکرده،
+             * لازم نیست همه چیز دوباره ساخته شود.
+             */
+
+            if (
+                status === currentStatus &&
+                !force
+            ) {
+
+                updateVersion();
+
+                return;
+            }
+
+
+            currentStatus = status;
+
+
+            /*
+             * توقف Redirect قبلی
+             */
+
+            clearRedirectTimers();
+
+
+            const message =
+                getStatusMessage(status);
+
+
+            /* Icon */
+
+            updateIcon(message);
+
+
+            /* Text */
+
+            statusTitle.textContent =
+                message.title;
+
+            statusDesc.textContent =
+                message.desc;
+
+            statusLineText.textContent =
+                message.line ||
+                'وضعیت سرویس';
+
+
+            /* Color */
+
+            statusCard.style.setProperty(
+                '--status-color',
+                message.color
+            );
+
+            statusDot.style.background =
+                message.color;
+
+            statusDot.style.boxShadow =
+                '0 0 0 4px ' +
+                hexToRgba(message.color, .10);
+
+
+            /* Version */
+
+            updateVersion();
+
+
+            /*
+             * Retry button
+             */
+
+            if (status === 'offline') {
+
+                retryBtn.classList.remove('hidden');
+
+                retryBtn.innerHTML =
+                    '<i class="fa-solid fa-rotate-left"></i> تلاش مجدد';
+
+            }
+
+            else if (
+                status === 'error' ||
+                status === 'maintenance'
+            ) {
+
+                retryBtn.classList.remove('hidden');
+
+                retryBtn.innerHTML =
+                    '<i class="fa-solid fa-rotate-right"></i> بررسی دوباره';
+
+                retryBtn.onclick = function(e) {
+
+                    e.preventDefault();
+
+                    showToast('در حال بررسی دوباره...');
+
+                    setTimeout(() => {
+
+                        location.reload();
+
+                    }, 500);
+
+                };
+
+            }
+
+            else {
+
+                retryBtn.classList.remove('hidden');
+
+                retryBtn.innerHTML =
+                    '<i class="fa-solid fa-arrow-left"></i> ورود به سایت';
+
+                retryBtn.onclick = null;
+
+            }
+
+
+            /*
+             * Redirect
+             */
+
+            if (status === 'online') {
+
+                const site =
+                    getSiteStatus();
+
+
+                const redirectEnabled =
+                    site &&
+                    typeof site.redirectToMain !== 'undefined'
+                        ? site.redirectToMain
+                        : true;
+
+
+                const redirectDelay =
+                    site &&
+                    typeof site.redirectDelay === 'number'
+                        ? site.redirectDelay
+                        : 3000;
+
+
+                const showCountdown =
+                    site &&
+                    typeof site.countdown !== 'undefined'
+                        ? site.countdown
+                        : true;
+
+
+                if (redirectEnabled) {
+
+                    startRedirect(
+                        redirectDelay,
+                        showCountdown
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        /* =========================================================
+           REDIRECT
+        ========================================================= */
+
+        function startRedirect(
+            delay,
+            showCountdown
+        ) {
+
+            clearRedirectTimers();
+
+
+            if (!showCountdown) {
+
+                redirectTimer = setTimeout(
+                    () => {
+
+                        window.location.href =
+                            'index.html';
+
+                    },
+                    delay
+                );
+
+                return;
+            }
+
+
+            countdownBox.classList.remove(
+                'hidden'
+            );
+
+
+            let seconds =
+                Math.max(
+                    1,
+                    Math.ceil(delay / 1000)
+                );
+
+
+            countdownTimer.textContent =
+                seconds;
+
+
+            countdownInterval =
+                setInterval(() => {
+
+                    seconds--;
+
+                    if (seconds <= 0) {
+
+                        clearInterval(
+                            countdownInterval
+                        );
+
+                        countdownInterval =
+                            null;
+
+                        countdownTimer.textContent =
+                            '✓';
+
+
+                        setTimeout(() => {
+
+                            window.location.href =
+                                'index.html';
+
+                        }, 250);
+
+                        return;
+                    }
+
+
+                    countdownTimer.classList.remove(
+                        'tick'
+                    );
+
+                    /*
+                     * force reflow برای اجرای مجدد
+                     * انیمیشن
+                     */
+
+                    void countdownTimer.offsetWidth;
+
+
+                    countdownTimer.classList.add(
+                        'tick'
+                    );
+
+
+                    countdownTimer.textContent =
+                        seconds;
+
+                }, 1000);
+
+            }
+
+
+        /* =========================================================
+           HEX → RGBA
+        ========================================================= */
+
+        function hexToRgba(hex, alpha) {
+
+            if (!hex) {
+                return `rgba(212,165,74,${alpha})`;
+            }
+
+
+            let clean =
+                hex.replace('#', '');
+
+
+            if (clean.length === 3) {
+
+                clean =
+                    clean
+                        .split('')
+                        .map(x => x + x)
+                        .join('');
+
+            }
+
+
+            const r =
+                parseInt(
+                    clean.substring(0,2),
+                    16
+                );
+
+            const g =
+                parseInt(
+                    clean.substring(2,4),
+                    16
+                );
+
+            const b =
+                parseInt(
+                    clean.substring(4,6),
+                    16
+                );
+
+
+            if (
+                Number.isNaN(r) ||
+                Number.isNaN(g) ||
+                Number.isNaN(b)
+            ) {
+                return `rgba(212,165,74,${alpha})`;
+            }
+
+
+            return `rgba(${r},${g},${b},${alpha})`;
+        }
+
+
+        /* =========================================================
+           RETRY BUTTON DEFAULT
+        ========================================================= */
+
+        retryBtn.addEventListener(
+            'click',
+            function(e) {
+
+                /*
+                 * برای حالت online
+                 * لینک مستقیم کار کند.
+                 */
+
+                if (
+                    currentStatus === 'offline'
+                ) {
+
+                    e.preventDefault();
+
+                    showToast(
+                        'در حال بررسی اتصال...'
+                    );
+
+                    setTimeout(
+                        () => location.reload(),
+                        400
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           ONLINE / OFFLINE EVENTS
+        ========================================================= */
+
+        window.addEventListener(
+            'online',
+            () => {
+
+                showToast(
+                    'اتصال اینترنت برقرار شد ✓'
+                );
+
+                showStatus(
+                    detectStatus(),
+                    true
+                );
+
+            }
+        );
+
+
+        window.addEventListener(
+            'offline',
+            () => {
+
+                showToast(
+                    'اتصال اینترنت قطع شد'
+                );
+
+                showStatus(
+                    'offline',
+                    true
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           PERIODIC CHECK
+        ========================================================= */
+
+        setInterval(() => {
+
+            const newStatus =
+                detectStatus();
+
+
+            if (
+                newStatus !== currentStatus
+            ) {
+
+                showStatus(
+                    newStatus,
+                    true
+                );
+
+            }
+
+        }, 5000);
+
+
+        /* =========================================================
+           INITIALIZE
+        ========================================================= */
+
+        currentStatus =
+            detectStatus();
+
+
+        showStatus(
+            currentStatus,
+            true
+        );
+
+
+        /* =========================================================
+           DEBUG
+        ========================================================= */
+
+        console.log(
+            '🌐 BlockForge Network System'
+        );
+
+        console.log(
+            '📡 Status:',
+            currentStatus
+        );
+
+        console.log(
+            '🌍 Online:',
+            navigator.onLine
+        );
+
+    </script>
+
+</body>
+</html>

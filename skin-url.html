@@ -1,0 +1,2337 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+
+<meta name="theme-color" content="#07070a">
+<meta name="color-scheme" content="dark">
+
+<title>Skin → URL | BlockForge</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root{
+    --bg:#050507;
+    --card:rgba(18,18,24,.72);
+    --card2:rgba(255,255,255,.035);
+    --border:rgba(255,255,255,.075);
+
+    --pink:#ec1e63;
+    --pink2:#ff4081;
+
+    --green:#2ecc71;
+    --red:#ff4d5e;
+    --blue:#4aa3ff;
+    --yellow:#ffb020;
+
+    --text:#f4f4f6;
+    --muted:#85858f;
+
+    --radius:18px;
+    --safe:env(safe-area-inset-bottom,16px);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    font-size:15px;
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    font-family:'Vazirmatn',sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 50% -10%,rgba(236,30,99,.12),transparent 40%),
+        radial-gradient(circle at 0% 50%,rgba(74,163,255,.035),transparent 35%),
+        var(--bg);
+
+    padding-bottom:calc(30px + var(--safe));
+    overflow-x:hidden;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+
+    height:58px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 15px;
+
+    background:rgba(5,5,7,.78);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+
+    border-bottom:1px solid var(--border);
+}
+
+.back{
+    width:36px;
+    height:36px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#aaa;
+    text-decoration:none;
+
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--border);
+
+    border-radius:50%;
+
+    transition:.2s;
+}
+
+.back:active{
+    transform:scale(.92);
+}
+
+.title{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:.9rem;
+    font-weight:800;
+}
+
+.title i{
+    color:var(--pink);
+}
+
+.header-space{
+    width:36px;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+    width:100%;
+    max-width:520px;
+
+    margin:auto;
+    padding:18px 15px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    text-align:center;
+    margin:10px 0 20px;
+}
+
+.hero-icon{
+    width:66px;
+    height:66px;
+
+    margin:0 auto 10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(145deg,
+        rgba(236,30,99,.2),
+        rgba(236,30,99,.04));
+
+    border:1px solid rgba(236,30,99,.18);
+
+    box-shadow:
+        0 15px 45px rgba(236,30,99,.08);
+}
+
+.hero-icon i{
+    font-size:1.7rem;
+    color:var(--pink2);
+}
+
+.hero h1{
+    font-size:1.05rem;
+    font-weight:900;
+}
+
+.hero p{
+    margin-top:4px;
+
+    font-size:.57rem;
+    color:var(--muted);
+}
+
+/* ================= CARD ================= */
+
+.card{
+    position:relative;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+
+    padding:17px;
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.2);
+}
+
+/* ================= DROPZONE ================= */
+
+.dropzone{
+    position:relative;
+
+    min-height:250px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    border-radius:16px;
+
+    border:2px dashed rgba(236,30,99,.22);
+
+    background:
+        radial-gradient(circle,
+        rgba(236,30,99,.07),
+        transparent 65%);
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.dropzone:hover,
+.dropzone.drag{
+    border-color:rgba(236,30,99,.65);
+
+    background:
+        radial-gradient(circle,
+        rgba(236,30,99,.13),
+        transparent 65%);
+
+    transform:translateY(-1px);
+}
+
+.dropzone.processing{
+    pointer-events:none;
+}
+
+.upload-icon{
+    width:72px;
+    height:72px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:rgba(236,30,99,.09);
+
+    border:1px solid rgba(236,30,99,.16);
+
+    margin-bottom:13px;
+}
+
+.upload-icon i{
+    font-size:1.65rem;
+    color:var(--pink);
+}
+
+.drop-title{
+    font-size:.78rem;
+    font-weight:800;
+}
+
+.drop-sub{
+    margin-top:4px;
+
+    font-size:.54rem;
+    color:#777;
+}
+
+.drop-limit{
+    margin-top:12px;
+
+    padding:4px 9px;
+
+    border-radius:20px;
+
+    font-size:.45rem;
+
+    color:#999;
+
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--border);
+}
+
+input[type=file]{
+    display:none;
+}
+
+/* ================= PREVIEW ================= */
+
+.preview-area{
+    display:none;
+    text-align:center;
+}
+
+.preview-area.show{
+    display:block;
+}
+
+.preview-frame{
+    position:relative;
+
+    width:180px;
+    height:180px;
+
+    margin:0 auto 14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    border-radius:16px;
+
+    background:
+        repeating-conic-gradient(
+            #18181d 0% 25%,
+            #101014 0% 50%
+        ) 50% / 18px 18px;
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.35);
+}
+
+.preview-frame img{
+    max-width:100%;
+    max-height:100%;
+
+    image-rendering:pixelated;
+    image-rendering:crisp-edges;
+}
+
+.preview-badge{
+    position:absolute;
+
+    bottom:8px;
+    right:8px;
+
+    padding:4px 8px;
+
+    border-radius:7px;
+
+    font-size:.45rem;
+    font-weight:700;
+
+    color:#fff;
+
+    background:rgba(0,0,0,.7);
+    backdrop-filter:blur(8px);
+}
+
+.file-name{
+    font-size:.65rem;
+    font-weight:700;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+
+    max-width:90%;
+    margin:auto;
+}
+
+.file-info{
+    margin-top:4px;
+
+    color:#777;
+    font-size:.48rem;
+}
+
+/* ================= VALIDATION ================= */
+
+.validation{
+    display:flex;
+    gap:6px;
+
+    margin:13px 0;
+}
+
+.validation-item{
+    flex:1;
+
+    padding:7px 4px;
+
+    text-align:center;
+
+    border-radius:9px;
+
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--border);
+
+    color:#777;
+
+    font-size:.43rem;
+}
+
+.validation-item i{
+    display:block;
+    margin-bottom:3px;
+}
+
+.validation-item.ok{
+    color:var(--green);
+    border-color:rgba(46,204,113,.15);
+}
+
+.validation-item.bad{
+    color:var(--red);
+    border-color:rgba(255,77,94,.15);
+}
+
+/* ================= SETTINGS ================= */
+
+.settings{
+    margin-top:14px;
+}
+
+.setting-title{
+    display:flex;
+    align-items:center;
+    gap:6px;
+
+    margin-bottom:8px;
+
+    font-size:.62rem;
+    font-weight:800;
+}
+
+.setting-title i{
+    color:var(--pink);
+}
+
+.ttl-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+}
+
+.ttl{
+    padding:8px 3px;
+
+    border-radius:9px;
+
+    color:#888;
+
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--border);
+
+    font-family:inherit;
+    font-size:.45rem;
+
+    cursor:pointer;
+    transition:.2s;
+}
+
+.ttl.active{
+    color:#fff;
+
+    border-color:rgba(236,30,99,.5);
+
+    background:rgba(236,30,99,.1);
+}
+
+.ttl.never{
+    color:var(--green);
+}
+
+.ttl.never.active{
+    border-color:rgba(46,204,113,.5);
+    background:rgba(46,204,113,.08);
+}
+
+/* ================= PROGRESS ================= */
+
+.progress{
+    display:none;
+
+    margin-top:14px;
+
+    padding:12px;
+
+    border-radius:11px;
+
+    background:rgba(0,0,0,.2);
+    border:1px solid var(--border);
+}
+
+.progress.show{
+    display:block;
+}
+
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+
+    margin-bottom:7px;
+
+    font-size:.48rem;
+    color:#888;
+}
+
+.bar{
+    height:7px;
+
+    overflow:hidden;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.05);
+}
+
+.fill{
+    width:0%;
+    height:100%;
+
+    border-radius:10px;
+
+    background:linear-gradient(
+        90deg,
+        var(--pink),
+        var(--pink2)
+    );
+
+    transition:width .15s;
+}
+
+/* ================= BUTTONS ================= */
+
+.buttons{
+    margin-top:14px;
+}
+
+.btn{
+    width:100%;
+
+    min-height:44px;
+
+    border:none;
+    border-radius:11px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+
+    font-family:inherit;
+    font-size:.62rem;
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.btn:active{
+    transform:scale(.98);
+}
+
+.btn-primary{
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ec1e63,
+            #c2185b
+        );
+
+    box-shadow:
+        0 8px 25px rgba(236,30,99,.2);
+}
+
+.btn-primary:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+.btn-secondary{
+    margin-top:7px;
+
+    color:#aaa;
+
+    background:rgba(255,255,255,.025);
+
+    border:1px solid var(--border);
+}
+
+.btn-green{
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2ecc71,
+            #209b54
+        );
+}
+
+.btn-blue{
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #398cff,
+            #2468d9
+        );
+}
+
+/* ================= RESULT ================= */
+
+.result{
+    display:none;
+
+    margin-top:15px;
+
+    animation:resultIn .35s ease;
+}
+
+.result.show{
+    display:block;
+}
+
+@keyframes resultIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.success{
+    text-align:center;
+
+    padding:12px;
+
+    border-radius:11px;
+
+    background:rgba(46,204,113,.05);
+
+    border:1px solid rgba(46,204,113,.15);
+
+    color:var(--green);
+
+    font-size:.58rem;
+    font-weight:800;
+
+    margin-bottom:10px;
+}
+
+.success i{
+    margin-left:4px;
+}
+
+.url-label{
+    margin-bottom:5px;
+
+    color:#777;
+
+    font-size:.48rem;
+}
+
+.url-box{
+    position:relative;
+
+    padding:11px;
+
+    min-height:65px;
+
+    display:flex;
+    align-items:center;
+
+    word-break:break-all;
+
+    direction:ltr;
+    text-align:left;
+
+    border-radius:10px;
+
+    background:#030305;
+
+    border:1px solid rgba(46,204,113,.12);
+
+    color:#8ee8ae;
+
+    font-family:monospace;
+
+    font-size:.5rem;
+
+    line-height:1.5;
+}
+
+.url-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:7px;
+
+    margin-top:8px;
+}
+
+/* ================= META ================= */
+
+.meta{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    gap:6px;
+
+    margin-top:9px;
+}
+
+.meta-box{
+    padding:8px 4px;
+
+    text-align:center;
+
+    border-radius:8px;
+
+    background:rgba(255,255,255,.025);
+
+    border:1px solid var(--border);
+}
+
+.meta-value{
+    font-size:.55rem;
+    font-weight:800;
+    color:#ddd;
+}
+
+.meta-label{
+    margin-top:2px;
+
+    font-size:.4rem;
+    color:#666;
+}
+
+/* ================= NOTICE ================= */
+
+.notice{
+    margin-top:12px;
+
+    padding:9px 10px;
+
+    border-radius:9px;
+
+    background:rgba(255,176,32,.045);
+
+    border:1px solid rgba(255,176,32,.12);
+
+    color:#999;
+
+    font-size:.45rem;
+
+    line-height:1.8;
+}
+
+.notice i{
+    color:var(--yellow);
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+
+    z-index:999;
+
+    bottom:25px;
+    left:50%;
+
+    transform:translateX(-50%) translateY(20px);
+
+    opacity:0;
+
+    pointer-events:none;
+
+    max-width:90%;
+
+    padding:10px 16px;
+
+    border-radius:12px;
+
+    background:rgba(24,24,30,.96);
+
+    border:1px solid var(--border);
+
+    backdrop-filter:blur(15px);
+
+    color:#fff;
+
+    font-size:.55rem;
+    font-weight:700;
+
+    transition:.25s;
+
+    white-space:nowrap;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+.toast.success{
+    color:#fff;
+    background:rgba(35,120,70,.95);
+}
+
+.toast.error{
+    color:#fff;
+    background:rgba(130,30,45,.95);
+}
+
+/* ================= SPINNER ================= */
+
+.spinner{
+    width:17px;
+    height:17px;
+
+    border:2px solid rgba(255,255,255,.3);
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:380px){
+    .ttl-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .preview-frame{
+        width:150px;
+        height:150px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="index.html" class="back">
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
+
+    <div class="title">
+        <i class="fa-solid fa-link"></i>
+        اسکین به URL
+    </div>
+
+    <div class="header-space"></div>
+
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+
+        <div class="hero-icon">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+        </div>
+
+        <h1>تبدیل اسکین به لینک مستقیم</h1>
+
+        <p>
+            اسکین را آپلود کن و یک URL عمومی برای استفاده در سرورها بگیر
+        </p>
+
+    </section>
+
+
+    <section class="card">
+
+        <!-- DROPZONE -->
+
+        <div
+            class="dropzone"
+            id="dropzone"
+            onclick="openPicker()"
+        >
+
+            <div class="upload-icon">
+                <i class="fa-solid fa-upload"></i>
+            </div>
+
+            <div class="drop-title">
+                اسکین PNG را انتخاب کن
+            </div>
+
+            <div class="drop-sub">
+                یا فایل را اینجا بکش و رها کن
+            </div>
+
+            <div class="drop-limit">
+                PNG • حداکثر 16MB
+            </div>
+
+            <input
+                id="fileInput"
+                type="file"
+                accept="image/png,.png"
+            >
+
+        </div>
+
+
+        <!-- PREVIEW -->
+
+        <div class="preview-area" id="previewArea">
+
+            <div class="preview-frame">
+
+                <img
+                    id="previewImage"
+                    alt="Skin Preview"
+                >
+
+                <div class="preview-badge">
+                    PNG
+                </div>
+
+            </div>
+
+            <div
+                class="file-name"
+                id="fileName"
+            >
+            </div>
+
+            <div
+                class="file-info"
+                id="fileInfo"
+            >
+            </div>
+
+
+            <!-- VALIDATION -->
+
+            <div class="validation">
+
+                <div class="validation-item" id="checkType">
+                    <i class="fa-solid fa-circle-check"></i>
+                    PNG
+                </div>
+
+                <div class="validation-item" id="checkSize">
+                    <i class="fa-solid fa-circle-check"></i>
+                    حجم
+                </div>
+
+                <div class="validation-item" id="checkImage">
+                    <i class="fa-solid fa-circle-check"></i>
+                    تصویر
+                </div>
+
+            </div>
+
+
+            <!-- SETTINGS -->
+
+            <div class="settings">
+
+                <div class="setting-title">
+                    <i class="fa-solid fa-clock"></i>
+                    مدت اعتبار لینک
+                </div>
+
+                <div class="ttl-grid">
+
+                    <button
+                        class="ttl"
+                        data-ttl="86400"
+                    >
+                        ۲۴ ساعت
+                    </button>
+
+                    <button
+                        class="ttl"
+                        data-ttl="604800"
+                    >
+                        ۷ روز
+                    </button>
+
+                    <button
+                        class="ttl"
+                        data-ttl="2592000"
+                    >
+                        ۳۰ روز
+                    </button>
+
+                    <button
+                        class="ttl never active"
+                        data-ttl="0"
+                    >
+                        ∞ دائمی
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div
+                class="progress"
+                id="progress"
+            >
+
+                <div class="progress-top">
+
+                    <span id="progressText">
+                        آماده‌سازی...
+                    </span>
+
+                    <span id="progressPercent">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="bar">
+                    <div
+                        class="fill"
+                        id="progressFill"
+                    ></div>
+                </div>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <div class="buttons">
+
+                <button
+                    class="btn btn-primary"
+                    id="uploadButton"
+                    onclick="uploadSkin()"
+                >
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    ساخت URL مستقیم
+                </button>
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="resetAll()"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                    انتخاب فایل دیگر
+                </button>
+
+            </div>
+
+
+            <!-- RESULT -->
+
+            <div
+                class="result"
+                id="result"
+            >
+
+                <div class="success">
+                    <i class="fa-solid fa-circle-check"></i>
+                    لینک مستقیم با موفقیت ساخته شد
+                </div>
+
+
+                <div class="url-label">
+                    Direct URL
+                </div>
+
+                <div
+                    class="url-box"
+                    id="urlBox"
+                >
+                </div>
+
+
+                <div class="url-actions">
+
+                    <button
+                        class="btn btn-green"
+                        id="copyButton"
+                        onclick="copyURL()"
+                    >
+                        <i class="fa-solid fa-copy"></i>
+                        کپی URL
+                    </button>
+
+                    <button
+                        class="btn btn-blue"
+                        onclick="openURL()"
+                    >
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        باز کردن
+                    </button>
+
+                </div>
+
+
+                <div class="meta">
+
+                    <div class="meta-box">
+                        <div
+                            class="meta-value"
+                            id="metaSize"
+                        >
+                            -
+                        </div>
+
+                        <div class="meta-label">
+                            حجم
+                        </div>
+                    </div>
+
+
+                    <div class="meta-box">
+                        <div
+                            class="meta-value"
+                            id="metaType"
+                        >
+                            PNG
+                        </div>
+
+                        <div class="meta-label">
+                            فرمت
+                        </div>
+                    </div>
+
+
+                    <div class="meta-box">
+                        <div
+                            class="meta-value"
+                            id="metaExpiry"
+                        >
+                            دائمی
+                        </div>
+
+                        <div class="meta-label">
+                            اعتبار
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="notice">
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    این لینک، URL مستقیم تصویر است؛
+                    یعنی به جای Data URL، یک آدرس اینترنتی واقعی برای فایل PNG دریافت می‌کنی.
+                </div>
+
+
+                <button
+                    class="btn btn-secondary"
+                    style="margin-top:8px"
+                    onclick="resetAll()"
+                >
+                    <i class="fa-solid fa-rotate-left"></i>
+                    ساخت لینک جدید
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<div
+    class="toast"
+    id="toast"
+>
+</div>
+
+
+<script>
+
+/* =========================================================
+   BlockForge Skin → URL
+   Image host: imgdb.io
+   ========================================================= */
+
+const API_URL =
+    "https://imgdb.io/api/v1/upload";
+
+const MAX_FILE_SIZE =
+    16 * 1024 * 1024;
+
+
+let selectedFile = null;
+let uploadedURL = "";
+let selectedTTL = 0;
+let uploading = false;
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const fileInput =
+    document.getElementById("fileInput");
+
+const dropzone =
+    document.getElementById("dropzone");
+
+const previewArea =
+    document.getElementById("previewArea");
+
+const previewImage =
+    document.getElementById("previewImage");
+
+const fileName =
+    document.getElementById("fileName");
+
+const fileInfo =
+    document.getElementById("fileInfo");
+
+const uploadButton =
+    document.getElementById("uploadButton");
+
+const progress =
+    document.getElementById("progress");
+
+const progressFill =
+    document.getElementById("progressFill");
+
+const progressText =
+    document.getElementById("progressText");
+
+const progressPercent =
+    document.getElementById("progressPercent");
+
+const result =
+    document.getElementById("result");
+
+const urlBox =
+    document.getElementById("urlBox");
+
+
+/* =========================================================
+   FILE PICKER
+   ========================================================= */
+
+function openPicker(){
+
+    if(uploading) return;
+
+    fileInput.click();
+
+}
+
+
+fileInput.addEventListener(
+    "change",
+    function(){
+
+        if(this.files && this.files[0]){
+
+            handleFile(
+                this.files[0]
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   DRAG & DROP
+   ========================================================= */
+
+[
+    "dragenter",
+    "dragover"
+].forEach(event => {
+
+    dropzone.addEventListener(
+        event,
+        e => {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            if(!uploading){
+
+                dropzone.classList.add("drag");
+
+            }
+
+        }
+    );
+
+});
+
+
+[
+    "dragleave",
+    "drop"
+].forEach(event => {
+
+    dropzone.addEventListener(
+        event,
+        e => {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            dropzone.classList.remove("drag");
+
+        }
+    );
+
+});
+
+
+dropzone.addEventListener(
+    "drop",
+    e => {
+
+        if(uploading) return;
+
+        const file =
+            e.dataTransfer.files[0];
+
+        if(file){
+
+            handleFile(file);
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   HANDLE FILE
+   ========================================================= */
+
+async function handleFile(file){
+
+    if(uploading) return;
+
+
+    resetResultOnly();
+
+
+    /* MIME validation */
+
+    const isPNG =
+        file.type === "image/png" ||
+        file.name.toLowerCase().endsWith(".png");
+
+
+    if(!isPNG){
+
+        markBad(
+            "checkType"
+        );
+
+        toast(
+            "فقط فایل PNG قابل قبول است",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(file.size <= 0){
+
+        toast(
+            "فایل خالی است",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(file.size > MAX_FILE_SIZE){
+
+        markBad(
+            "checkSize"
+        );
+
+        toast(
+            "حجم فایل بیشتر از 16MB است",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    selectedFile = file;
+
+
+    /* Preview */
+
+    const objectURL =
+        URL.createObjectURL(file);
+
+    previewImage.src =
+        objectURL;
+
+
+    previewImage.onload =
+        () => {
+
+            URL.revokeObjectURL(
+                objectURL
+            );
+
+            validateImageDimensions();
+
+        };
+
+
+    fileName.textContent =
+        file.name;
+
+    fileInfo.textContent =
+        formatBytes(file.size);
+
+
+    markOK(
+        "checkType"
+    );
+
+    markOK(
+        "checkSize"
+    );
+
+
+    previewArea.classList.add(
+        "show"
+    );
+
+    dropzone.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   IMAGE DIMENSIONS
+   ========================================================= */
+
+function validateImageDimensions(){
+
+    const width =
+        previewImage.naturalWidth;
+
+    const height =
+        previewImage.naturalHeight;
+
+
+    /*
+       Minecraft skin commonly:
+       64x64
+       64x32 legacy
+
+       We don't reject other PNG sizes because
+       some custom systems may accept them.
+    */
+
+    if(
+        (width === 64 && height === 64) ||
+        (width === 64 && height === 32)
+    ){
+
+        markOK(
+            "checkImage"
+        );
+
+        fileInfo.textContent +=
+            " • " + width + "×" + height;
+
+    }else{
+
+        markBad(
+            "checkImage"
+        );
+
+        fileInfo.textContent +=
+            " • " + width + "×" + height;
+
+        toast(
+            "هشدار: ابعاد معمول اسکین Minecraft نیست",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   TTL
+   ========================================================= */
+
+document
+.querySelectorAll(".ttl")
+.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            document
+            .querySelectorAll(".ttl")
+            .forEach(
+                x => x.classList.remove("active")
+            );
+
+
+            button.classList.add(
+                "active"
+            );
+
+
+            selectedTTL =
+                Number(
+                    button.dataset.ttl
+                );
+
+
+            updateExpiryText();
+
+        }
+    );
+
+});
+
+
+function updateExpiryText(){
+
+    const el =
+        document.getElementById(
+            "metaExpiry"
+        );
+
+
+    if(selectedTTL === 0){
+
+        el.textContent =
+            "∞";
+
+        return;
+
+    }
+
+
+    if(selectedTTL === 86400){
+
+        el.textContent =
+            "۲۴ ساعت";
+
+        return;
+
+    }
+
+
+    if(selectedTTL === 604800){
+
+        el.textContent =
+            "۷ روز";
+
+        return;
+
+    }
+
+
+    if(selectedTTL === 2592000){
+
+        el.textContent =
+            "۳۰ روز";
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================================
+   UPLOAD
+   ========================================================= */
+
+async function uploadSkin(){
+
+    if(uploading) return;
+
+
+    if(!selectedFile){
+
+        toast(
+            "اول یک اسکین انتخاب کن",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    uploading = true;
+
+
+    uploadButton.disabled =
+        true;
+
+
+    uploadButton.innerHTML =
+        '<span class="spinner"></span> در حال آپلود...';
+
+
+    progress.classList.add(
+        "show"
+    );
+
+
+    setProgress(
+        5,
+        "بررسی فایل..."
+    );
+
+
+    try{
+
+        await sleep(250);
+
+
+        setProgress(
+            15,
+            "آماده‌سازی آپلود..."
+        );
+
+
+        const form =
+            new FormData();
+
+
+        form.append(
+            "file",
+            selectedFile,
+            selectedFile.name
+        );
+
+
+        /*
+           ttl=0 means never expires.
+
+           Other selected TTL values are sent
+           directly to imgdb.io.
+        */
+
+        const endpoint =
+            API_URL +
+            "?ttl=" +
+            encodeURIComponent(
+                selectedTTL
+            );
+
+
+        setProgress(
+            25,
+            "ارسال اسکین..."
+        );
+
+
+        const response =
+            await fetch(
+                endpoint,
+                {
+                    method:"POST",
+                    body:form
+                }
+            );
+
+
+        setProgress(
+            75,
+            "دریافت URL..."
+        );
+
+
+        let data = null;
+
+        try{
+
+            data =
+                await response.json();
+
+        }catch{
+
+            throw new Error(
+                "پاسخ نامعتبر از سرور"
+            );
+
+        }
+
+
+        if(!response.ok){
+
+            let message =
+                data?.error ||
+                "آپلود ناموفق بود";
+
+
+            if(response.status === 413){
+
+                message =
+                    "حجم فایل بیش از حد مجاز است";
+
+            }
+
+            if(response.status === 429){
+
+                message =
+                    "تعداد درخواست‌ها زیاد شده؛ کمی بعد دوباره امتحان کن";
+
+            }
+
+            if(response.status === 415){
+
+                message =
+                    "فرمت تصویر پشتیبانی نمی‌شود";
+
+            }
+
+
+            throw new Error(
+                message
+            );
+
+        }
+
+
+        if(
+            !data ||
+            !data.url
+        ){
+
+            throw new Error(
+                "URL از سرویس دریافت نشد"
+            );
+
+        }
+
+
+        uploadedURL =
+            data.url;
+
+
+        setProgress(
+            100,
+            "آپلود کامل شد"
+        );
+
+
+        await sleep(300);
+
+
+        showResult(
+            data
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        progress.classList.remove(
+            "show"
+        );
+
+
+        toast(
+            "❌ " +
+            (
+                error.message ||
+                "خطا در آپلود"
+            ),
+            "error"
+        );
+
+
+    }finally{
+
+        uploading = false;
+
+        uploadButton.disabled =
+            false;
+
+        uploadButton.innerHTML =
+            '<i class="fa-solid fa-cloud-arrow-up"></i> ساخت URL مستقیم';
+
+    }
+
+}
+
+
+/* =========================================================
+   SHOW RESULT
+   ========================================================= */
+
+function showResult(data){
+
+    urlBox.textContent =
+        data.url;
+
+
+    document.getElementById(
+        "metaSize"
+    ).textContent =
+        formatBytes(
+            data.size ||
+            selectedFile.size
+        );
+
+
+    document.getElementById(
+        "metaType"
+    ).textContent =
+        "PNG";
+
+
+    updateExpiryText();
+
+
+    result.classList.add(
+        "show"
+    );
+
+
+    result.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+
+    toast(
+        "✅ URL مستقیم ساخته شد",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   COPY URL
+   ========================================================= */
+
+async function copyURL(){
+
+    if(!uploadedURL) return;
+
+
+    try{
+
+        await navigator.clipboard.writeText(
+            uploadedURL
+        );
+
+
+        const button =
+            document.getElementById(
+                "copyButton"
+            );
+
+
+        const old =
+            button.innerHTML;
+
+
+        button.innerHTML =
+            '<i class="fa-solid fa-check"></i> کپی شد';
+
+
+        toast(
+            "✅ URL کپی شد",
+            "success"
+        );
+
+
+        setTimeout(
+            () => {
+
+                button.innerHTML =
+                    old;
+
+            },
+            1800
+        );
+
+
+    }catch{
+
+        /* Fallback */
+
+        const textarea =
+            document.createElement(
+                "textarea"
+            );
+
+        textarea.value =
+            uploadedURL;
+
+        textarea.style.position =
+            "fixed";
+
+        textarea.style.opacity =
+            "0";
+
+        document.body.appendChild(
+            textarea
+        );
+
+        textarea.select();
+
+        document.execCommand(
+            "copy"
+        );
+
+        textarea.remove();
+
+
+        toast(
+            "✅ URL کپی شد",
+            "success"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN URL
+   ========================================================= */
+
+function openURL(){
+
+    if(!uploadedURL) return;
+
+
+    window.open(
+        uploadedURL,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+function resetResultOnly(){
+
+    uploadedURL = "";
+
+    result.classList.remove(
+        "show"
+    );
+
+    progress.classList.remove(
+        "show"
+    );
+
+}
+
+
+function resetAll(){
+
+    if(uploading) return;
+
+
+    selectedFile = null;
+    uploadedURL = "";
+
+
+    fileInput.value =
+        "";
+
+
+    previewImage.removeAttribute(
+        "src"
+    );
+
+
+    previewArea.classList.remove(
+        "show"
+    );
+
+
+    result.classList.remove(
+        "show"
+    );
+
+
+    progress.classList.remove(
+        "show"
+    );
+
+
+    dropzone.style.display =
+        "flex";
+
+
+    setProgress(
+        0,
+        "آماده‌سازی..."
+    );
+
+
+    document
+    .querySelectorAll(".validation-item")
+    .forEach(
+        x => {
+
+            x.classList.remove(
+                "ok",
+                "bad"
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "metaExpiry"
+    ).textContent =
+        "دائمی";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   VALIDATION UI
+   ========================================================= */
+
+function markOK(id){
+
+    const el =
+        document.getElementById(id);
+
+    el.classList.remove(
+        "bad"
+    );
+
+    el.classList.add(
+        "ok"
+    );
+
+}
+
+
+function markBad(id){
+
+    const el =
+        document.getElementById(id);
+
+    el.classList.remove(
+        "ok"
+    );
+
+    el.classList.add(
+        "bad"
+    );
+
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+function setProgress(
+    percent,
+    text
+){
+
+    progressFill.style.width =
+        percent + "%";
+
+    progressPercent.textContent =
+        Math.round(percent) + "%";
+
+    progressText.textContent =
+        text;
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+let toastTimer = null;
+
+
+function toast(
+    message,
+    type = ""
+){
+
+    const el =
+        document.getElementById(
+            "toast"
+        );
+
+
+    el.textContent =
+        message;
+
+
+    el.className =
+        "toast";
+
+
+    if(type){
+
+        el.classList.add(
+            type
+        );
+
+    }
+
+
+    requestAnimationFrame(
+        () => {
+
+            el.classList.add(
+                "show"
+            );
+
+        }
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                el.classList.remove(
+                    "show"
+                );
+
+            },
+            2800
+        );
+
+}
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function formatBytes(bytes){
+
+    if(!bytes) return "0 B";
+
+
+    const units =
+        [
+            "B",
+            "KB",
+            "MB",
+            "GB"
+        ];
+
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    return (
+        bytes /
+        Math.pow(1024,i)
+    ).toFixed(
+        i === 0 ? 0 : 2
+    )
+    + " "
+    + units[i];
+
+}
+
+
+function sleep(ms){
+
+    return new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                ms
+            )
+    );
+
+}
+
+
+/* =========================================================
+   PASTE IMAGE
+   ========================================================= */
+
+document.addEventListener(
+    "paste",
+    event => {
+
+        if(uploading) return;
+
+
+        const items =
+            event.clipboardData?.items;
+
+
+        if(!items) return;
+
+
+        for(
+            const item of items
+        ){
+
+            if(
+                item.type.startsWith(
+                    "image/"
+                )
+            ){
+
+                const file =
+                    item.getAsFile();
+
+
+                if(file){
+
+                    handleFile(
+                        file
+                    );
+
+                }
+
+
+                break;
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key === "Enter" &&
+            selectedFile &&
+            !uploading
+        ){
+
+            uploadSkin();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

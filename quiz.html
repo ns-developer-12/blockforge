@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover"
+    >
+
+    <meta name="theme-color" content="#070707">
+
+    <title>مسابقه ماینکرفت | BlockForge</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+    <style>
+        :root {
+            --bg: #060606;
+            --bg2: #0d0d0d;
+            --bg3: #151515;
+
+            --gold: #d5a64a;
+            --gold2: #f2c45d;
+
+            --purple: #8b5cf6;
+            --purple2: #6d28d9;
+
+            --green: #2ecc71;
+            --red: #ef4444;
+
+            --text: #eeeeee;
+            --text2: #a4a4a4;
+            --text3: #666;
+
+            --border: #222;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 15px;
+        }
+
+        body {
+            font-family: "Vazirmatn", sans-serif;
+            background:
+                radial-gradient(
+                    circle at 50% -10%,
+                    rgba(139,92,246,.12),
+                    transparent 35%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: calc(82px + var(--safe-bottom));
+            -webkit-font-smoothing: antialiased;
+        }
+
+        button,
+        a {
+            font-family: inherit;
+        }
+
+        button {
+            border: 0;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            height: 62px;
+
+            padding:
+                8px
+                16px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: rgba(6,6,6,.9);
+            backdrop-filter: blur(20px);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--gold),
+                    #765421
+                );
+
+            color: white;
+
+            box-shadow:
+                0 5px 20px rgba(213,166,74,.25);
+        }
+
+        .logo-text {
+            color: white;
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        .back-btn {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: var(--bg3);
+            border: 1px solid var(--border);
+
+            color: #aaa;
+            text-decoration: none;
+
+            transition: .2s;
+        }
+
+        .back-btn:active {
+            transform: scale(.94);
+        }
+
+        .quiz-container {
+            width: min(100% - 28px, 520px);
+
+            margin: 0 auto;
+
+            min-height:
+                calc(100vh - 62px - 82px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px 0;
+        }
+
+        .card {
+            width: 100%;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.025),
+                    rgba(255,255,255,.01)
+                ),
+                var(--bg2);
+
+            border: 1px solid var(--border);
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 20px 70px rgba(0,0,0,.35);
+
+            overflow: hidden;
+        }
+
+        /* START */
+
+        .start-card {
+            text-align: center;
+            padding: 30px 22px;
+        }
+
+        .start-icon {
+            width: 86px;
+            height: 86px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(139,92,246,.25),
+                    rgba(109,40,217,.08)
+                );
+
+            border: 1px solid rgba(139,92,246,.35);
+
+            color: #a78bfa;
+
+            font-size: 2.8rem;
+
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+
+        .start-card h1 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .start-card > p {
+            color: var(--text2);
+            font-size: .8rem;
+            line-height: 2;
+        }
+
+        .reward-box {
+            margin: 20px 0;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+        }
+
+        .reward-item {
+            padding: 13px 8px;
+
+            background: var(--bg3);
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+        }
+
+        .reward-item i {
+            color: var(--gold2);
+            margin-left: 4px;
+        }
+
+        .reward-item strong {
+            display: block;
+            color: white;
+            font-size: .9rem;
+        }
+
+        .reward-item span {
+            display: block;
+            color: var(--text3);
+            font-size: .62rem;
+            margin-top: 2px;
+        }
+
+        .resume-notice {
+            display: none;
+
+            padding: 11px 13px;
+
+            margin-bottom: 13px;
+
+            border-radius: 13px;
+
+            background: rgba(139,92,246,.08);
+            border: 1px solid rgba(139,92,246,.25);
+
+            color: #b69cff;
+
+            font-size: .7rem;
+        }
+
+        .primary-btn {
+            width: 100%;
+
+            padding: 15px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple),
+                    var(--purple2)
+                );
+
+            color: white;
+
+            font-size: .88rem;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 28px rgba(139,92,246,.3);
+
+            transition: .2s;
+        }
+
+        .primary-btn:active {
+            transform: scale(.98);
+        }
+
+        .primary-btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* QUIZ */
+
+        .quiz-card {
+            display: none;
+        }
+
+        .quiz-top {
+            padding: 17px 18px 13px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            font-size: .7rem;
+            color: var(--text2);
+        }
+
+        .question-number strong {
+            color: var(--gold2);
+        }
+
+        .score {
+            color: var(--green);
+            font-weight: 800;
+        }
+
+        .progress-track {
+            height: 7px;
+
+            margin-top: 13px;
+
+            border-radius: 10px;
+
+            background: #1c1c1c;
+
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+
+            width: 0;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--purple),
+                    #b58cff
+                );
+
+            transition: width .4s ease;
+        }
+
+        .question-body {
+            padding: 23px 18px 20px;
+        }
+
+        .question-reward {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 5px 9px;
+
+            margin-bottom: 12px;
+
+            border-radius: 999px;
+
+            background: rgba(213,166,74,.08);
+            border: 1px solid rgba(213,166,74,.18);
+
+            color: var(--gold2);
+
+            font-size: .62rem;
+            font-weight: 700;
+        }
+
+        .question {
+            font-size: 1.05rem;
+            line-height: 2;
+
+            font-weight: 800;
+
+            color: white;
+
+            margin-bottom: 18px;
+
+            animation: questionIn .35s ease;
+        }
+
+        @keyframes questionIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .option {
+            position: relative;
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            display: flex;
+            align-items: center;
+
+            text-align: right;
+
+            background: var(--bg3);
+
+            border: 1px solid #252525;
+
+            border-radius: 15px;
+
+            color: #c7c7c7;
+
+            font-size: .8rem;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                border-color .2s,
+                background .2s,
+                transform .15s;
+        }
+
+        .option:active {
+            transform: scale(.985);
+        }
+
+        .option:hover:not(:disabled) {
+            border-color: rgba(213,166,74,.55);
+            color: white;
+        }
+
+        .option:disabled {
+            cursor: default;
+        }
+
+        .option-letter {
+            width: 29px;
+            height: 29px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-left: 10px;
+
+            border-radius: 9px;
+
+            background: #202020;
+
+            color: #777;
+
+            font-size: .68rem;
+            font-weight: 900;
+        }
+
+        .option.correct {
+            border-color: var(--green);
+            background: rgba(46,204,113,.11);
+            color: #70e6a0;
+        }
+
+        .option.correct .option-letter {
+            background: var(--green);
+            color: white;
+        }
+
+        .option.wrong {
+            border-color: var(--red);
+            background: rgba(239,68,68,.11);
+            color: #ff8585;
+
+            animation: shake .35s ease;
+        }
+
+        .option.wrong .option-letter {
+            background: var(--red);
+            color: white;
+        }
+
+        @keyframes shake {
+            0%,100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .answer-result {
+            min-height: 35px;
+
+            margin-top: 14px;
+
+            padding: 9px 11px;
+
+            border-radius: 12px;
+
+            font-size: .72rem;
+            font-weight: 800;
+
+            display: none;
+        }
+
+        .answer-result.correct {
+            display: block;
+
+            background: rgba(46,204,113,.08);
+            color: #65df98;
+        }
+
+        .answer-result.wrong {
+            display: block;
+
+            background: rgba(239,68,68,.08);
+            color: #ff7474;
+        }
+
+        /* END */
+
+        .end-card {
+            display: none;
+            text-align: center;
+            padding: 30px 22px;
+        }
+
+        .end-icon {
+            width: 90px;
+            height: 90px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 28px;
+
+            background: rgba(213,166,74,.1);
+            border: 1px solid rgba(213,166,74,.3);
+
+            color: var(--gold2);
+
+            font-size: 3rem;
+        }
+
+        .end-card h2 {
+            font-size: 1.35rem;
+            font-weight: 900;
+        }
+
+        .end-subtitle {
+            color: var(--text2);
+            font-size: .75rem;
+            margin-top: 4px;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 9px;
+
+            margin: 20px 0;
+        }
+
+        .result-item {
+            padding: 14px 8px;
+
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .result-item strong {
+            display: block;
+
+            color: white;
+            font-size: 1.15rem;
+        }
+
+        .result-item span {
+            color: #777;
+            font-size: .6rem;
+        }
+
+        .result-item.reward {
+            border-color: rgba(213,166,74,.25);
+        }
+
+        .result-item.reward strong {
+            color: var(--gold2);
+        }
+
+        .secondary-btn {
+            width: 100%;
+
+            padding: 14px;
+
+            border-radius: 15px;
+
+            background: var(--bg3);
+            border: 1px solid var(--border);
+
+            color: #aaa;
+
+            cursor: pointer;
+
+            font-size: .78rem;
+            font-weight: 700;
+        }
+
+        /* NAV */
+
+        .bottom-nav {
+            position: fixed;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            z-index: 200;
+
+            display: flex;
+            justify-content: space-around;
+
+            padding:
+                8px
+                0
+                calc(8px + var(--safe-bottom));
+
+            background: rgba(6,6,6,.96);
+            backdrop-filter: blur(20px);
+
+            border-top: 1px solid var(--border);
+        }
+
+        .bottom-nav a {
+            min-width: 70px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+
+            padding: 3px 8px;
+
+            color: #555;
+
+            text-decoration: none;
+
+            font-size: .6rem;
+        }
+
+        .bottom-nav i {
+            font-size: 1.2rem;
+        }
+
+        .bottom-nav .active {
+            color: var(--gold);
+        }
+
+        @media (min-width: 700px) {
+            .bottom-nav {
+                display: none;
+            }
+
+            body {
+                padding-bottom: 20px;
+            }
+
+            .quiz-container {
+                min-height: calc(100vh - 62px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="index.html" class="back-btn" aria-label="بازگشت">
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
+
+    <div class="logo">
+        <div class="logo-icon">
+            <i class="fa-solid fa-cubes"></i>
+        </div>
+
+        <div class="logo-text">
+            Block<span>Forge</span>
+        </div>
+    </div>
+
+    <div style="width:38px"></div>
+
+</header>
+
+
+<main class="quiz-container">
+
+    <!-- START -->
+
+    <section class="card start-card" id="quizStart">
+
+        <div class="start-icon">
+            <i class="fa-solid fa-question"></i>
+        </div>
+
+        <h1>مسابقه ماینکرفت</h1>
+
+        <p>
+            ۱۰ سؤال از دنیای ماینکرفت جواب بده،
+            امتیازت رو بالا ببر و توکن جایزه بگیر.
+        </p>
+
+        <div class="reward-box">
+
+            <div class="reward-item">
+                <i class="fa-solid fa-coins"></i>
+                <strong>۵۰ توکن</strong>
+                <span>هر پاسخ صحیح</span>
+            </div>
+
+            <div class="reward-item">
+                <i class="fa-solid fa-trophy"></i>
+                <strong>۵۰۰ توکن</strong>
+                <span>حداکثر جایزه</span>
+            </div>
+
+        </div>
+
+        <div class="resume-notice" id="resumeNotice">
+            <i class="fa-solid fa-rotate"></i>
+            یک مسابقه نیمه‌تمام داری.
+            از همان سؤال ادامه می‌دهی.
+        </div>
+
+        <button class="primary-btn" id="startBtn">
+            <i class="fa-solid fa-play"></i>
+            <span>شروع مسابقه</span>
+        </button>
+
+    </section>
+
+
+    <!-- QUIZ -->
+
+    <section class="card quiz-card" id="quizCard">
+
+        <div class="quiz-top">
+
+            <div class="quiz-meta">
+
+                <div class="question-number">
+                    سؤال
+                    <strong id="questionNumber">۱</strong>
+                    از
+                    <strong id="questionTotal">۱۰</strong>
+                </div>
+
+                <div class="score">
+                    <i class="fa-solid fa-check"></i>
+                    <span id="score">۰</span>
+                    درست
+                </div>
+
+            </div>
+
+            <div class="progress-track">
+                <div
+                    class="progress-fill"
+                    id="progressFill"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <div class="question-body">
+
+            <div class="question-reward">
+                <i class="fa-solid fa-coins"></i>
+                پاسخ صحیح +۵۰ توکن
+            </div>
+
+            <div class="question" id="questionText"></div>
+
+            <div class="options" id="options"></div>
+
+            <div
+                class="answer-result"
+                id="answerResult"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- END -->
+
+    <section class="card end-card" id="endCard">
+
+        <div class="end-icon">
+            <i class="fa-solid fa-trophy"></i>
+        </div>
+
+        <h2 id="endTitle">
+            مسابقه تمام شد!
+        </h2>
+
+        <div class="end-subtitle" id="endSubtitle">
+            نتیجه مسابقه‌ات آماده است.
+        </div>
+
+        <div class="result-grid">
+
+            <div class="result-item">
+                <strong id="finalScore">۰</strong>
+                <span>پاسخ صحیح</span>
+            </div>
+
+            <div class="result-item">
+                <strong id="finalPercent">۰٪</strong>
+                <span>درصد موفقیت</span>
+            </div>
+
+            <div class="result-item reward">
+                <strong id="finalReward">۰</strong>
+                <span>توکن دریافت‌شده</span>
+            </div>
+
+            <div class="result-item">
+                <strong id="finalTotal">۱۰</strong>
+                <span>تعداد سؤال</span>
+            </div>
+
+        </div>
+
+        <button
+            class="secondary-btn"
+            id="homeBtn"
+        >
+            <i class="fa-solid fa-house"></i>
+            برگشت به خانه
+        </button>
+
+    </section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+    <a href="index.html">
+        <i class="fa-solid fa-house"></i>
+        خانه
+    </a>
+
+    <a href="premium.html">
+        <i class="fa-solid fa-crown"></i>
+        پرمیوم
+    </a>
+
+    <a
+        href="index.html"
+        id="savedBtn"
+    >
+        <i class="fa-solid fa-bookmark"></i>
+        ذخیره‌شده
+    </a>
+
+</nav>
+
+
+<script>
+"use strict";
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+const QUESTIONS = [
+    {
+        q: "ماینکرفت در ابتدا توسط چه استودیویی ساخته شد؟",
+        opts: ["Mojang", "Microsoft", "Valve", "Epic Games"],
+        ans: "Mojang"
+    },
+    {
+        q: "اولین نسخه عمومی ماینکرفت در چه سالی عرضه شد؟",
+        opts: ["2009", "2010", "2011", "2012"],
+        ans: "2009"
+    },
+    {
+        q: "نام دنیای اصلی ماینکرفت چیست؟",
+        opts: ["Overworld", "Nether", "The End", "Skyland"],
+        ans: "Overworld"
+    },
+    {
+        q: "کدام باس در The End قرار دارد؟",
+        opts: ["Ender Dragon", "Wither", "Warden", "Elder Guardian"],
+        ans: "Ender Dragon"
+    },
+    {
+        q: "برای ساخت پورتال Nether به چه بلوکی نیاز داری؟",
+        opts: ["Obsidian", "Diamond Block", "Gold Block", "Iron Block"],
+        ans: "Obsidian"
+    },
+    {
+        q: "نام مستعار Markus Persson چیست؟",
+        opts: ["Notch", "Jeb", "Dinnerbone", "Grumm"],
+        ans: "Notch"
+    },
+    {
+        q: "کدام موجود با انفجار خود به بازیکن آسیب می‌زند؟",
+        opts: ["Creeper", "Cow", "Villager", "Pig"],
+        ans: "Creeper"
+    },
+    {
+        q: "کدام بایوم معمولاً فاقد درخت طبیعی است؟",
+        opts: ["Desert", "Forest", "Jungle", "Taiga"],
+        ans: "Desert"
+    },
+    {
+        q: "برای یک پورتال Nether حداقل چند بلوک Obsidian لازم است؟",
+        opts: ["۱۰", "۸", "۱۲", "۱۴"],
+        ans: "۱۰"
+    },
+    {
+        q: "کدام موجود از Creeper دوری می‌کند؟",
+        opts: ["Cat", "Cow", "Sheep", "Pig"],
+        ans: "Cat"
+    }
+];
+
+
+/* =========================================================
+   STORAGE SAFE
+========================================================= */
+
+const STORAGE_KEY = "bf_quiz_state";
+const DONE_KEY = "bf_quiz_done";
+const TOKENS_KEY = "bf_tokens";
+const REWARD_KEY = "bf_last_reward";
+
+
+function readJSON(key, fallback) {
+
+    try {
+
+        const value = localStorage.getItem(key);
+
+        if (!value) {
+            return fallback;
+        }
+
+        const parsed = JSON.parse(value);
+
+        return parsed ?? fallback;
+
+    } catch (error) {
+
+        console.warn("Storage read error:", key, error);
+
+        return fallback;
+    }
+}
+
+
+function writeJSON(key, value) {
+
+    try {
+
+        localStorage.setItem(
+            key,
+            JSON.stringify(value)
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.warn("Storage write error:", key, error);
+
+        return false;
+    }
+}
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let quizQuestions = [];
+let currentQuestion = 0;
+let correctAnswers = 0;
+
+let answering = false;
+let finished = false;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function shuffle(array) {
+
+    const result = [...array];
+
+    for (
+        let i = result.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j = Math.floor(
+            Math.random() * (i + 1)
+        );
+
+        [
+            result[i],
+            result[j]
+        ] = [
+            result[j],
+            result[i]
+        ];
+    }
+
+    return result;
+}
+
+
+function toPersianNumber(value) {
+
+    return Number(value)
+        .toLocaleString("fa-IR");
+}
+
+
+function saveState() {
+
+    writeJSON(STORAGE_KEY, {
+        version: 2,
+
+        questions: quizQuestions,
+
+        currentQuestion,
+
+        correctAnswers,
+
+        finished: false
+    });
+}
+
+
+function getState() {
+
+    const state = readJSON(STORAGE_KEY, null);
+
+    if (
+        !state ||
+        !Array.isArray(state.questions) ||
+        state.questions.length === 0
+    ) {
+        return null;
+    }
+
+    return state;
+}
+
+
+function clearState() {
+
+    try {
+        localStorage.removeItem(STORAGE_KEY);
+    } catch {}
+}
+
+
+/* =========================================================
+   TOKENS
+========================================================= */
+
+function getTokenData() {
+
+    const fallback = {
+        tokens: 2000,
+        last: Date.now()
+    };
+
+    const data = readJSON(
+        TOKENS_KEY,
+        fallback
+    );
+
+    if (
+        typeof data.tokens !== "number" ||
+        !Number.isFinite(data.tokens)
+    ) {
+        data.tokens = 2000;
+    }
+
+    if (
+        typeof data.last !== "number" ||
+        !Number.isFinite(data.last)
+    ) {
+        data.last = Date.now();
+    }
+
+    return data;
+}
+
+
+function addTokens(amount) {
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+        return;
+    }
+
+    const data = getTokenData();
+
+    data.tokens = Math.min(
+        50000,
+        Math.max(0, data.tokens + amount)
+    );
+
+    data.last = Date.now();
+
+    writeJSON(
+        TOKENS_KEY,
+        data
+    );
+}
+
+
+/* =========================================================
+   UI
+========================================================= */
+
+const startCard =
+    document.getElementById("quizStart");
+
+const quizCard =
+    document.getElementById("quizCard");
+
+const endCard =
+    document.getElementById("endCard");
+
+const startBtn =
+    document.getElementById("startBtn");
+
+const resumeNotice =
+    document.getElementById("resumeNotice");
+
+const questionText =
+    document.getElementById("questionText");
+
+const optionsContainer =
+    document.getElementById("options");
+
+const questionNumber =
+    document.getElementById("questionNumber");
+
+const questionTotal =
+    document.getElementById("questionTotal");
+
+const scoreElement =
+    document.getElementById("score");
+
+const progressFill =
+    document.getElementById("progressFill");
+
+const answerResult =
+    document.getElementById("answerResult");
+
+
+/* =========================================================
+   SHOW QUESTION
+========================================================= */
+
+function showQuestion() {
+
+    answering = false;
+
+    if (
+        !quizQuestions.length ||
+        currentQuestion >= quizQuestions.length
+    ) {
+        finishQuiz();
+        return;
+    }
+
+    const question =
+        quizQuestions[currentQuestion];
+
+    questionNumber.textContent =
+        toPersianNumber(currentQuestion + 1);
+
+    questionTotal.textContent =
+        toPersianNumber(quizQuestions.length);
+
+    scoreElement.textContent =
+        toPersianNumber(correctAnswers);
+
+    const progress =
+        ((currentQuestion) /
+            quizQuestions.length) * 100;
+
+    progressFill.style.width =
+        `${progress}%`;
+
+    questionText.style.animation = "none";
+
+    void questionText.offsetWidth;
+
+    questionText.style.animation =
+        "questionIn .35s ease";
+
+    questionText.textContent =
+        question.q;
+
+    answerResult.className =
+        "answer-result";
+
+    answerResult.textContent = "";
+
+    optionsContainer.innerHTML = "";
+
+    const shuffledOptions =
+        shuffle(question.opts);
+
+    const letters = ["الف", "ب", "ج", "د"];
+
+    shuffledOptions.forEach(
+        (option, index) => {
+
+            const button =
+                document.createElement("button");
+
+            button.type = "button";
+
+            button.className =
+                "option";
+
+            button.dataset.value =
+                option;
+
+            const letter =
+                document.createElement("span");
+
+            letter.className =
+                "option-letter";
+
+            letter.textContent =
+                letters[index] || "";
+
+            const text =
+                document.createElement("span");
+
+            text.textContent =
+                option;
+
+            button.appendChild(letter);
+            button.appendChild(text);
+
+            button.addEventListener(
+                "click",
+                () => answerQuestion(option, button)
+            );
+
+            optionsContainer.appendChild(button);
+        }
+    );
+}
+
+
+/* =========================================================
+   ANSWER
+========================================================= */
+
+function answerQuestion(
+    selected,
+    selectedButton
+) {
+
+    if (answering || finished) {
+        return;
+    }
+
+    answering = true;
+
+    const question =
+        quizQuestions[currentQuestion];
+
+    const isCorrect =
+        selected === question.ans;
+
+    const buttons =
+        optionsContainer.querySelectorAll(
+            ".option"
+        );
+
+    buttons.forEach(button => {
+
+        button.disabled = true;
+
+        if (
+            button.dataset.value ===
+            question.ans
+        ) {
+            button.classList.add("correct");
+        }
+    });
+
+    if (isCorrect) {
+
+        correctAnswers++;
+
+        selectedButton.classList.add(
+            "correct"
+        );
+
+        answerResult.className =
+            "answer-result correct";
+
+        answerResult.innerHTML =
+            '<i class="fa-solid fa-circle-check"></i> ' +
+            "آفرین! جواب درست بود. +۵۰ توکن";
+
+    } else {
+
+        selectedButton.classList.add(
+            "wrong"
+        );
+
+        answerResult.className =
+            "answer-result wrong";
+
+        answerResult.innerHTML =
+            '<i class="fa-solid fa-circle-xmark"></i> ' +
+            `جواب درست: ${question.ans}`;
+    }
+
+    /*
+       بسیار مهم:
+       وضعیت را بلافاصله بعد از پاسخ ذخیره می‌کنیم.
+    */
+
+    currentQuestion++;
+
+    saveState();
+
+    scoreElement.textContent =
+        toPersianNumber(correctAnswers);
+
+    const progress =
+        (currentQuestion /
+            quizQuestions.length) * 100;
+
+    progressFill.style.width =
+        `${progress}%`;
+
+    /*
+       اجازه نمی‌دهیم چند timeout همزمان ایجاد شود.
+    */
+
+    setTimeout(() => {
+
+        if (finished) {
+            return;
+        }
+
+        showQuestion();
+
+    }, 1200);
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+function startQuiz() {
+
+    if (finished) {
+        return;
+    }
+
+    const saved =
+        getState();
+
+    const alreadyDone =
+        localStorage.getItem(DONE_KEY) === "true";
+
+    /*
+       اگر قبلاً مسابقه کامل شده باشد،
+       اجازه شروع دوباره نداریم.
+    */
+
+    if (alreadyDone) {
+
+        showAlreadyCompleted();
+
+        return;
+    }
+
+    /*
+       ادامه مسابقه قبلی
+    */
+
+    if (
+        saved &&
+        saved.finished !== true &&
+        Array.isArray(saved.questions) &&
+        saved.currentQuestion <
+            saved.questions.length
+    ) {
+
+        quizQuestions =
+            saved.questions;
+
+        currentQuestion =
+            Math.max(
+                0,
+                Number(saved.currentQuestion) || 0
+            );
+
+        correctAnswers =
+            Math.max(
+                0,
+                Number(saved.correctAnswers) || 0
+            );
+
+    } else {
+
+        quizQuestions =
+            shuffle(QUESTIONS);
+
+        currentQuestion = 0;
+
+        correctAnswers = 0;
+
+        saveState();
+    }
+
+    startCard.style.display =
+        "none";
+
+    endCard.style.display =
+        "none";
+
+    quizCard.style.display =
+        "block";
+
+    showQuestion();
+}
+
+
+/* =========================================================
+   COMPLETED
+========================================================= */
+
+function showAlreadyCompleted() {
+
+    startCard.innerHTML = `
+        <div class="start-icon"
+             style="color:#f2c45d;border-color:rgba(213,166,74,.3);background:rgba(213,166,74,.08)">
+            <i class="fa-solid fa-trophy"></i>
+        </div>
+
+        <h1>مسابقه قبلاً انجام شده</h1>
+
+        <p>
+            این مسابقه فقط یک‌بار قابل انجام است.
+            منتظر مسابقه بعدی باش!
+        </p>
+
+        <button
+            class="secondary-btn"
+            style="margin-top:20px"
+            id="completedHomeBtn"
+        >
+            <i class="fa-solid fa-house"></i>
+            برگشت به خانه
+        </button>
+    `;
+
+    document
+        .getElementById("completedHomeBtn")
+        .addEventListener(
+            "click",
+            () => {
+                window.location.href =
+                    "index.html";
+            }
+        );
+}
+
+
+/* =========================================================
+   FINISH
+========================================================= */
+
+function finishQuiz() {
+
+    if (finished) {
+        return;
+    }
+
+    finished = true;
+    answering = true;
+
+    /*
+       قفل مهم:
+       اول وضعیت را finished می‌کنیم
+       تا Refresh یا اجرای دوباره تابع
+       باعث پرداخت دوباره نشود.
+    */
+
+    const reward =
+        correctAnswers * 50;
+
+    const total =
+        quizQuestions.length;
+
+    const percent =
+        total > 0
+            ? Math.round(
+                (correctAnswers / total) * 100
+            )
+            : 0;
+
+    const rewardAlreadyGiven =
+        readJSON(
+            REWARD_KEY,
+            null
+        );
+
+    /*
+       شناسه اختصاصی این مسابقه
+    */
+
+    let quizId =
+        sessionStorage.getItem(
+            "bf_current_quiz_id"
+        );
+
+    if (!quizId) {
+
+        quizId =
+            Date.now().toString() +
+            "_" +
+            Math.random()
+                .toString(36)
+                .slice(2);
+
+        sessionStorage.setItem(
+            "bf_current_quiz_id",
+            quizId
+        );
+    }
+
+    /*
+       فقط یک بار پرداخت
+    */
+
+    if (
+        !rewardAlreadyGiven ||
+        rewardAlreadyGiven.quizId !== quizId
+    ) {
+
+        addTokens(reward);
+
+        writeJSON(
+            REWARD_KEY,
+            {
+                quizId,
+                reward,
+                time: Date.now()
+            }
+        );
+    }
+
+    /*
+       مسابقه دیگر قابل ادامه نیست.
+    */
+
+    clearState();
+
+    localStorage.setItem(
+        DONE_KEY,
+        "true"
+    );
+
+    localStorage.setItem(
+        "bf_token_update",
+        Date.now().toString()
+    );
+
+    localStorage.setItem(
+        "bf_last_reward",
+        String(reward)
+    );
+
+    /*
+       UI
+    */
+
+    quizCard.style.display =
+        "none";
+
+    startCard.style.display =
+        "none";
+
+    endCard.style.display =
+        "block";
+
+    document.getElementById(
+        "finalScore"
+    ).textContent =
+        toPersianNumber(correctAnswers);
+
+    document.getElementById(
+        "finalPercent"
+    ).textContent =
+        toPersianNumber(percent) + "٪";
+
+    document.getElementById(
+        "finalReward"
+    ).textContent =
+        toPersianNumber(reward);
+
+    document.getElementById(
+        "finalTotal"
+    ).textContent =
+        toPersianNumber(total);
+
+    let title =
+        "مسابقه تمام شد!";
+
+    if (percent === 100) {
+        title = "فوق‌العاده بود! 🏆";
+    } else if (percent >= 70) {
+        title = "عالی بود! 🎉";
+    } else if (percent >= 50) {
+        title = "خوبه! 👏";
+    } else {
+        title = "دفعه بعد بهتر میشه! 💪";
+    }
+
+    document.getElementById(
+        "endTitle"
+    ).textContent = title;
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+function init() {
+
+    const saved =
+        getState();
+
+    const done =
+        localStorage.getItem(
+            DONE_KEY
+        ) === "true";
+
+    if (done) {
+
+        showAlreadyCompleted();
+
+        return;
+    }
+
+    if (
+        saved &&
+        saved.finished !== true &&
+        Array.isArray(saved.questions) &&
+        saved.questions.length > 0 &&
+        saved.currentQuestion <
+            saved.questions.length
+    ) {
+
+        resumeNotice.style.display =
+            "block";
+
+        startBtn.innerHTML =
+            '<i class="fa-solid fa-rotate"></i> ادامه مسابقه';
+    }
+}
+
+
+startBtn.addEventListener(
+    "click",
+    startQuiz
+);
+
+document
+    .getElementById("homeBtn")
+    .addEventListener(
+        "click",
+        () => {
+            window.location.href =
+                "index.html";
+        }
+    );
+
+init();
+</script>
+
+</body>
+</html>

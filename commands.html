@@ -1,0 +1,3115 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08080c">
+<title>Command Forge | Bedrock</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root{
+    --bg:#07070a;
+    --bg2:#0d0d12;
+    --bg3:#12121a;
+    --card:rgba(18,18,25,.72);
+    --card2:rgba(25,25,34,.72);
+    --line:rgba(255,255,255,.075);
+    --line2:rgba(255,255,255,.12);
+
+    --purple:#a855f7;
+    --purple2:#7c3aed;
+    --gold:#d4a54a;
+    --green:#2ecc71;
+    --red:#ef5350;
+    --blue:#42a5f5;
+    --cyan:#00bcd4;
+    --orange:#fb923c;
+
+    --text:#f0f0f3;
+    --text2:#aaaab5;
+    --text3:#6c6c78;
+
+    --radius:15px;
+    --radius-lg:21px;
+    --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+    font-size:15px;
+}
+
+body{
+    min-height:100vh;
+    font-family:'Vazirmatn',sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 0%,rgba(168,85,247,.075),transparent 30%),
+        radial-gradient(circle at 100% 80%,rgba(66,165,245,.045),transparent 28%),
+        var(--bg);
+    line-height:1.7;
+    overflow-x:hidden;
+    padding-bottom:calc(30px + var(--safe-bottom));
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    border:0;
+}
+
+button,
+.cmd-card,
+.favorite-btn,
+.history-item{
+    user-select:none;
+}
+
+::-webkit-scrollbar{
+    width:6px;
+    height:6px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#292933;
+    border-radius:20px;
+}
+
+::selection{
+    background:rgba(168,85,247,.35);
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:58px;
+    padding:0 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:rgba(7,7,10,.86);
+    backdrop-filter:blur(25px) saturate(150%);
+    -webkit-backdrop-filter:blur(25px) saturate(150%);
+    border-bottom:1px solid var(--line);
+}
+
+.back-btn,
+.header-action{
+    width:36px;
+    height:36px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#aaa;
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--line);
+    text-decoration:none;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.back-btn:hover,
+.header-action:hover{
+    color:#fff;
+    border-color:rgba(168,85,247,.4);
+    background:rgba(168,85,247,.1);
+}
+
+.header-title{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-size:.9rem;
+    font-weight:800;
+}
+
+.header-title i{
+    color:var(--purple);
+}
+
+/* ================= MAIN ================= */
+
+.container{
+    width:min(100% - 24px,920px);
+    margin:auto;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    padding:22px 0 15px;
+}
+
+.hero-title{
+    font-size:1.35rem;
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.hero-title span{
+    color:var(--purple);
+}
+
+.hero-desc{
+    color:var(--text3);
+    font-size:.68rem;
+}
+
+.hero-stats{
+    display:flex;
+    gap:7px;
+    margin-top:13px;
+    flex-wrap:wrap;
+}
+
+.stat{
+    padding:6px 10px;
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--line);
+    border-radius:10px;
+    color:var(--text2);
+    font-size:.58rem;
+}
+
+.stat b{
+    color:#fff;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+    position:relative;
+    margin-bottom:10px;
+}
+
+.search-box i{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#666;
+    pointer-events:none;
+}
+
+.search-input{
+    width:100%;
+    height:45px;
+    padding:0 42px 0 45px;
+    border-radius:13px;
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--line);
+    outline:none;
+    color:#fff;
+    font-size:.72rem;
+    transition:.2s;
+}
+
+.search-input:focus{
+    border-color:rgba(168,85,247,.55);
+    box-shadow:0 0 0 3px rgba(168,85,247,.08);
+}
+
+.search-clear{
+    position:absolute;
+    left:9px;
+    top:50%;
+    transform:translateY(-50%);
+    width:28px;
+    height:28px;
+    border-radius:8px;
+    color:#777;
+    background:transparent;
+    cursor:pointer;
+}
+
+/* ================= FILTERS ================= */
+
+.filters{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    padding:1px 0 10px;
+}
+
+.filters::-webkit-scrollbar{
+    display:none;
+}
+
+.filter{
+    flex-shrink:0;
+    padding:7px 12px;
+    border-radius:20px;
+    color:#888;
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--line);
+    cursor:pointer;
+    font-size:.59rem;
+    transition:.2s;
+}
+
+.filter.active{
+    color:#fff;
+    background:rgba(168,85,247,.14);
+    border-color:rgba(168,85,247,.45);
+}
+
+/* ================= COMMAND GRID ================= */
+
+.commands-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+    margin-bottom:16px;
+}
+
+.cmd-card{
+    position:relative;
+    padding:12px;
+    min-height:92px;
+    border-radius:14px;
+    background:var(--card);
+    border:1px solid var(--line);
+    cursor:pointer;
+    transition:.22s;
+    overflow:hidden;
+}
+
+.cmd-card:hover{
+    transform:translateY(-1px);
+    border-color:rgba(168,85,247,.4);
+}
+
+.cmd-card.active{
+    border-color:rgba(168,85,247,.65);
+    background:linear-gradient(135deg,rgba(168,85,247,.13),rgba(255,255,255,.025));
+    box-shadow:0 8px 30px rgba(0,0,0,.2);
+}
+
+.cmd-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:7px;
+}
+
+.cmd-icon{
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(168,85,247,.12);
+    color:var(--purple);
+    flex-shrink:0;
+}
+
+.cmd-name{
+    direction:ltr;
+    text-align:left;
+    font-family:monospace;
+    font-weight:800;
+    font-size:.72rem;
+    flex:1;
+}
+
+.favorite-btn{
+    width:25px;
+    height:25px;
+    background:transparent;
+    color:#555;
+    cursor:pointer;
+    border-radius:7px;
+}
+
+.favorite-btn.active{
+    color:#f6c453;
+}
+
+.cmd-desc{
+    color:#777;
+    font-size:.56rem;
+    margin-top:8px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.cmd-badge{
+    position:absolute;
+    left:9px;
+    bottom:8px;
+    font-size:.47rem;
+    color:#666;
+}
+
+.empty{
+    grid-column:1/-1;
+    text-align:center;
+    padding:35px 15px;
+    color:#666;
+    font-size:.7rem;
+}
+
+/* ================= BUILDER ================= */
+
+.builder{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.panel{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    backdrop-filter:blur(15px);
+}
+
+.panel-head{
+    padding:13px 15px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.panel-title{
+    font-size:.72rem;
+    font-weight:800;
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.panel-title i{
+    color:var(--purple);
+}
+
+.panel-sub{
+    font-size:.52rem;
+    color:#666;
+}
+
+.panel-body{
+    padding:15px;
+}
+
+/* ================= TOOLBAR ================= */
+
+.toolbar{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.tool-btn{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    padding:7px 10px;
+    border-radius:9px;
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--line);
+    color:#aaa;
+    cursor:pointer;
+    font-size:.57rem;
+    transition:.2s;
+}
+
+.tool-btn:hover{
+    color:#fff;
+    border-color:var(--line2);
+}
+
+.tool-btn.danger:hover{
+    color:var(--red);
+    border-color:rgba(239,83,80,.3);
+}
+
+/* ================= PARAMS ================= */
+
+.params{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.param{
+    position:relative;
+}
+
+.param-label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:#bbb;
+    font-size:.64rem;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.param-label .required{
+    color:var(--red);
+    font-size:.55rem;
+}
+
+.param-desc{
+    color:#62626c;
+    font-size:.52rem;
+    margin-bottom:6px;
+}
+
+.param-input,
+.param-select,
+.param-textarea{
+    width:100%;
+    min-height:42px;
+    border-radius:10px;
+    background:rgba(0,0,0,.3);
+    border:1px solid rgba(255,255,255,.09);
+    color:#fff;
+    outline:none;
+    padding:9px 12px;
+    font-size:.68rem;
+    direction:rtl;
+    transition:.2s;
+}
+
+.param-input:focus,
+.param-select:focus,
+.param-textarea:focus{
+    border-color:rgba(168,85,247,.55);
+    box-shadow:0 0 0 3px rgba(168,85,247,.07);
+}
+
+.param-input.invalid{
+    border-color:rgba(239,83,80,.7);
+}
+
+.param-select option{
+    background:#15151b;
+}
+
+.param-hint{
+    color:#555;
+    font-size:.5rem;
+    margin-top:5px;
+}
+
+.quick-row{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+    margin-top:6px;
+}
+
+.quick-chip{
+    padding:4px 7px;
+    border-radius:7px;
+    background:rgba(168,85,247,.06);
+    color:#8c65ad;
+    border:1px solid rgba(168,85,247,.12);
+    font-size:.49rem;
+    cursor:pointer;
+}
+
+.quick-chip:hover{
+    color:#fff;
+    background:rgba(168,85,247,.13);
+}
+
+/* ================= OUTPUT ================= */
+
+.output-panel{
+    border-color:rgba(168,85,247,.28);
+}
+
+.output-box{
+    position:relative;
+    direction:ltr;
+    text-align:left;
+    background:#050507;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:12px;
+    padding:15px;
+    min-height:58px;
+    color:#ddd;
+    font-family:"Courier New",monospace;
+    font-size:.72rem;
+    line-height:1.8;
+    overflow:auto;
+    word-break:break-word;
+}
+
+.output-box .slash{
+    color:#a855f7;
+    font-weight:900;
+}
+
+.output-box .command-name{
+    color:#f5c84b;
+    font-weight:800;
+}
+
+.output-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:7px;
+    color:#555;
+    font-size:.5rem;
+}
+
+.valid{
+    color:var(--green);
+}
+
+.invalid-text{
+    color:var(--red);
+}
+
+/* ================= ACTIONS ================= */
+
+.main-actions{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:7px;
+    margin-top:10px;
+}
+
+.action-btn{
+    min-height:42px;
+    border-radius:11px;
+    cursor:pointer;
+    font-size:.62rem;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    transition:.2s;
+}
+
+.action-primary{
+    color:#fff;
+    background:linear-gradient(135deg,var(--purple),var(--purple2));
+    box-shadow:0 8px 25px rgba(124,58,237,.2);
+}
+
+.action-secondary{
+    color:#aaa;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--line);
+}
+
+.action-btn:hover{
+    transform:translateY(-1px);
+}
+
+/* ================= KB ================= */
+
+.kb{
+    margin-top:12px;
+}
+
+.kb-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:9px;
+}
+
+.kb-card{
+    padding:12px;
+    background:rgba(0,0,0,.18);
+    border:1px solid var(--line);
+    border-radius:12px;
+}
+
+.kb-title{
+    color:#aaa;
+    font-size:.57rem;
+    font-weight:800;
+    margin-bottom:7px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.kb-title i{
+    color:var(--purple);
+}
+
+.kb-text{
+    color:#bbb;
+    font-size:.62rem;
+    line-height:1.9;
+}
+
+.syntax{
+    direction:ltr;
+    text-align:left;
+    background:#050507;
+    color:#ddd;
+    border-radius:9px;
+    padding:9px;
+    font-family:monospace;
+    font-size:.6rem;
+    overflow:auto;
+}
+
+.example{
+    direction:ltr;
+    text-align:left;
+    background:rgba(46,204,113,.04);
+    border:1px solid rgba(46,204,113,.1);
+    color:#b9eacb;
+    border-radius:9px;
+    padding:9px;
+    font-family:monospace;
+    font-size:.59rem;
+    overflow:auto;
+}
+
+/* ================= HISTORY ================= */
+
+.history-list{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.history-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.02);
+    border-radius:9px;
+    cursor:pointer;
+}
+
+.history-item:hover{
+    border-color:rgba(168,85,247,.25);
+}
+
+.history-command{
+    direction:ltr;
+    text-align:left;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    font-family:monospace;
+    font-size:.58rem;
+    color:#aaa;
+    flex:1;
+}
+
+.history-time{
+    color:#555;
+    font-size:.45rem;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:calc(20px + var(--safe-bottom));
+    transform:translateX(-50%) translateY(20px);
+    opacity:0;
+    pointer-events:none;
+    z-index:999;
+    padding:10px 15px;
+    border-radius:12px;
+    background:rgba(20,20,27,.96);
+    border:1px solid var(--line2);
+    box-shadow:0 15px 40px rgba(0,0,0,.55);
+    color:#fff;
+    font-size:.62rem;
+    transition:.25s;
+    white-space:nowrap;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:500;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(5px);
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(100%,650px);
+    max-height:85vh;
+    overflow:auto;
+    background:#111118;
+    border:1px solid var(--line2);
+    border-radius:22px 22px 0 0;
+    padding:15px;
+    animation:modalUp .25s ease;
+}
+
+@keyframes modalUp{
+    from{
+        transform:translateY(100%);
+    }
+    to{
+        transform:translateY(0);
+    }
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.modal-title{
+    font-size:.8rem;
+    font-weight:800;
+}
+
+.modal-close{
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    background:rgba(255,255,255,.05);
+    color:#aaa;
+    cursor:pointer;
+}
+
+/* ================= DESKTOP ================= */
+
+@media(min-width:720px){
+
+    .commands-grid{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    .builder{
+        grid-template-columns:1fr 1fr;
+        align-items:start;
+    }
+
+    .output-panel,
+    .kb{
+        grid-column:1/-1;
+    }
+
+    .kb-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .modal{
+        align-items:center;
+    }
+
+    .modal-box{
+        border-radius:20px;
+    }
+}
+
+@media(max-width:380px){
+
+    .commands-grid{
+        grid-template-columns:1fr;
+    }
+
+    .main-actions{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .main-actions .action-primary{
+        grid-column:1/-1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <a href="index.html" class="back-btn" aria-label="بازگشت">
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
+
+    <div class="header-title">
+        <i class="fa-solid fa-terminal"></i>
+        Command Forge
+    </div>
+
+    <button class="header-action" onclick="openHistory()" aria-label="تاریخچه">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+    </button>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <div class="hero-title">
+            جنریتور <span>کامند بدراک</span>
+        </div>
+
+        <div class="hero-desc">
+            کامندت رو بساز، بررسی کن، کپی کن و اطلاعاتش رو از KB ببین.
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat">
+                <b id="commandCount">0</b> کامند
+            </div>
+
+            <div class="stat">
+                <b id="favoriteCount">0</b> موردعلاقه
+            </div>
+
+            <div class="stat">
+                Bedrock
+            </div>
+        </div>
+    </section>
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            id="commandSearch"
+            class="search-input"
+            type="search"
+            placeholder="جستجوی کامند... مثلا give، teleport، scoreboard"
+            autocomplete="off"
+        >
+
+        <button class="search-clear" onclick="clearSearch()">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <!-- FILTERS -->
+
+    <div class="filters" id="filters"></div>
+
+    <!-- COMMANDS -->
+
+    <div class="commands-grid" id="commandsGrid"></div>
+
+    <!-- BUILDER -->
+
+    <section class="builder">
+
+        <!-- PARAMETERS -->
+
+        <div class="panel">
+            <div class="panel-head">
+
+                <div>
+                    <div class="panel-title">
+                        <i class="fa-solid fa-sliders"></i>
+                        ساخت کامند
+                    </div>
+
+                    <div class="panel-sub" id="selectedCommandDesc">
+                        -
+                    </div>
+                </div>
+
+                <div class="toolbar">
+
+                    <button class="tool-btn" onclick="resetForm()">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        ریست
+                    </button>
+
+                    <button class="tool-btn" onclick="showKB()">
+                        <i class="fa-solid fa-book"></i>
+                        KB
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="params" id="params"></div>
+
+            </div>
+        </div>
+
+        <!-- OUTPUT -->
+
+        <div class="panel output-panel">
+
+            <div class="panel-head">
+
+                <div class="panel-title">
+                    <i class="fa-solid fa-code"></i>
+                    خروجی
+                </div>
+
+                <div id="statusText" class="panel-sub">
+                    آماده
+                </div>
+
+            </div>
+
+            <div class="panel-body">
+
+                <div class="output-box" id="output">
+                    <span class="slash">/</span>
+                </div>
+
+                <div class="output-meta">
+
+                    <span id="commandLength">
+                        0 کاراکتر
+                    </span>
+
+                    <span id="validation">
+                        آماده
+                    </span>
+
+                </div>
+
+                <div class="main-actions">
+
+                    <button
+                        class="action-btn action-primary"
+                        onclick="copyCommand()"
+                    >
+                        <i class="fa-solid fa-copy"></i>
+                        کپی کامند
+                    </button>
+
+                    <button
+                        class="action-btn action-secondary"
+                        onclick="shareCommand()"
+                    >
+                        <i class="fa-solid fa-share-nodes"></i>
+                        اشتراک
+                    </button>
+
+                    <button
+                        class="action-btn action-secondary"
+                        onclick="saveCurrentCommand()"
+                    >
+                        <i class="fa-solid fa-bookmark"></i>
+                        ذخیره
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- KB -->
+
+        <section class="kb panel">
+
+            <div class="panel-head">
+
+                <div class="panel-title">
+                    <i class="fa-solid fa-book-open"></i>
+                    Knowledge Base
+                </div>
+
+                <button class="tool-btn" onclick="showKB()">
+                    اطلاعات کامل
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+
+            </div>
+
+            <div class="panel-body">
+
+                <div class="kb-grid">
+
+                    <div class="kb-card">
+
+                        <div class="kb-title">
+                            <i class="fa-solid fa-circle-info"></i>
+                            توضیح
+                        </div>
+
+                        <div class="kb-text" id="kbDescription">
+                            -
+                        </div>
+
+                    </div>
+
+                    <div class="kb-card">
+
+                        <div class="kb-title">
+                            <i class="fa-solid fa-terminal"></i>
+                            Syntax
+                        </div>
+
+                        <div class="syntax" id="kbSyntax">
+                            -
+                        </div>
+
+                    </div>
+
+                    <div class="kb-card">
+
+                        <div class="kb-title">
+                            <i class="fa-solid fa-flask"></i>
+                            Example
+                        </div>
+
+                        <div class="example" id="kbExample">
+                            -
+                        </div>
+
+                    </div>
+
+                    <div class="kb-card">
+
+                        <div class="kb-title">
+                            <i class="fa-solid fa-lightbulb"></i>
+                            نکته
+                        </div>
+
+                        <div class="kb-text" id="kbTip">
+                            -
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </section>
+
+</main>
+
+<!-- HISTORY MODAL -->
+
+<div class="modal" id="historyModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <div class="modal-title">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                تاریخچه کامندها
+            </div>
+
+            <button class="modal-close" onclick="closeHistory()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div class="history-list" id="historyList"></div>
+
+        <button
+            class="action-btn action-secondary"
+            style="width:100%;margin-top:10px"
+            onclick="clearHistory()"
+        >
+            <i class="fa-solid fa-trash"></i>
+            پاک کردن تاریخچه
+        </button>
+
+    </div>
+</div>
+
+<!-- KB MODAL -->
+
+<div class="modal" id="kbModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <div class="modal-title">
+                <i class="fa-solid fa-book-open"></i>
+                راهنمای کامند
+            </div>
+
+            <button class="modal-close" onclick="closeKB()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div id="kbModalContent"></div>
+
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   COMMAND FORGE
+   Minecraft Bedrock Command Generator
+   ========================================================= */
+
+/* ================= DATA ================= */
+
+const COMMANDS = [
+
+{
+    id:"give",
+    name:"/give",
+    icon:"fa-gift",
+    category:"inventory",
+    title:"دادن آیتم",
+    desc:"دادن یک آیتم به بازیکن",
+    cheats:true,
+
+    params:[
+        {
+            key:"target",
+            label:"هدف",
+            desc:"بازیکنی که آیتم را دریافت می‌کند",
+            type:"text",
+            default:"@p",
+            required:true,
+            quick:["@p","@s","@a","@r"]
+        },
+        {
+            key:"item",
+            label:"آیتم",
+            desc:"شناسه آیتم",
+            type:"text",
+            default:"diamond",
+            required:true,
+            quick:[
+                "diamond",
+                "diamond_sword",
+                "golden_apple",
+                "netherite_ingot",
+                "stone"
+            ]
+        },
+        {
+            key:"amount",
+            label:"تعداد",
+            type:"number",
+            default:"1",
+            min:1,
+            max:64
+        },
+        {
+            key:"data",
+            label:"Data",
+            desc:"در صورت نیاز",
+            type:"number",
+            default:"0",
+            min:0
+        }
+    ],
+
+    syntax:"/give <player> <item> [amount] [data]",
+
+    example:"/give @p diamond 10",
+
+    tip:"برای هدف‌گیری سریع می‌توانی از @p، @a، @e، @s یا @r استفاده کنی.",
+
+    build:p =>
+        `/give ${p.target} ${p.item} ${p.amount} ${p.data}`
+},
+
+{
+    id:"teleport",
+    name:"/tp",
+    icon:"fa-location-arrow",
+    category:"movement",
+    title:"تله‌پورت",
+    desc:"انتقال بازیکن یا موجود به مختصات",
+    cheats:true,
+
+    params:[
+        {
+            key:"target",
+            label:"هدف",
+            type:"text",
+            default:"@p",
+            required:true,
+            quick:["@p","@s","@a","@e"]
+        },
+        {
+            key:"x",
+            label:"X",
+            type:"text",
+            default:"~",
+            required:true,
+            quick:["~","~5","~-5"]
+        },
+        {
+            key:"y",
+            label:"Y",
+            type:"text",
+            default:"~",
+            required:true,
+            quick:["~","~5","~-5"]
+        },
+        {
+            key:"z",
+            label:"Z",
+            type:"text",
+            default:"~",
+            required:true,
+            quick:["~","~5","~-5"]
+        }
+    ],
+
+    syntax:"/tp <victim> <x> <y> <z>",
+
+    example:"/tp @p 0 80 0",
+
+    tip:"علامت ~ مختصات نسبی نسبت به موقعیت فعلی را نشان می‌دهد.",
+
+    build:p =>
+        `/tp ${p.target} ${p.x} ${p.y} ${p.z}`
+},
+
+{
+    id:"gamemode",
+    name:"/gamemode",
+    icon:"fa-gamepad",
+    category:"player",
+    title:"تغییر Gamemode",
+    desc:"تغییر حالت بازی بازیکن",
+    cheats:true,
+
+    params:[
+        {
+            key:"mode",
+            label:"حالت بازی",
+            type:"select",
+            default:"creative",
+            options:{
+                survival:"Survival",
+                creative:"Creative",
+                adventure:"Adventure",
+                spectator:"Spectator"
+            }
+        },
+        {
+            key:"target",
+            label:"هدف",
+            type:"text",
+            default:"@p",
+            quick:["@p","@s","@a"]
+        }
+    ],
+
+    syntax:"/gamemode <gameMode> [player]",
+
+    example:"/gamemode creative @p",
+
+    tip:"اگر هدف را مشخص نکنی، کامند روی اجراکننده اعمال می‌شود.",
+
+    build:p =>
+        `/gamemode ${p.mode}${p.target ? " "+p.target : ""}`
+},
+
+{
+    id:"effect",
+    name:"/effect",
+    icon:"fa-wand-magic-sparkles",
+    category:"player",
+    title:"Effect",
+    desc:"دادن یا حذف افکت",
+    cheats:true,
+
+    params:[
+        {
+            key:"target",
+            label:"هدف",
+            type:"text",
+            default:"@p",
+            required:true,
+            quick:["@p","@a","@s"]
+        },
+        {
+            key:"effect",
+            label:"افکت",
+            type:"select",
+            default:"speed",
+            options:{
+                speed:"Speed",
+                slowness:"Slowness",
+                haste:"Haste",
+                strength:"Strength",
+                jump_boost:"Jump Boost",
+                regeneration:"Regeneration",
+                resistance:"Resistance",
+                fire_resistance:"Fire Resistance",
+                water_breathing:"Water Breathing",
+                invisibility:"Invisibility",
+                night_vision:"Night Vision",
+                weakness:"Weakness",
+                poison:"Poison",
+                wither:"Wither",
+                levitation:"Levitation",
+                slow_falling:"Slow Falling"
+            }
+        },
+        {
+            key:"duration",
+            label:"مدت",
+            desc:"بر حسب ثانیه",
+            type:"number",
+            default:"30",
+            min:1
+        },
+        {
+            key:"amplifier",
+            label:"قدرت",
+            desc:"0 یعنی Level 1",
+            type:"number",
+            default:"0",
+            min:0,
+            max:255
+        }
+    ],
+
+    syntax:"/effect <player> <effect> <seconds> [amplifier]",
+
+    example:"/effect @p speed 30 1",
+
+    tip:"سطح افکت از صفر شروع می‌شود؛ یعنی amplifier برابر 0 یعنی Level 1.",
+
+    build:p =>
+        `/effect ${p.target} ${p.effect} ${p.duration} ${p.amplifier}`
+},
+
+{
+    id:"summon",
+    name:"/summon",
+    icon:"fa-skull",
+    category:"world",
+    title:"احضار Entity",
+    desc:"احضار یک موجود",
+    cheats:true,
+
+    params:[
+        {
+            key:"entity",
+            label:"Entity",
+            type:"text",
+            default:"zombie",
+            required:true,
+            quick:[
+                "zombie",
+                "skeleton",
+                "creeper",
+                "cow",
+                "pig",
+                "villager",
+                "iron_golem",
+                "warden"
+            ]
+        },
+        {
+            key:"x",
+            label:"X",
+            type:"text",
+            default:"~"
+        },
+        {
+            key:"y",
+            label:"Y",
+            type:"text",
+            default:"~"
+        },
+        {
+            key:"z",
+            label:"Z",
+            type:"text",
+            default:"~"
+        }
+    ],
+
+    syntax:"/summon <entity> [x y z]",
+
+    example:"/summon zombie ~ ~ ~",
+
+    tip:"می‌توانی به جای مختصات ثابت از ~ استفاده کنی تا Entity در موقعیت نسبی احضار شود.",
+
+    build:p =>
+        `/summon ${p.entity} ${p.x} ${p.y} ${p.z}`
+},
+
+{
+    id:"time",
+    name:"/time",
+    icon:"fa-clock",
+    category:"world",
+    title:"زمان",
+    desc:"تغییر زمان جهان",
+    cheats:true,
+
+    params:[
+        {
+            key:"time",
+            label:"زمان",
+            type:"select",
+            default:"1000",
+            options:{
+                "0":"شروع روز",
+                "1000":"روز",
+                "6000":"ظهر",
+                "12000":"غروب",
+                "13000":"شب",
+                "18000":"نیمه‌شب",
+                "23000":"قبل از طلوع"
+            }
+        }
+    ],
+
+    syntax:"/time set <time>",
+
+    example:"/time set day",
+
+    tip:"برای زمان دقیق می‌توانی مقدار عددی Tick را وارد کنی.",
+
+    build:p =>
+        `/time set ${p.time}`
+},
+
+{
+    id:"weather",
+    name:"/weather",
+    icon:"fa-cloud-sun",
+    category:"world",
+    title:"آب‌وهوا",
+    desc:"تغییر وضعیت آب‌وهوای جهان",
+    cheats:true,
+
+    params:[
+        {
+            key:"type",
+            label:"نوع",
+            type:"select",
+            default:"clear",
+            options:{
+                clear:"صاف",
+                rain:"بارانی",
+                thunder:"طوفانی"
+            }
+        },
+        {
+            key:"duration",
+            label:"مدت",
+            desc:"Tick",
+            type:"number",
+            default:"600",
+            min:1
+        }
+    ],
+
+    syntax:"/weather <clear|rain|thunder> [duration]",
+
+    example:"/weather thunder 600",
+
+    tip:"در Bedrock مدت weather بر اساس tick است؛ 20 tick تقریباً یک ثانیه است.",
+
+    build:p =>
+        `/weather ${p.type} ${p.duration}`
+},
+
+{
+    id:"kill",
+    name:"/kill",
+    icon:"fa-skull-crossbones",
+    category:"player",
+    title:"Kill",
+    desc:"کشتن هدف",
+    cheats:true,
+
+    params:[
+        {
+            key:"target",
+            label:"هدف",
+            type:"text",
+            default:"@p",
+            required:true,
+            quick:["@p","@s","@a","@e"]
+        }
+    ],
+
+    syntax:"/kill [target]",
+
+    example:"/kill @e[type=zombie]",
+
+    tip:"در استفاده از @e دقت کن؛ ممکن است تعداد زیادی Entity انتخاب شوند.",
+
+    build:p =>
+        `/kill ${p.target}`
+},
+
+{
+    id:"fill",
+    name:"/fill",
+    icon:"fa-cubes",
+    category:"world",
+    title:"Fill",
+    desc:"پر کردن یک ناحیه با بلاک",
+    cheats:true,
+
+    params:[
+        {
+            key:"x1",
+            label:"X1",
+            type:"text",
+            default:"~"
+        },
+        {
+            key:"y1",
+            label:"Y1",
+            type:"text",
+            default:"~"
+        },
+        {
+            key:"z1",
+            label:"Z1",
+            type:"text",
+            default:"~"
+        },
+        {
+            key:"x2",
+            label:"X2",
+            type:"text",
+            default:"~10"
+        },
+        {
+            key:"y2",
+            label:"Y2",
+            type:"text",
+            default:"~10"
+        },
+        {
+            key:"z2",
+            label:"Z2",
+            type:"text",
+            default:"~10"
+        },
+        {
+            key:"block",
+            label:"Block",
+            type:"text",
+            default:"stone",
+            required:true,
+            quick:[
+                "stone",
+                "dirt",
+                "glass",
+                "air",
+                "bedrock"
+            ]
+        }
+    ],
+
+    syntax:"/fill <from> <to> <tileName> [fillMode]",
+
+    example:"/fill ~ ~ ~ ~10 ~10 ~10 stone",
+
+    tip:"قبل از Fill محدوده را بررسی کن؛ این کامند می‌تواند حجم بزرگی از جهان را تغییر دهد.",
+
+    build:p =>
+        `/fill ${p.x1} ${p.y1} ${p.z1} ${p.x2} ${p.y2} ${p.z2} ${p.block}`
+},
+
+{
+    id:"setblock",
+    name:"/setblock",
+    icon:"fa-cube",
+    category:"world",
+    title:"Set Block",
+    desc:"قرار دادن یک بلاک",
+    cheats:true,
+
+    params:[
+        {
+            key:"x",
+            label:"X",
+            type:"text",
+            default:"~"
+        },
+        {
+            key:"y",
+            label:"Y",
+            type:"text",
+            default:"~"
+        },
+        {
+            key:"z",
+            label:"Z",
+            type:"text",
+            default:"~"
+        },
+        {
+            key:"block",
+            label:"Block",
+            type:"text",
+            default:"stone",
+            required:true,
+            quick:["stone","air","glass","diamond_block"]
+        }
+    ],
+
+    syntax:"/setblock <position> <tileName> [oldBlockHandling]",
+
+    example:"/setblock ~ ~-1 ~ diamond_block",
+
+    tip:"برای ساخت سازه‌های سریع، /setblock را با مختصات نسبی ترکیب کن.",
+
+    build:p =>
+        `/setblock ${p.x} ${p.y} ${p.z} ${p.block}`
+},
+
+{
+    id:"setworldspawn",
+    name:"/setworldspawn",
+    icon:"fa-house",
+    category:"world",
+    title:"World Spawn",
+    desc:"تنظیم Spawn اصلی جهان",
+    cheats:true,
+
+    params:[
+        {
+            key:"x",
+            label:"X",
+            type:"text",
+            default:"~"
+        },
+        {
+            key:"y",
+            label:"Y",
+            type:"text",
+            default:"~"
+        },
+        {
+            key:"z",
+            label:"Z",
+            type:"text",
+            default:"~"
+        }
+    ],
+
+    syntax:"/setworldspawn [spawnPoint: x y z]",
+
+    example:"/setworldspawn ~ ~ ~",
+
+    tip:"Spawn جهانی با Spawn Point تخت بازیکن یکی نیست.",
+
+    build:p =>
+        `/setworldspawn ${p.x} ${p.y} ${p.z}`
+},
+
+{
+    id:"difficulty",
+    name:"/difficulty",
+    icon:"fa-gauge-high",
+    category:"world",
+    title:"Difficulty",
+    desc:"تنظیم سختی جهان",
+    cheats:true,
+
+    params:[
+        {
+            key:"level",
+            label:"سختی",
+            type:"select",
+            default:"normal",
+            options:{
+                peaceful:"Peaceful",
+                easy:"Easy",
+                normal:"Normal",
+                hard:"Hard"
+            }
+        }
+    ],
+
+    syntax:"/difficulty <difficulty>",
+
+    example:"/difficulty hard",
+
+    tip:"این تنظیم روی سختی جهان اعمال می‌شود.",
+
+    build:p =>
+        `/difficulty ${p.level}`
+},
+
+{
+    id:"enchant",
+    name:"/enchant",
+    icon:"fa-wand-sparkles",
+    category:"player",
+    title:"Enchant",
+    desc:"افسون کردن آیتم در دست",
+    cheats:true,
+
+    params:[
+        {
+            key:"target",
+            label:"بازیکن",
+            type:"text",
+            default:"@p",
+            required:true,
+            quick:["@p","@s"]
+        },
+        {
+            key:"enchantment",
+            label:"افسون",
+            type:"select",
+            default:"sharpness",
+            options:{
+                sharpness:"Sharpness",
+                protection:"Protection",
+                efficiency:"Efficiency",
+                unbreaking:"Unbreaking",
+                fortune:"Fortune",
+                silk_touch:"Silk Touch",
+                mending:"Mending",
+                power:"Power",
+                punch:"Punch",
+                flame:"Flame",
+                infinity:"Infinity",
+                looting:"Looting",
+                fire_aspect:"Fire Aspect",
+                knockback:"Knockback",
+                feather_falling:"Feather Falling",
+                thorns:"Thorns"
+            }
+        },
+        {
+            key:"level",
+            label:"Level",
+            type:"number",
+            default:"1",
+            min:1
+        }
+    ],
+
+    syntax:"/enchant <player> <enchantment> [level]",
+
+    example:"/enchant @p sharpness 5",
+
+    tip:"آیتم مورد نظر باید در دست بازیکن باشد و Level باید با محدودیت آن Enchantment سازگار باشد.",
+
+    build:p =>
+        `/enchant ${p.target} ${p.enchantment} ${p.level}`
+},
+
+{
+    id:"clear",
+    name:"/clear",
+    icon:"fa-eraser",
+    category:"inventory",
+    title:"Clear Inventory",
+    desc:"حذف آیتم از Inventory",
+    cheats:true,
+
+    params:[
+        {
+            key:"target",
+            label:"بازیکن",
+            type:"text",
+            default:"@p",
+            quick:["@p","@s","@a"]
+        },
+        {
+            key:"item",
+            label:"آیتم",
+            type:"text",
+            default:"diamond",
+            quick:["diamond","stone","dirt"]
+        },
+        {
+            key:"amount",
+            label:"تعداد",
+            type:"number",
+            default:"0",
+            min:0
+        }
+    ],
+
+    syntax:"/clear <player> [itemName] [data] [maxCount]",
+
+    example:"/clear @p diamond 0 10",
+
+    tip:"اگر تعداد را 0 بگذاری، رفتار آن به ساختار نسخه و Syntax مورد استفاده بستگی دارد؛ برای حذف مقدار مشخص، مقدار را صریح وارد کن.",
+
+    build:p =>
+        `/clear ${p.target} ${p.item} 0 ${p.amount}`
+},
+
+{
+    id:"tag",
+    name:"/tag",
+    icon:"fa-tag",
+    category:"logic",
+    title:"Tag",
+    desc:"اضافه یا حذف Tag از Entity",
+    cheats:true,
+
+    params:[
+        {
+            key:"target",
+            label:"هدف",
+            type:"text",
+            default:"@p",
+            quick:["@p","@a","@e"]
+        },
+        {
+            key:"action",
+            label:"عملیات",
+            type:"select",
+            default:"add",
+            options:{
+                add:"Add",
+                remove:"Remove"
+            }
+        },
+        {
+            key:"tag",
+            label:"نام Tag",
+            type:"text",
+            default:"boss",
+            required:true
+        }
+    ],
+
+    syntax:"/tag <entity> <add|remove> <name>",
+
+    example:"/tag @e[type=zombie] add boss",
+
+    tip:"Tagها برای سیستم‌های Command-based مثل Boss، Quest و Event بسیار کاربردی‌اند.",
+
+    build:p =>
+        `/tag ${p.target} ${p.action} ${p.tag}`
+},
+
+{
+    id:"say",
+    name:"/say",
+    icon:"fa-comment",
+    category:"communication",
+    title:"Say",
+    desc:"نمایش پیام در چت",
+    cheats:false,
+
+    params:[
+        {
+            key:"message",
+            label:"پیام",
+            type:"text",
+            default:"Hello Bedrock!",
+            required:true
+        }
+    ],
+
+    syntax:"/say <message>",
+
+    example:"/say Welcome to BlockForge!",
+
+    tip:"برای پیام‌های ساده مناسب است؛ برای پیام‌های پیشرفته‌تر می‌توانی /tellraw را استفاده کنی.",
+
+    build:p =>
+        `/say ${p.message}`
+},
+
+{
+    id:"title",
+    name:"/titleraw",
+    icon:"fa-heading",
+    category:"communication",
+    title:"Title Raw",
+    desc:"نمایش عنوان به بازیکن",
+    cheats:true,
+
+    params:[
+        {
+            key:"target",
+            label:"هدف",
+            type:"text",
+            default:"@p",
+            quick:["@p","@a"]
+        },
+        {
+            key:"text",
+            label:"متن JSON",
+            type:"text",
+            default:'{"rawtext":[{"text":"Hello!"}]}'
+        }
+    ],
+
+    syntax:"/titleraw <player> <title|subtitle|actionbar> <raw json>",
+
+    example:'/titleraw @a title {"rawtext":[{"text":"Welcome!"}]}',
+
+    tip:"برای Titleهای واقعی باید نوع title/subtitle/actionbar را هم مشخص کنی.",
+
+    build:p =>
+        `/titleraw ${p.target} title ${p.text}`
+},
+
+{
+    id:"scoreboard",
+    name:"/scoreboard",
+    icon:"fa-ranking-star",
+    category:"logic",
+    title:"Scoreboard",
+    desc:"ساخت سیستم امتیاز و متغیر",
+    cheats:true,
+
+    params:[
+        {
+            key:"objective",
+            label:"Objective",
+            type:"text",
+            default:"points",
+            required:true
+        },
+        {
+            key:"player",
+            label:"بازیکن",
+            type:"text",
+            default:"@p",
+            quick:["@p","@s","@a"]
+        },
+        {
+            key:"amount",
+            label:"مقدار",
+            type:"number",
+            default:"1"
+        }
+    ],
+
+    syntax:"/scoreboard players add <player> <objective> <score>",
+
+    example:"/scoreboard players add @p points 1",
+
+    tip:"اول باید Objective را ایجاد کرده باشی؛ مثلاً با /scoreboard objectives add points dummy.",
+
+    build:p =>
+        `/scoreboard players add ${p.player} ${p.objective} ${p.amount}`
+},
+
+{
+    id:"execute",
+    name:"/execute",
+    icon:"fa-code-branch",
+    category:"logic",
+    title:"Execute",
+    desc:"اجرای شرطی و زنجیره‌ای کامندها",
+    cheats:true,
+
+    params:[
+        {
+            key:"target",
+            label:"اجرا به عنوان",
+            type:"text",
+            default:"@a",
+            quick:["@a","@p","@e"]
+        },
+        {
+            key:"command",
+            label:"Command",
+            type:"text",
+            default:"say Hello",
+            required:true
+        }
+    ],
+
+    syntax:"/execute as <target> run <command>",
+
+    example:"/execute as @a run say Hello",
+
+    tip:"نسخه‌های جدید Bedrock از Syntax جدید /execute استفاده می‌کنند؛ برای شرط‌ها و زنجیره‌های پیچیده باید Syntax دقیق همان نسخه را بررسی کنی.",
+
+    build:p =>
+        `/execute as ${p.target} run ${p.command}`
+},
+
+{
+    id:"gamerule",
+    name:"/gamerule",
+    icon:"fa-gear",
+    category:"world",
+    title:"GameRule",
+    desc:"تنظیم قوانین جهان",
+    cheats:true,
+
+    params:[
+        {
+            key:"rule",
+            label:"GameRule",
+            type:"select",
+            default:"keepinventory",
+            options:{
+                keepinventory:"keepInventory",
+                mobgriefing:"mobGriefing",
+                doweathercycle:"doWeatherCycle",
+                dodaylightcycle:"doDaylightCycle",
+                domobspawning:"doMobSpawning",
+                tntexplodes:"tntExplodes",
+                commandblockoutput:"commandBlockOutput",
+                sendcommandfeedback:"sendCommandFeedback"
+            }
+        },
+        {
+            key:"value",
+            label:"مقدار",
+            type:"select",
+            default:"true",
+            options:{
+                true:"true",
+                false:"false"
+            }
+        }
+    ],
+
+    syntax:"/gamerule <rule> [value]",
+
+    example:"/gamerule keepInventory true",
+
+    tip:"نام GameRuleها در Bedrock باید دقیق وارد شوند.",
+
+    build:p =>
+        `/gamerule ${p.rule} ${p.value}`
+}
+
+];
+
+/* ================= STATE ================= */
+
+let currentCommand = COMMANDS[0];
+let values = {};
+let currentCategory = "all";
+
+/* ================= HELPERS ================= */
+
+const $ = id => document.getElementById(id);
+
+function escapeHTML(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function getFavorites(){
+    try{
+        return JSON.parse(localStorage.getItem("bf_cmd_favorites") || "[]");
+    }catch{
+        return [];
+    }
+}
+
+function setFavorites(data){
+    localStorage.setItem(
+        "bf_cmd_favorites",
+        JSON.stringify(data)
+    );
+}
+
+function isFavorite(id){
+    return getFavorites().includes(id);
+}
+
+function toggleFavorite(id,event){
+    event?.stopPropagation();
+
+    const list = getFavorites();
+    const index = list.indexOf(id);
+
+    if(index >= 0){
+        list.splice(index,1);
+        toast("از علاقه‌مندی‌ها حذف شد");
+    }else{
+        list.push(id);
+        toast("به علاقه‌مندی‌ها اضافه شد ⭐");
+    }
+
+    setFavorites(list);
+
+    renderCommands();
+    updateStats();
+}
+
+function updateStats(){
+    $("commandCount").textContent = COMMANDS.length;
+    $("favoriteCount").textContent = getFavorites().length;
+}
+
+/* ================= CATEGORIES ================= */
+
+const CATEGORY_NAMES = {
+    all:"همه",
+    inventory:"Inventory",
+    movement:"Movement",
+    player:"Player",
+    world:"World",
+    logic:"Logic",
+    communication:"Chat"
+};
+
+function renderFilters(){
+
+    const categories = ["all",...new Set(COMMANDS.map(c=>c.category))];
+
+    $("filters").innerHTML = categories.map(category => `
+        <button
+            class="filter ${category===currentCategory?"active":""}"
+            onclick="setCategory('${category}')"
+        >
+            ${CATEGORY_NAMES[category] || category}
+        </button>
+    `).join("");
+}
+
+function setCategory(category){
+    currentCategory = category;
+    renderFilters();
+    renderCommands();
+}
+
+/* ================= SEARCH ================= */
+
+$("commandSearch").addEventListener("input",renderCommands);
+
+function clearSearch(){
+    $("commandSearch").value="";
+    renderCommands();
+    $("commandSearch").focus();
+}
+
+/* ================= COMMAND LIST ================= */
+
+function renderCommands(){
+
+    const query = $("commandSearch").value
+        .trim()
+        .toLowerCase();
+
+    let list = COMMANDS.filter(command => {
+
+        const categoryOK =
+            currentCategory==="all" ||
+            command.category===currentCategory;
+
+        const searchOK =
+            !query ||
+            command.name.toLowerCase().includes(query) ||
+            command.title.toLowerCase().includes(query) ||
+            command.desc.toLowerCase().includes(query) ||
+            command.category.toLowerCase().includes(query);
+
+        return categoryOK && searchOK;
+    });
+
+    const grid = $("commandsGrid");
+
+    if(!list.length){
+
+        grid.innerHTML = `
+            <div class="empty">
+                <i class="fa-solid fa-magnifying-glass"
+                   style="font-size:1.5rem;margin-bottom:8px;display:block">
+                </i>
+                کامندی پیدا نشد.
+            </div>
+        `;
+
+        return;
+    }
+
+    grid.innerHTML = list.map(command => {
+
+        const favorite = isFavorite(command.id);
+
+        return `
+            <div
+                class="cmd-card ${command.id===currentCommand.id?"active":""}"
+                onclick="selectCommand('${command.id}')"
+            >
+
+                <div class="cmd-top">
+
+                    <div class="cmd-icon">
+                        <i class="fa-solid ${command.icon}"></i>
+                    </div>
+
+                    <div class="cmd-name">
+                        ${escapeHTML(command.name)}
+                    </div>
+
+                    <button
+                        class="favorite-btn ${favorite?"active":""}"
+                        onclick="toggleFavorite('${command.id}',event)"
+                    >
+                        <i class="${favorite?"fa-solid":"fa-regular"} fa-star"></i>
+                    </button>
+
+                </div>
+
+                <div class="cmd-desc">
+                    ${escapeHTML(command.desc)}
+                </div>
+
+                <div class="cmd-badge">
+                    ${command.cheats ? "Cheats" : "No Cheats"}
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
+}
+
+/* ================= SELECT ================= */
+
+function selectCommand(id){
+
+    const command =
+        COMMANDS.find(c=>c.id===id);
+
+    if(!command) return;
+
+    currentCommand = command;
+
+    values = {};
+
+    command.params.forEach(param=>{
+        values[param.key] =
+            param.default ?? "";
+    });
+
+    $("selectedCommandDesc").textContent =
+        command.title + " — " + command.desc;
+
+    renderCommands();
+    renderParams();
+    updateKB();
+    updateOutput();
+
+    localStorage.setItem(
+        "bf_last_command",
+        command.id
+    );
+}
+
+/* ================= PARAMS ================= */
+
+function renderParams(){
+
+    $("params").innerHTML =
+        currentCommand.params.map(param => {
+
+            let input="";
+
+            if(param.type==="select"){
+
+                input = `
+                    <select
+                        class="param-select"
+                        id="param_${param.key}"
+                        onchange="changeParam('${param.key}',this.value)"
+                    >
+
+                        ${Object.entries(param.options)
+                            .map(([key,label])=>`
+                                <option
+                                    value="${escapeHTML(key)}"
+                                    ${values[param.key]===key?"selected":""}
+                                >
+                                    ${escapeHTML(label)}
+                                </option>
+                            `)
+                            .join("")
+                        }
+
+                    </select>
+                `;
+
+            }else if(param.type==="number"){
+
+                input = `
+                    <input
+                        class="param-input"
+                        id="param_${param.key}"
+                        type="number"
+                        value="${escapeHTML(values[param.key])}"
+                        min="${param.min ?? ""}"
+                        max="${param.max ?? ""}"
+                        oninput="changeParam('${param.key}',this.value)"
+                    >
+                `;
+
+            }else{
+
+                input = `
+                    <input
+                        class="param-input"
+                        id="param_${param.key}"
+                        type="text"
+                        value="${escapeHTML(values[param.key])}"
+                        placeholder="${escapeHTML(param.default || "")}"
+                        autocomplete="off"
+                        oninput="changeParam('${param.key}',this.value)"
+                    >
+                `;
+            }
+
+            const quick =
+                param.quick?.length
+                ? `
+                    <div class="quick-row">
+                        ${param.quick.map(value=>`
+                            <button
+                                class="quick-chip"
+                                onclick="quickValue('${param.key}',${JSON.stringify(value)})"
+                            >
+                                ${escapeHTML(value)}
+                            </button>
+                        `).join("")}
+                    </div>
+                `
+                : "";
+
+            return `
+                <div class="param">
+
+                    <div class="param-label">
+
+                        ${escapeHTML(param.label)}
+
+                        ${param.required
+                            ? `<span class="required">*</span>`
+                            : ""
+                        }
+
+                    </div>
+
+                    ${param.desc
+                        ? `<div class="param-desc">
+                            ${escapeHTML(param.desc)}
+                           </div>`
+                        : ""
+                    }
+
+                    ${input}
+
+                    ${quick}
+
+                    ${param.min!==undefined || param.max!==undefined
+                        ? `
+                        <div class="param-hint">
+                            محدوده:
+                            ${param.min ?? "-∞"}
+                            تا
+                            ${param.max ?? "+∞"}
+                        </div>
+                        `
+                        : ""
+                    }
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+function changeParam(key,value){
+
+    values[key]=value;
+
+    validateForm();
+    updateOutput();
+
+    localStorage.setItem(
+        "bf_form_"+currentCommand.id,
+        JSON.stringify(values)
+    );
+}
+
+function quickValue(key,value){
+
+    values[key]=value;
+
+    const input =
+        $("param_"+key);
+
+    if(input){
+        input.value=value;
+    }
+
+    updateOutput();
+    validateForm();
+}
+
+/* ================= VALIDATION ================= */
+
+function validateForm(){
+
+    let valid=true;
+    let message="آماده";
+
+    currentCommand.params.forEach(param=>{
+
+        const value =
+            String(values[param.key] ?? "").trim();
+
+        const input =
+            $("param_"+param.key);
+
+        if(param.required && !value){
+
+            valid=false;
+
+            if(input){
+                input.classList.add("invalid");
+            }
+
+        }else{
+
+            input?.classList.remove("invalid");
+        }
+
+        if(param.type==="number" && value){
+
+            const number=Number(value);
+
+            if(!Number.isFinite(number)){
+
+                valid=false;
+
+                input?.classList.add("invalid");
+            }
+
+            if(param.min!==undefined && number<param.min){
+
+                valid=false;
+
+                input?.classList.add("invalid");
+            }
+
+            if(param.max!==undefined && number>param.max){
+
+                valid=false;
+
+                input?.classList.add("invalid");
+            }
+        }
+
+    });
+
+    if(!valid){
+        message="بررسی ورودی‌ها";
+        $("validation").className="invalid-text";
+    }else{
+        message="✓ معتبر";
+        $("validation").className="valid";
+    }
+
+    $("validation").textContent=message;
+
+    return valid;
+}
+
+/* ================= OUTPUT ================= */
+
+function buildCurrent(){
+
+    try{
+        return currentCommand.build(values);
+    }catch{
+        return "";
+    }
+}
+
+function highlightCommand(command){
+
+    const escaped=escapeHTML(command);
+
+    return escaped
+        .replace(/^\/([^ ]+)/,
+            '<span class="slash">/</span><span class="command-name">$1</span>'
+        );
+}
+
+function updateOutput(){
+
+    const command=buildCurrent();
+
+    $("output").innerHTML =
+        highlightCommand(command);
+
+    $("commandLength").textContent =
+        command.length + " کاراکتر";
+
+    $("statusText").textContent =
+        currentCommand.name;
+}
+
+/* ================= KB ================= */
+
+function updateKB(){
+
+    $("kbDescription").innerHTML =
+        escapeHTML(currentCommand.desc);
+
+    $("kbSyntax").textContent =
+        currentCommand.syntax;
+
+    $("kbExample").textContent =
+        currentCommand.example;
+
+    $("kbTip").innerHTML =
+        escapeHTML(currentCommand.tip);
+}
+
+function showKB(){
+
+    $("kbModalContent").innerHTML = `
+
+        <div class="kb-grid">
+
+            <div class="kb-card">
+
+                <div class="kb-title">
+                    <i class="fa-solid fa-terminal"></i>
+                    Command
+                </div>
+
+                <div
+                    style="
+                        direction:ltr;
+                        font-family:monospace;
+                        font-size:.9rem;
+                        color:#f5c84b;
+                    "
+                >
+                    ${escapeHTML(currentCommand.name)}
+                </div>
+
+            </div>
+
+            <div class="kb-card">
+
+                <div class="kb-title">
+                    <i class="fa-solid fa-circle-info"></i>
+                    توضیح
+                </div>
+
+                <div class="kb-text">
+                    ${escapeHTML(currentCommand.desc)}
+                </div>
+
+            </div>
+
+            <div class="kb-card">
+
+                <div class="kb-title">
+                    <i class="fa-solid fa-code"></i>
+                    Syntax
+                </div>
+
+                <div class="syntax">
+                    ${escapeHTML(currentCommand.syntax)}
+                </div>
+
+            </div>
+
+            <div class="kb-card">
+
+                <div class="kb-title">
+                    <i class="fa-solid fa-flask"></i>
+                    Example
+                </div>
+
+                <div class="example">
+                    ${escapeHTML(currentCommand.example)}
+                </div>
+
+            </div>
+
+            <div class="kb-card">
+
+                <div class="kb-title">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    نکته
+                </div>
+
+                <div class="kb-text">
+                    ${escapeHTML(currentCommand.tip)}
+                </div>
+
+            </div>
+
+            <div class="kb-card">
+
+                <div class="kb-title">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Cheats
+                </div>
+
+                <div class="kb-text">
+                    ${
+                        currentCommand.cheats
+                        ? "این کامند به فعال بودن Cheats / دسترسی مناسب نیاز دارد."
+                        : "این کامند در سطح عمومی‌تری قابل استفاده است."
+                    }
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+    $("kbModal").classList.add("show");
+}
+
+function closeKB(){
+    $("kbModal").classList.remove("show");
+}
+
+/* ================= COPY ================= */
+
+async function copyCommand(){
+
+    const command=buildCurrent();
+
+    if(!command){
+        toast("کامند خالی است");
+        return;
+    }
+
+    try{
+
+        await navigator.clipboard.writeText(command);
+
+        toast("کامند کپی شد ✓");
+
+        addHistory(command);
+
+    }catch{
+
+        fallbackCopy(command);
+
+    }
+}
+
+function fallbackCopy(text){
+
+    const area=document.createElement("textarea");
+
+    area.value=text;
+    area.style.position="fixed";
+    area.style.opacity="0";
+
+    document.body.appendChild(area);
+
+    area.select();
+
+    try{
+
+        document.execCommand("copy");
+
+        toast("کامند کپی شد ✓");
+
+        addHistory(text);
+
+    }catch{
+
+        toast("کپی خودکار در این مرورگر در دسترس نیست");
+
+    }
+
+    area.remove();
+}
+
+/* ================= SHARE ================= */
+
+async function shareCommand(){
+
+    const command=buildCurrent();
+
+    const shareData={
+        title:"BlockForge Command",
+        text:command
+    };
+
+    if(navigator.share){
+
+        try{
+            await navigator.share(shareData);
+            addHistory(command);
+            return;
+        }catch{}
+    }
+
+    const url =
+        location.href.split("#")[0] +
+        "#cmd=" +
+        encodeURIComponent(command);
+
+    try{
+
+        await navigator.clipboard.writeText(url);
+
+        toast("لینک کامند کپی شد ✓");
+
+    }catch{
+
+        fallbackCopy(url);
+
+    }
+}
+
+/* ================= SAVE ================= */
+
+function saveCurrentCommand(){
+
+    const command=buildCurrent();
+
+    addHistory(command);
+
+    toast("کامند در تاریخچه ذخیره شد ✓");
+}
+
+/* ================= HISTORY ================= */
+
+function getHistory(){
+
+    try{
+        return JSON.parse(
+            localStorage.getItem("bf_cmd_history") || "[]"
+        );
+    }catch{
+        return [];
+    }
+}
+
+function addHistory(command){
+
+    if(!command) return;
+
+    let history=getHistory();
+
+    history=history.filter(item=>item.command!==command);
+
+    history.unshift({
+        command,
+        commandId:currentCommand.id,
+        time:Date.now()
+    });
+
+    history=history.slice(0,30);
+
+    localStorage.setItem(
+        "bf_cmd_history",
+        JSON.stringify(history)
+    );
+}
+
+function openHistory(){
+
+    const list=getHistory();
+
+    if(!list.length){
+
+        $("historyList").innerHTML=`
+            <div class="empty">
+                هنوز کامندی ذخیره نشده.
+            </div>
+        `;
+
+    }else{
+
+        $("historyList").innerHTML =
+            list.map((item,index)=>`
+
+                <div
+                    class="history-item"
+                    onclick="loadHistory(${index})"
+                >
+
+                    <div class="history-command">
+                        ${escapeHTML(item.command)}
+                    </div>
+
+                    <div class="history-time">
+                        ${formatTime(item.time)}
+                    </div>
+
+                </div>
+
+            `).join("");
+    }
+
+    $("historyModal").classList.add("show");
+}
+
+function closeHistory(){
+    $("historyModal").classList.remove("show");
+}
+
+function loadHistory(index){
+
+    const history=getHistory();
+    const item=history[index];
+
+    if(!item) return;
+
+    const command =
+        COMMANDS.find(c=>c.id===item.commandId);
+
+    if(command){
+
+        selectCommand(command.id);
+
+        parseCommandIntoForm(item.command);
+
+        closeHistory();
+
+        toast("کامند بازیابی شد ✓");
+
+    }else{
+
+        closeHistory();
+
+        fallbackCopy(item.command);
+    }
+}
+
+function parseCommandIntoForm(command){
+
+    const parts=command.trim().split(/\s+/);
+
+    if(!parts.length) return;
+
+    const commandName=
+        parts[0].replace("/","");
+
+    if(commandName==="give"){
+
+        values.target=parts[1] || "@p";
+        values.item=parts[2] || "diamond";
+        values.amount=parts[3] || "1";
+        values.data=parts[4] || "0";
+
+    }else if(commandName==="tp"){
+
+        values.target=parts[1] || "@p";
+        values.x=parts[2] || "~";
+        values.y=parts[3] || "~";
+        values.z=parts[4] || "~";
+
+    }else if(commandName==="gamemode"){
+
+        values.mode=parts[1] || "creative";
+        values.target=parts[2] || "@p";
+
+    }else if(commandName==="kill"){
+
+        values.target=parts[1] || "@p";
+    }
+
+    renderParams();
+    updateOutput();
+    validateForm();
+}
+
+function clearHistory(){
+
+    localStorage.removeItem("bf_cmd_history");
+
+    openHistory();
+
+    toast("تاریخچه پاک شد");
+}
+
+function formatTime(time){
+
+    const date=new Date(time);
+
+    return date.toLocaleTimeString(
+        "fa-IR",
+        {
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+}
+
+/* ================= RESET ================= */
+
+function resetForm(){
+
+    values={};
+
+    currentCommand.params.forEach(param=>{
+        values[param.key]=param.default ?? "";
+    });
+
+    renderParams();
+    updateOutput();
+    validateForm();
+
+    toast("فرم ریست شد");
+}
+
+/* ================= TOAST ================= */
+
+let toastTimer;
+
+function toast(message){
+
+    const el=$("toast");
+
+    el.textContent=message;
+
+    el.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer=setTimeout(()=>{
+        el.classList.remove("show");
+    },2200);
+}
+
+/* ================= HASH SHARE ================= */
+
+function loadSharedCommand(){
+
+    const hash=location.hash;
+
+    if(!hash.startsWith("#cmd="))
+        return;
+
+    try{
+
+        const command=
+            decodeURIComponent(
+                hash.substring(5)
+            );
+
+        if(command){
+
+            fallbackCopy(command);
+
+            toast("کامند موجود در لینک آماده شد ✓");
+        }
+
+    }catch{}
+}
+
+/* ================= MODAL EVENTS ================= */
+
+$("historyModal").addEventListener("click",e=>{
+    if(e.target === $("historyModal")){
+        closeHistory();
+    }
+});
+
+$("kbModal").addEventListener("click",e=>{
+    if(e.target === $("kbModal")){
+        closeKB();
+    }
+});
+
+/* ================= KEYBOARD ================= */
+
+document.addEventListener("keydown",e=>{
+
+    if(e.key==="Escape"){
+
+        closeHistory();
+        closeKB();
+
+    }
+
+    if((e.ctrlKey || e.metaKey) && e.key==="Enter"){
+
+        e.preventDefault();
+
+        copyCommand();
+
+    }
+
+});
+
+/* ================= INIT ================= */
+
+function init(){
+
+    renderFilters();
+
+    updateStats();
+
+    const last=
+        localStorage.getItem("bf_last_command");
+
+    if(last && COMMANDS.some(c=>c.id===last)){
+        selectCommand(last);
+    }else{
+        selectCommand(COMMANDS[0].id);
+    }
+
+    loadSharedCommand();
+}
+
+init();
+
+</script>
+
+</body>
+</html>
