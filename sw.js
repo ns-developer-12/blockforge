@@ -5,12 +5,11 @@
 
 'use strict';
 
-
 /* =========================================================
    CONFIG
    ========================================================= */
 
-const SW_VERSION = '1.0.0';
+const SW_VERSION = '1.1.0';
 
 const CACHE_PREFIX = 'minecraft-land';
 
@@ -23,16 +22,29 @@ const DYNAMIC_CACHE =
 const IMAGE_CACHE =
     `${CACHE_PREFIX}-images-${SW_VERSION}`;
 
+/*
+   کش مخصوص فونت‌ها و آیکون‌های خارجی
+*/
+const EXTERNAL_ASSET_CACHE =
+    `${CACHE_PREFIX}-external-assets-${SW_VERSION}`;
+
+/*
+   سرویس‌های خارجی که فایل فونت / CSS از آن‌ها دریافت می‌شود
+*/
+const EXTERNAL_ASSET_HOSTS = new Set([
+    'fonts.googleapis.com',
+    'fonts.gstatic.com',
+    'cdnjs.cloudflare.com'
+]);
+
 const OFFLINE_PAGE =
     './index.html';
 
 
-/*
-   فایل‌هایی که از ابتدا کش می‌شوند.
+/* =========================================================
+   PRECACHE
+   ========================================================= */
 
-   اگر فایل جدیدی اضافه کردی،
-   اسمش را اینجا هم اضافه کن.
-*/
 const PRECACHE_FILES = [
     './',
     './index.html',
@@ -79,10 +91,6 @@ self.addEventListener(
                         `[SW ${SW_VERSION}] Static files cached.`
                     );
 
-                    /*
-                       باعث می‌شود نسخه جدید
-                       منتظر بسته شدن نسخه قبلی نماند.
-                    */
                     return self.skipWaiting();
 
                 })
@@ -120,10 +128,6 @@ self.addEventListener(
 
                 cleanupOldCaches(),
 
-                /*
-                   Service Worker جدید
-                   بلافاصله کنترل صفحات را می‌گیرد.
-                */
                 self.clients.claim()
 
             ])
@@ -146,12 +150,14 @@ async function cleanupOldCaches() {
     const validCaches = [
         STATIC_CACHE,
         DYNAMIC_CACHE,
-        IMAGE_CACHE
+        IMAGE_CACHE,
+        EXTERNAL_ASSET_CACHE
     ];
 
     await Promise.all(
 
         cacheNames
+
             .filter(
                 cacheName =>
 
@@ -165,6 +171,7 @@ async function cleanupOldCaches() {
                         cacheName
                     )
             )
+
             .map(
                 cacheName => {
 
@@ -207,13 +214,10 @@ self.addEventListener(
 
 
         /*
-           درخواست‌های chrome-extension
-           و مشابه را دست نمی‌زنیم.
+           درخواست‌های غیر HTTP
         */
         if (
-            !request.url.startsWith(
-                'http'
-            )
+            !request.url.startsWith('http')
         ) {
             return;
         }
@@ -226,8 +230,7 @@ self.addEventListener(
 
 
         /*
-           درخواست‌های خارج از سایت
-           را مدیریت نمی‌کنیم.
+           درخواست‌های خارجی
         */
         if (
             url.origin !==
@@ -235,16 +238,46 @@ self.addEventListener(
         ) {
 
             /*
-               تصاویر خارجی را می‌توانیم
-               جداگانه مدیریت کنیم.
+               Google Fonts
+               Font Awesome
+               فایل‌های CSS فونت
+               فایل‌های WOFF / WOFF2 / TTF / OTF
             */
-
             if (
-                isImageRequest(request)
+                EXTERNAL_ASSET_HOSTS.has(
+                    url.hostname
+                )
+
+                &&
+
+                isExternalAssetRequest(
+                    request
+                )
             ) {
 
                 event.respondWith(
-                    imageStrategy(request)
+                    externalAssetStrategy(
+                        request
+                    )
+                );
+
+                return;
+            }
+
+
+            /*
+               تصاویر خارجی
+            */
+            if (
+                isImageRequest(
+                    request
+                )
+            ) {
+
+                event.respondWith(
+                    imageStrategy(
+                        request
+                    )
                 );
 
             }
@@ -261,7 +294,9 @@ self.addEventListener(
         ) {
 
             event.respondWith(
-                navigationStrategy(request)
+                navigationStrategy(
+                    request
+                )
             );
 
             return;
@@ -269,14 +304,18 @@ self.addEventListener(
 
 
         /*
-           CSS / JS / فونت / فایل‌های استاتیک
+           CSS / JS / Font / Static
         */
         if (
-            isStaticRequest(request)
+            isStaticRequest(
+                request
+            )
         ) {
 
             event.respondWith(
-                staticStrategy(request)
+                staticStrategy(
+                    request
+                )
             );
 
             return;
@@ -287,11 +326,15 @@ self.addEventListener(
            تصاویر
         */
         if (
-            isImageRequest(request)
+            isImageRequest(
+                request
+            )
         ) {
 
             event.respondWith(
-                imageStrategy(request)
+                imageStrategy(
+                    request
+                )
             );
 
             return;
@@ -302,11 +345,160 @@ self.addEventListener(
            سایر درخواست‌ها
         */
         event.respondWith(
-            dynamicStrategy(request)
+            dynamicStrategy(
+                request
+            )
         );
 
     }
 );
+
+
+/* =========================================================
+   EXTERNAL FONT / ICON ASSETS
+   Cache First
+   ========================================================= */
+
+function isExternalAssetRequest(
+    request
+) {
+
+    const destination =
+        request.destination;
+
+    /*
+       مرورگر معمولاً برای این فایل‌ها
+       destination را مشخص می‌کند.
+    */
+    if (
+        destination === 'font' ||
+        destination === 'style'
+    ) {
+
+        return true;
+
+    }
+
+
+    /*
+       fallback بر اساس پسوند فایل
+    */
+    const url =
+        new URL(
+            request.url
+        );
+
+    return /\.(woff2?|ttf|otf|css)$/i
+        .test(
+            url.pathname
+        );
+
+}
+
+
+/* =========================================================
+   EXTERNAL ASSET STRATEGY
+   Cache First
+   ========================================================= */
+
+async function externalAssetStrategy(
+    request
+) {
+
+    const cache =
+        await caches.open(
+            EXTERNAL_ASSET_CACHE
+        );
+
+
+    /*
+       اگر قبلاً کش شده:
+       فوراً نسخه کش‌شده را برگردان
+    */
+    const cached =
+        await cache.match(
+            request
+        );
+
+
+    if (cached) {
+
+        /*
+           در پس‌زمینه نسخه جدید را بررسی می‌کنیم.
+           کاربر منتظر دانلود نمی‌ماند.
+        */
+        updateCacheInBackground(
+            request,
+            EXTERNAL_ASSET_CACHE
+        );
+
+        return cached;
+    }
+
+
+    /*
+       اگر در کش نبود، از اینترنت بگیر
+    */
+    try {
+
+        const response =
+            await fetch(
+                request
+            );
+
+
+        /*
+           هم response معمولی و هم opaque
+           قابل ذخیره هستند.
+        */
+        if (
+            response &&
+
+            (
+                response.ok ||
+                response.type === 'opaque'
+            )
+        ) {
+
+            await cache.put(
+                request,
+                response.clone()
+            );
+
+        }
+
+
+        return response;
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            '[SW] External asset unavailable:',
+            request.url
+        );
+
+
+        /*
+           اگر اینترنت قطع باشد ولی نسخه کش‌شده‌ای
+           وجود داشته باشد، همان را استفاده کن.
+        */
+        if (cached) {
+            return cached;
+        }
+
+
+        return new Response(
+            '',
+            {
+                status: 503
+            }
+        );
+
+    }
+
+}
 
 
 /* =========================================================
@@ -326,10 +518,6 @@ async function navigationStrategy(
             );
 
 
-        /*
-           نسخه جدید index را
-           در cache ذخیره می‌کنیم.
-        */
         if (
             response &&
             response.ok
@@ -347,6 +535,7 @@ async function navigationStrategy(
 
         }
 
+
         return response;
 
     }
@@ -358,39 +547,33 @@ async function navigationStrategy(
         );
 
 
-        /*
-           اول cache خود درخواست
-        */
         const cached =
             await caches.match(
                 request
             );
+
 
         if (cached) {
             return cached;
         }
 
 
-        /*
-           سپس index.html
-        */
         const offline =
             await caches.match(
                 OFFLINE_PAGE
             );
+
 
         if (offline) {
             return offline;
         }
 
 
-        /*
-           آخرین fallback
-        */
         return new Response(
             offlineHTML(),
             {
                 status: 503,
+
                 headers: {
                     'Content-Type':
                         'text/html; charset=utf-8'
@@ -417,17 +600,21 @@ async function staticStrategy(
             request
         );
 
+
     if (cached) {
 
         /*
-           در پس‌زمینه نسخه جدید را می‌گیریم.
+           کاربر بلافاصله فایل کش‌شده را می‌گیرد.
+           نسخه جدید در پس‌زمینه دریافت می‌شود.
         */
         updateCacheInBackground(
             request,
             STATIC_CACHE
         );
 
+
         return cached;
+
     }
 
 
@@ -437,6 +624,7 @@ async function staticStrategy(
             await fetch(
                 request
             );
+
 
         if (
             response &&
@@ -455,6 +643,7 @@ async function staticStrategy(
 
         }
 
+
         return response;
 
     }
@@ -465,6 +654,7 @@ async function staticStrategy(
             '[SW] Static request failed:',
             error
         );
+
 
         return new Response(
             '',
@@ -492,6 +682,7 @@ async function imageStrategy(
             request
         );
 
+
     if (cached) {
         return cached;
     }
@@ -505,12 +696,9 @@ async function imageStrategy(
             );
 
 
-        /*
-           بعض CDNها response را opaque
-           برمی‌گردانند.
-        */
         if (
             response &&
+
             (
                 response.ok ||
                 response.type === 'opaque'
@@ -529,6 +717,7 @@ async function imageStrategy(
 
         }
 
+
         return response;
 
     }
@@ -540,10 +729,7 @@ async function imageStrategy(
             request.url
         );
 
-        /*
-           اگر تصویر نبود،
-           یک پاسخ ساده برمی‌گردانیم.
-        */
+
         return new Response(
             '',
             {
@@ -590,6 +776,7 @@ async function dynamicStrategy(
 
         }
 
+
         return response;
 
     }
@@ -601,6 +788,7 @@ async function dynamicStrategy(
                 request
             );
 
+
         if (cached) {
             return cached;
         }
@@ -608,12 +796,17 @@ async function dynamicStrategy(
 
         return new Response(
             JSON.stringify({
+
                 offline: true,
+
                 message:
                     'در حال حاضر اتصال به اینترنت وجود ندارد.'
+
             }),
+
             {
                 status: 503,
+
                 headers: {
                     'Content-Type':
                         'application/json; charset=utf-8'
@@ -645,15 +838,21 @@ async function updateCacheInBackground(
                 }
             );
 
+
         if (
             response &&
-            response.ok
+
+            (
+                response.ok ||
+                response.type === 'opaque'
+            )
         ) {
 
             const cache =
                 await caches.open(
                     cacheName
                 );
+
 
             await cache.put(
                 request,
@@ -687,11 +886,13 @@ function isImageRequest(
     const destination =
         request.destination;
 
+
     if (
         destination === 'image'
     ) {
 
         return true;
+
     }
 
 
@@ -699,6 +900,7 @@ function isImageRequest(
         new URL(
             request.url
         );
+
 
     return /\.(png|jpg|jpeg|gif|webp|svg|avif|ico)$/i
         .test(
@@ -714,6 +916,7 @@ function isStaticRequest(
 
     const destination =
         request.destination;
+
 
     return [
 
@@ -919,23 +1122,30 @@ self.addEventListener(
 
                 caches
                     .keys()
+
                     .then(
                         names =>
+
                             Promise.all(
+
                                 names
+
                                     .filter(
                                         name =>
                                             name.startsWith(
                                                 CACHE_PREFIX
                                             )
                                     )
+
                                     .map(
                                         name =>
                                             caches.delete(
                                                 name
                                             )
                                     )
+
                             )
+
                     )
 
             );
@@ -985,12 +1195,13 @@ async function cleanupImageCache() {
             IMAGE_CACHE
         );
 
+
     const requests =
         await cache.keys();
 
 
     /*
-       حداکثر 150 تصویر نگه می‌داریم.
+       حداکثر 150 تصویر
     */
     const MAX_IMAGES = 150;
 
@@ -999,7 +1210,9 @@ async function cleanupImageCache() {
         requests.length <=
         MAX_IMAGES
     ) {
+
         return;
+
     }
 
 
@@ -1037,9 +1250,7 @@ self.addEventListener(
         ) {
 
             event.waitUntil(
-
                 cleanupImageCache()
-
             );
 
         }
