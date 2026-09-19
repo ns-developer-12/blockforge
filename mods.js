@@ -52,8 +52,7 @@ const MY_CONTENT =
         rating: 4.6,
         lottery: true,
         changelog: [
-            { version: '1.21', date: '۲۲ تیر ۱۴۰۴', changes: ['🐛 رفع باگ اسپاون', '🎵 صداهای جدید', '⚡ کاهش لگ'] },
-            { version: '1.0', date: '۱۰ تیر ۱۴۰۴', changes: ['🆕 انتشار اولیه', '👹 موجود وندیگو', '🌲 اسپاون جنگلی'] }
+            { version: '1.0', date: '۱۰ تیر ۱۴۰۴', changes: ['اطلاعاتی موجود نیست.'] }
         ]
     },
     {
@@ -71,8 +70,7 @@ const MY_CONTENT =
         rating: 4.3,
         lottery: true,
         changelog: [
-            { version: '1.21.60', date: '۲۵ تیر ۱۴۰۴', changes: ['🎨 ۲۰ رنگ جدید', '🖼️ ذخیره نقاشی', '🐛 رفع باگ پاک شدن'] },
-            { version: '1.0', date: '۵ تیر ۱۴۰۴', changes: ['🆕 انتشار اولیه', '🎨 ۱۰ رنگ پایه', '🖌️ ۳ نوع قلمو'] }
+            { version: '1.21.60', date: '۲۵ تیر ۱۴۰۴', changes: ['اطلاعاتی موجود نیست.] }
         ]
     },
     {
@@ -90,8 +88,7 @@ const MY_CONTENT =
         rating: 4.4,
         lottery: true,
         changelog: [
-            { version: '1.21.120', date: '۱۸ تیر ۱۴۰۴', changes: ['📹 دوربین چرخشی', '🔐 قفل رمزی', '🚨 دزدگیر'] },
-            { version: '1.0', date: '۱ تیر ۱۴۰۴', changes: ['🆕 انتشار اولیه', '🔒 قفل پایه', '💡 لیزر تشخیص حرکت'] }
+            { version: '1.21.120', date: '۱۸ تیر ۱۴۰۴', changes: ['نسخه ای موجود نیست.'] }
         ]
     },
     {
@@ -109,8 +106,7 @@ const MY_CONTENT =
         rating: 4.9,
         lottery: true,
         changelog: [
-            { version: '1.21', date: '۲۸ تیر ۱۴۰۴', changes: ['⬆️ سقف لول ۱۰۰', '✨ ۱۰ مهارت جدید', '🎯 Skill Tree'] },
-            { version: '1.0', date: '۱۰ تیر ۱۴۰۴', changes: ['🆕 انتشار اولیه', '📊 سیستم XP', '💪 ۵ قدرت ویژه'] }
+            { version: '1.21', date: '۲۸ تیر ۱۴۰۴', changes: ['اطلاعاتی موجود نیست.'] }
         ]
     },
     {
