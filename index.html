@@ -95,12 +95,51 @@
     <script src="net.js"
         onerror="window.__BF_OFFLINE_GUARD__ && window.__BF_OFFLINE_GUARD__.goOffline()"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- FONT CACHE / PRELOAD -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"
+          as="style"
+          crossorigin
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    </noscript>
+
+    <link rel="preload"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          as="style"
+          crossorigin
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    </noscript>
+
+    <!-- Persistent browser cache for fonts/icons -->
+    <script>
+    (function () {
+        try {
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(function () {});
+                });
+            }
+        } catch (e) {}
+    })();
+    </script>
 
     <style>
+        @font-face {
+            font-family: 'Vazirmatn';
+            font-style: normal;
+            font-weight: 300 900;
+            font-display: swap;
+            src: local('Vazirmatn');
+        }
+
         :root {
             --bg: #050510;
             --bg2: #08081a;
@@ -6169,14 +6208,25 @@ body {
            START
         ========================== */
 
-        setTimeout(() => {
-            document.getElementById('loader').classList.add('hide');
-            document.getElementById('app').classList.add('show');
+        (function startApp() {
+            const hasWarmCache = localStorage.getItem('bf_assets_warm') === '1';
+            const delay = hasWarmCache ? 120 : 350;
 
-            load();
-            renderHome();
-            badge();
-        }, 1500);
+            // Mark the site as warm after the first successful startup.
+            // The service worker keeps the font/icon files in Cache Storage.
+            setTimeout(() => {
+                load();
+                renderHome();
+                badge();
+
+                document.getElementById('loader').classList.add('hide');
+                document.getElementById('app').classList.add('show');
+
+                try {
+                    localStorage.setItem('bf_assets_warm', '1');
+                } catch (e) {}
+            }, delay);
+        })();
 
 
         /* =========================
@@ -6268,4 +6318,4 @@ body {
 </script>
 
 </body>
-</html>
+    </html>
