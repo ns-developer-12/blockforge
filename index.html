@@ -1,6 +1,102 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+<!-- =========================
+     BLOCKFORGE APP-ONLY ACCESS GUARD
+     ========================= -->
+<script>
+(function () {
+    "use strict";
+
+    /*
+      IMPORTANT:
+      This is a client-side gate. It blocks ordinary direct links, but
+      cannot provide cryptographic security because both the app and this
+      HTML are delivered to the user.
+    */
+    const BF_SHARED_SECRET = 'axVhvh1X5-84ii9CXuyjc7Mk-YhuiAqZ7epbyMXuJEQ';
+    const BF_MAX_AGE_MS = 60 * 1000;
+
+    function denyAccess() {
+        document.documentElement.innerHTML = `
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>دسترسی غیرمجاز</title>
+            <style>
+              html,body{margin:0;min-height:100%;background:#050510;color:#fff;font-family:Arial,sans-serif}
+              body{display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;box-sizing:border-box}
+              .box{max-width:420px;padding:30px;border:1px solid #ffffff18;border-radius:22px;background:#111125;box-shadow:0 20px 70px #0008}
+              .icon{font-size:42px;margin-bottom:12px}
+              h1{font-size:20px;margin:0 0 10px}
+              p{color:#aaaabc;line-height:1.9;font-size:14px;margin:0}
+            </style>
+          </head>
+          <body>
+            <div class="box">
+              <div class="icon">🔒</div>
+              <h1>دسترسی غیرمجاز</h1>
+              <p>این صفحه فقط از داخل اپ BlockForge قابل باز شدن است.</p>
+            </div>
+          </body>`;
+        throw new Error("BLOCKFORGE_APP_ONLY_ACCESS");
+    }
+
+    function toBase64Url(bytes) {
+        let s = "";
+        const a = new Uint8Array(bytes);
+        for (let i = 0; i < a.length; i++) s += String.fromCharCode(a[i]);
+        return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+    }
+
+    async function makeSignature(text) {
+        const enc = new TextEncoder();
+        const key = await crypto.subtle.importKey(
+            "raw",
+            enc.encode(BF_SHARED_SECRET),
+            { name: "HMAC", hash: "SHA-256" },
+            false,
+            ["sign"]
+        );
+        const sig = await crypto.subtle.sign("HMAC", key, enc.encode(text));
+        return toBase64Url(sig);
+    }
+
+    async function verify() {
+        const p = new URLSearchParams(location.search);
+        const mode = p.get("bf_app");
+        const ts = Number(p.get("bf_ts"));
+        const sig = p.get("bf_sig");
+
+        if (mode !== "1" || !Number.isFinite(ts) || !sig) return false;
+        if (Math.abs(Date.now() - ts) > BF_MAX_AGE_MS) return false;
+
+        const expected = await makeSignature("BlockForge|" + ts);
+        if (expected !== sig) return false;
+
+        // Remove the access credentials from the visible URL after validation.
+        try {
+            history.replaceState(null, "", location.pathname + location.hash);
+        } catch (e) {}
+
+        sessionStorage.setItem("bf_app_session", "1");
+        return true;
+    }
+
+    // Keep the page hidden until the access check finishes.
+    document.documentElement.style.visibility = "hidden";
+
+    verify().then(ok => {
+        if (!ok) {
+            denyAccess();
+            return;
+        }
+        document.documentElement.style.visibility = "";
+        window.__BF_APP_ACCESS_GRANTED__ = true;
+    }).catch(denyAccess);
+})();
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#070711">
@@ -6209,6 +6305,8 @@ body {
         ========================== */
 
         (function startApp() {
+            if (window.__BF_APP_ACCESS_GRANTED__ !== true) return;
+
             const hasWarmCache = localStorage.getItem('bf_assets_warm') === '1';
             const delay = hasWarmCache ? 120 : 350;
 
@@ -6318,4 +6416,4 @@ body {
 </script>
 
 </body>
-    </html>
+	</html>
