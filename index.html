@@ -1,102 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<!-- =========================
-     BLOCKFORGE APP-ONLY ACCESS GUARD
-     ========================= -->
-<script>
-(function () {
-    "use strict";
-
-    /*
-      IMPORTANT:
-      This is a client-side gate. It blocks ordinary direct links, but
-      cannot provide cryptographic security because both the app and this
-      HTML are delivered to the user.
-    */
-    const BF_SHARED_SECRET = 'axVhvh1X5-84ii9CXuyjc7Mk-YhuiAqZ7epbyMXuJEQ';
-    const BF_MAX_AGE_MS = 60 * 1000;
-
-    function denyAccess() {
-        document.documentElement.innerHTML = `
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>دسترسی غیرمجاز</title>
-            <style>
-              html,body{margin:0;min-height:100%;background:#050510;color:#fff;font-family:Arial,sans-serif}
-              body{display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;box-sizing:border-box}
-              .box{max-width:420px;padding:30px;border:1px solid #ffffff18;border-radius:22px;background:#111125;box-shadow:0 20px 70px #0008}
-              .icon{font-size:42px;margin-bottom:12px}
-              h1{font-size:20px;margin:0 0 10px}
-              p{color:#aaaabc;line-height:1.9;font-size:14px;margin:0}
-            </style>
-          </head>
-          <body>
-            <div class="box">
-              <div class="icon">🔒</div>
-              <h1>دسترسی غیرمجاز</h1>
-              <p>این صفحه فقط از داخل اپ BlockForge قابل باز شدن است.</p>
-            </div>
-          </body>`;
-        throw new Error("BLOCKFORGE_APP_ONLY_ACCESS");
-    }
-
-    function toBase64Url(bytes) {
-        let s = "";
-        const a = new Uint8Array(bytes);
-        for (let i = 0; i < a.length; i++) s += String.fromCharCode(a[i]);
-        return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-    }
-
-    async function makeSignature(text) {
-        const enc = new TextEncoder();
-        const key = await crypto.subtle.importKey(
-            "raw",
-            enc.encode(BF_SHARED_SECRET),
-            { name: "HMAC", hash: "SHA-256" },
-            false,
-            ["sign"]
-        );
-        const sig = await crypto.subtle.sign("HMAC", key, enc.encode(text));
-        return toBase64Url(sig);
-    }
-
-    async function verify() {
-        const p = new URLSearchParams(location.search);
-        const mode = p.get("bf_app");
-        const ts = Number(p.get("bf_ts"));
-        const sig = p.get("bf_sig");
-
-        if (mode !== "1" || !Number.isFinite(ts) || !sig) return false;
-        if (Math.abs(Date.now() - ts) > BF_MAX_AGE_MS) return false;
-
-        const expected = await makeSignature("BlockForge|" + ts);
-        if (expected !== sig) return false;
-
-        // Remove the access credentials from the visible URL after validation.
-        try {
-            history.replaceState(null, "", location.pathname + location.hash);
-        } catch (e) {}
-
-        sessionStorage.setItem("bf_app_session", "1");
-        return true;
-    }
-
-    // Keep the page hidden until the access check finishes.
-    document.documentElement.style.visibility = "hidden";
-
-    verify().then(ok => {
-        if (!ok) {
-            denyAccess();
-            return;
-        }
-        document.documentElement.style.visibility = "";
-        window.__BF_APP_ACCESS_GRANTED__ = true;
-    }).catch(denyAccess);
-})();
-</script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#070711">
@@ -4548,6 +4452,92 @@ body {
 }
 
 </style>
+
+<!-- BlockForge app-only access guard -->
+<style id="bf-app-guard-style">
+html { visibility:hidden !important; }
+</style>
+<script>
+(function() {
+    const BF_SECRET = 'ffe75ba45178ab1fd9c6a812c02834cf502e19cb2b00a2e0d4e3d629167e8bfb';
+    const MAX_AGE_MS = 60 * 1000;
+
+    function hexToBytes(hex) {
+        const out = new Uint8Array(hex.length / 2);
+        for (let i = 0; i < out.length; i++) {
+            out[i] = parseInt(hex.substr(i * 2, 2), 16);
+        }
+        return out;
+    }
+
+    async function verify() {
+        try {
+            const p = new URLSearchParams(location.search);
+            if (p.get('bf_app') !== '1') throw new Error('no app flag');
+
+            const ts = p.get('bf_ts');
+            const sig = p.get('bf_sig');
+            if (!ts || !sig || !/^\d+$/.test(ts)) throw new Error('bad token');
+
+            const age = Date.now() - Number(ts);
+            if (age < -5000 || age > MAX_AGE_MS) throw new Error('expired');
+
+            const key = await crypto.subtle.importKey(
+                'raw',
+                hexToBytes(BF_SECRET),
+                { name:'HMAC', hash:'SHA-256' },
+                false,
+                ['sign']
+            );
+
+            const data = new TextEncoder().encode('BlockForge|' + ts);
+            const expected = new Uint8Array(
+                await crypto.subtle.sign('HMAC', key, data)
+            );
+
+            const got = new Uint8Array(sig.match(/.{1,2}/g).map(x => parseInt(x,16)));
+            if (got.length !== expected.length) throw new Error('bad signature');
+
+            let ok = true;
+            for (let i = 0; i < expected.length; i++) {
+                if (expected[i] !== got[i]) ok = false;
+            }
+            if (!ok) throw new Error('invalid signature');
+
+            window.__BF_APP_ACCESS_GRANTED__ = true;
+
+            // Remove the temporary credentials from the address bar.
+            history.replaceState(null, '', location.pathname + location.hash);
+
+            const s = document.getElementById('bf-app-guard-style');
+            if (s) s.remove();
+        } catch (e) {
+            document.open();
+            document.write(`
+                <html dir="rtl">
+                <head><meta charset="UTF-8"><title>دسترسی غیرمجاز</title>
+                <style>
+                    body{margin:0;min-height:100vh;display:grid;place-items:center;
+                    background:#090b10;color:#fff;font-family:Tahoma,Arial,sans-serif}
+                    .box{width:min(90%,420px);padding:30px;border:1px solid #2a2f3a;
+                    border-radius:18px;background:#11151d;text-align:center;box-sizing:border-box}
+                    .icon{font-size:46px;margin-bottom:14px}
+                    h1{font-size:22px;margin:0 0 10px}
+                    p{color:#aeb6c5;line-height:1.8;margin:0}
+                </style></head>
+                <body><div class="box">
+                    <div class="icon">🔒</div>
+                    <h1>دسترسی غیرمجاز</h1>
+                    <p>این صفحه فقط از داخل اپ BlockForge قابل باز شدن است.</p>
+                </div></body></html>
+            `);
+            document.close();
+        }
+    }
+    verify();
+})();
+</script>
+
 </head>
 
 <body>
@@ -6305,8 +6295,7 @@ body {
         ========================== */
 
         (function startApp() {
-            if (window.__BF_APP_ACCESS_GRANTED__ !== true) return;
-
+    if (window.__BF_APP_ACCESS_GRANTED__ !== true) return;
             const hasWarmCache = localStorage.getItem('bf_assets_warm') === '1';
             const delay = hasWarmCache ? 120 : 350;
 
