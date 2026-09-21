@@ -1,6 +1,6 @@
 
 const SITE_STATUS = {
-    status: "maintenance", // "online" | "offline" | "maintenance" | "error"
+    status: "online", // "online" | "offline" | "maintenance" | "error"
     
     messages: {
         offline: {
