@@ -11,25 +11,25 @@
         img: 'https://uploadkon.ir/uploads/0bce27_26IMG-20260727-193529-953.jpg',
         downloadUrl: 'https://drive.google.com/file/d/1y9W-osv0uqRcZVXdUaWLWJY69_98LAe5/view?usp=drivesdk',
         fileName: 'the Forgotten Legends.mcaddon',
-        price: 100,
-        discount: 20,
+        price: 1820,
+        discount: 30,
         rating: 4.8,
         lottery: true,
         changelog: [
-            { version: '1.21', date: '2025', changes: ['اطلاعاتی اموجود نیست.'] }
+            { version: '1.20', date: '2024', changes: ['اطلاعاتی اموجود نیست.'] }
         ]
     }
     {
-        title: 'مینی مپ',
+        title: 'درخت های بهتر',
         author: 'mc',
         cat: 'mods',
-        desc: 'یه مینی مپ کامل به بازی اضافه میکنه که میتونی همه جا رو ببینی و هیچوقت گم نشی.',
+        desc: 'درخت های ماینکرفت رو بزرگتر و بهتر کن !!',
         version: '1.21',
-        size: '471.1 kb',
-        img: 'https://uploadkon.ir/uploads/5b5b27_26IMG-20260727-195203-002.jpg',
-        downloadUrl: 'https://www.mediafire.com/file/3vnjlywkofwqxeb/mini_map.mcaddon/file',
+        size: '520 kb',
+        img: 'https://uploadkon.ir/uploads/5b8723_26IMG-20260923-201722-093.jpg',
+        downloadUrl: 'https://drive.google.com/file/d/1vbaGz229BgBYOKfKvDlq0J1BpXm4cnBq/view?usp=drivesdk',
         fileName: 'mini_map.mcaddon',
-        price: 820,
+        price: 531,
         discount: 0,
         rating: 4.5,
         lottery: true,
