@@ -1,6 +1,6 @@
 
 
-// const MY_CONTENT = [
+ const MY_CONTENT = [
     {
         title: 'افسانه فراموش شده ها',
         author: 'mc',
