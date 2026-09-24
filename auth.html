@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07080b">
 
 <title>ورود / ثبت‌نام | BlockForge</title>
@@ -1179,6 +1179,227 @@ button{
    IMPORTANT:
    CAPTCHA را عمداً اصلاً انتخاب نکردیم.
    ========================================================= */
+
+
+/* =========================================================
+   VISUAL POLISH LAYER
+   فقط ظاهر؛ منطق، CAPTCHA و افکت RGB فوکوس دست‌نخورده‌اند
+========================================================= */
+
+body{
+    background:
+        radial-gradient(60% 45% at 50% 0%, rgba(215,169,79,.15), transparent 70%),
+        radial-gradient(45% 35% at 100% 100%, rgba(215,169,79,.05), transparent 70%),
+        #07080b;
+}
+
+/* شبکهٔ بلوکی محو پشت کارت */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:
+        linear-gradient(rgba(215,169,79,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(215,169,79,.055) 1px, transparent 1px);
+    background-size:44px 44px;
+    -webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 0%, #000, transparent 75%);
+            mask-image:radial-gradient(ellipse 70% 55% at 50% 0%, #000, transparent 75%);
+}
+
+/* کارت */
+.auth-card{
+    max-width:440px;
+    padding:34px 26px 24px;
+    border-radius:28px;
+    background:
+        linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.01) 40%),
+        rgba(14,15,20,.9);
+    box-shadow:
+        0 40px 120px rgba(0,0,0,.65),
+        0 0 0 1px rgba(0,0,0,.4),
+        inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+.auth-card::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:14%;
+    right:14%;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(240,207,133,.75), transparent);
+}
+
+/* برند */
+.brand{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    margin-bottom:28px;
+    font-size:1.75rem;
+    line-height:1;
+    letter-spacing:.01em;
+}
+
+.brand i{
+    width:60px;
+    height:60px;
+    margin:0;
+    display:grid;
+    place-items:center;
+    border-radius:19px;
+    font-size:25px;
+    color:#1a1304;
+    background:linear-gradient(145deg, #f3d68f, #c08d2e);
+    box-shadow:
+        0 12px 32px rgba(215,169,79,.32),
+        inset 0 1px 0 rgba(255,255,255,.55),
+        inset 0 -3px 6px rgba(0,0,0,.18);
+}
+
+/* تب‌ها */
+.tabs{
+    gap:4px;
+    padding:5px;
+    margin-bottom:26px;
+    border-radius:16px;
+    background:rgba(255,255,255,.03);
+}
+
+.tab{
+    min-height:46px;
+    border-radius:12px;
+    font-size:14px;
+    color:#7f7f88;
+}
+
+.tab:hover:not(.active){
+    color:#b8b8bf;
+}
+
+.tab.active{
+    color:#f0cf85;
+    background:rgba(215,169,79,.13);
+    box-shadow:inset 0 0 0 1px rgba(215,169,79,.28);
+}
+
+/* فرم‌ها */
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-label{
+    gap:8px;
+    margin-bottom:8px;
+    font-size:13px;
+    color:#a8a8b0;
+}
+
+.input-label i{
+    width:16px;
+    font-size:12px;
+}
+
+.input-field{
+    height:52px;
+    padding:0 16px;
+    border-radius:14px;
+    border-color:rgba(255,255,255,.09);
+    background:rgba(255,255,255,.03);
+    font-size:16px;
+}
+
+.input-field::placeholder{
+    color:#53545c;
+}
+
+.password-toggle{
+    width:38px;
+    height:38px;
+    font-size:15px;
+}
+
+/* دکمهٔ اصلی */
+.main-btn{
+    min-height:52px;
+    margin-top:12px;
+    border-radius:14px;
+    font-size:15px;
+    color:#1a1304;
+    background:linear-gradient(135deg, #f3d68f 0%, #d7a94f 48%, #b98526 100%);
+    box-shadow:
+        0 10px 28px rgba(215,169,79,.25),
+        inset 0 1px 0 rgba(255,255,255,.45);
+}
+
+.main-btn:hover:not(:disabled){
+    box-shadow:
+        0 14px 34px rgba(215,169,79,.34),
+        inset 0 1px 0 rgba(255,255,255,.5);
+}
+
+/* پیام‌ها */
+.alert{
+    padding:11px 14px;
+    border-radius:12px;
+    font-size:13px;
+}
+
+/* تأیید کد */
+.otp-title{
+    font-size:1.3rem;
+}
+
+.otp-description{
+    font-size:13.5px;
+    line-height:2;
+    color:#9a9aa3;
+}
+
+.otp-input{
+    border-radius:14px;
+    background:rgba(255,255,255,.03);
+    font-size:20px;
+}
+
+.timer,
+.resend{
+    font-size:13px;
+}
+
+/* پاورقی */
+.security{
+    margin-top:24px;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,.06);
+    font-size:12px;
+    color:#6d6d76;
+}
+
+/* دسترسی‌پذیری */
+.tab:focus-visible,
+.main-btn:focus-visible,
+.password-toggle:focus-visible,
+.resend:focus-visible{
+    outline:2px solid #d7a94f;
+    outline-offset:2px;
+}
+
+@media(max-width:390px){
+    .auth-card{
+        padding:28px 16px 20px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    .auth-card,
+    .tab-content.active{
+        animation:none;
+    }
+}
 
 </style>
 </head>
@@ -3341,7 +3562,7 @@ async function sendRegisterCode(isResend=false){
 
         showAlert(
             "regAlert",
-            "ارسال کد انجام نشد. تنظیمات EmailJS و اتصال اینترنت را بررسی کنید.",
+            "ارسال کد انجام نشد. تنظیمات و اتصال اینترنت را بررسی کنید.",
             "error"
         );
 
@@ -3802,4 +4023,4 @@ document
 </script>
 
 </body>
-</html>
+   </html>
