@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#070711">
     <meta name="color-scheme" content="dark">
 
@@ -4451,6 +4451,74 @@ body {
     }
 }
 
+
+/* =========================================================
+   UX POLISH LAYER — خوانایی، لمس، دسترسی‌پذیری
+   فقط ظاهر؛ منطق برنامه دست‌نخورده است
+========================================================= */
+
+/* --- خوانایی: اندازهٔ متن‌ها به حد قابل‌خواندن روی موبایل --- */
+.token-chip{font-size:13px;padding:6px 10px}
+.stat-chip{font-size:12.5px;padding:7px 12px;border-radius:18px}
+.section-head{margin-bottom:8px}
+.section-head h3{font-size:15.5px}
+.more{font-size:13px;color:var(--gold2);padding:6px 4px;cursor:pointer}
+.rubika-banner h4{font-size:13.5px}
+.rubika-banner p{font-size:12px;color:var(--text2)}
+.lottery h4{font-size:14px}
+.lottery-btn{font-size:13.5px;min-height:44px}
+#lotteryTimer{font-size:12px!important}
+.footer{font-size:12px;padding:18px 12px 24px}
+
+/* --- دسته‌بندی‌ها --- */
+.cats{gap:8px}
+.cat{padding:15px 4px 12px;border-radius:18px}
+.cat i{font-size:22px}
+.cat-name{font-size:11.5px;font-weight:700;line-height:1.4;color:var(--text)}
+.cat-num{font-size:11px;color:var(--text3)}
+.cat:active{transform:scale(.96)}
+
+/* --- ناوبری پایین --- */
+.bottom-nav a{font-size:11px;gap:3px;min-width:64px;padding:6px 8px}
+.bottom-nav a i{font-size:18px}
+.bottom-nav a.active{font-weight:800}
+
+/* --- پروفایل (استایل‌های درون‌خطی تنگ و ریز بودند) --- */
+.profile-card{padding:26px 20px 20px}
+.profile-card > button:first-child{
+    width:38px!important;height:38px!important;font-size:15px!important;
+    top:10px!important;right:10px!important
+}
+.profile-card #profileName{font-size:18px!important}
+.profile-card #profileEmail{font-size:13px!important;margin-bottom:10px!important}
+.profile-card input{
+    font-size:16px!important;padding:12px 14px!important;
+    border-radius:12px!important;min-height:46px
+}
+.profile-card input:focus{border-color:var(--gold)!important}
+.profile-card [onclick="saveUsername()"]{
+    font-size:14px!important;padding:0 18px!important;
+    border-radius:12px!important;min-width:52px
+}
+.profile-card [onclick="logout()"]{
+    font-size:14px!important;padding:13px!important;
+    border-radius:12px!important;margin-top:14px!important
+}
+.profile-card #profileMsg{font-size:13px!important;min-height:18px!important}
+
+/* --- دسترسی‌پذیری --- */
+:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.cat:focus-visible,.rubika-banner:focus-visible{outline-offset:-2px}
+
+@media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+        scroll-behavior:auto!important;
+    }
+}
+
 </style>
 </head>
 
@@ -6317,5 +6385,28 @@ body {
 
 </script>
 
+
+<script>
+/* دسترسی‌پذیری: نام برای دکمه‌های آیکونی و کیبورد برای کارت‌های کلیکی */
+(function(){
+    var labels = {
+        "search.html":"جستجو", "posts.html":"اخبار و مطالب",
+        "premium.html":"پرمیوم", "showSaved()":"ذخیره‌شده‌ها", "openMenu()":"منو"
+    };
+    document.querySelectorAll(".h-actions button").forEach(function(b){
+        var on = b.getAttribute("onclick") || "", name = "";
+        Object.keys(labels).forEach(function(k){ if(on.indexOf(k) > -1) name = labels[k]; });
+        if(b.classList.contains("profile-btn-header")) name = "پروفایل";
+        if(name) b.setAttribute("aria-label", name);
+    });
+    document.querySelectorAll(".cat,.rubika-banner,.more").forEach(function(el){
+        el.setAttribute("role","button");
+        el.tabIndex = 0;
+        el.addEventListener("keydown", function(e){
+            if(e.key === "Enter" || e.key === " "){ e.preventDefault(); el.click(); }
+        });
+    });
+})();
+</script>
 </body>
 	</html>
