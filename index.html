@@ -4268,11 +4268,6 @@ body {
     }
 }
 
-.view-enter{opacity:0;transform:translateY(22px);filter:blur(3px);will-change:transform,opacity;transition:opacity .48s cubic-bezier(.22,.75,.22,1),transform .48s cubic-bezier(.22,.75,.22,1),filter .48s ease;content-visibility:auto;contain-intrinsic-size:120px}
-.view-enter.view-up{opacity:1;transform:translateY(0);filter:none}
-.view-enter.view-down{opacity:1;transform:translateY(0);filter:none}
-@media(prefers-reduced-motion:reduce){.view-enter{opacity:1;transform:none;filter:none;transition:none}}
-
 .rise {
     animation: uiRise .75s cubic-bezier(.22,.9,.28,1.12) both;
     will-change: transform, opacity, filter;
@@ -4727,44 +4722,23 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
     <!-- LOADER -->
     <div class="loader" id="loader">
         <div class="loader-lottie main-loader-only" id="loaderLottieWrap">
-            <iframe class="lottie-frame main-loader-lottie" id="loaderLottie"
-                    src="https://lottie.host/embed/62da80be-c214-49ef-840b-5d77660e1b2a/QDNUMX7Lyf.lottie"
-                    title=""
-                    tabindex="-1"
-                    allowtransparency="true"
-                    loading="eager"></iframe>
+            <dotlottie-player id="loaderLottie" src="https://lottie.host/embed/62da80be-c214-49ef-840b-5d77660e1b2a/QDNUMX7Lyf.lottie" autoplay loop mode="normal" style="width:210px;height:210px;background:transparent;"></dotlottie-player>
         </div>
 <div class="loader-status" id="loaderStatus">loading...</div>
     </div>
 <script>
-        (function () {
-            var el = document.getElementById('loaderLottie');
-            var w = document.getElementById('loaderLottieWrap');
-            var status = document.getElementById('loaderStatus');
-            if (!el || !w) return;
-
-            function ok() {
-                if (w.classList.contains('ready')) return;
-                w.classList.add('ready');
-                window.__bfLoaderReadyAt = Date.now();
-            }
-
-            el.addEventListener('load', ok);
-            setTimeout(ok, 1200);
-
-            // مرحله‌های متن لودینگ:
-            // 0.3s -> loading sounds
-            // 2s   -> loading items
-            // سپس  -> checking ...
-            setTimeout(function () {
-                if (status) status.textContent = 'loading items';
-            }, 300);
-
-            setTimeout(function () {
-                if (status) status.textContent = 'checking ...';
-            }, 2300);
-        })();
-        </script>
+(function(){
+ var el=document.getElementById('loaderLottie'),w=document.getElementById('loaderLottieWrap'),status=document.getElementById('loaderStatus');
+ if(!el||!w)return;
+ var ready=false;
+ function ok(){if(ready)return;ready=true;w.classList.add('ready');window.__bfLoaderReadyAt=Date.now();}
+ el.addEventListener('ready',ok,{once:true});
+ el.addEventListener('load',ok,{once:true});
+ setTimeout(ok,7000);
+ setTimeout(function(){if(status)status.textContent='loading items';},300);
+ setTimeout(function(){if(status)status.textContent='checking ...';},2300);
+})();
+</script>
     </div>
 
 
@@ -6014,7 +5988,7 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
         function openModal(id) {
             const item = items.find(i => Number(i.id) === Number(id));
             if (!item) return;
-            window.location.href = 'items.html?mod=' + encodeURIComponent(item.slug || ('item-' + item.id));
+            window.location.href = 'items.html?id=' + encodeURIComponent(item.id);
             return;
 
             const price = getPrice(item);
@@ -6535,57 +6509,39 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
         ========================== */
 
         (function startApp() {
-            // لودینگ فقط ورود اولیه به خانه را پوشش می‌دهد؛ برگشت از صفحات داخلی دوباره لودینگ کامل ندارد.
-            const firstVisit = sessionStorage.getItem('bf_home_seen') !== '1';
-            const MIN_SHOW = 70;
-            const FALLBACK_MS = 1200;
+            // انیمیشن لودینگ از لحظه‌ی آماده شدنش MIN_SHOW میلی‌ثانیه نمایش داده میشه.
+            // اگه پلیر لود نشد (اینترنت ضعیف)، بعد از FALLBACK_MS برنامه باز میشه.
+            const MIN_SHOW = 5000;
+            const FALLBACK_MS = 12000;
             const t0 = Date.now();
 
             function finish() {
                 load();
                 renderHome();
                 badge();
+
                 document.getElementById('loader').classList.add('hide');
                 document.getElementById('app').classList.add('show');
-                setTimeout(() => playRise(document.getElementById('homePage') || document), 20);
+                setTimeout(() => playRise(document.getElementById('homePage') || document), 180);
+
+                // لودینگ مودال بعد از بالا اومدن اپ آماده میشه
                 setTimeout(ensureModalLottie, 1500);
+
                 try {
-                    sessionStorage.setItem('bf_home_seen', '1');
                     localStorage.setItem('bf_assets_warm', '1');
                 } catch (e) {}
-                initViewportLoading();
             }
 
-            if (!firstVisit) {
-                finish();
-                return;
-            }
-
-            // دقیقاً حداقل ۰.۰۷ ثانیه فرصت می‌دهیم سپس صفحه نمایش داده می‌شود.
             (function wait() {
-                if (Date.now() - t0 >= MIN_SHOW) finish();
-                else setTimeout(wait, 10);
+                const now = Date.now();
+                const readyAt = window.__bfLoaderReadyAt;
+                const done = readyAt
+                    ? (now - readyAt >= MIN_SHOW)
+                    : (now - t0 >= FALLBACK_MS);
+                if (done) finish();
+                else setTimeout(wait, 80);
             })();
         })();
-
-        function initViewportLoading(){
-            const root=document.getElementById('homePage')||document;
-            const targets=root.querySelectorAll('.section,.slider-section,.rubika-banner,.stats-row,.lottery,.cats,.h-scroll > *, .full-grid > *, .saved-grid > *, .card, .v-card, .fl-card, .saved-item');
-            let lastY=window.scrollY||0;
-            const io=new IntersectionObserver(entries=>{
-                entries.forEach(entry=>{
-                    if(!entry.isIntersecting)return;
-                    const el=entry.target;
-                    const dir=(window.scrollY||0)>=lastY?'down':'up';
-                    el.classList.add('view-enter','view-'+dir);
-                    io.unobserve(el);
-                });
-                lastY=window.scrollY||0;
-            },{root:null,threshold:.08,rootMargin:'0px 0px -8% 0px'});
-            targets.forEach(el=>io.observe(el));
-            // تصاویر غیرضروری lazy باشند تا فقط هنگام نیاز توسط مرورگر بارگیری شوند.
-            root.querySelectorAll('img:not([loading])').forEach(img=>{img.loading='lazy';img.decoding='async'});
-        }
 
 
         /* =========================
