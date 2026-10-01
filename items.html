@@ -56,30 +56,8 @@ root.innerHTML=`<article class="hero"><img class="hero-img" src="${item.img}" al
 ${related.length?`<section class="section"><div class="section-title"><i class="fa-solid fa-link"></i> آیتم‌های مرتبط</div><div class="related">${related.map(r=>`<div class="rel" onclick="location.href='items.html?id=${r.id}'"><img src="${r.img}" alt=""><div>${r.title||''}</div></div>`).join('')}</div></section>`:''}`;
 document.getElementById('download').onclick=()=>download(item,c,bought)}
 let purchaseBusy=false;
-function download(item,c,bought){
- const btn=document.getElementById('download');
- if(purchaseBusy)return;
- if(!item.downloadUrl){toast('لینک دانلود برای این آیتم ثبت نشده است.');return}
- if(bought||c===0){purchaseBusy=true;if(btn){btn.disabled=true;btn.textContent='در حال آماده‌سازی دانلود...';}if(c===0)mark(item.id);location.href=direct(item.downloadUrl);return}
- if(tokens()<c){toast('توکن کافی نیست. موجودی: '+tokens().toLocaleString('fa')+' توکن');return}
- purchaseBusy=true;if(btn){btn.disabled=true;btn.textContent='در حال ثبت خرید...';}
- if(!spend(c)){purchaseBusy=false;if(btn){btn.disabled=false;btn.textContent='خرید و دانلود';}toast('پرداخت انجام نشد.');return}
- mark(item.id);
- if(btn)btn.textContent='خرید ثبت شد؛ در حال دانلود...';
- toast('خرید با موفقیت انجام شد؛ دریافت فایل شروع می‌شود.');
- setTimeout(()=>location.href=direct(item.downloadUrl),700);
-}
-async function startPage(){
- if(!auth())return;
- const started=Date.now();render();
- const img=document.querySelector('.hero-img');
- if(img&&!img.complete)await new Promise(r=>{const d=()=>r();img.addEventListener('load',d,{once:true});img.addEventListener('error',d,{once:true});});
- const loader=document.getElementById('itemLoaderLottie');
- if(loader)await new Promise(r=>{let done=false;const d=()=>{if(done)return;done=true;r()};loader.addEventListener('load',d,{once:true});setTimeout(d,7000);});
- const wait=Math.max(0,5000-(Date.now()-started));
- setTimeout(()=>{document.getElementById('loading').style.display='none';document.getElementById('page').style.display='block'},wait);
-}
-startPage();
+function download(item,c,bought){const btn=document.getElementById('download');if(purchaseBusy)return;if(!item.downloadUrl){toast('لینک دانلود برای این آیتم ثبت نشده است.');return}if(bought||c===0){purchaseBusy=true;if(btn){btn.disabled=true;btn.textContent='در حال آماده‌سازی دانلود...'}mark(item.id);location.href=direct(item.downloadUrl);return}if(tokens()<c){toast('توکن کافی نیست. موجودی: '+tokens().toLocaleString('fa')+' توکن');return}purchaseBusy=true;if(btn){btn.disabled=true;btn.textContent='در حال ثبت خرید...'}if(!spend(c)){purchaseBusy=false;if(btn){btn.disabled=false;btn.textContent='خرید و دانلود'}toast('پرداخت انجام نشد.');return}mark(item.id);if(btn)btn.textContent='خرید ثبت شد؛ در حال دانلود...';toast('خرید با موفقیت انجام شد؛ دریافت فایل شروع می‌شود.');setTimeout(()=>location.href=direct(item.downloadUrl),700)}
+if(auth()){render();const img=document.querySelector('.hero-img');const loader=document.getElementById('itemLoaderLottie');const started=Date.now();const waits=[];if(img&&!img.complete)waits.push(new Promise(r=>{img.addEventListener('load',r,{once:true});img.addEventListener('error',r,{once:true})}));if(loader)waits.push(new Promise(r=>{let done=false;const d=()=>{if(done)return;done=true;r()};loader.addEventListener('load',d,{once:true});setTimeout(d,5000)}));Promise.all(waits).then(()=>{const wait=Math.max(0,700-(Date.now()-started));setTimeout(()=>{document.getElementById('loading').style.display='none';document.getElementById('page').style.display='block'},wait)})}
 })();
 </script>
 </body></html>
