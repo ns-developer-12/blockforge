@@ -99,14 +99,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://lottie.host" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="dns-prefetch" href="https://lottie.host">
 
     <link rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Noto+Color+Emoji&display=swap"
           as="style"
           crossorigin
           onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
     </noscript>
 
     <link rel="preload"
@@ -118,6 +121,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     </noscript>
 
+    <!-- پلیر dotLottie برای لودینگ اصلی (فایل .lottie مستقیم، توسط sw.js کش میشه) -->
+    <script type="module" src="https://unpkg.com/@dotlottie/player-component@2.3.0/dist/dotlottie-player.mjs"></script>
+
     <!-- Persistent browser cache for fonts/icons -->
     <script>
     (function () {
@@ -125,6 +131,7 @@
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function () {
                     navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(function () {});
+                    if (navigator.storage && navigator.storage.persist) { navigator.storage.persist().catch(function () {}); }
                 });
             }
         } catch (e) {}
@@ -132,13 +139,6 @@
     </script>
 
     <style>
-        @font-face {
-            font-family: 'Vazirmatn';
-            font-style: normal;
-            font-weight: 300 900;
-            font-display: swap;
-            src: local('Vazirmatn');
-        }
 
         :root {
             --bg: #050510;
@@ -419,6 +419,52 @@
             100% {
                 transform: translateX(390%);
             }
+        }
+
+        .loader-status {
+            min-width: 145px;
+            margin-top: 11px;
+            text-align: center;
+            color: var(--text2);
+            font-size: .63rem;
+            font-weight: 700;
+            letter-spacing: .2px;
+            opacity: .9;
+            transition: opacity .22s ease, transform .22s ease;
+        }
+
+        .loader-lottie.main-loader-only {
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px;
+            isolation: isolate;
+            margin-bottom: 8px;
+            background:
+                radial-gradient(circle at center,
+                    rgba(255,255,255,.055),
+                    rgba(255,255,255,.018) 55%,
+                    transparent 76%);
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,.055),
+                0 18px 55px rgba(0,0,0,.22),
+                inset 0 0 28px rgba(255,255,255,.035);
+        }
+
+        /* لبه‌ی قاب را نرم می‌کند تا زمینه‌ی سفید Embed کمتر به چشم بیاید. */
+        .loader-lottie.main-loader-only::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            box-shadow:
+                inset 0 0 24px 8px rgba(5,5,16,.22),
+                0 0 32px 10px rgba(5,5,16,.16);
+            z-index: 2;
+        }
+
+        .loader-lottie .main-loader-lottie {
+            border-radius: inherit;
         }
 
         #app {
@@ -768,163 +814,6 @@
         @keyframes rippleOut {
             0% { transform: scale(1); opacity: 1; }
             100% { transform: scale(1.55); opacity: 0; }
-        }
-
-        /* =========================
-           BEGINNER HELPER
-        ========================== */
-
-        .helper-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 500;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 14px;
-            background: rgba(0,0,0,.72);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity .3s ease, visibility .3s ease;
-        }
-
-        .helper-overlay.active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
-
-        .helper-card {
-            width: min(560px, 100%);
-            max-height: min(82dvh, 700px);
-            overflow-y: auto;
-            position: relative;
-            padding: 18px 16px calc(18px + var(--safe));
-            border: 1px solid rgba(242,201,109,.22);
-            border-radius: 24px;
-            background:
-                radial-gradient(circle at 85% 0, rgba(212,165,74,.13), transparent 32%),
-                linear-gradient(145deg, rgba(25,23,35,.98), rgba(10,10,20,.98));
-            box-shadow: 0 25px 80px rgba(0,0,0,.55);
-            transform: translateY(35px) scale(.97);
-            transition: transform .42s var(--ease);
-        }
-
-        .helper-overlay.active .helper-card {
-            transform: translateY(0) scale(1);
-        }
-
-        .helper-close {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            width: 32px;
-            height: 32px;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            background: rgba(255,255,255,.05);
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .helper-hero {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-            padding-left: 34px;
-            margin-bottom: 14px;
-        }
-
-        .helper-avatar {
-            width: 82px;
-            height: 82px;
-            flex: 0 0 82px;
-            object-fit: contain;
-            filter: drop-shadow(0 12px 25px rgba(212,165,74,.18));
-        }
-
-        .helper-kicker {
-            color: var(--gold2);
-            font-size: .52rem;
-            font-weight: 900;
-            letter-spacing: .3px;
-            margin-bottom: 3px;
-        }
-
-        .helper-title {
-            font-size: 1rem;
-            font-weight: 900;
-            color: #fff;
-            line-height: 1.4;
-        }
-
-        .helper-subtitle {
-            color: var(--text2);
-            font-size: .56rem;
-            margin-top: 3px;
-        }
-
-        .helper-steps {
-            display: grid;
-            gap: 7px;
-        }
-
-        .helper-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 10px;
-            border: 1px solid rgba(255,255,255,.065);
-            border-radius: 13px;
-            background: rgba(255,255,255,.028);
-        }
-
-        .helper-step-num {
-            width: 28px;
-            height: 28px;
-            flex: 0 0 28px;
-            border-radius: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--gold2), var(--gold));
-            color: #17120a;
-            font-size: .58rem;
-            font-weight: 900;
-        }
-
-        .helper-step h4 {
-            color: #fff;
-            font-size: .62rem;
-            font-weight: 900;
-            margin-bottom: 2px;
-        }
-
-        .helper-step p {
-            color: #9f9faf;
-            font-size: .51rem;
-            line-height: 1.75;
-        }
-
-        .helper-tip {
-            margin-top: 10px;
-            padding: 10px 11px;
-            border-radius: 12px;
-            border: 1px solid rgba(46,204,113,.16);
-            background: rgba(46,204,113,.045);
-            color: #b9e9d0;
-            font-size: .5rem;
-            line-height: 1.8;
-        }
-
-        @media (min-width: 650px) {
-            .helper-overlay { align-items: center; }
         }
 
         /* =========================
@@ -4519,6 +4408,312 @@ body {
     }
 }
 
+
+/* =========================================
+   BF UI v2 — مودال انیمیشنی + محو شدن پس‌زمینه + فونت/ایموجی
+========================================= */
+body, button, input, textarea, select {
+    font-family: 'Vazirmatn', 'Noto Color Emoji', system-ui, sans-serif;
+}
+
+/* پس‌زمینه وقتی مودال بازه: عقب می‌ره، کوچیک و کم‌رنگ میشه */
+.main-content, .header, .bottom-nav, .help-fab {
+    transform-origin: 50% 0;
+    transition: transform .6s var(--ease), opacity .6s var(--ease);
+}
+body.modal-open .main-content {
+    transform: scale(.93) translateY(-12px);
+    opacity: .28;
+    pointer-events: none;
+}
+body.modal-open .header,
+body.modal-open .help-fab { opacity: .25; }
+body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
+
+.modal-overlay {
+    background:
+        radial-gradient(ellipse at 50% 105%, rgba(139,92,246,.28), transparent 62%),
+        rgba(3,3,10,.80);
+    transition: opacity .45s ease, visibility .45s ease;
+}
+.modal {
+    transform: translateY(108%) scale(.96);
+    opacity: 0;
+    transform-origin: 50% 100%;
+    transition: transform .62s cubic-bezier(.2,.9,.25,1.07), opacity .35s ease;
+}
+.modal-overlay.active .modal { transform: none; opacity: 1; }
+.modal.dragging { transition: none; }
+
+@keyframes mIn  { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes mImg { from { opacity: 0; transform: scale(1.14); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+
+.modal-overlay.active:not(.loading) .modal > *:not(.m-close):not(.modal-handle) {
+    animation: mIn .55s var(--ease) backwards;
+}
+.modal-overlay.active:not(.loading) .modal > .modal-img {
+    animation: mImg .85s var(--ease) .1s backwards;
+    background: #15152b;
+}
+.modal-handle { cursor: grab; }
+
+/* صفحه موقع برگشت از پایین بالا میاد */
+.footer.rise, .back-bar.rise { animation: uiRise .7s cubic-bezier(.22,.9,.28,1.12) both; }
+
+:focus-visible { outline: 2px solid var(--purple3); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+    .modal, .main-content, .header, .bottom-nav, .help-fab { transition: none !important; }
+    .modal-overlay.active .modal > * { animation: none !important; }
+}
+
+/* ---------- Lottie ---------- */
+.lottie-frame {
+    border: 0;
+    background: transparent;
+    color-scheme: normal;       /* بدون این، iframe پس‌زمینه‌ی سفید/مات می‌گیره */
+    pointer-events: none;
+}
+.loader-lottie {
+    position: relative;
+    width: 190px;
+    height: 190px;
+    margin-bottom: 4px;
+}
+.loader-lottie .main-loader-lottie {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: transparent !important;
+    pointer-events: none;
+    opacity: 1;
+}
+.main-loader-only {
+    width: 190px;
+    height: 190px;
+    margin: 0 auto;
+}
+
+
+.modal-loader {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(.88);
+    transition: opacity .3s ease, transform .5s var(--ease);
+}
+.modal-loader::before {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 24px;
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.13);
+    box-shadow: 0 18px 55px rgba(0,0,0,.28),
+                inset 0 1px 0 rgba(255,255,255,.10),
+                inset 0 0 35px rgba(255,255,255,.025);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+.modal-loader .lottie-frame {
+    position: relative;
+    z-index: 1;
+    width: 210px;
+    height: 210px;
+    border: 0;
+    background: transparent !important;
+    color-scheme: normal;
+}
+.modal-overlay.loading .modal-loader { opacity: 1; transform: none; }
+
+/* تا وقتی لودینگ هست، مودال پایینه */
+.modal-overlay.active.loading .modal {
+    transform: translateY(108%) scale(.96);
+    opacity: 0;
+}
+.loader-lottie .main-loader-lottie {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    color-scheme: normal;
+    pointer-events: none;
+}
+
+        /* Main loader: clean white surface with BlockForge accents */
+        .loader {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 42%, rgba(139,92,246,.10), transparent 30%),
+                radial-gradient(circle at 20% 18%, rgba(29,209,161,.08), transparent 25%),
+                radial-gradient(circle at 84% 82%, rgba(240,192,64,.07), transparent 22%),
+                #ffffff !important;
+        }
+
+        .loader::before,
+        .loader::after {
+            content: '';
+            position: absolute;
+            border-radius: 999px;
+            pointer-events: none;
+            filter: blur(2px);
+        }
+
+        .loader::before {
+            width: 260px;
+            height: 260px;
+            top: -90px;
+            left: -70px;
+            background: radial-gradient(circle, rgba(139,92,246,.12), transparent 68%);
+            animation: loaderOrbA 6s ease-in-out infinite;
+        }
+
+        .loader::after {
+            width: 300px;
+            height: 300px;
+            right: -110px;
+            bottom: -120px;
+            background: radial-gradient(circle, rgba(29,209,161,.10), transparent 68%);
+            animation: loaderOrbB 7s ease-in-out infinite;
+        }
+
+        .loader-lottie {
+            display: block !important;
+            z-index: 2;
+        }
+
+        .loader-lottie.main-loader-only {
+            background:
+                radial-gradient(circle at center,
+                    rgba(255,255,255,.98) 0%,
+                    rgba(255,255,255,.92) 54%,
+                    rgba(139,92,246,.045) 72%,
+                    transparent 82%) !important;
+            box-shadow:
+                0 0 0 1px rgba(15,15,30,.05),
+                0 18px 55px rgba(55,45,90,.10),
+                0 0 70px rgba(139,92,246,.10),
+                inset 0 0 34px rgba(139,92,246,.045) !important;
+            animation: loaderFloat 3.2s ease-in-out infinite;
+        }
+
+        .loader-lottie.main-loader-only::after {
+            box-shadow:
+                inset 0 0 28px 8px rgba(255,255,255,.75),
+                0 0 35px 8px rgba(139,92,246,.06);
+        }
+
+        .loader-status {
+            display: block !important;
+            position: relative;
+            z-index: 3;
+            margin-top: 13px !important;
+            color: #171525 !important;
+            text-shadow: 0 3px 18px rgba(139,92,246,.13);
+            font-size: .78rem !important;
+            font-weight: 900 !important;
+            letter-spacing: .2px !important;
+            opacity: .88 !important;
+        }
+
+        .loader-status::after {
+            content: '';
+            display: block;
+            width: 72px;
+            height: 3px;
+            margin: 10px auto 0;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #8b5cf6, #1dd1a1, #f0c040, #8b5cf6);
+            background-size: 220% 100%;
+            box-shadow: 0 4px 18px rgba(139,92,246,.16);
+            animation: loaderLine 2.2s linear infinite;
+        }
+
+        @keyframes loaderFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-7px) scale(1.012); }
+        }
+
+        @keyframes loaderOrbA {
+            0%, 100% { transform: translate(0,0) scale(1); }
+            50% { transform: translate(35px,28px) scale(1.12); }
+        }
+
+        @keyframes loaderOrbB {
+            0%, 100% { transform: translate(0,0) scale(1); }
+            50% { transform: translate(-28px,-24px) scale(1.1); }
+        }
+
+        @keyframes loaderLine {
+            from { background-position: 0% 50%; }
+            to { background-position: 220% 50%; }
+        }
+
+        /* Mod description loader: full-screen white */
+        .modal-loader {
+            position: absolute !important;
+            inset: 0 !important;
+            z-index: 99999 !important;
+            width: 100% !important;
+            height: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: #fff !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        .modal-loader::before {
+            display: none !important;
+            content: none !important;
+        }
+
+        .modal-loader .lottie-frame {
+            position: relative !important;
+            z-index: 2 !important;
+            width: 210px !important;
+            height: 210px !important;
+            border: 0 !important;
+            background: #fff !important;
+            box-shadow: none !important;
+        }
+
+        .modal-overlay.loading {
+            background: #fff !important;
+        }
+
+        .modal-overlay.loading .modal-loader {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        .modal-overlay.active.loading .modal {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
 </style>
 </head>
 
@@ -4526,15 +4721,45 @@ body {
 
     <!-- LOADER -->
     <div class="loader" id="loader">
-        <div class="loader-icon">
-            <i class="fa-solid fa-cubes"></i>
+        <div class="loader-lottie main-loader-only" id="loaderLottieWrap">
+            <iframe class="lottie-frame main-loader-lottie" id="loaderLottie"
+                    src="https://lottie.host/embed/62da80be-c214-49ef-840b-5d77660e1b2a/QDNUMX7Lyf.lottie"
+                    title=""
+                    tabindex="-1"
+                    allowtransparency="true"
+                    loading="eager"></iframe>
         </div>
-        <div class="loader-text">
-            Block<span>Forge</span>
-        </div>
-        <div class="loader-bar-wrap">
-            <div class="loader-bar"></div>
-        </div>
+<div class="loader-status" id="loaderStatus">loading...</div>
+    </div>
+<script>
+        (function () {
+            var el = document.getElementById('loaderLottie');
+            var w = document.getElementById('loaderLottieWrap');
+            var status = document.getElementById('loaderStatus');
+            if (!el || !w) return;
+
+            function ok() {
+                if (w.classList.contains('ready')) return;
+                w.classList.add('ready');
+                window.__bfLoaderReadyAt = Date.now();
+            }
+
+            el.addEventListener('load', ok);
+            setTimeout(ok, 1200);
+
+            // مرحله‌های متن لودینگ:
+            // 0.3s -> loading sounds
+            // 2s   -> loading items
+            // سپس  -> checking ...
+            setTimeout(function () {
+                if (status) status.textContent = 'loading items';
+            }, 300);
+
+            setTimeout(function () {
+                if (status) status.textContent = 'checking ...';
+            }, 2300);
+        })();
+        </script>
     </div>
 
 
@@ -4603,7 +4828,7 @@ body {
 
 
         <!-- HELP -->
-        <a href="#" class="help-fab" title="راهنمای تازه‌کارها" aria-label="راهنمای تازه‌کارها" onclick="openBeginnerHelper(event)">
+        <a href="help.html" class="help-fab" title="راهنما" aria-label="راهنما">
             <span class="ripple"></span>
             <i class="fa-solid fa-circle-question"></i>
         </a>
@@ -4632,9 +4857,9 @@ body {
                 پروفایل
             </a>
 
-            <a href="#" onclick="openBeginnerHelper(event);closeMenu();">
+            <a href="help.html">
                 <i class="fa-solid fa-circle-question"></i>
-                راهنمای تازه‌کارها
+                راهنما
             </a>
 
             <a href="https://rubika.ir/zolbiao" target="_blank" rel="noopener">
@@ -4653,64 +4878,6 @@ body {
                 2026 / ۱۴۰۴
                 <br>
                 mahdi x mine
-            </div>
-        </div>
-
-
-        <!-- BEGINNER HELPER -->
-        <div class="helper-overlay" id="beginnerHelper" onclick="if(event.target===this) closeBeginnerHelper()" aria-hidden="true">
-            <div class="helper-card" role="dialog" aria-modal="true" aria-labelledby="helperTitle">
-                <button class="helper-close" type="button" onclick="closeBeginnerHelper()" aria-label="بستن راهنما">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-
-                <div class="helper-hero">
-                    <img class="helper-avatar" src="data/sorce/images/helper.png" alt="Helper">
-                    <div>
-                        <div class="helper-kicker">BEGINNER GUIDE</div>
-                        <div class="helper-title" id="helperTitle">سلام! من راهنمای BlockForge هستم 👋</div>
-                        <div class="helper-subtitle">اگه اولین باره اینجایی، این چند قدم رو دنبال کن.</div>
-                    </div>
-                </div>
-
-                <div class="helper-steps">
-                    <div class="helper-step">
-                        <div class="helper-step-num">۱</div>
-                        <div>
-                            <h4>مود، اسکین یا نقشه رو انتخاب کن</h4>
-                            <p>روی کارت موردنظرت بزن تا صفحه جزئیات، قیمت و دکمه دریافت رو ببینی.</p>
-                        </div>
-                    </div>
-
-                    <div class="helper-step">
-                        <div class="helper-step-num">۲</div>
-                        <div>
-                            <h4>قیمت رو بررسی کن</h4>
-                            <p>اگر آیتم رایگان باشه، دکمه دریافت مستقیم فعاله. برای آیتم پولی باید به اندازه قیمت، توکن داشته باشی.</p>
-                        </div>
-                    </div>
-
-                    <div class="helper-step">
-                        <div class="helper-step-num">۳</div>
-                        <div>
-                            <h4>روی «خرید و دانلود» بزن</h4>
-                            <p>برای آیتم پولی، توکن موردنیاز از موجودی کم می‌شه و خرید ثبت می‌شه. اگر توکن کافی نباشه، دانلود شروع نمی‌شه.</p>
-                        </div>
-                    </div>
-
-                    <div class="helper-step">
-                        <div class="helper-step-num">۴</div>
-                        <div>
-                            <h4>دانلود رو انجام بده</h4>
-                            <p>بعد از خرید، آیتم برایت فعال می‌شه و می‌تونی فایلش رو دریافت کنی. آیتم‌های خریداری‌شده دوباره هزینه‌ای ندارن.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="helper-tip">
-                    <i class="fa-solid fa-lightbulb"></i>
-                    نکته: موجودی توکن از بالای صفحه قابل مشاهده است. قبل از خرید، قیمت آیتم و موجودی توکن رو چک کن.
-                </div>
             </div>
         </div>
 
@@ -4945,6 +5112,9 @@ body {
 
         <!-- MODAL -->
         <div class="modal-overlay" id="modalOverlay">
+            <div class="modal-loader" aria-hidden="true">
+                <iframe class="lottie-frame" id="modalLottie" title="" tabindex="-1" allowtransparency="true"></iframe>
+            </div>
             <div class="modal" id="modalContent"></div>
         </div>
 
@@ -5074,7 +5244,7 @@ body {
 
             // بخش‌های ثابت
             const sections = scope.querySelectorAll(
-                '.slider-section, .rubika-banner, .stats-row, .lottery, .section'
+                '.slider-section, .rubika-banner, .stats-row, .lottery, .section, .back-bar, .footer'
             );
 
             sections.forEach((el, i) => {
@@ -5837,8 +6007,10 @@ body {
         ========================== */
 
         function openModal(id) {
-            const item = items.find(i => i.id === id);
+            const item = items.find(i => Number(i.id) === Number(id));
             if (!item) return;
+            window.location.href = 'items.html?id=' + encodeURIComponent(item.id);
+            return;
 
             const price = getPrice(item);
             const cost = getCost(item);
@@ -5858,10 +6030,7 @@ body {
                             ${related.map(r => {
                                 const rc = getCost(r);
                                 return `
-                                    <div class="related-item" onclick="
-                                        document.getElementById('modalOverlay').classList.remove('active');
-                                        setTimeout(() => openModal(${r.id}), 300);
-                                    ">
+                                    <div class="related-item" onclick="modalSwap(${r.id})">
                                         <div class="related-item-img" style="background-image:url('${r.img}');"></div>
                                         <div class="related-item-body">
                                             <h5>${r.title}</h5>
@@ -5909,11 +6078,11 @@ body {
                 <div class="modal-handle"></div>
 
                 <button class="m-close"
-                    onclick="document.getElementById('modalOverlay').classList.remove('active')">
+                    onclick="closeModal()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
 
-                <img class="modal-img" src="${item.img}" alt="">
+                <img class="modal-img" src="${item.img}" alt="" decoding="async">
 
                 <div class="modal-intro">
                     <span class="modal-badge ${cost === 0 ? 'free' : 'paid'}">
@@ -6002,12 +6171,118 @@ body {
                 ${rel}
             `;
 
-            document.getElementById('modalOverlay').classList.add('active');
+            showModalUI();
         }
 
         document.getElementById('modalOverlay').onclick = function (e) {
-            if (e.target === this) this.classList.remove('active');
+            if (e.target === this) closeModal();
         };
+
+        let modalOpen = false;
+        let modalToken = 0;
+
+        const MODAL_LOTTIE = 'https://lottie.host/embed/32be3513-f545-4482-a09e-66ee60287c1f/6yEY7wJ0My.lottie';
+
+        // مدت نمایش انیمیشن لودینگ مودال (میلی‌ثانیه) — تا انیمیشن لوگو کامل دیده بشه
+        const MODAL_MIN_MS = 2800;
+        const MODAL_MAX_MS = 5000;
+
+        function ensureModalLottie() {
+            const f = document.getElementById('modalLottie');
+            if (f && !f.getAttribute('src')) f.setAttribute('src', MODAL_LOTTIE);
+        }
+
+        // هر بار انیمیشن از اول شروع بشه
+        function restartModalLottie() {
+            const f = document.getElementById('modalLottie');
+            if (!f) return;
+            if (!f.getAttribute('src')) { f.setAttribute('src', MODAL_LOTTIE); return; }
+            try { f.contentWindow.location.replace(MODAL_LOTTIE); }
+            catch (e) { f.setAttribute('src', MODAL_LOTTIE); }
+        }
+
+        function showModalUI() {
+            const o = document.getElementById('modalOverlay');
+            const m = document.getElementById('modalContent');
+            m.scrollTop = 0;
+            m.style.transform = '';
+            Array.from(m.children).forEach((c, i) => {
+                c.style.animationDelay = (0.10 + i * 0.05) + 's';
+            });
+            restartModalLottie();
+
+            // فاز لودینگ: حداقل MODAL_MIN_MS یا تا لود شدن عکس (حداکثر MODAL_MAX_MS)
+            const token = ++modalToken;
+            const img = m.querySelector('.modal-img');
+            const minWait = new Promise(r => setTimeout(r, MODAL_MIN_MS));
+            const imgReady = new Promise(r => {
+                if (!img || img.complete) return r();
+                img.addEventListener('load', r, { once: true });
+                img.addEventListener('error', r, { once: true });
+                setTimeout(r, MODAL_MAX_MS);
+            });
+            o.classList.add('loading');
+            Promise.all([minWait, imgReady]).then(() => {
+                if (token === modalToken) o.classList.remove('loading');
+            });
+
+            o.classList.add('active');
+            document.body.classList.add('modal-open');
+            if (!modalOpen) {
+                modalOpen = true;
+                try { history.pushState({ bfModal: 1 }, ''); } catch (e) {}
+            }
+        }
+
+        function closeModal(fromPop) {
+            const o = document.getElementById('modalOverlay');
+            if (!o || (!modalOpen && !o.classList.contains('active'))) return;
+            modalToken++;
+            o.classList.remove('active', 'loading');
+            document.body.classList.remove('modal-open');
+            if (modalOpen) {
+                modalOpen = false;
+                if (fromPop !== true) {
+                    try { if (history.state && history.state.bfModal) history.back(); } catch (e) {}
+                }
+            }
+            // برگشت: صفحه از پایین به بالا دوباره لود میشه
+            setTimeout(() => {
+                const page = document.getElementById('homePage') ||
+                             document.getElementById('fullListPage') ||
+                             document.getElementById('savedPage');
+                if (page) playRise(page);
+            }, 200);
+        }
+
+        function modalSwap(id) {
+            document.getElementById('modalOverlay').classList.remove('active');
+            setTimeout(() => openModal(id), 320);
+        }
+
+        window.addEventListener('popstate', () => { if (modalOpen) closeModal(true); });
+
+        // کشیدن مودال به پایین برای بستن
+        (function () {
+            const m = document.getElementById('modalContent');
+            let y0 = null, dy = 0;
+            m.addEventListener('touchstart', e => {
+                y0 = m.scrollTop <= 0 ? e.touches[0].clientY : null; dy = 0;
+            }, { passive: true });
+            m.addEventListener('touchmove', e => {
+                if (y0 === null) return;
+                dy = e.touches[0].clientY - y0;
+                if (dy > 0) { m.classList.add('dragging'); m.style.transform = 'translateY(' + dy + 'px)'; }
+            }, { passive: true });
+            m.addEventListener('touchend', () => {
+                if (y0 === null) return;
+                m.classList.remove('dragging');
+                const far = dy > 110;
+                m.style.transform = '';
+                y0 = null;
+                if (far) closeModal();
+            });
+        })();
 
 
         /* =========================
@@ -6200,28 +6475,6 @@ body {
 
 
         /* =========================
-           BEGINNER HELPER
-        ========================== */
-
-        function openBeginnerHelper(e) {
-            if (e) e.preventDefault();
-            const helper = document.getElementById('beginnerHelper');
-            if (!helper) return;
-            helper.classList.add('active');
-            helper.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeBeginnerHelper() {
-            const helper = document.getElementById('beginnerHelper');
-            if (!helper) return;
-            helper.classList.remove('active');
-            helper.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-        }
-
-
-        /* =========================
            MENU
         ========================== */
 
@@ -6277,23 +6530,38 @@ body {
         ========================== */
 
         (function startApp() {
-            const hasWarmCache = localStorage.getItem('bf_assets_warm') === '1';
-            const delay = hasWarmCache ? 120 : 350;
+            // انیمیشن لودینگ از لحظه‌ی آماده شدنش MIN_SHOW میلی‌ثانیه نمایش داده میشه.
+            // اگه پلیر لود نشد (اینترنت ضعیف)، بعد از FALLBACK_MS برنامه باز میشه.
+            const MIN_SHOW = 5000;
+            const FALLBACK_MS = 6500;
+            const t0 = Date.now();
 
-            // Mark the site as warm after the first successful startup.
-            // The service worker keeps the font/icon files in Cache Storage.
-            setTimeout(() => {
+            function finish() {
                 load();
                 renderHome();
                 badge();
 
                 document.getElementById('loader').classList.add('hide');
                 document.getElementById('app').classList.add('show');
+                setTimeout(() => playRise(document.getElementById('homePage') || document), 180);
+
+                // لودینگ مودال بعد از بالا اومدن اپ آماده میشه
+                setTimeout(ensureModalLottie, 1500);
 
                 try {
                     localStorage.setItem('bf_assets_warm', '1');
                 } catch (e) {}
-            }, delay);
+            }
+
+            (function wait() {
+                const now = Date.now();
+                const readyAt = window.__bfLoaderReadyAt;
+                const done = readyAt
+                    ? (now - readyAt >= MIN_SHOW)
+                    : (now - t0 >= FALLBACK_MS);
+                if (done) finish();
+                else setTimeout(wait, 80);
+            })();
         })();
 
 
@@ -6313,9 +6581,8 @@ body {
 
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
-                document.getElementById('modalOverlay')?.classList.remove('active');
+                closeModal();
                 closeLotteryReward();
-                closeBeginnerHelper();
                 closeMenu();
                 closeProfile();
             }
