@@ -4722,23 +4722,44 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
     <!-- LOADER -->
     <div class="loader" id="loader">
         <div class="loader-lottie main-loader-only" id="loaderLottieWrap">
-            <dotlottie-player id="loaderLottie" src="https://lottie.host/embed/62da80be-c214-49ef-840b-5d77660e1b2a/QDNUMX7Lyf.lottie" autoplay loop mode="normal" style="width:210px;height:210px;background:transparent;"></dotlottie-player>
+            <iframe class="lottie-frame main-loader-lottie" id="loaderLottie"
+                    src="https://lottie.host/embed/62da80be-c214-49ef-840b-5d77660e1b2a/QDNUMX7Lyf.lottie"
+                    title=""
+                    tabindex="-1"
+                    allowtransparency="true"
+                    loading="eager"></iframe>
         </div>
 <div class="loader-status" id="loaderStatus">loading...</div>
     </div>
 <script>
-(function(){
- var el=document.getElementById('loaderLottie'),w=document.getElementById('loaderLottieWrap'),status=document.getElementById('loaderStatus');
- if(!el||!w)return;
- var ready=false;
- function ok(){if(ready)return;ready=true;w.classList.add('ready');window.__bfLoaderReadyAt=Date.now();}
- el.addEventListener('ready',ok,{once:true});
- el.addEventListener('load',ok,{once:true});
- setTimeout(ok,7000);
- setTimeout(function(){if(status)status.textContent='loading items';},300);
- setTimeout(function(){if(status)status.textContent='checking ...';},2300);
-})();
-</script>
+        (function () {
+            var el = document.getElementById('loaderLottie');
+            var w = document.getElementById('loaderLottieWrap');
+            var status = document.getElementById('loaderStatus');
+            if (!el || !w) return;
+
+            function ok() {
+                if (w.classList.contains('ready')) return;
+                w.classList.add('ready');
+                window.__bfLoaderReadyAt = Date.now();
+            }
+
+            el.addEventListener('load', ok);
+            setTimeout(ok, 1200);
+
+            // مرحله‌های متن لودینگ:
+            // 0.3s -> loading sounds
+            // 2s   -> loading items
+            // سپس  -> checking ...
+            setTimeout(function () {
+                if (status) status.textContent = 'loading items';
+            }, 300);
+
+            setTimeout(function () {
+                if (status) status.textContent = 'checking ...';
+            }, 2300);
+        })();
+        </script>
     </div>
 
 
@@ -6512,7 +6533,7 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
             // انیمیشن لودینگ از لحظه‌ی آماده شدنش MIN_SHOW میلی‌ثانیه نمایش داده میشه.
             // اگه پلیر لود نشد (اینترنت ضعیف)، بعد از FALLBACK_MS برنامه باز میشه.
             const MIN_SHOW = 5000;
-            const FALLBACK_MS = 12000;
+            const FALLBACK_MS = 6500;
             const t0 = Date.now();
 
             function finish() {
