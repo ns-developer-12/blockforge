@@ -22,32 +22,21 @@ h1{font-size:1.55rem;margin:12px 0 5px;line-height:1.45}.author{color:var(--mute
 .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.info{padding:12px 8px;text-align:center;border-radius:15px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.05)}.info i{font-size:.9rem;color:var(--green);margin-bottom:6px}.info small{display:block;color:#77778a;font-size:.58rem}.info strong{display:block;margin-top:3px;font-size:.68rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .description{position:relative;line-height:2.05;font-size:.78rem;color:#d8d8e2;white-space:pre-wrap}.description::before{content:"";position:absolute;right:-16px;top:0;width:3px;height:100%;border-radius:99px;background:linear-gradient(var(--purple),var(--green));opacity:.7}
 .price{display:flex;align-items:center;justify-content:space-between;gap:12px}.price-main{font-size:1.15rem;font-weight:900;color:var(--gold)}.old{text-decoration:line-through;color:#777;font-size:.7rem;margin-left:7px}.discount{font-size:.62rem;color:#77e8c5;background:rgba(29,209,161,.1);padding:5px 8px;border-radius:8px}.download{width:100%;border:0;border-radius:15px;padding:14px;background:linear-gradient(100deg,var(--purple),#6d4ce7);color:#fff;font-family:inherit;font-weight:900;font-size:.78rem;cursor:pointer;box-shadow:0 10px 30px rgba(139,92,246,.18);transition:.2s}.download:active{transform:scale(.98)}.download.free{background:linear-gradient(100deg,#1aa981,#1dd1a1)}
-.related{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.rel{overflow:hidden;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);cursor:pointer}.rel img{width:100%;height:80px;object-fit:cover;display:block}.rel div{padding:8px;font-size:.62rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.empty{text-align:center;padding:60px 20px;color:#888}.toast{position:fixed;left:13px;right:13px;bottom:15px;z-index:30;padding:13px 15px;border-radius:15px;background:#fff;color:#151525;box-shadow:0 15px 45px rgba(0,0,0,.3);font-size:.72rem;font-weight:800;transform:translateY(130%);transition:.35s}.toast.show{transform:none}.loading{min-height:100vh;display:grid;place-items:center;background:#fff;color:#171525}.loaderbox{text-align:center}.loaderbox .orb{width:90px;height:90px;border-radius:28px;margin:auto;background:radial-gradient(circle,rgba(139,92,246,.18),rgba(255,255,255,.95) 65%);box-shadow:0 15px 50px rgba(139,92,246,.12);animation:pulse 1.8s infinite}.loaderbox p{font-size:.75rem;font-weight:900;margin-top:14px}@keyframes pulse{50%{transform:scale(1.07)}}
-@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.desc-loader{display:grid;place-items:center;min-height:185px;margin:-2px 0 12px;border:1px solid rgba(255,255,255,.06);border-radius:17px;background:rgba(255,255,255,.025);overflow:hidden;transition:opacity .3s ease,max-height .35s ease,margin .35s ease,padding .35s ease}
-.desc-loader iframe{width:180px;height:180px;border:0;background:transparent}
-.desc-content{opacity:0;transform:translateY(10px);transition:opacity .4s ease,transform .4s ease}
-.desc-content.ready{opacity:1;transform:none}
-.share-row{display:flex;gap:8px;margin-top:10px}
-.share-btn{flex:1;border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:11px;background:rgba(255,255,255,.045);color:#fff;font-family:inherit;font-weight:800;font-size:.7rem;cursor:pointer}
-.share-btn:active{transform:scale(.98)}
-@media (prefers-reduced-motion:reduce){.hero,.section,.desc-content{animation:none!important;transition:none!important}}
+.related{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.rel{overflow:hidden;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);cursor:pointer}.rel img{width:100%;height:80px;object-fit:cover;display:block}.rel div{padding:8px;font-size:.62rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.empty{text-align:center;padding:60px 20px;color:#888}.toast{position:fixed;left:13px;right:13px;bottom:15px;z-index:30;padding:13px 15px;border-radius:15px;background:#fff;color:#151525;box-shadow:0 15px 45px rgba(0,0,0,.3);font-size:.72rem;font-weight:800;transform:translateY(130%);transition:.35s}.toast.show{transform:none}.loading{min-height:100vh;display:grid;place-items:center;background:#fff;color:#171525}.loaderbox{text-align:center}.lottie-holder{width:210px;height:210px;margin:auto;border-radius:28px;overflow:hidden;background:#fff;box-shadow:0 15px 50px rgba(139,92,246,.12)}.lottie-holder iframe{width:100%;height:100%;border:0;display:block}.loaderbox p{font-size:.75rem;font-weight:900;margin-top:14px}@keyframes pulse{50%{transform:scale(1.07)}}@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @media(max-width:560px){.hero-img{height:225px}.info-grid{grid-template-columns:1fr 1fr}.info:last-child{grid-column:1/-1}.related{grid-template-columns:1fr 1fr}.rel:last-child{display:none}}
 </style>
 </head>
 <body>
-<div id="loading" class="loading"><div class="loaderbox"><div class="orb"></div><p>در حال آماده‌سازی آیتم...</p></div></div>
+<div id="loading" class="loading"><div class="loaderbox"><div class="lottie-holder"><iframe id="itemLoaderLottie" src="https://lottie.host/embed/62da80be-c214-49ef-840b-5d77660e1b2a/QDNUMX7Lyf.lottie" title="" tabindex="-1" loading="eager" allowtransparency="true"></iframe></div><p>در حال آماده‌سازی آیتم...</p></div></div>
 <div id="page" style="display:none">
-<header class="top"><button class="icon-btn" onclick="history.length>1?history.back():location.href='index.html'" aria-label="بازگشت"><i class="fa-solid fa-arrow-right"></i></button><div class="brand">Block<span>Forge</span></div><button class="icon-btn" onclick="sharePage()" aria-label="اشتراک‌گذاری"><i class="fa-solid fa-share-nodes"></i></button></header>
+<header class="top"><button class="icon-btn" onclick="history.length>1?history.back():location.href='index.html'" aria-label="بازگشت"><i class="fa-solid fa-arrow-right"></i></button><div class="brand">Block<span>Forge</span></div></header>
 <main class="wrap" id="content"></main>
 <div class="toast" id="toast"></div>
 </div>
 <script>
 (function(){
 'use strict';
-const params=new URLSearchParams(location.search);
-const modSlug=(params.get('mod')||'').trim().toLowerCase();
-const legacyId=Number(params.get('id'));
+const params=new URLSearchParams(location.search); const id=Number(params.get('id'));
 function auth(){try{const a=JSON.parse(localStorage.getItem('bf_auth')||'{}');if(!a.loggedIn||Date.now()-a.time>30*24*60*60*1000){location.href='auth.html';return false}}catch(e){location.href='auth.html';return false}return true}
 function tokens(){try{const d=JSON.parse(localStorage.getItem('bf_tokens')||'{"tokens":2000,"last":'+Date.now()+'}');const e=Date.now()-d.last;if(e>=21600000){d.tokens=Math.min(50000,d.tokens+Math.floor(e/21600000)*2000);d.last=Date.now()-(e%21600000);localStorage.setItem('bf_tokens',JSON.stringify(d))}return d.tokens}catch(e){return 0}}
 function spend(n){const d=JSON.parse(localStorage.getItem('bf_tokens')||'{"tokens":2000,"last":'+Date.now()+'}');if(tokens()<n)return false;d.tokens=tokens()-n;localStorage.setItem('bf_tokens',JSON.stringify(d));return true}
@@ -58,34 +47,39 @@ function cost(i){const raw=num(i.price||i.cost||0), d=Math.max(0,Math.min(100,nu
 function direct(url){try{const u=new URL(url,location.href);if(/drive\.google\.com|docs\.google\.com/.test(u.hostname)){let x=u.searchParams.get('id');if(!x){const m=u.pathname.match(/\/(?:file\/d|document\/d|spreadsheets\/d|presentation\/d)\/([^/]+)/);if(m)x=m[1]}if(x)return 'https://drive.google.com/uc?export=download&id='+encodeURIComponent(x)}}catch(e){}return url}
 function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),2600)}
 function build(){if(typeof MY_CONTENT==='undefined')return [];return MY_CONTENT.map((i,n)=>({id:n+1,...i,img:i.img||'https://picsum.photos/seed/'+(n+1)+'/700/420'}))}
-function getItem(all){if(modSlug)return all.find(x=>String(x.slug||'').toLowerCase()===modSlug);if(Number.isFinite(legacyId)&&legacyId>0)return all.find(x=>x.id===legacyId);return null}
-function sharePage(){const u=location.href;if(navigator.share){navigator.share({title:document.title,url:u}).catch(()=>{});return}if(navigator.clipboard){navigator.clipboard.writeText(u).then(()=>toast('لینک صفحه کپی شد.')).catch(()=>toast(u));return}toast(u)}
-function render(){const all=build(), item=getItem(all), root=document.getElementById('content');if(!item){root.innerHTML='<div class="empty"><i class="fa-solid fa-box-open" style="font-size:2rem"></i><h3>آیتم پیدا نشد</h3><p>لینک این آیتم معتبر نیست.</p></div>';return}
+function render(){const all=build(), item=all.find(x=>x.id===id), root=document.getElementById('content');if(!item){root.innerHTML='<div class="empty"><i class="fa-solid fa-box-open" style="font-size:2rem"></i><h3>آیتم پیدا نشد</h3><p>شناسه‌ی این آیتم معتبر نیست.</p></div>';return}
 const c=cost(item), p=purchased(), bought=p.has(item.id), disc=num(item.discount);const related=all.filter(x=>x.id!==item.id&&x.cat===item.cat).slice(0,3);
 root.innerHTML=`<article class="hero"><img class="hero-img" src="${item.img}" alt="${item.title||''}" loading="eager"><div class="hero-body"><span class="badge"><i class="fa-solid fa-cube"></i> ${item.cat||'آیتم'}</span><h1>${item.title||'بدون عنوان'}</h1><div class="author">سازنده: ${item.author||'ناشناس'}</div>${item.rating?`<div class="rating"><i class="fa-solid fa-star"></i> ${item.rating}</div>`:''}</div></article>
 <section class="section"><div class="section-title"><i class="fa-solid fa-circle-info"></i> اطلاعات آیتم</div><div class="info-grid"><div class="info"><i class="fa-solid fa-user"></i><small>سازنده</small><strong>${item.author||'ناشناس'}</strong></div><div class="info"><i class="fa-solid fa-code-branch"></i><small>ورژن</small><strong>${item.version||'---'}</strong></div><div class="info"><i class="fa-solid fa-weight-hanging"></i><small>حجم</small><strong>${item.size||'---'}</strong></div></div></section>
-<section class="section"><div class="section-title"><i class="fa-solid fa-align-right"></i> توضیحات کامل</div><div class="desc-loader" id="descLoader"><iframe src="https://lottie.host/embed/ec9ebf91-e045-4c6e-adca-821968446e9e/WyYfwjbKCb.lottie" title="loading" loading="eager"></iframe></div><div class="description desc-content" id="descContent">${item.desc||'برای این آیتم توضیحی ثبت نشده است.'}</div><div class="share-row"><button class="share-btn" onclick="sharePage()"><i class="fa-solid fa-link"></i> کپی / اشتراک لینک</button></div></section>
+<section class="section"><div class="section-title"><i class="fa-solid fa-align-right"></i> توضیحات کامل</div><div class="description">${item.desc||'برای این آیتم توضیحی ثبت نشده است.'}</div></section>
 <section class="section"><div class="section-title"><i class="fa-solid fa-download"></i> دریافت فایل</div>${c>0&&!bought?`<div class="price"><div class="price-main">${disc?`<span class="old">${num(item.price).toLocaleString('fa')}</span>`:''}<i class="fa-solid fa-coins"></i> ${c.toLocaleString('fa')} توکن</div>${disc?`<span class="discount">-${disc}%</span>`:''}</div><div style="height:12px"></div>`:''}<button id="download" class="download ${c===0||bought?'free':''}">${bought?'دانلود':' '+(c===0?'دانلود رایگان':'خرید و دانلود')+' '}</button></section>
-${related.length?`<section class="section"><div class="section-title"><i class="fa-solid fa-link"></i> آیتم‌های مرتبط</div><div class="related">${related.map(r=>`<div class="rel" onclick="location.href='items.html?mod='+encodeURIComponent(r.slug||'item-'+r.id)"><img src="${r.img}" alt=""><div>${r.title||''}</div></div>`).join('')}</div></section>`:''}`;
-}
+${related.length?`<section class="section"><div class="section-title"><i class="fa-solid fa-link"></i> آیتم‌های مرتبط</div><div class="related">${related.map(r=>`<div class="rel" onclick="location.href='items.html?id=${r.id}'"><img src="${r.img}" alt=""><div>${r.title||''}</div></div>`).join('')}</div></section>`:''}`;
+document.getElementById('download').onclick=()=>download(item,c,bought)}
 let purchaseBusy=false;
-document.getElementById('download').onclick=()=>download(item,c);
-function download(item,c){
-  if(purchaseBusy)return;
-  purchaseBusy=true;
-  const btn=document.getElementById('download');
-  if(btn){btn.disabled=true;btn.style.opacity='.65';btn.textContent='در حال آماده‌سازی…';}
-  const alreadyBought=purchased().has(Number(item.id));
-  if(!item.downloadUrl){purchaseBusy=false;if(btn){btn.disabled=false;btn.textContent='لینک دانلود موجود نیست'}toast('لینک دانلود برای این آیتم ثبت نشده است.');return}
-  if(alreadyBought||c===0){mark(item.id);location.assign(direct(item.downloadUrl));return}
-  if(tokens()<c){purchaseBusy=false;if(btn){btn.disabled=false;btn.textContent='خرید و دانلود'}toast('توکن کافی نیست. موجودی: '+tokens().toLocaleString('fa')+' توکن');return}
-  if(!spend(c)){purchaseBusy=false;if(btn){btn.disabled=false;btn.textContent='خرید و دانلود'}toast('پرداخت انجام نشد.');return}
-  mark(item.id);
-  // بلافاصله پس از ثبت خرید، دانلود را شروع می‌کنیم؛ تأخیر طولانی باعث می‌شد کاربر دوباره روی خرید بزند.
-  location.assign(direct(item.downloadUrl));
+function download(item,c,bought){
+ const btn=document.getElementById('download');
+ if(purchaseBusy)return;
+ if(!item.downloadUrl){toast('لینک دانلود برای این آیتم ثبت نشده است.');return}
+ if(bought||c===0){purchaseBusy=true;if(btn){btn.disabled=true;btn.textContent='در حال آماده‌سازی دانلود...';}if(c===0)mark(item.id);location.href=direct(item.downloadUrl);return}
+ if(tokens()<c){toast('توکن کافی نیست. موجودی: '+tokens().toLocaleString('fa')+' توکن');return}
+ purchaseBusy=true;if(btn){btn.disabled=true;btn.textContent='در حال ثبت خرید...';}
+ if(!spend(c)){purchaseBusy=false;if(btn){btn.disabled=false;btn.textContent='خرید و دانلود';}toast('پرداخت انجام نشد.');return}
+ mark(item.id);
+ if(btn)btn.textContent='خرید ثبت شد؛ در حال دانلود...';
+ toast('خرید با موفقیت انجام شد؛ دریافت فایل شروع می‌شود.');
+ setTimeout(()=>location.href=direct(item.downloadUrl),700);
 }
-function revealDescription(){const l=document.getElementById('descLoader'),d=document.getElementById('descContent');if(!l||!d)return;setTimeout(()=>{l.style.opacity='0';l.style.maxHeight='0';l.style.minHeight='0';l.style.margin='0';d.classList.add('ready');setTimeout(()=>l.remove(),360)},2400)}
-if(auth()){render();document.getElementById('loading').style.display='none';document.getElementById('page').style.display='block';revealDescription()}
+async function startPage(){
+ if(!auth())return;
+ const started=Date.now();render();
+ const img=document.querySelector('.hero-img');
+ if(img&&!img.complete)await new Promise(r=>{const d=()=>r();img.addEventListener('load',d,{once:true});img.addEventListener('error',d,{once:true});});
+ const loader=document.getElementById('itemLoaderLottie');
+ if(loader)await new Promise(r=>{let done=false;const d=()=>{if(done)return;done=true;r()};loader.addEventListener('load',d,{once:true});setTimeout(d,7000);});
+ const wait=Math.max(0,5000-(Date.now()-started));
+ setTimeout(()=>{document.getElementById('loading').style.display='none';document.getElementById('page').style.display='block'},wait);
+}
+startPage();
 })();
 </script>
 </body></html>
