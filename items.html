@@ -112,7 +112,11 @@ button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none
 @media (max-height:520px){.pl-skel{display:none}}
 
 /* ============ صفحه ============ */
-#view{max-width:640px;margin:0 auto;padding:0 14px calc(104px + var(--safe))}
+#view{max-width:720px;margin:0 auto;padding:0 14px calc(104px + var(--safe))}
+html{scroll-behavior:auto !important;overscroll-behavior-y:contain}
+body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{animation-play-state:paused !important}
+body.bf-scrolling #view *{pointer-events:none !important}
+@media (hover:none){.rel-card:hover{box-shadow:none}}
 .topbar{
     position:sticky;top:0;z-index:50;margin:0 -14px;
     padding:calc(10px + var(--safet)) 14px 10px;
@@ -206,13 +210,13 @@ button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none
 .cl-item ul{margin:7px 18px 0 0;color:var(--text2);font-size:.82rem}
 
 .hrow{
-    display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -14px;
+    display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -14px;
     padding:18px 14px 24px;perspective:1100px;scroll-snap-type:x mandatory;position:relative;
 }
 .hrow::-webkit-scrollbar{display:none}
 .hrow>.rel-card{
-    flex:none;width:150px;scroll-snap-align:center;position:relative;border-radius:16px;overflow:hidden;
-    background:var(--surface2);border:1px solid var(--border2);box-shadow:0 12px 30px rgba(0,0,0,.4);
+    flex:none;width:168px;scroll-snap-align:center;position:relative;border-radius:16px;overflow:hidden;will-change:transform;
+    background:var(--surface2);border:1px solid var(--border2);box-shadow:0 8px 18px rgba(0,0,0,.35);
 }
 .rel-card .im{aspect-ratio:4/3;background:#15152b center/cover no-repeat}
 .rel-card .bd{padding:9px 10px 11px}
@@ -227,7 +231,7 @@ button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none
     padding:10px 14px calc(10px + var(--safe));
     background:linear-gradient(180deg,rgba(5,5,16,.0),rgba(5,5,16,.94) 38%);
 }
-.dlbar-in{max-width:640px;margin:0 auto;display:flex;gap:9px;align-items:center}
+.dlbar-in{max-width:720px;margin:0 auto;display:flex;gap:9px;align-items:center}
 .dlbar .btn.main{flex:1}
 .dlbar .btn.sq{width:48px;padding:0}
 
@@ -280,7 +284,11 @@ button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none
 
 .notfound{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px}
 .notfound i{font-size:2.6rem;color:var(--gold)}
-.nf-lottie{width:min(340px,90vw);height:min(340px,90vw);border:0;background:transparent;color-scheme:normal}
+.nf-wrap{position:relative;width:min(380px,94vw);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+.nf-lottie{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;color-scheme:normal;
+  -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 38%,rgba(0,0,0,.55) 62%,transparent 86%);
+          mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 38%,rgba(0,0,0,.55) 62%,transparent 86%);
+  filter:saturate(1.05) brightness(.96)}
 
 /* موتور انیمیشن */
 .bf-rv:not(.bf-in){opacity:0}
@@ -439,8 +447,8 @@ button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none
             var key = Math.round(d * 40);
             if (el.__bfK === key) continue;
             el.__bfK = key;
-            var s = 1.1 - 0.17 * f;
-            el.style.transform = 'translate3d(' + (-cl * 9).toFixed(1) + 'px,0,' + (-f * 55).toFixed(1) + 'px) rotateY(' + (cl * 24).toFixed(1) + 'deg) scale(' + s.toFixed(3) + ')';
+            var s = 1.05 - 0.11 * f;
+            el.style.transform = 'translate3d(' + (cl * 5).toFixed(1) + 'px,0,' + (-f * 28).toFixed(1) + 'px) rotateY(' + (cl * 20).toFixed(1) + 'deg) scale(' + s.toFixed(3) + ')';
             el.style.zIndex = String(100 - Math.round(a * 10));
         }
     }
@@ -665,6 +673,54 @@ button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none
     }
     function btnClass(item) { return isPurchased(item.id) ? 'purchased' : (getCost(item) === 0 ? 'free' : ''); }
 
+
+    function makeInfinite(row) {
+        if (!row || row.__inf) return;
+        var orig = Array.prototype.slice.call(row.children);
+        var n = orig.length;
+        if (n < 3) return;
+        row.__inf = 1;
+        var b = document.createDocumentFragment(), a = document.createDocumentFragment();
+        orig.forEach(function (c) { b.appendChild(c.cloneNode(true)); a.appendChild(c.cloneNode(true)); });
+        row.insertBefore(b, row.firstChild);
+        row.appendChild(a);
+        function center(el) { var r = el.getBoundingClientRect(); return r.left + r.width / 2; }
+        function nearest() {
+            var rc = center(row), best = 0, bd = 1e9;
+            for (var i = 0; i < row.children.length; i++) {
+                var d = Math.abs(center(row.children[i]) - rc);
+                if (d < bd) { bd = d; best = i; }
+            }
+            return best;
+        }
+        function jump(from, to) {
+            var delta = center(row.children[to]) - center(row.children[from]);
+            row.style.scrollSnapType = 'none';
+            row.scrollLeft += delta;
+            requestAnimationFrame(function () { row.style.scrollSnapType = ''; });
+        }
+        var mid = row.children[n];
+        if (mid) row.scrollLeft += center(mid) - center(row);
+        var t = null;
+        row.addEventListener('scroll', function () {
+            clearTimeout(t);
+            t = setTimeout(function () {
+                var i = nearest();
+                if (i < n) jump(i, i + n);
+                else if (i >= 2 * n) jump(i, i - n);
+            }, 140);
+        }, { passive: true });
+    }
+
+    (function () {
+        var t = null, on = false;
+        window.addEventListener('scroll', function () {
+            if (!on) { on = true; document.body.classList.add('bf-scrolling'); }
+            clearTimeout(t);
+            t = setTimeout(function () { on = false; document.body.classList.remove('bf-scrolling'); }, 120);
+        }, { passive: true });
+    })();
+
     function related(item, c) {
         var s = items.filter(function (i) { return i.cat === item.cat && i.id !== item.id; });
         var o = items.filter(function (i) { return i.id !== item.id && i.cat !== item.cat; });
@@ -675,13 +731,13 @@ button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none
         var v = $('#view');
         if (!item) {
             v.innerHTML = '<div class="topbar"><button class="tb-btn" id="tbBack" aria-label="بازگشت"><i class="fa-solid fa-arrow-right"></i></button><div class="tb-title">BlockForge</div></div>' +
-                '<div class="notfound rvx"><iframe class="nf-lottie" title="404" tabindex="-1" allowtransparency="true" loading="eager" src="https://lottie.host/embed/0c21a67e-5966-4646-a728-487ca77404fa/JrhlKsIlHH.lottie"></iframe>' +
+                '<div class="notfound rvx"><div class="nf-wrap"><iframe class="nf-lottie" title="404" tabindex="-1" allowtransparency="true" loading="eager" src="https://lottie.host/embed/0c21a67e-5966-4646-a728-487ca77404fa/JrhlKsIlHH.lottie"></iframe></div>' +
                 '<a class="btn" href="index.html"><i class="fa-solid fa-house"></i> بازگشت به صفحه اصلی</a></div>';
             $('#tbBack').onclick = goBack;
             return;
         }
         var p = getPrice(item), cost = getCost(item), saved = savedSet().has(item.id);
-        var rel = related(item, 4), cl = item.changelog || [];
+        var rel = related(item, 5), cl = item.changelog || [];
 
         var priceHTML = p.hasD
             ? '<div class="price-box rvx"><span class="price-old">' + fa(p.og) + '</span><span class="price-new"><i class="fa-solid fa-coins"></i>' + fa(p.fn) + '</span><span class="price-disc">-' + fa(p.d) + '٪</span></div>'
@@ -892,6 +948,7 @@ button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none
     /* ===================== شروع ===================== */
     function boot() {
         BFMotion.init({ items: '.rvx, .hrow > .rel-card', rows: '.hrow', sphere: true });
+        requestAnimationFrame(function () { requestAnimationFrame(function () { makeInfinite(document.querySelector('.hrow')); }); });
 
         var t0 = Date.now();
         loadScript('mods.js?v=' + Date.now()).then(function () {
