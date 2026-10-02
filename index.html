@@ -4909,12 +4909,11 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                     );
                 if (
                     !a.loggedIn ||
-                    Date.now() -
-                    a.time >
-                    30 * 24 * 60 * 60 * 1000
+                    !a.token ||
+                    !a.expiresAt ||
+                    Date.now() >= a.expiresAt
                 ) {
-                    window.location.href =
-                        'auth.html';
+                    window.location.replace('auth.html');
                 }
             })();
         </script>
@@ -5237,6 +5236,11 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
 
                 <div id="profileMsg" style="font-size:.38rem;min-height:12px;"></div>
 
+                <button id="connectEmailBtn" class="profile-email-action" onclick="connectEmail()">
+                    <i class="fa-solid fa-envelope"></i>
+                    اتصال ایمیل و ساخت حساب
+                </button>
+
                 <button style="width:100%;margin-top:11px;padding:8px;border-radius:7px;border:1px solid rgba(231,76,60,.3);background:rgba(231,76,60,.06);color:var(--red);cursor:pointer;font-family:inherit;font-weight:800;font-size:.5rem;" onclick="logout()">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     خروج
@@ -5498,14 +5502,16 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
             const a = JSON.parse(localStorage.getItem('bf_auth') || '{}');
             return {
                 username: a.username || 'کاربر',
-                email: a.email || '---'
+                email: a.email || '',
+                guest: a.guest === true
             };
         }
 
         function getFull() {
             const c = getCur();
+            if (c.guest || !c.email) return c;
             const u = JSON.parse(localStorage.getItem('bf_users') || '[]');
-            return u.find(x => x.email === c.email) || c;
+            return u.find(x => x.email && x.email.toLowerCase() === c.email.toLowerCase()) || c;
         }
 
         function isPremium() {
@@ -5516,10 +5522,17 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
 
         function openProfile() {
             const u = getFull();
-            document.getElementById('profileName').textContent = u.username || '---';
-            document.getElementById('profileEmail').textContent = u.email || '---';
+            const guest = u.guest === true || !u.email;
+            document.getElementById('profileName').textContent = u.username || 'کاربر';
+            document.getElementById('profileEmail').textContent = guest ? 'حساب مهمان' : u.email;
             document.getElementById('editUsername').value = u.username || '';
             document.getElementById('profileMsg').textContent = '';
+
+            const connectBtn = document.getElementById('connectEmailBtn');
+            if (connectBtn) {
+                connectBtn.style.display = guest ? 'block' : 'none';
+            }
+
             document.getElementById('profileOverlay').classList.add('active');
         }
 
@@ -5535,21 +5548,37 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                 return;
             }
 
-            const c = getCur();
-            const u = JSON.parse(localStorage.getItem('bf_users') || '[]');
-            const i = u.findIndex(x => x.email === c.email);
-
-            if (i >= 0) u[i].username = n;
-
-            localStorage.setItem('bf_users', JSON.stringify(u));
+            if (!/^[\p{L}\p{N}_.-]+$/u.test(n)) {
+                document.getElementById('profileMsg').textContent = 'نام کاربری نامعتبر است.';
+                return;
+            }
 
             const a = JSON.parse(localStorage.getItem('bf_auth') || '{}');
             a.username = n;
             localStorage.setItem('bf_auth', JSON.stringify(a));
 
-            document.getElementById('profileMsg').textContent = '✅ ذخیره شد!';
+            if (a.email) {
+                const u = JSON.parse(localStorage.getItem('bf_users') || '[]');
+                const i = u.findIndex(x => x.email && x.email.toLowerCase() === a.email.toLowerCase());
+                if (i >= 0) {
+                    u[i].username = n;
+                    localStorage.setItem('bf_users', JSON.stringify(u));
+                }
+            } else {
+                localStorage.setItem('bf_guest_upgrade', JSON.stringify({username:n}));
+            }
 
-            setTimeout(openProfile, 800);
+            document.getElementById('profileMsg').textContent = '✅ ذخیره شد!';
+            setTimeout(openProfile, 500);
+        }
+
+        function connectEmail() {
+            const a = JSON.parse(localStorage.getItem('bf_auth') || '{}');
+            if (!a.guest) return;
+            localStorage.setItem('bf_guest_upgrade', JSON.stringify({
+                username: a.username || ''
+            }));
+            window.location.href = 'auth.html?mode=register&upgrade=1';
         }
 
         function logout() {
