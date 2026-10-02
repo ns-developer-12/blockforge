@@ -1592,6 +1592,24 @@ body::before{
             ورود به حساب
         </button>
 
+        <div class="guest-divider"><span>یا</span></div>
+
+        <div class="guest-box">
+            <div class="guest-title"><i class="fa-solid fa-user-secret"></i> ورود به صورت مهمان</div>
+            <div class="guest-description">فقط یک نام کاربری انتخاب کن؛ رمز و ایمیل لازم نیست.</div>
+            <input
+                id="guestUsername"
+                class="input-field"
+                type="text"
+                maxlength="32"
+                autocomplete="off"
+                placeholder="نام کاربری مهمان"
+            >
+            <button type="button" class="guest-btn" onclick="loginAsGuest()">
+                <i class="fa-solid fa-arrow-left"></i> ورود به عنوان مهمان
+            </button>
+        </div>
+
     </div>
 
 
@@ -1607,25 +1625,6 @@ body::before{
         <div
             id="registerStep1"
         >
-
-            <div class="input-group">
-
-                <div class="input-label">
-                    <i class="fa-solid fa-user"></i>
-                    نام کاربری
-                </div>
-
-                <input
-                    id="regUsername"
-                    class="input-field"
-                    type="text"
-                    maxlength="32"
-                    autocomplete="username"
-                    placeholder="حداقل ۳ کاراکتر"
-                >
-
-            </div>
-
 
             <div class="input-group">
 
@@ -3283,15 +3282,6 @@ async function doLogin(){
 
 async function sendRegisterCode(isResend=false){
 
-    const username =
-        document
-            .getElementById(
-                "regUsername"
-            )
-            .value
-            .trim();
-
-
     const email =
         document
             .getElementById(
@@ -3308,36 +3298,6 @@ async function sendRegisterCode(isResend=false){
                 "regPassword"
             )
             .value;
-
-
-    if(!username || username.length < 3){
-
-        showAlert(
-            "regAlert",
-            "نام کاربری باید حداقل ۳ کاراکتر باشد.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if(
-        !/^[\p{L}\p{N}_.-]+$/u.test(
-            username
-        )
-    ){
-
-        showAlert(
-            "regAlert",
-            "نام کاربری فقط می‌تواند شامل حروف، عدد، _، - و . باشد.",
-            "error"
-        );
-
-        return;
-
-    }
 
 
     const emailRegex =
@@ -3693,26 +3653,10 @@ async function verifyRegisterCode(){
         }
 
 
-        if(
-            users.some(
-                user=>
-                    user.username &&
-                    user.username.toLowerCase() ===
-                    regUsername.toLowerCase()
-            )
-        ){
-
-            throw new Error(
-                "USERNAME_EXISTS"
-            );
-
-        }
-
-
         const newUser = {
 
             username:
-                regUsername,
+                getGuestUpgradeUsername(),
 
             email:
                 regEmail,
@@ -3766,6 +3710,8 @@ async function verifyRegisterCode(){
         createSession(
             newUser
         );
+
+        localStorage.removeItem("bf_guest_upgrade");
 
 
         showAlert(
@@ -3839,6 +3785,48 @@ async function verifyRegisterCode(){
 
 
 /* =========================================================
+   GUEST LOGIN / EMAIL UPGRADE
+========================================================= */
+
+function getGuestUpgradeUsername(){
+    try{
+        const g = readJSON("bf_guest_upgrade", null);
+        return g && g.username ? g.username : "";
+    }catch(e){ return ""; }
+}
+
+function loginAsGuest(){
+    const input = document.getElementById("guestUsername");
+    const username = input ? input.value.trim() : "";
+
+    if(!username || username.length < 3){
+        showAlert("loginAlert", "نام کاربری مهمان باید حداقل ۳ کاراکتر باشد.", "error");
+        if(input) input.focus();
+        return;
+    }
+
+    if(!/^[\p{L}\p{N}_.-]+$/u.test(username)){
+        showAlert("loginAlert", "نام کاربری فقط می‌تواند شامل حروف، عدد، _، - و . باشد.", "error");
+        return;
+    }
+
+    const now = Date.now();
+    writeJSON("bf_auth", {
+        username,
+        email: "",
+        token: bytesToBase64(randomBytes(32)),
+        loggedIn: true,
+        guest: true,
+        time: now,
+        expiresAt: now + 30 * 24 * 60 * 60 * 1000,
+        version: 3
+    });
+
+    writeJSON("bf_guest_upgrade", { username });
+    goHome();
+}
+
+/* =========================================================
    SESSION
 ========================================================= */
 
@@ -3871,6 +3859,9 @@ function createSession(user){
 
             loggedIn:
                 true,
+
+            guest:
+                false,
 
             time:
                 now,
@@ -4003,9 +3994,33 @@ document
         const session =
             getSession();
 
-        if(session){
+        const params = new URLSearchParams(window.location.search);
+        const isUpgrade =
+            params.get("upgrade") === "1" ||
+            !!readJSON("bf_guest_upgrade", null);
+
+        /*
+           اگر کاربر مهمان برای اتصال ایمیل وارد auth شده،
+           نباید به index.html برگردانده شود.
+        */
+        if(session && !isUpgrade){
 
             goHome();
+            return;
+
+        }
+
+        /* اتصال ایمیل: مستقیماً تب ثبت‌نام را باز کن */
+        if(isUpgrade){
+
+            switchTab("register");
+
+            const guest = readJSON("bf_guest_upgrade", null);
+            const usernameField = document.getElementById("regUsername");
+
+            if(usernameField && guest && guest.username){
+                usernameField.value = guest.username;
+            }
 
         }
 
