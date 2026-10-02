@@ -99,8 +99,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" as="style" crossorigin onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preconnect" href="https://lottie.host" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="prefetch" href="items.html">
     <link rel="dns-prefetch" href="https://lottie.host">
 
     <link rel="preload"
@@ -4715,6 +4717,84 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
         }
 
 </style>
+<style id="bf-overrides">
+/* ---------- متن لودینگ اصلی ---------- */
+.loader-status{
+    display:flex !important;flex-direction:column;align-items:center;justify-content:center;
+    align-self:center;width:100%;min-width:0 !important;margin-top:14px !important;text-align:center;
+    font-family:'Fredoka','Vazirmatn',system-ui,sans-serif !important;
+    direction:ltr !important;unicode-bidi:isolate;
+    font-size:1.05rem !important;font-weight:600 !important;letter-spacing:1.4px !important;
+    color:#171525 !important;text-shadow:none !important;opacity:1 !important;
+    -webkit-text-fill-color:currentColor;background:none !important;animation:none !important;
+}
+.loader-status .ls-wrap{position:relative;display:inline-block;white-space:nowrap;line-height:1.5}
+.loader-status .ls-ghost{visibility:hidden}
+.loader-status .ls-live{position:absolute;left:0;top:0;white-space:nowrap}
+.loader-status .ls-text::after{
+    content:'';display:inline-block;width:2px;height:1.05em;margin-left:2px;vertical-align:-.16em;
+    background:#8b5cf6;animation:lsCaret .7s steps(1) infinite;
+}
+.loader-status.done .ls-text::after{display:none}
+.loader-status .ls-dots{display:inline-block;margin-left:.28em;color:#8b5cf6;font-weight:700}
+.loader-status .ls-dots i{font-style:normal;display:inline-block;opacity:0;animation:lsDot 1.15s ease-in-out infinite}
+.loader-status .ls-dots i.on{opacity:1}
+.loader-status .ls-dots i:nth-child(2){animation-delay:.18s}
+.loader-status .ls-dots i:nth-child(3){animation-delay:.36s}
+@keyframes lsCaret{50%{opacity:0}}
+@keyframes lsDot{0%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+
+/* ---------- دکمه پشتیبانی: کاملاً گرد ---------- */
+.help-fab{
+    width:54px !important;height:54px !important;padding:0 !important;overflow:visible !important;
+    background:#fff !important;border:2px solid rgba(212,165,74,.65) !important;border-radius:50% !important;
+}
+.help-fab .fab-clip{
+    position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#fff;
+    clip-path:circle(50% at 50% 50%);-webkit-clip-path:circle(50% at 50% 50%);transform:translateZ(0);
+}
+.help-fab .fab-lottie{
+    position:absolute;left:50%;top:50%;width:118%;height:118%;transform:translate(-50%,-50%);
+    border:0;background:transparent !important;pointer-events:none;color-scheme:normal;border-radius:50%;
+}
+
+/* ---------- انیمیشن‌ها: روان و بدون لگ ---------- */
+.bf-rv:not(.bf-in){opacity:0}
+.card,.v-card,.fl-card,.server-card{
+    backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
+}
+.cat,.section-head,.slider-section,.stats-row,.rubika-banner{will-change:auto}
+
+/* ردیف‌های افقی: کره‌ی سه‌بعدی */
+.h-scroll{
+    perspective:1100px;perspective-origin:50% 50%;position:relative;
+    scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
+    padding-top:18px !important;padding-bottom:24px !important;margin-top:-10px;margin-bottom:-10px;
+}
+.h-scroll>.card,.h-scroll>.v-card,.h-scroll>.server-card{
+    position:relative;scroll-snap-align:center;transform-origin:50% 50%;backface-visibility:hidden;
+    will-change:transform;
+    transition:border-color .3s ease,box-shadow .3s ease !important;
+    box-shadow:0 14px 34px rgba(0,0,0,.42);
+}
+.h-scroll>.card:hover,.h-scroll>.v-card:hover{box-shadow:0 14px 34px rgba(0,0,0,.42)}
+
+/* ---------- PERF: اسکرول روان ---------- */
+.main-content{
+    scroll-behavior:auto !important;
+    overscroll-behavior-y:contain;
+    -webkit-overflow-scrolling:touch;
+}
+.header,.bottom-nav{
+    backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
+}
+.header{background:rgba(7,7,18,.98) !important}
+.bottom-nav{background:rgba(8,8,18,.98) !important}
+.slider-track{will-change:transform;backface-visibility:hidden}
+.slider-container{contain:layout paint}
+.h-scroll>.card,.h-scroll>.v-card,.h-scroll>.server-card{box-shadow:0 8px 18px rgba(0,0,0,.35) !important}
+.card,.v-card,.fl-card,.server-card,.saved-item{contain:layout style}
+</style>
 </head>
 
 <body>
@@ -4729,7 +4809,7 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
                     allowtransparency="true"
                     loading="eager"></iframe>
         </div>
-<div class="loader-status" id="loaderStatus">loading...</div>
+<div class="loader-status" id="loaderStatus" dir="ltr"><span class="ls-wrap"><span class="ls-ghost" id="lsGhost">loading...</span><span class="ls-live"><span class="ls-text" id="lsText"></span><span class="ls-dots" id="lsDots"><i>.</i><i>.</i><i>.</i></span></span></span></div>
     </div>
 <script>
         (function () {
@@ -4747,17 +4827,46 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
             el.addEventListener('load', ok);
             setTimeout(ok, 1200);
 
-            // مرحله‌های متن لودینگ:
-            // 0.3s -> loading sounds
-            // 2s   -> loading items
-            // سپس  -> checking ...
-            setTimeout(function () {
-                if (status) status.textContent = 'loading items';
-            }, 300);
+            // متن لودینگ: تایپ حرف‌به‌حرف، پاک‌کردن، و نقطه‌های سمت راست
+            var txt = document.getElementById('lsText');
+            var ghost = document.getElementById('lsGhost');
+            var dots = document.querySelectorAll('#lsDots i');
+            var timer = null;
 
-            setTimeout(function () {
-                if (status) status.textContent = 'checking ...';
-            }, 2300);
+            function setDots(n) {
+                for (var d = 0; d < dots.length; d++) dots[d].classList.toggle('on', d < n);
+            }
+
+            function typeStatus(str) {
+                if (!status || !txt) return;
+                clearInterval(timer);
+                ghost.textContent = str + '...';
+                status.classList.remove('done');
+                setDots(0);
+                var i = txt.textContent.length;
+                // اول متن قبلی پاک میشه
+                timer = setInterval(function () {
+                    if (i > 0) { txt.textContent = txt.textContent.slice(0, --i); return; }
+                    clearInterval(timer);
+                    var k = 0;
+                    timer = setInterval(function () {
+                        txt.textContent = str.slice(0, ++k);
+                        if (k >= str.length) {
+                            clearInterval(timer);
+                            status.classList.add('done');
+                            var n = 0;
+                            timer = setInterval(function () {
+                                setDots(++n);
+                                if (n >= 3) clearInterval(timer);
+                            }, 170);
+                        }
+                    }, 62);
+                }, 22);
+            }
+
+            typeStatus('loading');
+            setTimeout(function () { typeStatus('loading items'); }, 1700);
+            setTimeout(function () { typeStatus('checking'); }, 3900);
         })();
         </script>
     </div>
@@ -4828,9 +4937,10 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
 
 
         <!-- HELP -->
-        <a href="help.html" class="help-fab" title="راهنما" aria-label="راهنما">
+        <a href="help.html" class="help-fab" title="پشتیبانی" aria-label="پشتیبانی">
             <span class="ripple"></span>
-            <i class="fa-solid fa-circle-question"></i>
+            <span class="fab-clip"><iframe class="fab-lottie" src="https://lottie.host/embed/cea7beb5-456c-405e-9d2a-7cd0229050ce/2E4eIQMruC.lottie"
+                    title="" tabindex="-1" allowtransparency="true" loading="eager"></iframe></span>
         </a>
 
 
@@ -5112,9 +5222,7 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
 
         <!-- MODAL -->
         <div class="modal-overlay" id="modalOverlay">
-            <div class="modal-loader" aria-hidden="true">
-                <iframe class="lottie-frame" id="modalLottie" title="" tabindex="-1" allowtransparency="true"></iframe>
-            </div>
+            <div class="modal-loader" aria-hidden="true"></div>
             <div class="modal" id="modalContent"></div>
         </div>
 
@@ -5160,9 +5268,183 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
 
 
     <!-- EXTERNAL FILES -->
-    <script>document.write('<script src="mods.js?v=' + Date.now() + '"><\\/script>');</script>
+    <script>document.write('<script src="mods.js?v=' + Date.now() + '"><\/script>');</script>
     <script src="posts.js"></script>
     <script src="servers.js"></script>
+
+    <script>
+/* BFMotion — scroll reveal (direction aware) + horizontal 3D rows. Only opacity/translate/transform are animated. */
+(function () {
+    'use strict';
+    var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var HAS_T = !!(window.CSS && CSS.supports && CSS.supports('translate', '0 1px'));
+    var cfg = { items: '', rows: '', sphere: true };
+    var vDir = 0;          // +1 = scrolling down, -1 = scrolling up
+    var io = null, mo = null, inited = false;
+    var MAG = 30;          // reveal travel in px
+
+    /* ---------- reveal ---------- */
+    function tag(el) {
+        if (el.__bf) return;
+        el.__bf = 1;
+        var p = el.parentElement;
+        if (p && p.__bfRowSt) el.__bfRow = p.__bfRowSt;
+        if (RM || !io) return;
+        el.classList.add('bf-rv');
+        io.observe(el);
+    }
+
+    function play(el, i) {
+        el.classList.add('bf-in');
+        if (!el.animate) return;
+        var row = el.__bfRow, dx = 0, dy = 0;
+        if (row && row.dir && Date.now() - row.t < 700) dx = row.dir > 0 ? -MAG * 1.3 : MAG * 1.3;
+        else dy = vDir < 0 ? -MAG : MAG;
+        var key = HAS_T ? 'translate' : (row ? null : 'transform');
+        var from = { opacity: 0 }, to = { opacity: 1 };
+        if (key === 'translate') { from.translate = dx + 'px ' + dy + 'px'; to.translate = '0px 0px'; }
+        else if (key === 'transform') { from.transform = 'translate(' + dx + 'px,' + dy + 'px)'; to.transform = 'none'; }
+        if (el.__bfA) { try { el.__bfA.cancel(); } catch (e) {} }
+        el.__bfA = el.animate([from, to], {
+            duration: 640,
+            delay: Math.min(i, 9) * 62,
+            easing: 'cubic-bezier(.22,.9,.28,1)',
+            fill: 'backwards'
+        });
+    }
+
+    function reset(el) {
+        el.classList.remove('bf-in');
+        if (el.__bfA) { try { el.__bfA.cancel(); } catch (e) {} el.__bfA = null; }
+    }
+
+    function onIO(entries) {
+        var enter = [];
+        for (var k = 0; k < entries.length; k++) {
+            var e = entries[k], t = e.target;
+            if (!t.isConnected) { io.unobserve(t); continue; }
+            var on = t.classList.contains('bf-in');
+            if (e.isIntersecting && e.intersectionRatio >= 0.14) { if (!on) enter.push(e); }
+        }
+        if (!enter.length) return;
+        enter.sort(function (a, b) {
+            var ta = Math.round(a.boundingClientRect.top / 24), tb = Math.round(b.boundingClientRect.top / 24);
+            if (ta !== tb) return ta - tb;
+            return (a.target.compareDocumentPosition(b.target) & 4) ? -1 : 1;
+        });
+        for (var i = 0; i < enter.length; i++) { play(enter[i].target, i); if (io) io.unobserve(enter[i].target); }
+    }
+
+    /* ---------- horizontal rows (3D sphere + direction) ---------- */
+    function setupRow(row) {
+        if (row.__bfRowSt) return;
+        var st = row.__bfRowSt = { dir: 0, t: 0, sl: row.scrollLeft };
+        row.setAttribute('data-sphere', cfg.sphere ? '1' : '0');
+        row.addEventListener('scroll', function () {
+            var sl = row.scrollLeft;
+            if (sl !== st.sl) { st.dir = sl < st.sl ? 1 : -1; st.t = Date.now(); st.sl = sl; }
+            if (cfg.sphere) schedule(row);
+        }, { passive: true });
+    }
+
+    function schedule(row) {
+        if (row.__bfRaf) return;
+        row.__bfRaf = requestAnimationFrame(function () { row.__bfRaf = 0; sphere(row); });
+    }
+
+    function pad(row) {
+        var k = row.firstElementChild;
+        if (!k || !k.offsetWidth) return;
+        var p = Math.max(12, Math.round((row.clientWidth - k.offsetWidth) / 2));
+        if (row.__bfPad !== p) { row.__bfPad = p; row.style.paddingLeft = row.style.paddingRight = p + 'px'; }
+    }
+
+    function sphere(row) {
+        var kids = row.children, n = kids.length;
+        if (!n) return;
+        var c = row.scrollLeft + row.clientWidth / 2;
+        var step = (kids[0].offsetWidth || 150) + 8;
+        var data = new Array(n);
+        for (var i = 0; i < n; i++) data[i] = kids[i].offsetLeft + kids[i].offsetWidth / 2;   // reads first
+        for (var j = 0; j < n; j++) {
+            var el = kids[j], d = (data[j] - c) / step, a = Math.abs(d);
+            var f = Math.min(a, 2.5), cl = Math.max(-2.5, Math.min(2.5, d));
+            var key = Math.round(d * 40);
+            if (el.__bfK === key) continue;
+            el.__bfK = key;
+            var s = 1.1 - 0.17 * f;
+            el.style.transform = 'translate3d(' + (-cl * 9).toFixed(1) + 'px,0,' + (-f * 55).toFixed(1) + 'px) rotateY(' + (cl * 24).toFixed(1) + 'deg) scale(' + s.toFixed(3) + ')';
+            el.style.zIndex = String(100 - Math.round(a * 10));
+        }
+    }
+
+    function refreshRow(row) {
+        if (!row || !row.__bfRowSt) return;
+        pad(row);
+        if (cfg.sphere) { schedule(row); setTimeout(function () { pad(row); schedule(row); }, 350); }
+    }
+
+    /* ---------- scanning ---------- */
+    function scan(n) {
+        if (!n || n.nodeType !== 1) return;
+        if (cfg.rows) {
+            if (n.matches(cfg.rows)) setupRow(n);
+            var rs = n.querySelectorAll(cfg.rows);
+            for (var a = 0; a < rs.length; a++) setupRow(rs[a]);
+        }
+        if (cfg.items) {
+            if (n.matches(cfg.items)) tag(n);
+            var is = n.querySelectorAll(cfg.items);
+            for (var b = 0; b < is.length; b++) tag(is[b]);
+        }
+        var par = n.parentElement;
+        if (par && par.__bfRowSt) refreshRow(par);
+        if (cfg.rows) {
+            var rr = n.querySelectorAll(cfg.rows);
+            for (var c = 0; c < rr.length; c++) refreshRow(rr[c]);
+        }
+    }
+
+    function init(o) {
+        if (o) { cfg.items = o.items || ''; cfg.rows = o.rows || ''; cfg.sphere = o.sphere !== false; }
+        if (inited) return; inited = true;
+
+        if ('IntersectionObserver' in window && !RM) {
+            io = new IntersectionObserver(onIO, { threshold: [0, 0.14] });
+        }
+
+        document.addEventListener('scroll', function (e) {
+            var t = e.target, el = (t === document) ? document.scrollingElement : t;
+            if (!el || el.__bfRowSt || typeof el.scrollTop !== 'number') return;
+            var y = el.scrollTop, p = el.__bfY;
+            el.__bfY = y;
+            if (p !== undefined && y !== p) vDir = y > p ? 1 : -1;
+        }, { capture: true, passive: true });
+
+        window.addEventListener('resize', function () {
+            var rs = cfg.rows ? document.querySelectorAll(cfg.rows) : [];
+            for (var i = 0; i < rs.length; i++) { rs[i].__bfK = null; refreshRow(rs[i]); }
+        }, { passive: true });
+
+        mo = new MutationObserver(function (list) {
+            for (var i = 0; i < list.length; i++) {
+                var add = list[i].addedNodes;
+                for (var k = 0; k < add.length; k++) scan(add[k]);
+            }
+        });
+        mo.observe(document.body, { childList: true, subtree: true });
+        scan(document.body);
+    }
+
+    window.BFMotion = { init: init, scan: scan, play: play, reset: reset };
+})();
+
+    BFMotion.init({
+        items: '.slider-section, .rubika-banner, .stats-row, .lottery, .section-head, .cats > .cat, .footer, .back-bar, .fl-card, .saved-item, .h-scroll > .card, .h-scroll > .v-card, .h-scroll > .server-card',
+        rows: '.h-scroll',
+        sphere: true
+    });
+    </script>
 
 
     <script>
@@ -5239,47 +5521,7 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
            ⭐ RISE ANIMATION
         ========================== */
 
-        function playRise(root) {
-            const scope = root || document;
-
-            // بخش‌های ثابت
-            const sections = scope.querySelectorAll(
-                '.slider-section, .rubika-banner, .stats-row, .lottery, .section, .back-bar, .footer'
-            );
-
-            sections.forEach((el, i) => {
-                el.classList.remove('rise');
-                void el.offsetWidth;
-                el.style.animationDelay = (i * 0.05) + 's';
-                el.classList.add('rise');
-            });
-
-            // دکمه‌های دسته‌بندی
-            const cats = scope.querySelector('.cats');
-            if (cats) {
-                cats.classList.remove('rise-row');
-                void cats.offsetWidth;
-                cats.classList.add('rise-row');
-            }
-
-            // ردیف‌های افقی کارت‌ها
-            ['rowMods', 'rowSkins', 'rowMaps'].forEach(id => {
-                const row = scope.querySelector('#' + id) || document.getElementById(id);
-                if (!row) return;
-                row.classList.remove('rise-row');
-                void row.offsetWidth;
-                row.classList.add('rise-row');
-            });
-
-            // گریدهای کارت
-            ['fullListGrid', 'savedGrid'].forEach(id => {
-                const grid = scope.querySelector('#' + id) || document.getElementById(id);
-                if (!grid) return;
-                grid.classList.remove('rise-row');
-                void grid.offsetWidth;
-                grid.classList.add('rise-row');
-            });
-        }
+        function playRise() { /* حالا توسط BFMotion (اسکرول‌محور) انجام میشه */ }
 
 
         /* =========================
@@ -5832,54 +6074,85 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
            SLIDER
         ========================== */
 
+        const SLIDER_COUNT = 5;
+        let sliderTimer = null;
+        let sliderBusy = false;
+
+        function sliderTotal() {
+            return Math.min(items.length, SLIDER_COUNT);
+        }
+
+        function slideHTML(item, i) {
+            const tags = ['⭐ جدید', '🔥 محبوب', '💎 ویژه', '🚀 پیشنهادی', '🎯 منتخب'];
+            return `
+                <div class="slider-slide" style="background-image:url('${item.img}');" onclick="openModal(${item.id})">
+                    <div class="slider-info">
+                        <span class="tag">${tags[i % tags.length]}</span>
+                        <h3>${item.title}</h3>
+                        <p>${(item.desc || '').substring(0,40)}...</p>
+                    </div>
+                </div>
+            `;
+        }
+
         function renderSlider() {
             const t = document.getElementById('sliderTrack');
             const d = document.getElementById('sliderDots');
 
             if (!t || !d) return;
 
-            const s = items.slice(0,3);
+            const s = items.slice(0, SLIDER_COUNT);
 
-            t.innerHTML = s.map((item, i) => `
-                <div class="slider-slide" style="background-image:url('${item.img}');" onclick="openModal(${item.id})">
-                    <div class="slider-info">
-                        <span class="tag">
-                            ${i === 0 ? '⭐ جدید' : i === 1 ? '🔥 محبوب' : '💎 ویژه'}
-                        </span>
-                        <h3>${item.title}</h3>
-                        <p>${(item.desc || '').substring(0,40)}...</p>
-                    </div>
-                </div>
-            `).join('');
+            // اسلاید اول یک بار هم در انتها کپی میشه تا چرخه بی‌نهایت بشه
+            t.innerHTML = s.map(slideHTML).join('') + (s.length > 1 ? slideHTML(s[0], 0) : '');
 
             d.innerHTML = s.map((_, i) => `
                 <span class="${i === 0 ? 'active' : ''}" data-dot="${i}"></span>
             `).join('');
 
             d.querySelectorAll('span').forEach(dt => {
-                dt.onclick = () => goSlide(parseInt(dt.dataset.dot));
+                dt.onclick = () => { goSlide(parseInt(dt.dataset.dot)); restartSliderTimer(); };
             });
 
-            goSlide(0);
+            sliderBusy = false;
+            goSlide(0, false);
+            restartSliderTimer();
         }
 
-        function goSlide(i) {
+        function goSlide(i, animate = true) {
             slideIdx = i;
             const track = document.getElementById('sliderTrack');
-            if (track) track.style.transform = `translateX(${i * 100}%)`;
+            if (track) {
+                track.style.transition = animate ? '' : 'none';
+                track.style.transform = `translate3d(${i * 100}%,0,0)`;
+                if (!animate) { void track.offsetWidth; track.style.transition = ''; }
+            }
 
+            const n = sliderTotal();
             document.querySelectorAll('#sliderDots span').forEach((d, j) => {
-                d.classList.toggle('active', j === i);
+                d.classList.toggle('active', j === (n ? i % n : 0));
             });
         }
 
-        setInterval(() => {
-            const t = Math.min(items.length, 3);
-            if (t > 0) {
-                slideIdx = (slideIdx + 1) % t;
-                goSlide(slideIdx);
-            }
-        }, 4000);
+        function nextSlide() {
+            const n = sliderTotal();
+            if (n < 2 || sliderBusy) return;
+            sliderBusy = true;
+            goSlide(slideIdx + 1);
+
+            // رسیدن به کپیِ اسلاید اول: بدون انیمیشن برگرد به اولین اسلاید واقعی
+            setTimeout(() => {
+                if (slideIdx >= n) goSlide(0, false);
+                sliderBusy = false;
+            }, 680);
+        }
+
+        function restartSliderTimer() {
+            clearInterval(sliderTimer);
+            sliderTimer = setInterval(() => {
+                if (!document.hidden) nextSlide();
+            }, 4000);
+        }
 
 
         /* =========================
@@ -6006,10 +6279,14 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
            MODAL
         ========================== */
 
+        function itemUrl(item) {
+            return 'items.html?m=' + encodeURIComponent(item.slug || ('item-' + item.id));
+        }
+
         function openModal(id) {
             const item = items.find(i => Number(i.id) === Number(id));
             if (!item) return;
-            window.location.href = 'items.html?id=' + encodeURIComponent(item.id);
+            window.location.href = itemUrl(item);
             return;
 
             const price = getPrice(item);
@@ -6181,24 +6458,19 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
         let modalOpen = false;
         let modalToken = 0;
 
-        const MODAL_LOTTIE = 'https://lottie.host/embed/32be3513-f545-4482-a09e-66ee60287c1f/6yEY7wJ0My.lottie';
+        const MODAL_LOTTIE = 'https://lottie.host/embed/ec9ebf91-e045-4c6e-adca-821968446e9e/WyYfwjbKCb.lottie';
 
         // مدت نمایش انیمیشن لودینگ مودال (میلی‌ثانیه) — تا انیمیشن لوگو کامل دیده بشه
         const MODAL_MIN_MS = 2800;
         const MODAL_MAX_MS = 5000;
 
         function ensureModalLottie() {
-            const f = document.getElementById('modalLottie');
-            if (f && !f.getAttribute('src')) f.setAttribute('src', MODAL_LOTTIE);
+            /* مشخصات آیتم‌ها حالا در items.html باز می‌شوند */
         }
 
         // هر بار انیمیشن از اول شروع بشه
         function restartModalLottie() {
-            const f = document.getElementById('modalLottie');
-            if (!f) return;
-            if (!f.getAttribute('src')) { f.setAttribute('src', MODAL_LOTTIE); return; }
-            try { f.contentWindow.location.replace(MODAL_LOTTIE); }
-            catch (e) { f.setAttribute('src', MODAL_LOTTIE); }
+            return;
         }
 
         function showModalUI() {
@@ -6532,8 +6804,11 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
         (function startApp() {
             // انیمیشن لودینگ از لحظه‌ی آماده شدنش MIN_SHOW میلی‌ثانیه نمایش داده میشه.
             // اگه پلیر لود نشد (اینترنت ضعیف)، بعد از FALLBACK_MS برنامه باز میشه.
-            const MIN_SHOW = 5000;
-            const FALLBACK_MS = 6500;
+            let warm = false;
+            try { warm = sessionStorage.getItem('bf_warm') === '1'; } catch (e) {}
+            // برگشت از صفحه‌ی آیتم: لودینگ طولانی دوباره نمایش داده نمیشه
+            const MIN_SHOW = warm ? 450 : 5000;
+            const FALLBACK_MS = warm ? 1800 : 6500;
             const t0 = Date.now();
 
             function finish() {
@@ -6548,6 +6823,7 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
                 // لودینگ مودال بعد از بالا اومدن اپ آماده میشه
                 setTimeout(ensureModalLottie, 1500);
 
+                try { sessionStorage.setItem('bf_warm', '1'); } catch (e) {}
                 try {
                     localStorage.setItem('bf_assets_warm', '1');
                 } catch (e) {}
