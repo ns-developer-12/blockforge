@@ -1,972 +1,197 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#ffffff" id="metaTheme">
-<meta name="color-scheme" content="dark light">
-<title>BlockForge | مشخصات ماد</title>
-<meta name="description" id="metaDesc" content="مرجع مود، اسکین و مپ ماینکرفت — BlockForge">
-<meta property="og:site_name" content="BlockForge">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="fa_IR">
-<meta property="og:title" id="ogTitle" content="BlockForge | مشخصات ماد">
-<meta property="og:description" id="ogDesc" content="مرجع مود، اسکین و مپ ماینکرفت">
-<meta property="og:image" id="ogImg" content="">
-<meta property="og:url" id="ogUrl" content="">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" id="linkCanon" href="items.html">
-
-<link rel="preconnect" href="https://lottie.host" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<script>
-/* ورود: مثل index.html */
-(function () {
-    try {
-        var a = JSON.parse(localStorage.getItem('bf_auth') || '{}');
-        if (!a.loggedIn || Date.now() - a.time > 30 * 24 * 60 * 60 * 1000) {
-            try { sessionStorage.setItem('bf_next', location.href); } catch (e) {}
-            location.replace('auth.html');
-        }
-    } catch (e) { location.replace('auth.html'); }
-})();
-</script>
-
-<style>
-:root{
-    --bg:#050510; --surface:rgba(22,22,46,.78); --surface2:rgba(30,30,62,.9);
-    --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.14);
-    --gold:#d4a54a; --gold2:#f2c96d; --text:#f1f1f5; --text2:#a9a9ba; --text3:#65657a;
-    --green:#2ecc71; --green2:#1dd1a1; --red:#e74c3c; --purple:#8b5cf6;
-    --ease:cubic-bezier(.22,.75,.22,1);
-    --safe:env(safe-area-inset-bottom,0px); --safet:env(safe-area-inset-top,0px);
-}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
-body{
-    font-family:'Vazirmatn','Noto Color Emoji',system-ui,sans-serif;
-    background:
-        radial-gradient(ellipse at 15% 0%, rgba(212,165,74,.14), transparent 42%),
-        radial-gradient(ellipse at 95% 30%, rgba(139,92,246,.09), transparent 40%),
-        var(--bg);
-    color:var(--text); min-height:100vh; line-height:1.7; overflow-x:hidden;
-}
-body.loading-page{overflow:hidden}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none}
-
-/* ============ لودینگ (سفید) ============ */
-#pageLoader{
-    position:fixed;inset:0;z-index:9999;background:#fff;
-    display:flex;align-items:center;justify-content:center;padding:18px;
-    transition:opacity .55s var(--ease),visibility .55s ease;
-    overflow:hidden;
-}
-#pageLoader::before,#pageLoader::after{
-    content:'';position:absolute;border-radius:50%;pointer-events:none;
-}
-#pageLoader::before{width:340px;height:340px;left:-110px;top:-90px;background:radial-gradient(circle,rgba(139,92,246,.16),transparent 68%)}
-#pageLoader::after{width:360px;height:360px;right:-120px;bottom:-110px;background:radial-gradient(circle,rgba(212,165,74,.18),transparent 68%)}
-#pageLoader.hide{opacity:0;visibility:hidden;pointer-events:none}
-.pl-glass{
-    position:relative;z-index:1;width:min(390px,100%);max-height:100%;overflow:hidden;
-    display:flex;flex-direction:column;align-items:center;gap:8px;
-    padding:10px 18px 22px;border-radius:28px;
-    background:linear-gradient(150deg,rgba(255,255,255,.82),rgba(255,255,255,.56));
-    border:1px solid rgba(110,90,200,.16);
-    box-shadow:0 22px 60px rgba(70,50,140,.13),inset 0 1px 0 rgba(255,255,255,.95);
-    backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);
-}
-.pl-glass::before{
-    content:'';position:absolute;inset:0;pointer-events:none;z-index:2;
-    background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.75) 47%,transparent 62%);
-    background-size:260% 100%;animation:glassSweep 3s ease-in-out infinite;
-}
-@keyframes glassSweep{from{background-position:140% 0}to{background-position:-140% 0}}
-.pl-lottie{
-    width:170px;height:170px;flex:none;border:0;background:transparent;color-scheme:normal;
-    position:relative;z-index:1;
-}
-.pl-skel{width:100%;display:flex;flex-direction:column;gap:11px;position:relative;z-index:1}
-.sk{
-    border-radius:11px;
-    background:linear-gradient(90deg,#ecebf6 20%,#f9f8fd 50%,#ecebf6 80%);
-    background-size:240% 100%;animation:skShimmer 1.3s linear infinite;
-}
-@keyframes skShimmer{from{background-position:140% 0}to{background-position:-100% 0}}
-.sk-img{height:104px;border-radius:15px}
-.sk-row{display:flex;gap:9px;align-items:center}
-.sk-badge{height:18px;width:92px}
-.sk-title{height:23px;width:68%}
-.sk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.sk-grid .sk{height:54px;border-radius:13px}
-.sk-grid .sk:nth-child(2){animation-delay:.15s}.sk-grid .sk:nth-child(3){animation-delay:.3s}
-.sk-line{height:11px}.sk-line.w80{width:80%}.sk-line.w55{width:55%}
-.sk-btn{height:42px;border-radius:13px;margin-top:3px}
-@media (max-height:660px){.sk-img{display:none}.pl-lottie{width:120px;height:120px}}
-@media (max-height:520px){.pl-skel{display:none}}
-
-/* ============ صفحه ============ */
-#view{max-width:720px;margin:0 auto;padding:0 14px calc(104px + var(--safe))}
-html{scroll-behavior:auto !important;overscroll-behavior-y:contain}
-body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{animation-play-state:paused !important}
-body.bf-scrolling #view *{pointer-events:none !important}
-@media (hover:none){.rel-card:hover{box-shadow:none}}
-.topbar{
-    position:sticky;top:0;z-index:50;margin:0 -14px;
-    padding:calc(10px + var(--safet)) 14px 10px;
-    display:flex;align-items:center;gap:8px;
-    background:linear-gradient(180deg,rgba(5,5,16,.96),rgba(5,5,16,.86));
-    border-bottom:1px solid var(--border);
-}
-.tb-btn{
-    width:40px;height:40px;border-radius:13px;flex:none;
-    background:rgba(255,255,255,.06);border:1px solid var(--border);
-    display:flex;align-items:center;justify-content:center;font-size:.95rem;
-    transition:transform .2s var(--ease),background .2s;
-}
-.tb-btn:active{transform:scale(.88)}
-.tb-btn.on{color:var(--gold2);background:rgba(212,165,74,.14);border-color:rgba(212,165,74,.4)}
-.tb-title{flex:1;min-width:0;font-weight:800;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.token-chip{
-    display:flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:13px;flex:none;
-    background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.22);font-weight:800;font-size:.8rem;color:#7fe6ff;
-}
-
-.hero{
-    position:relative;margin-top:14px;border-radius:22px;overflow:hidden;aspect-ratio:16/10;
-    background:linear-gradient(135deg,#1a1a38,#0f0f24);border:1px solid var(--border2);
-    box-shadow:0 18px 50px rgba(0,0,0,.45);
-}
-.hero img{width:100%;height:100%;object-fit:cover;display:block}
-.hero::after{content:'';position:absolute;inset:auto 0 0 0;height:55%;background:linear-gradient(180deg,transparent,rgba(5,5,16,.82));pointer-events:none}
-.hero-chips{position:absolute;z-index:2;top:12px;right:12px;left:12px;display:flex;justify-content:space-between;gap:8px}
-.chip{
-    padding:4px 11px;border-radius:99px;font-size:.7rem;font-weight:800;
-    background:rgba(8,8,22,.72);border:1px solid var(--border2);
-}
-.chip.disc{background:linear-gradient(135deg,#e74c3c,#c0392b);border-color:transparent}
-.chip.gold{color:#17120a;background:linear-gradient(135deg,var(--gold2),var(--gold));border-color:transparent}
-
-.intro{margin-top:16px}
-.badge{
-    display:inline-flex;align-items:center;gap:6px;padding:3px 12px;border-radius:99px;font-size:.72rem;font-weight:800;
-    background:rgba(212,165,74,.12);color:var(--gold2);border:1px solid rgba(212,165,74,.3);
-}
-.badge.free{background:rgba(46,204,113,.1);color:var(--green);border-color:rgba(46,204,113,.3)}
-.title{font-size:1.45rem;font-weight:900;line-height:1.5;margin-top:8px}
-.rating{display:inline-flex;align-items:center;gap:5px;margin-top:2px;font-weight:800;font-size:.85rem;color:var(--gold2)}
-
-.label{display:flex;align-items:center;gap:8px;margin:22px 0 10px;font-weight:800;font-size:.9rem}
-.label i{color:var(--gold)}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.tile{
-    padding:13px 8px;text-align:center;border-radius:16px;
-    background:var(--surface);border:1px solid var(--border);
-}
-.tile i{color:var(--gold);font-size:1rem}
-.tile .l{font-size:.68rem;color:var(--text3);margin-top:4px}
-.tile .v{font-size:.82rem;font-weight:800;margin-top:1px;word-break:break-word}
-
-.price-box{
-    margin-top:12px;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:16px;
-    background:linear-gradient(135deg,rgba(212,165,74,.1),rgba(212,165,74,.03));border:1px solid rgba(212,165,74,.25);
-}
-.price-old{text-decoration:line-through;color:var(--text3);font-size:.85rem}
-.price-new{font-size:1.15rem;font-weight:900;color:var(--gold2);display:flex;align-items:center;gap:6px}
-.price-disc{margin-right:auto;padding:2px 10px;border-radius:99px;background:var(--red);font-size:.75rem;font-weight:800}
-
-.desc{padding:15px 16px;border-radius:16px;background:var(--surface);border:1px solid var(--border);color:#d4d4e0;font-size:.9rem;line-height:2;white-space:pre-line}
-
-.dl-card{
-    display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:16px;
-    background:var(--surface);border:1px solid var(--border);
-}
-.dl-card .fn{flex:1;min-width:0;font-size:.8rem;direction:ltr;text-align:left;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dl-card i.file{color:var(--gold);font-size:1.2rem}
-
-.btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 20px;border-radius:15px;
-    font-weight:900;font-size:.92rem;color:#17120a;background:linear-gradient(135deg,var(--gold2),var(--gold));
-    box-shadow:0 8px 26px rgba(212,165,74,.28);transition:transform .2s var(--ease),filter .2s;
-}
-.btn:active{transform:scale(.95)}
-.btn.free{background:linear-gradient(135deg,#2ecc71,#1a9e57);color:#fff;box-shadow:0 8px 26px rgba(46,204,113,.25)}
-.btn.purchased{background:linear-gradient(135deg,#3498db,#2475b0);color:#fff;box-shadow:0 8px 26px rgba(52,152,219,.25)}
-.btn.ghost{background:rgba(255,255,255,.07);color:var(--text);box-shadow:none;border:1px solid var(--border2)}
-
-.cl-tree{position:relative;padding-right:18px}
-.cl-tree::before{content:'';position:absolute;top:6px;bottom:6px;right:5px;width:2px;background:linear-gradient(var(--gold),transparent);opacity:.45;border-radius:2px}
-.cl-item{position:relative;padding:12px 14px;margin-bottom:10px;border-radius:15px;background:var(--surface);border:1px solid var(--border)}
-.cl-item::before{content:'';position:absolute;right:-18px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:3px solid var(--bg)}
-.cl-head{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.85rem}
-.cl-new{background:var(--gold);color:#17120a;padding:1px 8px;border-radius:99px;font-size:.65rem;margin-left:6px}
-.cl-date{color:var(--text3);font-size:.72rem;font-weight:500}
-.cl-item ul{margin:7px 18px 0 0;color:var(--text2);font-size:.82rem}
-
-.hrow{
-    display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -14px;
-    padding:18px 14px 24px;perspective:1100px;scroll-snap-type:x mandatory;position:relative;
-}
-.hrow::-webkit-scrollbar{display:none}
-.hrow>.rel-card{
-    flex:none;width:168px;scroll-snap-align:center;position:relative;border-radius:16px;overflow:hidden;will-change:transform;
-    background:var(--surface2);border:1px solid var(--border2);box-shadow:0 8px 18px rgba(0,0,0,.35);
-}
-.rel-card .im{aspect-ratio:4/3;background:#15152b center/cover no-repeat}
-.rel-card .bd{padding:9px 10px 11px}
-.rel-card h5{font-size:.8rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rel-card .m{font-size:.68rem;color:var(--text3)}
-.rel-card .p{font-size:.78rem;font-weight:800;margin-top:3px;color:var(--gold2)}
-.rel-card .p.free{color:var(--green)}
-
-/* نوار پایین */
-.dlbar{
-    position:fixed;z-index:60;left:0;right:0;bottom:0;
-    padding:10px 14px calc(10px + var(--safe));
-    background:linear-gradient(180deg,rgba(5,5,16,.0),rgba(5,5,16,.94) 38%);
-}
-.dlbar-in{max-width:720px;margin:0 auto;display:flex;gap:9px;align-items:center}
-.dlbar .btn.main{flex:1}
-.dlbar .btn.sq{width:48px;padding:0}
-
-/* شیت اشتراک */
-.sheet-ov{position:fixed;inset:0;z-index:200;background:rgba(3,3,10,.62);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
-.sheet-ov.show{opacity:1;visibility:visible}
-.sheet{
-    position:absolute;left:0;right:0;bottom:0;max-width:560px;margin:0 auto;
-    padding:10px 18px calc(22px + var(--safe));border-radius:26px 26px 0 0;
-    background:#14142c;border:1px solid var(--border2);border-bottom:0;
-    transform:translateY(105%);transition:transform .5s cubic-bezier(.2,.9,.25,1.05);
-}
-.sheet-ov.show .sheet{transform:none}
-.sheet .grab{width:42px;height:4px;border-radius:9px;background:rgba(255,255,255,.2);margin:0 auto 14px}
-.sh-item{display:flex;gap:12px;align-items:center;margin-bottom:14px}
-.sh-item .im{width:58px;height:58px;border-radius:14px;background:#1d1d3a center/cover no-repeat;flex:none}
-.sh-item b{display:block;font-size:.95rem}
-.sh-item span{font-size:.75rem;color:var(--text3)}
-.linkbox{display:flex;gap:8px;padding:6px;border-radius:15px;background:rgba(255,255,255,.05);border:1px solid var(--border2)}
-.linkbox input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--text2);font-size:.78rem;direction:ltr;text-align:left;padding:0 8px;font-family:inherit}
-.linkbox .btn{height:40px;font-size:.82rem;padding:0 16px;border-radius:11px}
-.share-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
-.sa{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.72rem;color:var(--text2)}
-.sa i{width:52px;height:52px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;color:#fff;transition:transform .2s var(--ease)}
-.sa:active i{transform:scale(.88)}
-.sa.tg i{background:linear-gradient(135deg,#37aee2,#1e96c8)}
-.sa.wa i{background:linear-gradient(135deg,#2ad06c,#12a150)}
-.sa.nv i{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#17120a}
-.sa.cp i{background:rgba(255,255,255,.1)}
-
-.toast{
-    position:fixed;left:50%;bottom:calc(96px + var(--safe));z-index:300;transform:translate(-50%,24px);opacity:0;pointer-events:none;
-    padding:10px 18px;border-radius:99px;background:#1f1f40;border:1px solid var(--border2);font-size:.82rem;font-weight:700;white-space:nowrap;
-    box-shadow:0 12px 36px rgba(0,0,0,.5);transition:opacity .3s,transform .4s var(--ease);
-}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-
-/* نتیجه پرداخت */
-.pay-ov{position:fixed;inset:0;z-index:250;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(3,3,10,.78);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
-.pay-ov.show{opacity:1;visibility:visible}
-.pay-card{width:min(340px,100%);padding:26px 20px 20px;text-align:center;border-radius:24px;background:#14142c;border:1px solid var(--border2);transform:scale(.9);transition:transform .45s cubic-bezier(.2,.9,.25,1.1)}
-.pay-ov.show .pay-card{transform:none}
-.pay-ic{width:68px;height:68px;margin:0 auto 12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.7rem}
-.pay-ic.ok{background:rgba(46,204,113,.14);color:var(--green)}
-.pay-ic.no{background:rgba(231,76,60,.14);color:var(--red)}
-.pay-card h2{font-size:1.1rem;font-weight:900}
-.pay-card p{color:var(--text2);font-size:.82rem;margin:6px 0 12px}
-.pay-cost{display:inline-flex;gap:6px;align-items:center;padding:5px 14px;border-radius:99px;background:rgba(212,165,74,.1);color:var(--gold2);font-weight:800;font-size:.8rem;margin-bottom:16px}
-.pay-card .btn{width:100%}
-
-.notfound{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px}
-.notfound i{font-size:2.6rem;color:var(--gold)}
-.nf-wrap{position:relative;width:min(380px,94vw);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
-.nf-lottie{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;color-scheme:normal;
-  -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 38%,rgba(0,0,0,.55) 62%,transparent 86%);
-          mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 38%,rgba(0,0,0,.55) 62%,transparent 86%);
-  filter:saturate(1.05) brightness(.96)}
-
-/* موتور انیمیشن */
-.bf-rv:not(.bf-in){opacity:0}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-</style>
-</head>
-<body class="loading-page">
-
-<!-- لودینگ سفید با لوگو + اسکلت مشخصات -->
-<div id="pageLoader" aria-live="polite" aria-label="در حال بارگذاری">
-    <div class="pl-glass">
-        <iframe class="pl-lottie" id="plLottie" title="" tabindex="-1" allowtransparency="true" loading="eager"
-                src="https://lottie.host/embed/ec9ebf91-e045-4c6e-adca-821968446e9e/WyYfwjbKCb.lottie"></iframe>
-        <div class="pl-skel" aria-hidden="true">
-            <div class="sk sk-img"></div>
-            <div class="sk-row"><div class="sk sk-badge"></div></div>
-            <div class="sk sk-title"></div>
-            <div class="sk-grid"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
-            <div class="sk sk-line"></div>
-            <div class="sk sk-line w80"></div>
-            <div class="sk sk-line w55"></div>
-            <div class="sk sk-btn"></div>
-        </div>
-    </div>
-</div>
-
-<main id="view"></main>
-
-<div class="sheet-ov" id="shareOv" aria-hidden="true">
-    <div class="sheet" role="dialog" aria-label="اشتراک‌گذاری">
-        <div class="grab"></div>
-        <div class="sh-item"><div class="im" id="shImg"></div><div><b id="shTitle"></b><span>لینک اختصاصی همین ماد</span></div></div>
-        <div class="linkbox">
-            <input id="shLink" readonly dir="ltr" aria-label="لینک ماد">
-            <button class="btn" id="shCopy"><i class="fa-regular fa-copy"></i> کپی</button>
-        </div>
-        <div class="share-grid">
-            <button class="sa nv" id="shNative"><i class="fa-solid fa-share-nodes"></i>اشتراک</button>
-            <a class="sa tg" id="shTg" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i>تلگرام</a>
-            <a class="sa wa" id="shWa" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i>واتساپ</a>
-            <button class="sa cp" id="shCopy2"><i class="fa-solid fa-link"></i>کپی لینک</button>
-        </div>
-    </div>
-</div>
-
-<div class="pay-ov" id="payOv">
-    <div class="pay-card">
-        <div class="pay-ic" id="payIc"></div>
-        <h2 id="payTitle"></h2>
-        <p id="payText"></p>
-        <div class="pay-cost" id="payCost"></div>
-        <button class="btn" id="payBtn"></button>
-    </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-/* BFMotion — scroll reveal (direction aware) + horizontal 3D rows. Only opacity/translate/transform are animated. */
-(function () {
-    'use strict';
-    var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var HAS_T = !!(window.CSS && CSS.supports && CSS.supports('translate', '0 1px'));
-    var cfg = { items: '', rows: '', sphere: true };
-    var vDir = 0;          // +1 = scrolling down, -1 = scrolling up
-    var io = null, mo = null, inited = false;
-    var MAG = 30;          // reveal travel in px
-
-    /* ---------- reveal ---------- */
-    function tag(el) {
-        if (el.__bf) return;
-        el.__bf = 1;
-        var p = el.parentElement;
-        if (p && p.__bfRowSt) el.__bfRow = p.__bfRowSt;
-        if (RM || !io) return;
-        el.classList.add('bf-rv');
-        io.observe(el);
-    }
-
-    function play(el, i) {
-        el.classList.add('bf-in');
-        if (!el.animate) return;
-        var row = el.__bfRow, dx = 0, dy = 0;
-        if (row && row.dir && Date.now() - row.t < 700) dx = row.dir > 0 ? -MAG * 1.3 : MAG * 1.3;
-        else dy = vDir < 0 ? -MAG : MAG;
-        var key = HAS_T ? 'translate' : (row ? null : 'transform');
-        var from = { opacity: 0 }, to = { opacity: 1 };
-        if (key === 'translate') { from.translate = dx + 'px ' + dy + 'px'; to.translate = '0px 0px'; }
-        else if (key === 'transform') { from.transform = 'translate(' + dx + 'px,' + dy + 'px)'; to.transform = 'none'; }
-        if (el.__bfA) { try { el.__bfA.cancel(); } catch (e) {} }
-        el.__bfA = el.animate([from, to], {
-            duration: 640,
-            delay: Math.min(i, 9) * 62,
-            easing: 'cubic-bezier(.22,.9,.28,1)',
-            fill: 'backwards'
-        });
-    }
-
-    function reset(el) {
-        el.classList.remove('bf-in');
-        if (el.__bfA) { try { el.__bfA.cancel(); } catch (e) {} el.__bfA = null; }
-    }
-
-    function onIO(entries) {
-        var enter = [];
-        for (var k = 0; k < entries.length; k++) {
-            var e = entries[k], t = e.target;
-            if (!t.isConnected) { io.unobserve(t); continue; }
-            var on = t.classList.contains('bf-in');
-            if (e.isIntersecting && e.intersectionRatio >= 0.14) { if (!on) enter.push(e); }
-            else if (!e.isIntersecting || e.intersectionRatio === 0) { if (on) reset(t); }
-        }
-        if (!enter.length) return;
-        enter.sort(function (a, b) {
-            var ta = Math.round(a.boundingClientRect.top / 24), tb = Math.round(b.boundingClientRect.top / 24);
-            if (ta !== tb) return ta - tb;
-            return (a.target.compareDocumentPosition(b.target) & 4) ? -1 : 1;
-        });
-        for (var i = 0; i < enter.length; i++) play(enter[i].target, i);
-    }
-
-    /* ---------- horizontal rows (3D sphere + direction) ---------- */
-    function setupRow(row) {
-        if (row.__bfRowSt) return;
-        var st = row.__bfRowSt = { dir: 0, t: 0, sl: row.scrollLeft };
-        row.setAttribute('data-sphere', cfg.sphere ? '1' : '0');
-        row.addEventListener('scroll', function () {
-            var sl = row.scrollLeft;
-            if (sl !== st.sl) { st.dir = sl < st.sl ? 1 : -1; st.t = Date.now(); st.sl = sl; }
-            if (cfg.sphere) schedule(row);
-        }, { passive: true });
-    }
-
-    function schedule(row) {
-        if (row.__bfRaf) return;
-        row.__bfRaf = requestAnimationFrame(function () { row.__bfRaf = 0; sphere(row); });
-    }
-
-    function pad(row) {
-        var k = row.firstElementChild;
-        if (!k || !k.offsetWidth) return;
-        var p = Math.max(12, Math.round((row.clientWidth - k.offsetWidth) / 2));
-        if (row.__bfPad !== p) { row.__bfPad = p; row.style.paddingLeft = row.style.paddingRight = p + 'px'; }
-    }
-
-    function sphere(row) {
-        var kids = row.children, n = kids.length;
-        if (!n) return;
-        var c = row.scrollLeft + row.clientWidth / 2;
-        var step = (kids[0].offsetWidth || 150) + 8;
-        var data = new Array(n);
-        for (var i = 0; i < n; i++) data[i] = kids[i].offsetLeft + kids[i].offsetWidth / 2;   // reads first
-        for (var j = 0; j < n; j++) {
-            var el = kids[j], d = (data[j] - c) / step, a = Math.abs(d);
-            var f = Math.min(a, 2.5), cl = Math.max(-2.5, Math.min(2.5, d));
-            var key = Math.round(d * 40);
-            if (el.__bfK === key) continue;
-            el.__bfK = key;
-            var s = 1.05 - 0.11 * f;
-            el.style.transform = 'translate3d(' + (cl * 5).toFixed(1) + 'px,0,' + (-f * 28).toFixed(1) + 'px) rotateY(' + (cl * 20).toFixed(1) + 'deg) scale(' + s.toFixed(3) + ')';
-            el.style.zIndex = String(100 - Math.round(a * 10));
-        }
-    }
-
-    function refreshRow(row) {
-        if (!row || !row.__bfRowSt) return;
-        pad(row);
-        if (cfg.sphere) { schedule(row); setTimeout(function () { pad(row); schedule(row); }, 350); }
-    }
-
-    /* ---------- scanning ---------- */
-    function scan(n) {
-        if (!n || n.nodeType !== 1) return;
-        if (cfg.rows) {
-            if (n.matches(cfg.rows)) setupRow(n);
-            var rs = n.querySelectorAll(cfg.rows);
-            for (var a = 0; a < rs.length; a++) setupRow(rs[a]);
-        }
-        if (cfg.items) {
-            if (n.matches(cfg.items)) tag(n);
-            var is = n.querySelectorAll(cfg.items);
-            for (var b = 0; b < is.length; b++) tag(is[b]);
-        }
-        var par = n.parentElement;
-        if (par && par.__bfRowSt) refreshRow(par);
-        if (cfg.rows) {
-            var rr = n.querySelectorAll(cfg.rows);
-            for (var c = 0; c < rr.length; c++) refreshRow(rr[c]);
-        }
-    }
-
-    function init(o) {
-        if (o) { cfg.items = o.items || ''; cfg.rows = o.rows || ''; cfg.sphere = o.sphere !== false; }
-        if (inited) return; inited = true;
-
-        if ('IntersectionObserver' in window && !RM) {
-            io = new IntersectionObserver(onIO, { threshold: [0, 0.14] });
-        }
-
-        document.addEventListener('scroll', function (e) {
-            var t = e.target, el = (t === document) ? document.scrollingElement : t;
-            if (!el || el.__bfRowSt || typeof el.scrollTop !== 'number') return;
-            var y = el.scrollTop, p = el.__bfY;
-            el.__bfY = y;
-            if (p !== undefined && y !== p) vDir = y > p ? 1 : -1;
-        }, { capture: true, passive: true });
-
-        window.addEventListener('resize', function () {
-            var rs = cfg.rows ? document.querySelectorAll(cfg.rows) : [];
-            for (var i = 0; i < rs.length; i++) { rs[i].__bfK = null; refreshRow(rs[i]); }
-        }, { passive: true });
-
-        mo = new MutationObserver(function (list) {
-            for (var i = 0; i < list.length; i++) {
-                var add = list[i].addedNodes;
-                for (var k = 0; k < add.length; k++) scan(add[k]);
+const MY_CONTENT = [
+    {
+        title: 'ماشین شکلات',
+        slug: 'Vending_Machines',
+        author: 'mc',
+        cat: 'mods',
+        desc: 'کلی ماشین شکلات به بازی اضافه کن و وارد دنیای شکلات ها شو !!',
+        version: '1.21.3',
+        size: '1.4 MB',
+        img: 'https://cdn.imgurl.ir/uploads/e653717_IMG_20261002_120723_435.jpg',
+        downloadUrl: 'https://drive.google.com/file/d/1v8uebzqbZez6FboZyME5fAPyK5nTkRlZ/view?usp=drivesdk',
+        fileName: 'the Forgotten Legends.mcaddon',
+        price: 1820,
+        discount: 30,
+        rating: 4.8,
+        lottery: true,
+        changelog: [
+            {
+                version: 'default',
+                date: '2026',
+                changes: ['توضیحات موجود نیست.']
             }
-        });
-        mo.observe(document.body, { childList: true, subtree: true });
-        scan(document.body);
-    }
+        ]
+    },
 
-    window.BFMotion = { init: init, scan: scan, play: play, reset: reset };
-})();
-
-</script>
-
-<script>
-(function () {
-    'use strict';
-
-    /* ===================== کمکی‌ها ===================== */
-    var $ = function (s) { return document.querySelector(s); };
-    var MIN_FIRST = 2600, MIN_NAV = 1500, IMG_MAX = 5000;
-    var items = [], cur = null, firstLoad = true, busy = false;
-
-    function esc(s) {
-        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-        });
-    }
-    function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
-
-    /* ===================== کاربر / توکن / خرید (هم‌کلید با index) ===================== */
-    function getCur() {
-        var a = {}; try { a = JSON.parse(localStorage.getItem('bf_auth') || '{}'); } catch (e) {}
-        return { username: a.username || 'کاربر', email: a.email || '---' };
-    }
-    function userKey() { var c = getCur(); return c.email && c.email !== '---' ? c.email : (c.username || 'guest'); }
-    function purchaseStore() { try { return JSON.parse(localStorage.getItem('bf_purchases') || '{}'); } catch (e) { return {}; } }
-    function getPurchased() { var s = purchaseStore(); return new Set((s[userKey()] || []).map(Number)); }
-    function isPurchased(id) { return getPurchased().has(Number(id)); }
-    function markPurchased(id) {
-        var set = getPurchased(); set.add(Number(id));
-        var s = purchaseStore(); s[userKey()] = Array.from(set).map(Number);
-        localStorage.setItem('bf_purchases', JSON.stringify(s));
-    }
-    function tokenData() {
-        try { return JSON.parse(localStorage.getItem('bf_tokens') || '{"tokens":2000,"last":' + Date.now() + '}'); }
-        catch (e) { return { tokens: 2000, last: Date.now() }; }
-    }
-    function getTokens() {
-        var d = tokenData(), e = Date.now() - d.last;
-        if (e >= 21600000) {
-            d.tokens = Math.min(50000, d.tokens + Math.floor(e / 21600000) * 2000);
-            d.last = Date.now() - (e % 21600000);
-            localStorage.setItem('bf_tokens', JSON.stringify(d));
-        }
-        return d.tokens;
-    }
-    function spendTokens(a) {
-        a = Math.max(0, Number(a) || 0);
-        var c = getTokens(); if (c < a) return false;
-        var d = tokenData(); d.tokens = c - a;
-        localStorage.setItem('bf_tokens', JSON.stringify(d));
-        return true;
-    }
-    function savedSet() { try { return new Set(JSON.parse(localStorage.getItem('bf_saved') || '[]')); } catch (e) { return new Set(); } }
-    function toggleSave(id) {
-        var s = savedSet(); if (s.has(id)) s.delete(id); else s.add(id);
-        localStorage.setItem('bf_saved', JSON.stringify(Array.from(s)));
-        return s.has(id);
-    }
-
-    function toNumber(v, f) {
-        f = f || 0;
-        if (typeof v === 'number' && isFinite(v)) return v;
-        if (typeof v === 'string') {
-            var n = Number(v.replace(/,/g, '').replace(/[۰-۹]/g, function (ch) { return String('۰۱۲۳۴۵۶۷۸۹'.indexOf(ch)); }).trim());
-            return isFinite(n) ? n : f;
-        }
-        return f;
-    }
-    function rawPrice(item) {
-        var r = item && item.price;
-        if (r === 0 || r === '0' || r == null || r === '') return 0;
-        if (typeof r === 'object') { var x = r.final != null ? r.final : (r.fn != null ? r.fn : (r.price != null ? r.price : (r.amount != null ? r.amount : (r.cost != null ? r.cost : r.value)))); return toNumber(x, 0); }
-        return toNumber(r, 0);
-    }
-    function getPrice(item) {
-        var og = rawPrice(item), d = Math.max(0, Math.min(100, toNumber(item && item.discount, 0)));
-        var fn = og <= 0 ? 0 : Math.max(0, Math.round(og - og * d / 100));
-        return { og: og, fn: fn, hasD: og > 0 && d > 0, d: d };
-    }
-    function getCost(item) { return getPrice(item).fn; }
-    function fa(n) { return Number(n).toLocaleString('fa'); }
-
-    function directUrl(url) {
-        if (!url) return url;
-        try {
-            var u = new URL(url, location.href);
-            if (u.hostname === 'drive.google.com' || u.hostname === 'docs.google.com') {
-                var id = u.searchParams.get('id');
-                if (!id) { var m = u.pathname.match(/\/(?:file\/d|document\/d|spreadsheets\/d|presentation\/d)\/([^/]+)/); if (m) id = m[1]; }
-                if (id) return 'https://drive.google.com/uc?export=download&id=' + encodeURIComponent(id);
+    {
+        title: 'ریوایو شدن',
+        slug: 'Revive',
+        author: 'mc',
+        cat: 'mods',
+        desc: 'حالا میتوانید بعد از مرگ دوباره ریوایو بشید !!',
+        version: '1.21',
+        size: '967.7 kb',
+        img: 'https://cdn.imgurl.ir/uploads/s846073_IMG_20261002_160645_085.jpg',
+        downloadUrl: 'https://drive.google.com/file/d/1umeyiyJZr60QCFONXmYkU8uGRLoOaFxs/view?usp=drivesdk',
+        fileName: 'Revive Add-On.mcaddon',
+        price: 531,
+        discount: 0,
+        rating: 4.2,
+        lottery: true,
+        changelog: [
+            {
+                version: 'default',
+                date: '2026',
+                changes: ['توضیحات موجود نیست.']
             }
-        } catch (e) {}
-        return url;
-    }
+        ]
+    },
 
-    /* ===================== داده و لینک اختصاصی ===================== */
-    function build() {
-        if (typeof MY_CONTENT === 'undefined') return [];
-        return MY_CONTENT.map(function (i, idx) {
-            var o = Object.assign({ id: idx + 1 }, i);
-            o.img = i.img || 'https://picsum.photos/seed/' + (idx + 1) + '/640/400';
-            o._slug = i.slug ? String(i.slug) : 'item-' + (idx + 1);
-            return o;
-        });
-    }
-    function itemUrl(item) {
-        var u = new URL('items.html', location.href);
-        u.search = ''; u.hash = '';
-        u.searchParams.set('m', item._slug);
-        return u.href;
-    }
-    function findFromLocation() {
-        var q = new URLSearchParams(location.search);
-        var m = q.get('m') || q.get('slug') || (location.hash && location.hash.length > 1 ? decodeURIComponent(location.hash.slice(1)) : '');
-        var id = q.get('id');
-        var it = null;
-        if (m) it = items.find(function (i) { return i._slug === m; });
-        if (!it && id) it = items.find(function (i) { return String(i.id) === String(id); });
-        return it || null;
-    }
-    function loadScript(src) {
-        return new Promise(function (res, rej) {
-            var s = document.createElement('script');
-            s.src = src; s.onload = res; s.onerror = rej;
-            document.head.appendChild(s);
-        });
-    }
-
-    /* ===================== متا / SEO ===================== */
-    function setMeta(id, val) { var e = document.getElementById(id); if (e) e.setAttribute(id === 'linkCanon' ? 'href' : 'content', val); }
-    function applyMeta(item) {
-        if (!item) { document.title = 'BlockForge | 404'; return; }
-        var url = itemUrl(item), d = (item.desc || '').replace(/\s+/g, ' ').slice(0, 150);
-        document.title = item.title + ' | BlockForge';
-        setMeta('metaDesc', d); setMeta('ogTitle', item.title + ' | BlockForge'); setMeta('ogDesc', d);
-        setMeta('ogImg', new URL(item.img, location.href).href); setMeta('ogUrl', url); setMeta('linkCanon', url);
-        var ld = document.getElementById('ldjson');
-        if (!ld) { ld = document.createElement('script'); ld.type = 'application/ld+json'; ld.id = 'ldjson'; document.head.appendChild(ld); }
-        var data = {
-            '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: item.title,
-            applicationCategory: 'GameApplication', operatingSystem: 'Minecraft Bedrock',
-            softwareVersion: item.version || undefined, description: d, image: item.img, url: url,
-            offers: { '@type': 'Offer', price: getCost(item), priceCurrency: 'IRR' }
-        };
-        if (item.rating) data.aggregateRating = { '@type': 'AggregateRating', ratingValue: item.rating, ratingCount: 10 };
-        ld.textContent = JSON.stringify(data);
-    }
-
-    /* ===================== رندر ===================== */
-    var CAT = { mods: 'ماد', skins: 'اسکین', maps: 'مپ', shaders: 'شیدر', textures: 'تکسچر', dlc: 'DLC' };
-
-    function btnLabel(item) {
-        var cost = getCost(item);
-        if (isPurchased(item.id)) return '<i class="fa-solid fa-download"></i> دانلود';
-        if (cost === 0) return '<i class="fa-solid fa-download"></i> دانلود رایگان';
-        return '<i class="fa-solid fa-cart-shopping"></i> خرید ' + fa(cost);
-    }
-    function btnClass(item) { return isPurchased(item.id) ? 'purchased' : (getCost(item) === 0 ? 'free' : ''); }
-
-
-    function makeInfinite(row) {
-        if (!row || row.__inf) return;
-        var orig = Array.prototype.slice.call(row.children);
-        var n = orig.length;
-        if (n < 3) return;
-        row.__inf = 1;
-        var b = document.createDocumentFragment(), a = document.createDocumentFragment();
-        orig.forEach(function (c) { b.appendChild(c.cloneNode(true)); a.appendChild(c.cloneNode(true)); });
-        row.insertBefore(b, row.firstChild);
-        row.appendChild(a);
-        function center(el) { var r = el.getBoundingClientRect(); return r.left + r.width / 2; }
-        function nearest() {
-            var rc = center(row), best = 0, bd = 1e9;
-            for (var i = 0; i < row.children.length; i++) {
-                var d = Math.abs(center(row.children[i]) - rc);
-                if (d < bd) { bd = d; best = i; }
+    {
+        title: "وسایل ساخت و ساز",
+        slug: 'Build_Assist',
+        author: 'mc',
+        cat: 'mods',
+        desc: 'موجودی وحشتناک به نام وندیگو رو به بازی اضافه میکنه. توی جنگل‌های تاریک کمین کرده!',
+        version: '1.21.120',
+        size: '363.2 kb',
+        img: 'https://cdn.imgurl.ir/uploads/g46994_IMG_20261002_162035_440.jpg',
+        downloadUrl: 'https://drive.google.com/file/d/1vhSjlUfePF-gYe9_nxFlE_8m6bV6frfK/view?usp=drivesdk',
+        fileName: 'Build Assist (addon).mcaddon',
+        price: 1800,
+        discount: 9,
+        rating: 4.6,
+        lottery: true,
+        changelog: [
+            {
+                version: 'default',
+                date: '2026',
+                changes: ['توضیحات موجود نیست.']
             }
-            return best;
-        }
-        function jump(from, to) {
-            var delta = center(row.children[to]) - center(row.children[from]);
-            row.style.scrollSnapType = 'none';
-            row.scrollLeft += delta;
-            requestAnimationFrame(function () { row.style.scrollSnapType = ''; });
-        }
-        var mid = row.children[n];
-        if (mid) row.scrollLeft += center(mid) - center(row);
-        var t = null;
-        row.addEventListener('scroll', function () {
-            clearTimeout(t);
-            t = setTimeout(function () {
-                var i = nearest();
-                if (i < n) jump(i, i + n);
-                else if (i >= 2 * n) jump(i, i - n);
-            }, 140);
-        }, { passive: true });
+        ]
+    },
+
+    {
+        title: 'بن تن',
+        slug: 'BEN_10',
+        author: 'mc',
+        cat: 'mods',
+        desc: 'بن تن رو تو ماینکرفت خودت بیار و از قابلیت هاش استفاده کن !!',
+        version: '1.20.6',
+        size: '685.7 MB',
+        img: 'https://cdn.imgurl.ir/uploads/h510365_IMG_20261002_165852_750.jpg',
+        downloadUrl: 'https://drive.google.com/file/d/1A6i7PPcl_4JUxhamxwiha2wlNYJB1-aY/view?usp=drivesdk',
+        fileName: 'BEN 10.mcaddon',
+        price: 900,
+        discount: 30,
+        rating: 4.3,
+        lottery: true,
+        changelog: [
+            {
+                version: 'default',
+                date: '2026',
+                changes: ['توضیحات موجود نیست.']
+            }
+        ]
+    },
+
+    {
+        title: 'چست سال نو جاوا',
+        slug: 'christmas_chests',
+        author: 'mc',
+        cat: 'mods',
+        desc: 'تا به حال خواستی چست هاتو شبیه چست های سال نوی جاوا کنی؟',
+        version: '1.20',
+        size: '90.1 kb',
+        img: 'https://cdn.imgurl.ir/uploads/k408029_IMG_20261002_170204_485.jpg',
+        downloadUrl: 'https://drive.google.com/file/d/1IZXyM4YnmNhbrHSmGgXyuygBFaLUqDDf/view?usp=drivesdk',
+        fileName: 'christmas_chests_remastered_bedrock_version.mcpack',
+        price: 1100,
+        discount: 0,
+        rating: 4.4,
+        lottery: true,
+        changelog: [
+            {
+                version: 'default',
+                date: '2026',
+                changes: ['توضیحات موجود نیست.']
+            }
+        ]
+    },
+
+    {
+        title: 'اور مستقیم',
+        slug: 'Actual_Auto_Smelt',
+        author: 'mc',
+        cat: 'mods',
+        desc: 'به جای اینکه اور ناخالص رو با ماین کردن آینم بدست بیاورید ، با این ماد میتوانید خیلی راحت اور خالص شده و پخته شده رو دریافت کنید.',
+        version: '1.20.120',
+        size: '29.2 kb',
+        img: 'https://cdn.imgurl.ir/uploads/g053869_IMG_20261002_174655_707.jpg',
+        downloadUrl: 'https://www.mediafire.com/file/zmq8v9fk5kvn6iu/Player-Evolved-Add-On+by+skupka.mcaddon/file',
+        fileName: 'Actual Auto Smelt (V0.02).mcpack',
+        price: 2000,
+        discount: 50,
+        rating: 4.9,
+        lottery: true,
+        changelog: [
+            {
+                version: 'default',
+                date: '2026',
+                changes: ['توضیحات موجود نیست.']
+            }
+        ]
+    },
+
+    {
+        title: 'مکانیزم',
+        slug: 'Machines',
+        author: 'mc',
+        cat: 'mods',
+        desc: 'با بهترین ماد ماینکرفت آشنا شوید !! مکانیزم یکی از بهترین ماد های ماینکرفت است که میتوانید با این ماد هر چیزی که بخواهید بسازید !!',
+        version: '1.21',
+        size: '3.8 MB',
+        img: 'https://cdn.imgurl.ir/uploads/n63902_IMG_20261002_175850_808.jpg',
+        downloadUrl: "",
+        fileName: 'Machines Add-On.mcaddon',
+        price: 1300,
+        discount: 10,
+        rating: 4.7,
+        lottery: true,
+        changelog: [
+            {
+                version: 'default',
+                date: '2026',
+                changes: ['توضیحات موجود نیست.']
+            }
+        ]
+    },
+
+    // ===========================================
+    // 👤 اسکین‌ها
+    // ===========================================
+
+    {
+       // title: 'اسکین PVP',
+        slug: 'pvp-skin',
+        author: 'mc',
+        cat: '',
+        desc: 'اسکین مخصوص PVP.',
+        version: '1.21',
+        size: '---',
+        img: '',
+        downloadUrl: '',
+        fileName: '',
+        price: 0,
+        discount: 0,
+        rating: 4.5,
+        lottery: false,
+        changelog: [
+            {
+                version: 'default',
+                date: '2026',
+                changes: ['توضیحات موجود نیست.']
+            }
+        ]
     }
-
-    (function () {
-        var t = null, on = false;
-        window.addEventListener('scroll', function () {
-            if (!on) { on = true; document.body.classList.add('bf-scrolling'); }
-            clearTimeout(t);
-            t = setTimeout(function () { on = false; document.body.classList.remove('bf-scrolling'); }, 120);
-        }, { passive: true });
-    })();
-
-    function related(item, c) {
-        var s = items.filter(function (i) { return i.cat === item.cat && i.id !== item.id; });
-        var o = items.filter(function (i) { return i.id !== item.id && i.cat !== item.cat; });
-        return s.concat(o).slice(0, c);
-    }
-
-    function render(item) {
-        var v = $('#view');
-        if (!item) {
-            v.innerHTML = '<div class="topbar"><button class="tb-btn" id="tbBack" aria-label="بازگشت"><i class="fa-solid fa-arrow-right"></i></button><div class="tb-title">BlockForge</div></div>' +
-                '<div class="notfound rvx"><div class="nf-wrap"><iframe class="nf-lottie" title="404" tabindex="-1" allowtransparency="true" loading="eager" src="https://lottie.host/embed/0c21a67e-5966-4646-a728-487ca77404fa/JrhlKsIlHH.lottie"></iframe></div>' +
-                '<a class="btn" href="index.html"><i class="fa-solid fa-house"></i> بازگشت به صفحه اصلی</a></div>';
-            $('#tbBack').onclick = goBack;
-            return;
-        }
-        var p = getPrice(item), cost = getCost(item), saved = savedSet().has(item.id);
-        var rel = related(item, 5), cl = item.changelog || [];
-
-        var priceHTML = p.hasD
-            ? '<div class="price-box rvx"><span class="price-old">' + fa(p.og) + '</span><span class="price-new"><i class="fa-solid fa-coins"></i>' + fa(p.fn) + '</span><span class="price-disc">-' + fa(p.d) + '٪</span></div>'
-            : (cost > 0 ? '<div class="price-box rvx"><span>💰 قیمت:</span><span class="price-new"><i class="fa-solid fa-coins"></i>' + fa(p.og) + '</span></div>' : '');
-
-        var clHTML = cl.length ? '<div class="label rvx"><i class="fa-solid fa-clock-rotate-left"></i>تاریخچه نسخه‌ها</div><div class="cl-tree">' +
-            cl.map(function (ver, idx) {
-                return '<div class="cl-item rvx"><div class="cl-head"><span>' + (idx === 0 ? '<span class="cl-new">جدید</span>' : '') + esc(ver.version) + '</span><span class="cl-date">' + esc(ver.date) + '</span></div><ul>' +
-                    (ver.changes || []).map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div>';
-            }).join('') + '</div>' : '';
-
-        var relHTML = rel.length ? '<div class="label rvx"><i class="fa-solid fa-link"></i>آیتم‌های مرتبط</div><div class="hrow">' +
-            rel.map(function (r) {
-                var rc = getCost(r);
-                return '<a class="rel-card" href="' + esc(itemUrl(r)) + '" data-slug="' + esc(r._slug) + '">' +
-                    '<div class="im" style="background-image:url(\'' + esc(r.img) + '\')"></div><div class="bd"><h5>' + esc(r.title) + '</h5>' +
-                    '<div class="m">' + esc(r.author || 'ناشناس') + '</div><div class="p ' + (rc === 0 ? 'free' : '') + '">' + (rc === 0 ? 'رایگان' : fa(rc)) + '</div></div></a>';
-            }).join('') + '</div>' : '';
-
-        v.innerHTML =
-            '<div class="topbar">' +
-                '<button class="tb-btn" id="tbBack" aria-label="بازگشت"><i class="fa-solid fa-arrow-right"></i></button>' +
-                '<div class="tb-title">' + esc(item.title) + '</div>' +
-                '<div class="token-chip"><i class="fa-solid fa-coins"></i><span id="tokenNum">' + fa(getTokens()) + '</span></div>' +
-                '<button class="tb-btn ' + (saved ? 'on' : '') + '" id="tbSave" aria-label="ذخیره"><i class="fa-solid fa-bookmark"></i></button>' +
-                '<button class="tb-btn" id="tbShare" aria-label="اشتراک‌گذاری"><i class="fa-solid fa-share-nodes"></i></button>' +
-            '</div>' +
-            '<div class="hero rvx"><img src="' + esc(item.img) + '" alt="' + esc(item.title) + '" decoding="async" onerror="this.style.display=\'none\'">' +
-                '<div class="hero-chips"><span class="chip gold">' + esc(CAT[item.cat] || 'آیتم') + '</span>' +
-                (p.hasD ? '<span class="chip disc">-' + fa(p.d) + '٪</span>' : '') + '</div></div>' +
-            '<div class="intro">' +
-                '<span class="badge ' + (cost === 0 ? 'free' : '') + ' rvx">' + (cost === 0 ? '🆓 رایگان' : '🛒 آماده خرید') + '</span>' +
-                '<h1 class="title rvx">' + esc(item.title) + '</h1>' +
-                (item.rating ? '<div class="rating rvx"><i class="fa-solid fa-star"></i>' + esc(item.rating) + '</div>' : '') +
-            '</div>' +
-            '<div class="label rvx"><i class="fa-solid fa-circle-info"></i>اطلاعات ماد</div>' +
-            '<div class="grid3">' +
-                '<div class="tile rvx"><i class="fa-solid fa-user"></i><div class="l">سازنده</div><div class="v">' + esc(item.author || 'ناشناس') + '</div></div>' +
-                '<div class="tile rvx"><i class="fa-solid fa-code-branch"></i><div class="l">ورژن</div><div class="v">' + esc(item.version || '---') + '</div></div>' +
-                '<div class="tile rvx"><i class="fa-solid fa-weight-hanging"></i><div class="l">حجم</div><div class="v">' + esc(item.size || '---') + '</div></div>' +
-            '</div>' +
-            priceHTML +
-            '<div class="label rvx"><i class="fa-solid fa-align-right"></i>توضیحات ماد</div>' +
-            '<div class="desc rvx">' + esc(item.desc || 'بدون توضیح') + '</div>' +
-            '<div class="label rvx"><i class="fa-solid fa-download"></i>دریافت فایل</div>' +
-            '<div class="dl-card rvx"><i class="fa-solid fa-file-zipper file"></i><div class="fn">' + esc(item.fileName || (item.title + '.mcaddon')) + '</div>' +
-                '<button class="btn ghost" id="inShare" style="height:40px;padding:0 14px;font-size:.8rem"><i class="fa-solid fa-share-nodes"></i> اشتراک</button></div>' +
-            clHTML + relHTML +
-            '<div class="dlbar"><div class="dlbar-in">' +
-                '<button class="btn main ' + btnClass(item) + '" id="dlBtn">' + btnLabel(item) + '</button>' +
-                '<button class="btn ghost sq" id="barShare" aria-label="اشتراک‌گذاری"><i class="fa-solid fa-share-nodes"></i></button>' +
-            '</div></div>';
-
-        $('#tbBack').onclick = goBack;
-        $('#tbSave').onclick = function () { var on = toggleSave(item.id); this.classList.toggle('on', on); toast(on ? 'ذخیره شد ✓' : 'از ذخیره‌ها حذف شد'); };
-        ['#tbShare', '#inShare', '#barShare'].forEach(function (s) { $(s).onclick = openShare; });
-        $('#dlBtn').onclick = startDownload;
-        v.querySelectorAll('.rel-card').forEach(function (a) {
-            a.addEventListener('click', function (e) {
-                if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
-                e.preventDefault();
-                var it = items.find(function (i) { return i._slug === a.getAttribute('data-slug'); });
-                if (it) navigate(it, true);
-            });
-        });
-    }
-
-    function refreshActions() {
-        var b = $('#dlBtn'); if (!b || !cur) return;
-        b.className = 'btn main ' + btnClass(cur); b.innerHTML = btnLabel(cur);
-        var t = $('#tokenNum'); if (t) t.textContent = fa(getTokens());
-    }
-
-    /* ===================== ناوبری و لودینگ ===================== */
-    function goBack() {
-        var same = false; try { same = document.referrer && new URL(document.referrer).origin === location.origin; } catch (e) {}
-        if (history.length > 1 && (same || !firstLoad)) history.back(); else location.href = 'index.html';
-    }
-
-    function preloadImg(src) {
-        return new Promise(function (r) {
-            var im = new Image(); var done = false;
-            function f() { if (!done) { done = true; r(); } }
-            im.onload = im.onerror = f; im.src = src; setTimeout(f, IMG_MAX);
-            if (im.complete) f();
-        });
-    }
-
-    function showLoader() {
-        var L = $('#pageLoader');
-        document.body.classList.add('loading-page');
-        L.classList.remove('hide');
-        $('#metaTheme').setAttribute('content', '#ffffff');
-        var f = $('#plLottie'), src = f.getAttribute('src');
-        try { f.contentWindow.location.replace(src); } catch (e) { f.setAttribute('src', src); }
-    }
-    function hideLoader() {
-        $('#pageLoader').classList.add('hide');
-        document.body.classList.remove('loading-page');
-        $('#metaTheme').setAttribute('content', '#050510');
-    }
-
-    function show(item, pushUrl) {
-        cur = item;
-        applyMeta(item);
-        if (item) {
-            var url = itemUrl(item);
-            try {
-                if (pushUrl) history.pushState({ m: item._slug }, '', url);
-                else history.replaceState({ m: item._slug }, '', url);   // آدرس تمیز و یکتا
-            } catch (e) {}
-        }
-        window.scrollTo(0, 0);
-        render(item);
-    }
-
-    function navigate(item, push) {
-        if (busy) return; busy = true;
-        showLoader();
-        var t0 = Date.now();
-        Promise.all([wait(MIN_NAV), item ? preloadImg(item.img) : 0]).then(function () {
-            hideLoader();
-            setTimeout(function () { show(item, push); busy = false; }, 220);
-        });
-    }
-
-    window.addEventListener('popstate', function () {
-        if (!items.length) return;
-        navigate(findFromLocation(), false);
-    });
-    window.addEventListener('pageshow', function (e) { if (e.persisted) refreshActions(); });
-
-    /* ===================== دانلود / پرداخت ===================== */
-    function startDownload() {
-        var item = cur; if (!item) return;
-        var cost = getCost(item);
-        function go() {
-            if (item.downloadUrl) location.href = directUrl(item.downloadUrl);
-            else toast('لینک دانلود هنوز موجود نیست');
-        }
-        if (isPurchased(item.id)) { go(); return; }
-        if (cost === 0) { markPurchased(item.id); refreshActions(); go(); return; }
-        if (getTokens() < cost || !spendTokens(cost)) { pay(false, cost); return; }
-        markPurchased(item.id); refreshActions(); pay(true, cost);
-    }
-    function pay(ok, cost) {
-        var ic = $('#payIc');
-        ic.className = 'pay-ic ' + (ok ? 'ok' : 'no');
-        ic.innerHTML = '<i class="fa-solid ' + (ok ? 'fa-check' : 'fa-xmark') + '"></i>';
-        $('#payTitle').textContent = ok ? 'پرداخت با موفقیت انجام شد' : 'پرداخت انجام نشد';
-        $('#payText').textContent = ok ? 'مود خریداری شد و اکنون برای شما فعال است.' : 'توکن کافی نیست؛ این مود خریداری نشد.';
-        $('#payCost').innerHTML = '<i class="fa-solid fa-coins"></i> ' + fa(cost) + (ok ? ' توکن پرداخت شد' : ' توکن نیاز است');
-        $('#payBtn').innerHTML = ok ? '<i class="fa-solid fa-download"></i> ادامه و دریافت مود' : '<i class="fa-solid fa-arrow-right"></i> بازگشت';
-        $('#payBtn').onclick = function () {
-            $('#payOv').classList.remove('show');
-            if (ok && cur && cur.downloadUrl) location.href = directUrl(cur.downloadUrl);
-        };
-        $('#payOv').classList.add('show');
-    }
-
-    /* ===================== اشتراک‌گذاری ===================== */
-    var toastT;
-    function toast(msg) {
-        var t = $('#toast'); t.textContent = msg; t.classList.add('show');
-        clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove('show'); }, 2000);
-    }
-    function shareText() { return cur ? (cur.title + ' — ' + (cur.desc || '').replace(/\s+/g, ' ').slice(0, 70)) : 'BlockForge'; }
-
-    function copyText(text) {
-        if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
-        return new Promise(function (res, rej) {
-            var ta = document.createElement('textarea');
-            ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
-            document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, 99999);
-            try { document.execCommand('copy') ? res() : rej(); } catch (e) { rej(e); }
-            document.body.removeChild(ta);
-        });
-    }
-    function copyLink() {
-        var url = itemUrl(cur);
-        copyText(url).then(function () { toast('لینک این ماد کپی شد ✓'); }, function () {
-            var i = $('#shLink'); i.focus(); i.select(); toast('لینک را دستی کپی کنید');
-        });
-    }
-    function openShare() {
-        if (!cur) return;
-        var url = itemUrl(cur), txt = shareText();
-        $('#shImg').style.backgroundImage = "url('" + cur.img.replace(/'/g, '%27') + "')";
-        $('#shTitle').textContent = cur.title;
-        $('#shLink').value = url;
-        $('#shTg').href = 'https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(txt);
-        $('#shWa').href = 'https://wa.me/?text=' + encodeURIComponent(txt + '\n' + url);
-        $('#shNative').style.display = navigator.share ? '' : 'none';
-        $('#shareOv').classList.add('show'); $('#shareOv').setAttribute('aria-hidden', 'false');
-    }
-    function closeShare() { $('#shareOv').classList.remove('show'); $('#shareOv').setAttribute('aria-hidden', 'true'); }
-
-    $('#shCopy').onclick = copyLink;
-    $('#shCopy2').onclick = copyLink;
-    $('#shLink').onclick = function () { this.select(); };
-    $('#shNative').onclick = function () {
-        if (!navigator.share || !cur) return;
-        navigator.share({ title: cur.title, text: shareText(), url: itemUrl(cur) }).then(closeShare, function () {});
-    };
-    $('#shareOv').addEventListener('click', function (e) { if (e.target === this) closeShare(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeShare(); });
-
-    /* ===================== شروع ===================== */
-    function boot() {
-        BFMotion.init({ items: '.rvx, .hrow > .rel-card', rows: '.hrow', sphere: true });
-        requestAnimationFrame(function () { requestAnimationFrame(function () { makeInfinite(document.querySelector('.hrow')); }); });
-
-        var t0 = Date.now();
-        loadScript('mods.js?v=' + Date.now()).then(function () {
-            items = build();
-            var item = findFromLocation();
-            return Promise.all([wait(MIN_FIRST), item ? preloadImg(item.img) : 0]).then(function () { return item; });
-        }).then(function (item) {
-            hideLoader();
-            setTimeout(function () { show(item, false); firstLoad = false; }, 220);
-        }).catch(function () {
-            hideLoader();
-            $('#view').innerHTML = '<div class="notfound"><i class="fa-solid fa-wifi"></i><h2>بارگذاری انجام نشد</h2>' +
-                '<p style="color:var(--text2);font-size:.85rem">اتصال اینترنت را بررسی کنید.</p>' +
-                '<button class="btn" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i> تلاش دوباره</button></div>';
-        });
-    }
-    boot();
-})();
-</script>
-</body>
-</html>
+];
