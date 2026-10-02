@@ -4794,6 +4794,31 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
 .slider-container{contain:layout paint}
 .h-scroll>.card,.h-scroll>.v-card,.h-scroll>.server-card{box-shadow:0 8px 18px rgba(0,0,0,.35) !important}
 .card,.v-card,.fl-card,.server-card,.saved-item{contain:layout style}
+
+/* ---------- PERF v2: اسکرول کاملاً روان ---------- */
+#app::before,#app::after{
+    filter:none !important;animation:none !important;opacity:.10 !important;
+    background:radial-gradient(circle,currentColor 0%,transparent 68%) !important;
+}
+#app::before{color:#a855f7}#app::after{color:#00d4ff}
+.help-fab{animation:none !important;box-shadow:0 9px 25px rgba(139,92,246,.4) !important}
+.card,.v-card,.fl-card{transform:none;will-change:auto}
+.h-scroll>.card,.h-scroll>.v-card,.h-scroll>.server-card{will-change:transform}
+@media (hover:none){
+    .card:hover,.v-card:hover,.fl-card:hover{box-shadow:none}
+    .card:hover .card-img,.v-card:hover .v-card-img,.fl-card:hover .fl-card-img{transform:none;filter:none}
+}
+body.bf-scrolling .main-content *{pointer-events:none !important}
+body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{animation-play-state:paused !important}
+.card-img,.v-card-img,.fl-card-img{transition:none !important}
+.bf-rv{will-change:opacity}
+
+/* ---------- موبایل: ۵ کارت قابل‌دیدن، تداخل کم ---------- */
+@media (max-width:520px){
+    .h-scroll{gap:10px}
+    .card{min-width:142px;max-width:142px}
+    .v-card{min-width:212px;max-width:212px}
+}
 </style>
 </head>
 
@@ -5267,6 +5292,21 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
     </div>
 
 
+
+    <script>
+    /* توقف انیمیشن‌های بی‌نهایت و pointer-events هنگام اسکرول عمودی */
+    (function () {
+        var t = null, on = false;
+        document.addEventListener('scroll', function (e) {
+            var el = e.target;
+            if (!el || !el.classList || !el.classList.contains('main-content')) return;
+            if (!on) { on = true; document.body.classList.add('bf-scrolling'); }
+            clearTimeout(t);
+            t = setTimeout(function () { on = false; document.body.classList.remove('bf-scrolling'); }, 120);
+        }, { capture: true, passive: true });
+    })();
+    </script>
+
     <!-- EXTERNAL FILES -->
     <script>document.write('<script src="mods.js?v=' + Date.now() + '"><\/script>');</script>
     <script src="posts.js"></script>
@@ -5325,6 +5365,7 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
             if (!t.isConnected) { io.unobserve(t); continue; }
             var on = t.classList.contains('bf-in');
             if (e.isIntersecting && e.intersectionRatio >= 0.14) { if (!on) enter.push(e); }
+            else if (!e.isIntersecting || e.intersectionRatio === 0) { if (on) reset(t); }
         }
         if (!enter.length) return;
         enter.sort(function (a, b) {
@@ -5332,7 +5373,7 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
             if (ta !== tb) return ta - tb;
             return (a.target.compareDocumentPosition(b.target) & 4) ? -1 : 1;
         });
-        for (var i = 0; i < enter.length; i++) { play(enter[i].target, i); if (io) io.unobserve(enter[i].target); }
+        for (var i = 0; i < enter.length; i++) play(enter[i].target, i);
     }
 
     /* ---------- horizontal rows (3D sphere + direction) ---------- */
@@ -5372,8 +5413,8 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
             var key = Math.round(d * 40);
             if (el.__bfK === key) continue;
             el.__bfK = key;
-            var s = 1.1 - 0.17 * f;
-            el.style.transform = 'translate3d(' + (-cl * 9).toFixed(1) + 'px,0,' + (-f * 55).toFixed(1) + 'px) rotateY(' + (cl * 24).toFixed(1) + 'deg) scale(' + s.toFixed(3) + ')';
+            var s = 1.05 - 0.11 * f;
+            el.style.transform = 'translate3d(' + (cl * 5).toFixed(1) + 'px,0,' + (-f * 28).toFixed(1) + 'px) rotateY(' + (cl * 20).toFixed(1) + 'deg) scale(' + s.toFixed(3) + ')';
             el.style.zIndex = String(100 - Math.round(a * 10));
         }
     }
@@ -6222,7 +6263,52 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
            HOME RENDER
         ========================== */
 
+        function makeInfinite(row) {
+            if (!row || row.__inf) return;
+            const orig = Array.from(row.children).filter(c => c.classList.contains('card') || c.classList.contains('v-card'));
+            const n = orig.length;
+            if (n < 3) return;
+            row.__inf = 1;
+
+            const before = document.createDocumentFragment();
+            const after = document.createDocumentFragment();
+            orig.forEach(c => { before.appendChild(c.cloneNode(true)); after.appendChild(c.cloneNode(true)); });
+            row.insertBefore(before, row.firstChild);
+            row.appendChild(after);
+
+            const center = el => { const r = el.getBoundingClientRect(); return r.left + r.width / 2; };
+            const nearest = () => {
+                const rc = center(row); let best = 0, bd = 1e9;
+                for (let i = 0; i < row.children.length; i++) {
+                    const d = Math.abs(center(row.children[i]) - rc);
+                    if (d < bd) { bd = d; best = i; }
+                }
+                return best;
+            };
+            const jump = (from, to) => {
+                const delta = center(row.children[to]) - center(row.children[from]);
+                row.style.scrollSnapType = 'none';
+                row.scrollLeft += delta;
+                requestAnimationFrame(() => { row.style.scrollSnapType = ''; });
+            };
+
+            // شروع از اولین کارتِ مجموعه‌ی وسط
+            const mid = row.children[n];
+            if (mid) row.scrollLeft += center(mid) - center(row);
+
+            let t = null;
+            row.addEventListener('scroll', () => {
+                clearTimeout(t);
+                t = setTimeout(() => {
+                    const i = nearest();
+                    if (i < n) jump(i, i + n);
+                    else if (i >= 2 * n) jump(i, i - n);
+                }, 140);
+            }, { passive: true });
+        }
+
         function renderHome() {
+            ['rowMods','rowSkins','rowMaps'].forEach(id => { const r = document.getElementById(id); if (r) r.__inf = 0; });
             renderSlider();
 
             ['mods','skins','maps','shaders','textures','dlc'].forEach(cat => {
@@ -6255,6 +6341,10 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
 
             updateTokenDisplay();
             updateLotteryUI();
+
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                ['rowMods','rowSkins','rowMaps'].forEach(id => makeInfinite(document.getElementById(id)));
+            }));
 
             // ⭐ انیمیشن rise
             requestAnimationFrame(() => playRise(document.getElementById('homePage') || document));
@@ -6811,11 +6901,27 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
             const FALLBACK_MS = warm ? 1800 : 6500;
             const t0 = Date.now();
 
+            function preloadAll() {
+                const urls = new Set();
+                (items || []).forEach(i => { if (i.img) urls.add(i.img); });
+                return Promise.all(Array.from(urls).map(u => new Promise(res => {
+                    const im = new Image();
+                    im.onload = im.onerror = () => res();
+                    im.src = u;
+                    if (im.decode) im.decode().then(res, res);
+                })));
+            }
+
             function finish() {
                 load();
                 renderHome();
                 badge();
 
+                // همه‌ی عکس‌های صفحه اصلی قبل از باز شدن لود و دیکود میشن
+                Promise.race([preloadAll(), new Promise(r => setTimeout(r, 4500))]).then(openApp);
+            }
+
+            function openApp() {
                 document.getElementById('loader').classList.add('hide');
                 document.getElementById('app').classList.add('show');
                 setTimeout(() => playRise(document.getElementById('homePage') || document), 180);
