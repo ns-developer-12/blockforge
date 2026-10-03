@@ -15,6 +15,13 @@
     (function () {
         "use strict";
 
+        // BlockForge path helper: works from both /blockforge/ and /blockforge/home/
+        window.BF_LOCAL = function (path) {
+            var p = String(path || '').replace(/^\/+/, '');
+            var isHome = /\/home(?:\/|$)/.test(window.location.pathname);
+            return (isHome ? '../' : './') + p;
+        };
+
         if (
             /(^|\/)net\.html(?:$|[?#])/.test(
                 window.location.href
@@ -30,9 +37,9 @@
             redirected = true;
 
             try {
-                window.location.replace("net.html");
+                window.location.replace(BF_LOCAL("net.html"));
             } catch (e) {
-                window.location.href = "net.html";
+                window.location.href = BF_LOCAL("net.html");
             }
         }
 
@@ -92,7 +99,7 @@
     })();
     </script>
 
-    <script src="net.js"
+    <script src="../net.js"
         onerror="window.__BF_OFFLINE_GUARD__ && window.__BF_OFFLINE_GUARD__.goOffline()"></script>
 
     <!-- FONT CACHE / PRELOAD -->
@@ -102,7 +109,7 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" as="style" crossorigin onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preconnect" href="https://lottie.host" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
-    <link rel="prefetch" href="items.html">
+    <link rel="prefetch" href="../items.html">
     <link rel="dns-prefetch" href="https://lottie.host">
 
     <link rel="preload"
@@ -132,7 +139,7 @@
         try {
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function () {
-                    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(function () {});
+                    navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(function () {});
                     if (navigator.storage && navigator.storage.persist) { navigator.storage.persist().catch(function () {}); }
                 });
             }
@@ -4913,7 +4920,7 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                     !a.expiresAt ||
                     Date.now() >= a.expiresAt
                 ) {
-                    window.location.replace('auth.html');
+                    window.location.replace(BF_LOCAL('auth.html'));
                 }
             })();
         </script>
@@ -4932,15 +4939,15 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                     <span id="tokenDisplay">0</span>
                 </div>
 
-                <button class="h-btn" onclick="window.location.href='search.html'">
+                <button class="h-btn" onclick="window.location.href='../search.html'">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
 
-                <button class="h-btn" onclick="window.location.href='posts.html'">
+                <button class="h-btn" onclick="window.location.href='../posts.html'">
                     <i class="fa-solid fa-newspaper"></i>
                 </button>
 
-                <button class="h-btn" onclick="window.location.href='premium.html'">
+                <button class="h-btn" onclick="window.location.href='../premium.html'">
                     <i class="fa-solid fa-crown" style="color:#f0c040;"></i>
                 </button>
 
@@ -4961,7 +4968,7 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
 
 
         <!-- HELP -->
-        <a href="help.html" class="help-fab" title="پشتیبانی" aria-label="پشتیبانی">
+        <a href="../help.html" class="help-fab" title="پشتیبانی" aria-label="پشتیبانی">
             <span class="ripple"></span>
             <span class="fab-clip"><iframe class="fab-lottie" src="https://lottie.host/embed/cea7beb5-456c-405e-9d2a-7cd0229050ce/2E4eIQMruC.lottie"
                     title="" tabindex="-1" allowtransparency="true" loading="eager"></iframe></span>
@@ -4981,7 +4988,7 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                 ذخیره‌شده‌ها
             </a>
 
-            <a href="premium.html">
+            <a href="../premium.html">
                 <i class="fa-solid fa-crown" style="color:#f0c040;"></i>
                 پرمیوم
             </a>
@@ -4991,7 +4998,7 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                 پروفایل
             </a>
 
-            <a href="help.html">
+            <a href="../help.html">
                 <i class="fa-solid fa-circle-question"></i>
                 راهنما
             </a>
@@ -5061,7 +5068,7 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                         <span class="cat-num"><span id="cntMods">0</span></span>
                     </div>
 
-                    <div class="cat enchant" onclick="window.location.href='enchantments.html'">
+                    <div class="cat enchant" onclick="window.location.href='../enchantments.html'">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
                         <span class="cat-name">انچنت‌ها</span>
                         <span class="cat-num">✨</span>
@@ -5097,31 +5104,31 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                         <span class="cat-num"><span id="cntDlc">0</span></span>
                     </div>
 
-                    <div class="cat servers" onclick="window.location.href='servers.html'">
+                    <div class="cat servers" onclick="window.location.href='../servers.html'">
                         <i class="fa-solid fa-server"></i>
                         <span class="cat-name">سرورها</span>
                         <span class="cat-num"><span id="cntServers">0</span></span>
                     </div>
 
-                    <div class="cat commands" onclick="window.location.href='commands.html'">
+                    <div class="cat commands" onclick="window.location.href='../commands.html'">
                         <i class="fa-solid fa-terminal"></i>
                         <span class="cat-name">کامندها</span>
                         <span class="cat-num">⌨️</span>
                     </div>
 
-                    <div class="cat skin-url" onclick="window.location.href='skin-url.html'">
+                    <div class="cat skin-url" onclick="window.location.href='../skin-url.html'">
                         <i class="fa-solid fa-link"></i>
                         <span class="cat-name">اسکین به URL</span>
                         <span class="cat-num">🔗</span>
                     </div>
 
-                    <div class="cat zip-comp" onclick="window.location.href='zip-compressor.html'">
+                    <div class="cat zip-comp" onclick="window.location.href='../zip-compressor.html'">
                         <i class="fa-solid fa-compress"></i>
                         <span class="cat-name">کم حجم ساز</span>
                         <span class="cat-num">📦</span>
                     </div>
 
-                    <div class="cat compare" onclick="window.location.href='compare.html'">
+                    <div class="cat compare" onclick="window.location.href='../compare.html'">
                         <i class="fa-solid fa-code-compare"></i>
                         <span class="cat-name">مقایسه مادها</span>
                         <span class="cat-num">⚖️</span>
@@ -5201,7 +5208,7 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                 <i class="fa-solid fa-user"></i>
                 پروفایل
             </a>
-            <a href="premium.html">
+            <a href="../premium.html">
                 <i class="fa-solid fa-crown" style="color:#f0c040;"></i>
                 پرمیوم
             </a>
@@ -5312,9 +5319,9 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
     </script>
 
     <!-- EXTERNAL FILES -->
-    <script>document.write('<script src="mods.js?v=' + Date.now() + '"><\/script>');</script>
-    <script src="posts.js"></script>
-    <script src="servers.js"></script>
+    <script>document.write('<script src="../mods.js?v=' + Date.now() + '"><\/script>');</script>
+    <script src="../posts.js"></script>
+    <script src="../servers.js"></script>
 
     <script>
 /* BFMotion — scroll reveal (direction aware) + horizontal 3D rows. Only opacity/translate/transform are animated. */
@@ -5578,12 +5585,12 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
             localStorage.setItem('bf_guest_upgrade', JSON.stringify({
                 username: a.username || ''
             }));
-            window.location.href = 'auth.html?mode=register&upgrade=1';
+            window.location.href = '../auth.html?mode=register&upgrade=1';
         }
 
         function logout() {
             localStorage.removeItem('bf_auth');
-            window.location.href = 'auth.html';
+            window.location.href = '../auth.html';
         }
 
 
@@ -5665,27 +5672,27 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                                 <span class="cat-name">DLC</span>
                                 <span class="cat-num"><span id="cntDlc">0</span></span>
                             </div>
-                            <div class="cat servers" onclick="window.location.href='servers.html'">
+                            <div class="cat servers" onclick="window.location.href='../servers.html'">
                                 <i class="fa-solid fa-server"></i>
                                 <span class="cat-name">سرورها</span>
                                 <span class="cat-num"><span id="cntServers">0</span></span>
                             </div>
-                            <div class="cat commands" onclick="window.location.href='commands.html'">
+                            <div class="cat commands" onclick="window.location.href='../commands.html'">
                                 <i class="fa-solid fa-terminal"></i>
                                 <span class="cat-name">کامندها</span>
                                 <span class="cat-num">⌨️</span>
                             </div>
-                            <div class="cat skin-url" onclick="window.location.href='skin-url.html'">
+                            <div class="cat skin-url" onclick="window.location.href='../skin-url.html'">
                                 <i class="fa-solid fa-link"></i>
                                 <span class="cat-name">اسکین به URL</span>
                                 <span class="cat-num">🔗</span>
                             </div>
-                            <div class="cat zip-comp" onclick="window.location.href='zip-compressor.html'">
+                            <div class="cat zip-comp" onclick="window.location.href='../zip-compressor.html'">
                                 <i class="fa-solid fa-compress"></i>
                                 <span class="cat-name">کم حجم ساز</span>
                                 <span class="cat-num">📦</span>
                             </div>
-                            <div class="cat compare" onclick="window.location.href='compare.html'">
+                            <div class="cat compare" onclick="window.location.href='../compare.html'">
                                 <i class="fa-solid fa-code-compare"></i>
                                 <span class="cat-name">مقایسه مادها</span>
                                 <span class="cat-num">⚖️</span>
@@ -6399,7 +6406,7 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
         ========================== */
 
         function itemUrl(item) {
-            return 'items.html?m=' + encodeURIComponent(item.slug || ('item-' + item.id));
+            return BF_LOCAL('items.html?m=' + encodeURIComponent(item.slug || ('item-' + item.id)));
         }
 
         function openModal(id) {
