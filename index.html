@@ -18,8 +18,7 @@
         // BlockForge path helper: works from both /blockforge/ and /blockforge/home/
         window.BF_LOCAL = function (path) {
             var p = String(path || '').replace(/^\/+/, '');
-            var isHome = /\/home(?:\/|$)/.test(window.location.pathname);
-            return (isHome ? '../' : './') + p;
+            return './' + p;
         };
 
         if (
@@ -99,7 +98,7 @@
     })();
     </script>
 
-    <script src="../net.js"
+    <script src="./net.js"
         onerror="window.__BF_OFFLINE_GUARD__ && window.__BF_OFFLINE_GUARD__.goOffline()"></script>
 
     <!-- FONT CACHE / PRELOAD -->
@@ -109,7 +108,7 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" as="style" crossorigin onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preconnect" href="https://lottie.host" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
-    <link rel="prefetch" href="../items.html">
+    <link rel="prefetch" href="./items.html">
     <link rel="dns-prefetch" href="https://lottie.host">
 
     <link rel="preload"
@@ -139,7 +138,7 @@
         try {
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function () {
-                    navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(function () {});
+                    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(function () {});
                     if (navigator.storage && navigator.storage.persist) { navigator.storage.persist().catch(function () {}); }
                 });
             }
@@ -295,188 +294,122 @@
         }
 
         /* =========================
-           LOADER
-        ========================== */
-
-        .loader {
-            position: fixed;
-            inset: 0;
-
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(139,92,246,.10),
-                    transparent 35%
-                ),
-                var(--bg);
-
-            z-index: 99999;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            transition:
-                opacity .55s var(--ease),
-                visibility .55s ease;
-        }
-
-        .loader.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loader-icon {
-            width: 66px;
-            height: 66px;
-
-            border-radius: 19px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(168,85,247,.28),
-                    rgba(29,209,161,.10)
-                );
-
-            border: 1px solid rgba(255,255,255,.12);
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 1.7rem;
-
-            color: var(--gold2);
-
-            margin-bottom: 13px;
-
-            box-shadow:
-                0 0 45px rgba(139,92,246,.18),
-                inset 0 0 25px rgba(255,255,255,.025);
-
-            animation: loaderPulse 2s infinite var(--ease);
-        }
-
-        @keyframes loaderPulse {
-            0%,100% {
-                transform: scale(1);
-                box-shadow:
-                    0 0 35px rgba(139,92,246,.12),
-                    inset 0 0 25px rgba(255,255,255,.025);
-            }
-
-            50% {
-                transform: scale(1.06);
-                box-shadow:
-                    0 0 55px rgba(139,92,246,.28),
-                    inset 0 0 25px rgba(255,255,255,.04);
-            }
-        }
-
-        .loader-text {
-            font-size: 1.12rem;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 12px;
-            letter-spacing: -.3px;
-        }
-
-        .loader-text span {
-            color: var(--gold2);
-        }
-
-        .loader-bar-wrap {
-            width: 115px;
-            height: 3px;
-
-            background: rgba(255,255,255,.045);
-
-            border-radius: 5px;
-
-            overflow: hidden;
-        }
-
-        .loader-bar {
-            height: 100%;
-            width: 34%;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    var(--purple2),
-                    var(--green2)
-                );
-
-            border-radius: 5px;
-
-            animation:
-                loaderBar 1.25s ease-in-out infinite;
-
-            box-shadow:
-                0 0 12px rgba(168,85,247,.45);
-        }
-
-        @keyframes loaderBar {
-            0% {
-                transform: translateX(-130%);
-            }
-
-            100% {
-                transform: translateX(390%);
-            }
-        }
-
-        .loader-status {
-            min-width: 145px;
-            margin-top: 11px;
-            text-align: center;
-            color: var(--text2);
-            font-size: .63rem;
-            font-weight: 700;
-            letter-spacing: .2px;
-            opacity: .9;
-            transition: opacity .22s ease, transform .22s ease;
-        }
-
-        .loader-lottie.main-loader-only {
-            position: relative;
-            overflow: hidden;
-            border-radius: 28px;
-            isolation: isolate;
-            margin-bottom: 8px;
-            background:
-                radial-gradient(circle at center,
-                    rgba(255,255,255,.055),
-                    rgba(255,255,255,.018) 55%,
-                    transparent 76%);
-            box-shadow:
-                0 0 0 1px rgba(255,255,255,.055),
-                0 18px 55px rgba(0,0,0,.22),
-                inset 0 0 28px rgba(255,255,255,.035);
-        }
-
-        /* لبه‌ی قاب را نرم می‌کند تا زمینه‌ی سفید Embed کمتر به چشم بیاید. */
-        .loader-lottie.main-loader-only::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            pointer-events: none;
-            box-shadow:
-                inset 0 0 24px 8px rgba(5,5,16,.22),
-                0 0 32px 10px rgba(5,5,16,.16);
-            z-index: 2;
-        }
-
-        .loader-lottie .main-loader-lottie {
-            border-radius: inherit;
-        }
-
-        #app {
+   LOADER — DARK UIVERSE STYLE
+========================= */
+.loader{
+    position:fixed !important;
+    inset:0 !important;
+    z-index:99999 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    background:#000 !important;
+    color:#fff !important;
+    transition:opacity .55s var(--ease),visibility .55s ease;
+}
+.loader.hide{
+    opacity:0 !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+}
+.loader-spinner{
+    --size:30px;
+    --color:#fff;
+    width:100px;
+    height:100px;
+    position:relative;
+    margin-bottom:8px;
+}
+.loader-spinner::after,
+.loader-spinner::before{
+    box-sizing:border-box;
+    position:absolute;
+    content:"";
+    width:var(--size);
+    height:var(--size);
+    top:50%;
+    left:50%;
+    background:var(--color);
+    box-shadow:0 0 calc(var(--size) / 3) rgba(0,0,0,.25);
+}
+.loader-spinner::before{
+    animation:loaderUp 2.4s cubic-bezier(0,0,.24,1.21) infinite;
+}
+.loader-spinner::after{
+    background:var(--color);
+    top:calc(50% - var(--size));
+    left:calc(50% - var(--size));
+    animation:loaderDown 2.4s cubic-bezier(0,0,.24,1.21) infinite;
+}
+@keyframes loaderDown{
+    0%,100%{transform:none}
+    25%{transform:translateX(100%)}
+    50%{transform:translateX(100%) translateY(100%)}
+    75%{transform:translateY(100%)}
+}
+@keyframes loaderUp{
+    0%,100%{transform:none}
+    25%{transform:translateX(-100%)}
+    50%{transform:translateX(-100%) translateY(-100%)}
+    75%{transform:translateY(-100%)}
+}
+.loader-card{
+    --loader-bg:#111;
+    background:var(--loader-bg) !important;
+    padding:1rem 1.35rem !important;
+    border-radius:1.25rem;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 35px rgba(139,92,246,.08);
+    min-width:min(300px,calc(100vw - 36px));
+}
+.loader-words-row{
+    color:rgb(124,124,124);
+    font-family:"Poppins","Vazirmatn",sans-serif;
+    font-weight:500;
+    font-size:25px;
+    box-sizing:content-box;
+    height:40px;
+    padding:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:8px;
+    direction:ltr;
+}
+.loader-words{
+    overflow:hidden;
+    position:relative;
+    height:40px;
+    min-width:150px;
+    text-align:left;
+}
+.loader-word-track{
+    display:block;
+    will-change:transform;
+    transform:translateY(0);
+}
+.loader-word{
+    display:block;
+    height:40px;
+    line-height:40px;
+    padding-left:6px;
+    color:var(--purple3);
+    white-space:nowrap;
+    text-shadow:0 0 18px rgba(168,85,247,.18);
+}
+.loader-status{
+    position:absolute !important;
+    width:1px !important;
+    height:1px !important;
+    padding:0 !important;
+    margin:-1px !important;
+    overflow:hidden !important;
+    clip:rect(0,0,0,0) !important;
+    white-space:nowrap !important;
+    border:0 !important;
+}
+#app {
             opacity: 0;
 
             transition: opacity .45s ease;
@@ -1655,15 +1588,18 @@
             gap: 7px;
 
             overflow-x: auto;
+            overflow-y: visible;
 
             padding:
                 5px 12px
                 11px;
 
             scrollbar-width: none;
-
-            scroll-snap-type:
-                x proximity;
+            direction: ltr;
+            scroll-snap-type: none !important;
+            scroll-behavior: auto !important;
+            overscroll-behavior-x: contain;
+            touch-action: pan-x;
         }
 
         .h-scroll::-webkit-scrollbar { display: none; }
@@ -1671,7 +1607,8 @@
         .card,
         .v-card,
         .server-card {
-            scroll-snap-align: start;
+            scroll-snap-align: none !important;
+            direction: rtl;
         }
 
         /* =========================
@@ -4752,10 +4689,7 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
 @keyframes lsDot{0%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
 
 /* ---------- دکمه پشتیبانی: کاملاً گرد ---------- */
-.help-fab{
-    width:54px !important;height:54px !important;padding:0 !important;overflow:visible !important;
-    background:#fff !important;border:2px solid rgba(212,165,74,.65) !important;border-radius:50% !important;
-}
+
 .help-fab .fab-clip{
     position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#fff;
     clip-path:circle(50% at 50% 50%);-webkit-clip-path:circle(50% at 50% 50%);transform:translateZ(0);
@@ -4772,19 +4706,36 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
 }
 .cat,.section-head,.slider-section,.stats-row,.rubika-banner{will-change:auto}
 
-/* ردیف‌های افقی: کره‌ی سه‌بعدی */
+/* ردیف‌های افقی: کره‌ی سه‌بعدی + infinite loop */
 .h-scroll{
-    perspective:1100px;perspective-origin:50% 50%;position:relative;
-    scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
-    padding-top:18px !important;padding-bottom:24px !important;margin-top:-10px;margin-bottom:-10px;
+    perspective:1100px;
+    perspective-origin:50% 50%;
+    position:relative;
+    direction:ltr !important;
+    scroll-snap-type:none !important;
+    scroll-behavior:auto !important;
+    overscroll-behavior-x:contain;
+    touch-action:pan-x;
+    padding-top:18px !important;
+    padding-bottom:24px !important;
+    margin-top:-10px;
+    margin-bottom:-10px;
 }
 .h-scroll>.card,.h-scroll>.v-card,.h-scroll>.server-card{
-    position:relative;scroll-snap-align:center;transform-origin:50% 50%;backface-visibility:hidden;
+    position:relative;
+    scroll-snap-align:none !important;
+    transform-origin:50% 50%;
+    backface-visibility:hidden;
     will-change:transform;
-    transition:border-color .3s ease,box-shadow .3s ease !important;
-    box-shadow:0 14px 34px rgba(0,0,0,.42);
+    direction:rtl !important;
+    transition:border-color .25s ease,box-shadow .25s ease !important;
+    box-shadow:0 8px 18px rgba(0,0,0,.35);
 }
-.h-scroll>.card:hover,.h-scroll>.v-card:hover{box-shadow:0 14px 34px rgba(0,0,0,.42)}
+.h-scroll.rise-row > .card,
+.h-scroll.rise-row > .v-card,
+.h-scroll.rise-row > .server-card{
+    animation:none !important;
+}
 
 /* ---------- PERF: اسکرول روان ---------- */
 .main-content{
@@ -4809,7 +4760,7 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
 }
 #app::before{color:#a855f7}#app::after{color:#00d4ff}
 .help-fab{animation:none !important;box-shadow:0 9px 25px rgba(139,92,246,.4) !important}
-.card,.v-card,.fl-card{transform:none;will-change:auto}
+.card,.v-card,.fl-card{will-change:auto}
 .h-scroll>.card,.h-scroll>.v-card,.h-scroll>.server-card{will-change:transform}
 @media (hover:none){
     .card:hover,.v-card:hover,.fl-card:hover{box-shadow:none}
@@ -4827,103 +4778,198 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
     .v-card{min-width:212px;max-width:212px}
 }
 </style>
+<style id="loader-dark-final">
+html,body{
+    background:#000 !important;
+}
+.loader{
+    background:#000 !important;
+}
+</style>
+
+<style id="final-ui-fixes">
+/* ---------- LOADER: no card, fixed white loading ---------- */
+.loader-card{display:none !important}
+.loader{background:#000 !important}
+.loader-words-row{
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    padding:0 !important;
+    gap:7px;
+    min-height:40px;
+}
+.loader-static{
+    color:#fff !important;
+    font-family:"Poppins","Vazirmatn",sans-serif;
+    font-size:25px;
+    font-weight:500;
+    line-height:40px;
+    white-space:nowrap;
+    text-shadow:0 0 18px rgba(255,255,255,.10);
+}
+.loader-words{min-width:115px !important;height:40px !important}
+.loader-word{color:var(--purple3) !important}
+
+/* ---------- SUPPORT FAQ ---------- */
+.faq-button{
+    width:50px !important;height:50px !important;border-radius:50% !important;
+    border:none !important;
+    background-color:#ffe53b !important;
+    background-image:linear-gradient(147deg,#ffe53b 0%,#ff2525 74%) !important;
+    display:flex !important;align-items:center !important;justify-content:center !important;
+    cursor:pointer;box-shadow:0 10px 10px rgba(0,0,0,.151) !important;
+    position:fixed !important;
+    bottom:calc(82px + var(--safe)) !important;right:14px !important;
+    z-index:150 !important;text-decoration:none !important;
+    color:#fff !important;
+}
+.faq-button svg{height:1.5em !important;fill:white !important}
+.faq-button:hover svg{animation:jello-vertical .7s both}
+@keyframes jello-vertical{
+  0%{transform:scale3d(1,1,1)}30%{transform:scale3d(.75,1.25,1)}
+  40%{transform:scale3d(1.25,.75,1)}50%{transform:scale3d(.85,1.15,1)}
+  65%{transform:scale3d(1.05,.95,1)}75%{transform:scale3d(.95,1.05,1)}100%{transform:scale3d(1,1,1)}
+}
+.faq-button .tooltip{
+    position:absolute;top:-20px;opacity:0;background-color:#ffe53b;
+    background-image:linear-gradient(147deg,#ffe53b 0%,#ff2525 74%);color:#fff;
+    padding:5px 10px;border-radius:5px;display:flex;align-items:center;justify-content:center;
+    transition-duration:.2s;pointer-events:none;letter-spacing:.5px;white-space:nowrap;
+}
+.faq-button .tooltip::before{
+    position:absolute;content:"";width:10px;height:10px;background-color:#ff2525;
+    background-size:1000%;background-position:center;transform:rotate(45deg);bottom:-15%;
+    transition-duration:.3s;
+}
+.faq-button:hover .tooltip{top:-40px;opacity:1;transition-duration:.3s}
+
+/* ---------- PREMIUM ---------- */
+.buttonupgrade{
+    width:fit-content;display:flex;padding:.65em .65rem;cursor:pointer;gap:.4rem;font-weight:bold;
+    border-radius:30px;text-shadow:2px 2px 3px rgba(221,255,0,.3);
+    background:linear-gradient(15deg,#ddff00,#b8d100,#93a300,#6e7500,#ddff00,#b8d100,#93a300,#6e7500) no-repeat;
+    background-size:300%;color:#000;border:none;background-position:left center;
+    box-shadow:0 12px 10px -12px rgba(221,255,0,.35);transition:background .3s ease,color .3s ease;
+    align-items:center;justify-content:center;
+}
+.buttonupgrade:hover{background-size:320%;background-position:right center;color:#000}
+.buttonupgrade:hover svg{fill:#000}
+.buttonupgrade svg{width:21px;fill:#000;transition:.3s ease}
+.header-upgrade{height:31px;min-width:auto;padding:.35em .75rem !important;gap:.45rem !important}.header-upgrade .premium-label{display:inline-flex;align-items:center;font-size:.68rem;font-weight:900;white-space:nowrap;line-height:1}.header-upgrade svg{flex:0 0 auto}
+.nav-pro-icon{width:18px;height:14px;fill:#ddff00;vertical-align:middle}
+/* موبایل: پرمیوم جمع‌وجورتر */
+@media (max-width:520px){
+    .header-upgrade{
+        height:28px !important;
+        padding:.25em .5rem !important;
+        gap:.28rem !important;
+        border-radius:22px !important;
+    }
+    .header-upgrade svg{width:16px !important;height:13px !important}
+    .header-upgrade .premium-label{font-size:.54rem !important;letter-spacing:-.15px}
+}
+
+
+/* ---------- POSTS UNDER RUBIKA ---------- */
+.posts-under-rubika{
+    width:100%;margin:7px 0 2px;padding:10px 14px;border:1px solid rgba(168,85,247,.28);
+    border-radius:12px;background:linear-gradient(135deg,rgba(139,92,246,.16),rgba(168,85,247,.06));
+    color:#fff;font-family:inherit;font-weight:800;font-size:.72rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .2s ease,border-color .2s ease,background .2s ease;
+}
+.posts-under-rubika i{color:var(--purple3)}
+.posts-under-rubika:active{transform:scale(.97)}
+
+/* ---------- PROFILE ---------- */
+.profile-details-btn,.profile-saved-btn{
+    width:100%;margin-top:8px;padding:11px;border-radius:10px;border:1px solid rgba(168,85,247,.25);
+    background:rgba(168,85,247,.08);color:#fff;cursor:pointer;font-family:inherit;font-weight:800;font-size:.68rem;
+    display:flex;align-items:center;justify-content:center;gap:8px;position:relative;
+}
+.profile-details-btn i{color:var(--purple3)}
+.profile-saved-btn i{color:#ffe53b}
+.profile-details-panel{display:none;margin-top:4px;padding:8px 0 2px}
+.profile-details-panel.open{display:block}
+.profile-saved-btn .badge{position:absolute;right:9px;top:50%;transform:translateY(-50%)}
+
+
+/* پروفایل: فقط آیکون‌های Font Awesome، بدون ایموجی */
+.profile-card .profile-icon,.profile-card .profile-details-btn i,.profile-card .profile-saved-btn i{
+    font-family:"Font Awesome 6 Free" !important;
+    font-weight:900;
+}
+
+/* ---------- 3D HORIZONTAL SCROLL: reduce jumps ---------- */
+.h-scroll{overflow-anchor:none !important;scroll-snap-type:none !important;}
+.h-scroll>.card,.h-scroll>.v-card,.h-scroll>.server-card{
+    transform-style:preserve-3d !important;
+    -webkit-transform-style:preserve-3d !important;
+    backface-visibility:hidden !important;
+    -webkit-backface-visibility:hidden !important;
+    transition:none !important;
+    contain:layout paint !important;
+    will-change:transform;
+}
+.h-scroll>.card *, .h-scroll>.v-card *, .h-scroll>.server-card *{backface-visibility:hidden}
+</style>
+
 </head>
 
 <body>
 
     <!-- LOADER -->
     <div class="loader" id="loader">
-        <div class="loader-lottie main-loader-only" id="loaderLottieWrap">
-            <iframe class="lottie-frame main-loader-lottie" id="loaderLottie"
-                    src="https://lottie.host/embed/62da80be-c214-49ef-840b-5d77660e1b2a/QDNUMX7Lyf.lottie"
-                    title=""
-                    tabindex="-1"
-                    allowtransparency="true"
-                    loading="eager"></iframe>
+        <div class="loader-spinner" aria-hidden="true"></div>
+        <div class="loader-words-row" aria-label="Loading">
+            <span class="loader-static">loading</span>
+            <div class="loader-words" aria-hidden="true">
+                <div class="loader-word-track" id="loaderWordTrack">
+                    <span class="loader-word">items</span>
+                    <span class="loader-word">checking</span>
+                    <span class="loader-word">items</span>
+                </div>
+            </div>
         </div>
-<div class="loader-status" id="loaderStatus" dir="ltr"><span class="ls-wrap"><span class="ls-ghost" id="lsGhost">loading...</span><span class="ls-live"><span class="ls-text" id="lsText"></span><span class="ls-dots" id="lsDots"><i>.</i><i>.</i><i>.</i></span></span></span></div>
-    </div>
-<script>
-        (function () {
-            var el = document.getElementById('loaderLottie');
-            var w = document.getElementById('loaderLottieWrap');
-            var status = document.getElementById('loaderStatus');
-            if (!el || !w) return;
-
-            function ok() {
-                if (w.classList.contains('ready')) return;
-                w.classList.add('ready');
-                window.__bfLoaderReadyAt = Date.now();
-            }
-
-            el.addEventListener('load', ok);
-            setTimeout(ok, 1200);
-
-            // متن لودینگ: تایپ حرف‌به‌حرف، پاک‌کردن، و نقطه‌های سمت راست
-            var txt = document.getElementById('lsText');
-            var ghost = document.getElementById('lsGhost');
-            var dots = document.querySelectorAll('#lsDots i');
-            var timer = null;
-
-            function setDots(n) {
-                for (var d = 0; d < dots.length; d++) dots[d].classList.toggle('on', d < n);
-            }
-
-            function typeStatus(str) {
-                if (!status || !txt) return;
-                clearInterval(timer);
-                ghost.textContent = str + '...';
-                status.classList.remove('done');
-                setDots(0);
-                var i = txt.textContent.length;
-                // اول متن قبلی پاک میشه
-                timer = setInterval(function () {
-                    if (i > 0) { txt.textContent = txt.textContent.slice(0, --i); return; }
-                    clearInterval(timer);
-                    var k = 0;
-                    timer = setInterval(function () {
-                        txt.textContent = str.slice(0, ++k);
-                        if (k >= str.length) {
-                            clearInterval(timer);
-                            status.classList.add('done');
-                            var n = 0;
-                            timer = setInterval(function () {
-                                setDots(++n);
-                                if (n >= 3) clearInterval(timer);
-                            }, 170);
-                        }
-                    }, 62);
-                }, 22);
-            }
-
-            typeStatus('loading');
-            setTimeout(function () { typeStatus('loading items'); }, 1700);
-            setTimeout(function () { typeStatus('checking'); }, 3900);
-        })();
-        </script>
+        <div class="loader-status" id="loaderStatus" aria-live="polite">
+            <span id="lsText">loading items</span>
+        </div>
     </div>
 
+    <script>
+    (function(){
+        var track = document.getElementById('loaderWordTrack');
+        var statusText = document.getElementById('lsText');
+        if (!track) return;
+        var words = ['items','checking','items'];
+        var labels = ['loading items','checking','loading items'];
+        var index = 0, holdTime = 2600, moveTime = 420;
+        function showWord(i, animate){
+            track.style.transition = animate ? 'transform '+moveTime+'ms cubic-bezier(.4,0,.2,1)' : 'none';
+            track.style.transform = 'translateY(-'+(i*40)+'px)';
+            if (statusText) statusText.textContent = labels[i];
+        }
+        function nextWord(){
+            if (index < words.length - 1) {
+                index++;
+                showWord(index, true);
+                setTimeout(nextWord, holdTime + moveTime);
+            } else {
+                setTimeout(function(){
+                    index = 0;
+                    showWord(0, true);
+                    setTimeout(nextWord, holdTime + moveTime);
+                }, holdTime);
+            }
+        }
+        showWord(0, false);
+        setTimeout(nextWord, holdTime);
+    })();
+    </script>
 
     <div id="app">
 
-        <script>
-            (function () {
-                const a =
-                    JSON.parse(
-                        localStorage.getItem(
-                            'bf_auth'
-                        ) || '{}'
-                    );
-                if (
-                    !a.loggedIn ||
-                    !a.token ||
-                    !a.expiresAt ||
-                    Date.now() >= a.expiresAt
-                ) {
-                    window.location.replace(BF_LOCAL('auth.html'));
-                }
-            })();
-        </script>
+        <!-- Auth redirect removed: index.html opens directly. -->
 
 
         <!-- HEADER -->
@@ -4939,21 +4985,13 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                     <span id="tokenDisplay">0</span>
                 </div>
 
-                <button class="h-btn" onclick="window.location.href='../search.html'">
+                <button class="h-btn" onclick="window.location.href='./search.html'">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
 
-                <button class="h-btn" onclick="window.location.href='../posts.html'">
-                    <i class="fa-solid fa-newspaper"></i>
-                </button>
-
-                <button class="h-btn" onclick="window.location.href='../premium.html'">
-                    <i class="fa-solid fa-crown" style="color:#f0c040;"></i>
-                </button>
-
-                <button class="h-btn" onclick="showSaved()">
-                    <i class="fa-solid fa-bookmark"></i>
-                    <span class="badge" id="savedBadge" style="display:none;">0</span>
+                <button class="buttonupgrade header-upgrade" onclick="window.location.href='./premium.html'" aria-label="Get Premium">
+                    <svg viewBox="0 0 36 24" xmlns="http://www.w3.org/2000/svg"><path d="m18 0 8 12 10-8-4 20H4L0 4l10 8 8-12z"></path></svg>
+                    <span class="premium-label">GET PREMIUM</span>
                 </button>
 
                 <button class="profile-btn-header" onclick="openProfile()">
@@ -4968,10 +5006,9 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
 
 
         <!-- HELP -->
-        <a href="../help.html" class="help-fab" title="پشتیبانی" aria-label="پشتیبانی">
-            <span class="ripple"></span>
-            <span class="fab-clip"><iframe class="fab-lottie" src="https://lottie.host/embed/cea7beb5-456c-405e-9d2a-7cd0229050ce/2E4eIQMruC.lottie"
-                    title="" tabindex="-1" allowtransparency="true" loading="eager"></iframe></span>
+        <a href="./help.html" class="faq-button" title="پشتیبانی" aria-label="پشتیبانی">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M80 160c0-35.3 28.7-64 64-64h32c35.3 0 64 28.7 64 64v3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74V320c0 17.7 14.3 32 32 32s32-14.3 32-32v-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7V160c0-70.7-57.3-128-128-128H144C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"></path></svg>
+            <span class="tooltip">FAQ</span>
         </a>
 
 
@@ -4983,13 +5020,8 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <a href="#" onclick="showSaved();closeMenu();">
-                <i class="fa-solid fa-bookmark"></i>
-                ذخیره‌شده‌ها
-            </a>
-
-            <a href="../premium.html">
-                <i class="fa-solid fa-crown" style="color:#f0c040;"></i>
+            <a href="./premium.html">
+                <svg class="nav-pro-icon" viewBox="0 0 36 24" xmlns="http://www.w3.org/2000/svg"><path d="m18 0 8 12 10-8-4 20H4L0 4l10 8 8-12z"></path></svg>
                 پرمیوم
             </a>
 
@@ -4998,7 +5030,7 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                 پروفایل
             </a>
 
-            <a href="../help.html">
+            <a href="./help.html">
                 <i class="fa-solid fa-circle-question"></i>
                 راهنما
             </a>
@@ -5044,6 +5076,10 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                     </div>
                     <i class="fa-solid fa-chevron-left" style="color:rgba(0,180,255,.5);"></i>
                 </div>
+                <button class="posts-under-rubika" onclick="window.location.href='./posts.html'">
+                    <i class="fa-solid fa-newspaper"></i>
+                    پست‌ها و اخبار
+                </button>
 
                 <div class="stats-row">
                     <div class="stat-chip">
@@ -5068,7 +5104,7 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                         <span class="cat-num"><span id="cntMods">0</span></span>
                     </div>
 
-                    <div class="cat enchant" onclick="window.location.href='../enchantments.html'">
+                    <div class="cat enchant" onclick="window.location.href='./enchantments.html'">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
                         <span class="cat-name">انچنت‌ها</span>
                         <span class="cat-num">✨</span>
@@ -5104,31 +5140,31 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                         <span class="cat-num"><span id="cntDlc">0</span></span>
                     </div>
 
-                    <div class="cat servers" onclick="window.location.href='../servers.html'">
+                    <div class="cat servers" onclick="window.location.href='./servers.html'">
                         <i class="fa-solid fa-server"></i>
                         <span class="cat-name">سرورها</span>
                         <span class="cat-num"><span id="cntServers">0</span></span>
                     </div>
 
-                    <div class="cat commands" onclick="window.location.href='../commands.html'">
+                    <div class="cat commands" onclick="window.location.href='./commands.html'">
                         <i class="fa-solid fa-terminal"></i>
                         <span class="cat-name">کامندها</span>
                         <span class="cat-num">⌨️</span>
                     </div>
 
-                    <div class="cat skin-url" onclick="window.location.href='../skin-url.html'">
+                    <div class="cat skin-url" onclick="window.location.href='./skin-url.html'">
                         <i class="fa-solid fa-link"></i>
                         <span class="cat-name">اسکین به URL</span>
                         <span class="cat-num">🔗</span>
                     </div>
 
-                    <div class="cat zip-comp" onclick="window.location.href='../zip-compressor.html'">
+                    <div class="cat zip-comp" onclick="window.location.href='./zip-compressor.html'">
                         <i class="fa-solid fa-compress"></i>
                         <span class="cat-name">کم حجم ساز</span>
                         <span class="cat-num">📦</span>
                     </div>
 
-                    <div class="cat compare" onclick="window.location.href='../compare.html'">
+                    <div class="cat compare" onclick="window.location.href='./compare.html'">
                         <i class="fa-solid fa-code-compare"></i>
                         <span class="cat-name">مقایسه مادها</span>
                         <span class="cat-num">⚖️</span>
@@ -5208,13 +5244,9 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                 <i class="fa-solid fa-user"></i>
                 پروفایل
             </a>
-            <a href="../premium.html">
+            <a href="./premium.html">
                 <i class="fa-solid fa-crown" style="color:#f0c040;"></i>
                 پرمیوم
-            </a>
-            <a href="#" onclick="showSaved()">
-                <i class="fa-solid fa-bookmark"></i>
-                ذخیره
             </a>
         </nav>
 
@@ -5233,20 +5265,24 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                 <div style="font-size:.87rem;font-weight:900;" id="profileName">---</div>
                 <div style="font-size:.48rem;color:var(--text3);margin-bottom:7px;" id="profileEmail">---</div>
 
-                <div style="display:flex;gap:5px;margin:9px 0;">
-                    <input type="text" id="editUsername" placeholder="نام جدید" style="flex:1;background:rgba(0,0,0,.38);border:1px solid var(--border);border-radius:7px;padding:7px;color:#fff;font-family:inherit;text-align:right;outline:none;font-size:.55rem;">
-
-                    <button onclick="saveUsername()" style="padding:6px 12px;border-radius:7px;border:none;background:linear-gradient(135deg,var(--green2),#1a6b2a);color:#fff;font-weight:800;cursor:pointer;font-family:inherit;font-size:.5rem;">
-                        <i class="fa-solid fa-check"></i>
-                    </button>
-                </div>
-
-                <div id="profileMsg" style="font-size:.38rem;min-height:12px;"></div>
-
-                <button id="connectEmailBtn" class="profile-email-action" onclick="connectEmail()">
-                    <i class="fa-solid fa-envelope"></i>
-                    اتصال ایمیل و ساخت حساب
+                <button class="profile-details-btn" onclick="toggleProfileDetails()">
+                    <i class="fa-solid fa-id-card"></i>
+                    مشخصات پروفایل
                 </button>
+                <button class="profile-saved-btn" onclick="showSaved();closeProfile();">
+                    <i class="fa-solid fa-bookmark"></i>
+                    ذخیره‌ها
+                    <span class="badge" id="profileSavedBadge" style="display:none;">0</span>
+                </button>
+
+                <div class="profile-details-panel" id="profileDetailsPanel">
+                    <div style="display:flex;gap:5px;margin:9px 0;">
+                        <input type="text" id="editUsername" placeholder="نام جدید" style="flex:1;background:rgba(0,0,0,.38);border:1px solid var(--border);border-radius:7px;padding:7px;color:#fff;font-family:inherit;text-align:right;outline:none;font-size:.55rem;">
+                        <button onclick="saveUsername()" style="padding:6px 12px;border-radius:7px;border:none;background:linear-gradient(135deg,var(--green2),#1a6b2a);color:#fff;font-weight:800;cursor:pointer;font-family:inherit;font-size:.5rem;"><i class="fa-solid fa-check"></i></button>
+                    </div>
+                    <div id="profileMsg" style="font-size:.38rem;min-height:12px;"></div>
+                    <button id="connectEmailBtn" class="profile-email-action" onclick="connectEmail()"><i class="fa-solid fa-envelope"></i> اتصال ایمیل و ساخت حساب</button>
+                </div>
 
                 <button style="width:100%;margin-top:11px;padding:8px;border-radius:7px;border:1px solid rgba(231,76,60,.3);background:rgba(231,76,60,.06);color:var(--red);cursor:pointer;font-family:inherit;font-weight:800;font-size:.5rem;" onclick="logout()">
                     <i class="fa-solid fa-right-from-bracket"></i>
@@ -5319,9 +5355,9 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
     </script>
 
     <!-- EXTERNAL FILES -->
-    <script>document.write('<script src="../mods.js?v=' + Date.now() + '"><\/script>');</script>
-    <script src="../posts.js"></script>
-    <script src="../servers.js"></script>
+    <script>document.write('<script src="./mods.js?v=' + Date.now() + '"><\/script>');</script>
+    <script src="./posts.js"></script>
+    <script src="./servers.js"></script>
 
     <script>
 /* BFMotion — scroll reveal (direction aware) + horizontal 3D rows. Only opacity/translate/transform are animated. */
@@ -5405,35 +5441,57 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
     }
 
     function pad(row) {
-        var k = row.firstElementChild;
-        if (!k || !k.offsetWidth) return;
-        var p = Math.max(12, Math.round((row.clientWidth - k.offsetWidth) / 2));
-        if (row.__bfPad !== p) { row.__bfPad = p; row.style.paddingLeft = row.style.paddingRight = p + 'px'; }
+        var kids = row.children;
+        if (!kids.length || !kids[0].offsetWidth) return;
+        var p = Math.max(12, Math.round((row.clientWidth - kids[0].offsetWidth) / 2));
+        if (row.__bfPad !== p) {
+            row.__bfPad = p;
+            row.style.paddingLeft = row.style.paddingRight = p + 'px';
+        }
+    }
+
+    function measureRow(row) {
+        var kids = row.children, n = kids.length;
+        if (!n) { row.__bfGeom = null; return; }
+        var centers = new Array(n);
+        var widths = new Array(n);
+        for (var i = 0; i < n; i++) {
+            centers[i] = kids[i].offsetLeft + kids[i].offsetWidth / 2;
+            widths[i] = kids[i].offsetWidth;
+            kids[i].__bfK = null;
+        }
+        var step = (widths[0] || 150) + parseFloat(getComputedStyle(row).columnGap || getComputedStyle(row).gap || '7') || 157;
+        row.__bfGeom = { centers: centers, n: n, step: step, width: row.clientWidth };
     }
 
     function sphere(row) {
-        var kids = row.children, n = kids.length;
-        if (!n) return;
+        var geom = row.__bfGeom;
+        if (!geom || !geom.n) return;
+
         var c = row.scrollLeft + row.clientWidth / 2;
-        var step = (kids[0].offsetWidth || 150) + 8;
-        var data = new Array(n);
-        for (var i = 0; i < n; i++) data[i] = kids[i].offsetLeft + kids[i].offsetWidth / 2;   // reads first
-        for (var j = 0; j < n; j++) {
-            var el = kids[j], d = (data[j] - c) / step, a = Math.abs(d);
-            var f = Math.min(a, 2.5), cl = Math.max(-2.5, Math.min(2.5, d));
-            var key = Math.round(d * 40);
-            if (el.__bfK === key) continue;
-            el.__bfK = key;
-            var s = 1.05 - 0.11 * f;
-            el.style.transform = 'translate3d(' + (cl * 5).toFixed(1) + 'px,0,' + (-f * 28).toFixed(1) + 'px) rotateY(' + (cl * 20).toFixed(1) + 'deg) scale(' + s.toFixed(3) + ')';
-            el.style.zIndex = String(100 - Math.round(a * 10));
+        var centers = geom.centers, n = geom.n, step = geom.step;
+
+        for (var i = 0; i < n; i++) {
+            var el = row.children[i];
+            if (!el) continue;
+            var d = (centers[i] - c) / step;
+            var a = Math.abs(d);
+            var f = Math.min(a, 2.5);
+            var cl = Math.max(-2.5, Math.min(2.5, d));
+            var scale = 1.05 - 0.10 * f;
+            var z = -f * 24;
+            var ry = cl * 17;
+            el.style.transform =
+                'translate3d(0,0,' + z.toFixed(2) + 'px) rotateY(' + ry.toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
+            el.style.zIndex = String(100 - Math.round(a * 8));
         }
     }
 
     function refreshRow(row) {
         if (!row || !row.__bfRowSt) return;
         pad(row);
-        if (cfg.sphere) { schedule(row); setTimeout(function () { pad(row); schedule(row); }, 350); }
+        measureRow(row);
+        if (cfg.sphere) schedule(row);
     }
 
     /* ---------- scanning ---------- */
@@ -5488,7 +5546,22 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
         scan(document.body);
     }
 
-    window.BFMotion = { init: init, scan: scan, play: play, reset: reset };
+    window.BFMotion = {
+        init: init,
+        scan: scan,
+        play: play,
+        reset: reset,
+        updateRow: function (row) {
+            if (!row || !cfg.sphere) return;
+            schedule(row);
+        },
+        refreshRow: function (row) {
+            if (!row || !row.__bfRowSt) return;
+            pad(row);
+            measureRow(row);
+            if (cfg.sphere) schedule(row);
+        }
+    };
 })();
 
     BFMotion.init({
@@ -5540,11 +5613,17 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                 connectBtn.style.display = guest ? 'block' : 'none';
             }
 
+            document.getElementById('profileDetailsPanel')?.classList.remove('open');
             document.getElementById('profileOverlay').classList.add('active');
         }
 
         function closeProfile() {
             document.getElementById('profileOverlay').classList.remove('active');
+        }
+
+        function toggleProfileDetails() {
+            const panel = document.getElementById('profileDetailsPanel');
+            if (panel) panel.classList.toggle('open');
         }
 
         function saveUsername() {
@@ -5624,6 +5703,10 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                             </div>
                             <i class="fa-solid fa-chevron-left" style="color:rgba(0,180,255,.5);"></i>
                         </div>
+                        <button class="posts-under-rubika" onclick="window.location.href='./posts.html'">
+                            <i class="fa-solid fa-newspaper"></i>
+                            پست‌ها و اخبار
+                        </button>
 
                         <div class="stats-row">
                             <div class="stat-chip">
@@ -5672,27 +5755,27 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
                                 <span class="cat-name">DLC</span>
                                 <span class="cat-num"><span id="cntDlc">0</span></span>
                             </div>
-                            <div class="cat servers" onclick="window.location.href='../servers.html'">
+                            <div class="cat servers" onclick="window.location.href='./servers.html'">
                                 <i class="fa-solid fa-server"></i>
                                 <span class="cat-name">سرورها</span>
                                 <span class="cat-num"><span id="cntServers">0</span></span>
                             </div>
-                            <div class="cat commands" onclick="window.location.href='../commands.html'">
+                            <div class="cat commands" onclick="window.location.href='./commands.html'">
                                 <i class="fa-solid fa-terminal"></i>
                                 <span class="cat-name">کامندها</span>
                                 <span class="cat-num">⌨️</span>
                             </div>
-                            <div class="cat skin-url" onclick="window.location.href='../skin-url.html'">
+                            <div class="cat skin-url" onclick="window.location.href='./skin-url.html'">
                                 <i class="fa-solid fa-link"></i>
                                 <span class="cat-name">اسکین به URL</span>
                                 <span class="cat-num">🔗</span>
                             </div>
-                            <div class="cat zip-comp" onclick="window.location.href='../zip-compressor.html'">
+                            <div class="cat zip-comp" onclick="window.location.href='./zip-compressor.html'">
                                 <i class="fa-solid fa-compress"></i>
                                 <span class="cat-name">کم حجم ساز</span>
                                 <span class="cat-num">📦</span>
                             </div>
-                            <div class="cat compare" onclick="window.location.href='../compare.html'">
+                            <div class="cat compare" onclick="window.location.href='./compare.html'">
                                 <i class="fa-solid fa-code-compare"></i>
                                 <span class="cat-name">مقایسه مادها</span>
                                 <span class="cat-num">⚖️</span>
@@ -5831,10 +5914,9 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
         function badge() {
             const c = savedItems.size;
             const e = document.getElementById('savedBadge');
-            if (e) {
-                e.style.display = c > 0 ? 'flex' : 'none';
-                e.textContent = c;
-            }
+            const pe = document.getElementById('profileSavedBadge');
+            if (e) { e.style.display = c > 0 ? 'flex' : 'none'; e.textContent = c; }
+            if (pe) { pe.style.display = c > 0 ? 'inline-flex' : 'none'; pe.textContent = c; }
         }
 
 
@@ -6300,51 +6382,93 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
         ========================== */
 
         function makeInfinite(row) {
-            if (!row || row.__inf) return;
-            const orig = Array.from(row.children).filter(c => c.classList.contains('card') || c.classList.contains('v-card'));
-            const n = orig.length;
-            if (n < 3) return;
-            row.__inf = 1;
+            if (!row || row.__inf === 2) return;
 
-            const before = document.createDocumentFragment();
-            const after = document.createDocumentFragment();
-            orig.forEach(c => { before.appendChild(c.cloneNode(true)); after.appendChild(c.cloneNode(true)); });
+            // Keep a clean original set; rebuild if renderHome() replaced the contents.
+            var orig = Array.from(row.children).filter(function (c) {
+                return c.classList.contains('card') || c.classList.contains('v-card') || c.classList.contains('server-card');
+            });
+            var n = orig.length;
+            if (n < 2) { row.__inf = 0; return; }
+
+            row.__inf = 2;
+            row.classList.add('bf-infinite-row');
+
+            var before = document.createDocumentFragment();
+            var after = document.createDocumentFragment();
+            var i;
+
+            // A,B,C copies -> the user can move in both directions continuously.
+            for (i = 0; i < n; i++) {
+                var b = orig[i].cloneNode(true);
+                var a = orig[i].cloneNode(true);
+                b.dataset.bfClone = 'before';
+                a.dataset.bfClone = 'after';
+                before.appendChild(b);
+                after.appendChild(a);
+            }
+
+            for (i = 0; i < orig.length; i++) orig[i].dataset.bfOriginal = '1';
             row.insertBefore(before, row.firstChild);
             row.appendChild(after);
 
-            const center = el => { const r = el.getBoundingClientRect(); return r.left + r.width / 2; };
-            const nearest = () => {
-                const rc = center(row); let best = 0, bd = 1e9;
-                for (let i = 0; i < row.children.length; i++) {
-                    const d = Math.abs(center(row.children[i]) - rc);
-                    if (d < bd) { bd = d; best = i; }
+            function cycleWidth() {
+                var all = row.children;
+                if (!all[n] || !all[0]) return 0;
+                return all[n].offsetLeft - all[0].offsetLeft;
+            }
+
+            // Start inside the middle/original copy.
+            var cw = cycleWidth();
+            if (cw > 0) row.scrollLeft = cw;
+
+            row.__bfCycle = cw;
+            row.__bfInfRaf = 0;
+            row.__bfInfLast = row.scrollLeft;
+
+            function normalize() {
+                row.__bfInfRaf = 0;
+                var w = row.__bfCycle || cycleWidth();
+                if (!w) return;
+
+                var x = row.scrollLeft;
+                // Stay inside the middle cycle. Shift by exactly one cycle,
+                // preserving the visual position so the loop is seamless.
+                if (x < w * 0.35) {
+                    row.scrollLeft = x + w;
+                } else if (x > w * 1.65) {
+                    row.scrollLeft = x - w;
                 }
-                return best;
-            };
-            const jump = (from, to) => {
-                const delta = center(row.children[to]) - center(row.children[from]);
-                row.style.scrollSnapType = 'none';
-                row.scrollLeft += delta;
-                requestAnimationFrame(() => { row.style.scrollSnapType = ''; });
-            };
+                row.__bfInfLast = row.scrollLeft;
 
-            // شروع از اولین کارتِ مجموعه‌ی وسط
-            const mid = row.children[n];
-            if (mid) row.scrollLeft += center(mid) - center(row);
+                // Geometry stays valid after normalization; only the viewport center changed.
+                if (window.BFMotion && typeof BFMotion.updateRow === 'function') BFMotion.updateRow(row);
+            }
 
-            let t = null;
-            row.addEventListener('scroll', () => {
-                clearTimeout(t);
-                t = setTimeout(() => {
-                    const i = nearest();
-                    if (i < n) jump(i, i + n);
-                    else if (i >= 2 * n) jump(i, i - n);
-                }, 140);
+            row.addEventListener('scroll', function () {
+                if (!row.__bfInfRaf) row.__bfInfRaf = requestAnimationFrame(normalize);
             }, { passive: true });
+
+            // Recalculate once after images/layout settle.
+            setTimeout(function () {
+                var nw = cycleWidth();
+                if (nw > 0) {
+                    row.__bfCycle = nw;
+                    row.scrollLeft = Math.max(0, Math.min(row.scrollLeft, row.scrollWidth - row.clientWidth));
+                }
+                if (window.BFMotion && typeof BFMotion.refreshRow === 'function') BFMotion.refreshRow(row);
+            }, 80);
         }
 
         function renderHome() {
-            ['rowMods','rowSkins','rowMaps'].forEach(id => { const r = document.getElementById(id); if (r) r.__inf = 0; });
+            ['rowMods','rowSkins','rowMaps'].forEach(id => {
+                const r = document.getElementById(id);
+                if (r) {
+                    r.__inf = 0;
+                    r.__bfCycle = 0;
+                    r.__bfGeom = null;
+                }
+            });
             renderSlider();
 
             ['mods','skins','maps','shaders','textures','dlc'].forEach(cat => {
@@ -6378,9 +6502,9 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
             updateTokenDisplay();
             updateLotteryUI();
 
-            requestAnimationFrame(() => requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
                 ['rowMods','rowSkins','rowMaps'].forEach(id => makeInfinite(document.getElementById(id)));
-            }));
+            });
 
             // ⭐ انیمیشن rise
             requestAnimationFrame(() => playRise(document.getElementById('homePage') || document));
@@ -6406,7 +6530,8 @@ body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{anima
         ========================== */
 
         function itemUrl(item) {
-            return BF_LOCAL('items.html?m=' + encodeURIComponent(item.slug || ('item-' + item.id)));
+            const slug = encodeURIComponent(item.slug || ('item-' + item.id));
+            return './items.html?m=' + slug;
         }
 
         function openModal(id) {
