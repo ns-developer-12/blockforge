@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ns-developer-12.github.io/blockforge/sitemap.xml
