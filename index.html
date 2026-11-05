@@ -8,6 +8,30 @@
 
     <title>BlockForge | مرجع مود و اسکین ماینکرفت</title>
 
+    <meta name="description" content="BlockForge؛ مرجع معرفی و دسترسی به مودها، اسکین‌ها، مپ‌ها و محتوای ماینکرفت. جدیدترین آیتم‌ها و اطلاعات مرتبط با دنیای Minecraft را در BlockForge پیدا کنید.">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://ns-developer-12.github.io/blockforge/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="BlockForge">
+    <meta property="og:title" content="BlockForge | مرجع مود و اسکین ماینکرفت">
+    <meta property="og:description" content="معرفی مودها، اسکین‌ها، مپ‌ها و محتوای ماینکرفت در BlockForge.">
+    <meta property="og:url" content="https://ns-developer-12.github.io/blockforge/">
+    <meta property="og:locale" content="fa_IR">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="BlockForge | مرجع مود و اسکین ماینکرفت">
+    <meta name="twitter:description" content="معرفی مودها، اسکین‌ها، مپ‌ها و محتوای ماینکرفت در BlockForge.">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "BlockForge",
+      "url": "https://ns-developer-12.github.io/blockforge/",
+      "description": "مرجع معرفی مودها، اسکین‌ها، مپ‌ها و محتوای ماینکرفت.",
+      "inLanguage": "fa"
+    }
+    </script>
+
+
     <!-- =========================
          OFFLINE / NET.JS GUARD
          ========================= -->
@@ -219,23 +243,7 @@
         body {
             font-family: 'Vazirmatn', sans-serif;
 
-            background:
-                radial-gradient(
-                    ellipse at 15% 5%,
-                    rgba(139,92,246,.12) 0%,
-                    transparent 42%
-                ),
-                radial-gradient(
-                    ellipse at 90% 25%,
-                    rgba(0,212,255,.055) 0%,
-                    transparent 38%
-                ),
-                radial-gradient(
-                    ellipse at 75% 90%,
-                    rgba(46,204,113,.055) 0%,
-                    transparent 42%
-                ),
-                var(--bg);
+            background: #000;
 
             color: var(--text);
             line-height: 1.6;
@@ -263,16 +271,16 @@
 
             background-image:
                 linear-gradient(
-                    rgba(255,255,255,.014) 1px,
+                    rgba(255,255,255,.075) 1px,
                     transparent 1px
                 ),
                 linear-gradient(
                     90deg,
-                    rgba(255,255,255,.014) 1px,
+                    rgba(255,255,255,.075) 1px,
                     transparent 1px
                 );
 
-            background-size: 32px 32px;
+            background-size: 28px 28px;
         }
 
         button,
@@ -4660,6 +4668,17 @@ body.modal-open .bottom-nav { transform: translateY(110%); opacity: 0; }
             pointer-events: none !important;
         }
 
+
+/* BlockForge monochrome grid refresh */
+body{background:#000!important}
+body::before{z-index:-1!important;opacity:.48!important;background-image:linear-gradient(rgba(255,255,255,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.075) 1px,transparent 1px)!important;background-size:28px 28px!important}
+#app,.header,.main-content{position:relative}
+.header{background:rgba(0,0,0,.94)!important;border-bottom-color:rgba(255,255,255,.15)!important}
+.header::after{background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent)!important}
+.slider-container,.card,.v-card,.server-card,.fl-card,.saved-item,.rubika-banner,.cat,.stats-row,.lottery{border:1px solid rgba(255,255,255,.18)!important;border-radius:14px!important;box-shadow:0 8px 24px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.035)!important}
+.h-scroll{perspective:none!important}
+.h-scroll>.card,.h-scroll>.v-card,.h-scroll>.server-card{transform:none!important}
+
 </style>
 <style id="bf-overrides">
 /* ---------- متن لودینگ اصلی ---------- */
@@ -4809,7 +4828,7 @@ html,body{
     text-shadow:0 0 18px rgba(255,255,255,.10);
 }
 .loader-words{min-width:115px !important;height:40px !important}
-.loader-word{color:var(--purple3) !important}
+.loader-word{color:#8f8f9c !important;text-shadow:0 0 18px rgba(143,143,156,.25) !important}
 
 /* ---------- SUPPORT FAQ ---------- */
 .faq-button{
@@ -4914,6 +4933,199 @@ html,body{
 .h-scroll>.card *, .h-scroll>.v-card *, .h-scroll>.server-card *{backface-visibility:hidden}
 </style>
 
+<style id="bf-content-visibility-fix">
+/* Fix: prevent the scroll-reveal script from leaving the whole page invisible. */
+#mainContent, #homePage { opacity: 1 !important; visibility: visible !important; }
+.bf-rv:not(.bf-in) { opacity: 1 !important; visibility: visible !important; }
+</style>
+
+<style id="bf-main-content-recovery">
+/* Recovery for blank home content on mobile */
+#app { display:flex !important; flex-direction:column !important; height:100% !important; min-height:0 !important; overflow:hidden !important; }
+#mainContent.main-content { display:block !important; flex:1 1 auto !important; min-height:0 !important; height:auto !important; width:100% !important; overflow-y:auto !important; overflow-x:hidden !important; opacity:1 !important; visibility:visible !important; position:relative !important; z-index:1 !important; }
+#homePage { display:block !important; min-height:1px !important; opacity:1 !important; visibility:visible !important; }
+#homePage > *, #mainContent .section, #mainContent .section-head, #mainContent .h-scroll, #mainContent .slider-section, #mainContent .rubika-banner, #mainContent .posts-under-rubika, #mainContent .stats-row, #mainContent .cats, #mainContent .lottery { visibility:visible !important; }
+#mainContent .bf-rv:not(.bf-in) { opacity:1 !important; visibility:visible !important; }
+</style>
+<style id="bf-scroll-fix">
+/* رفع پرش اسکرول */
+/* ۱) اجازه اسکرول عمودی وقتی انگشت روی ردیف افقی است */
+.h-scroll{
+    touch-action:pan-x pan-y !important;
+    overflow-y:hidden !important;
+    margin-top:0 !important;margin-bottom:0 !important;
+    padding-top:10px !important;padding-bottom:16px !important;
+    overscroll-behavior-x:contain;
+}
+/* ۲) حذف لایه‌های سنگین (blur و لایه سه‌بعدی) که اسکرول را می‌شکنند */
+.cat,.stat-chip,.rubika-banner,.lottery,.saved-item,.fl-card,.server-card,
+.card,.v-card,.slider-container,.modal-overlay,.menu-overlay{
+    backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
+}
+.h-scroll>.card,.h-scroll>.v-card,.h-scroll>.server-card{
+    transform-style:flat !important;-webkit-transform-style:flat !important;
+    backface-visibility:visible !important;-webkit-backface-visibility:visible !important;
+    will-change:auto !important;contain:layout style !important;
+}
+/* ۳) حذف تأثیر hover روی لمس و اثر روی کل درخت هنگام اسکرول */
+body.bf-scrolling .main-content *{pointer-events:auto !important}
+body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{animation-play-state:running !important}
+.main-content{overflow-anchor:none}
+@media (hover:none){
+    .card:hover,.v-card:hover,.fl-card:hover,.cat:hover{transform:none !important}
+}
+.card-img,.v-card-img,.fl-card-img{will-change:auto !important}
+</style>
+<style id="bf-mono-pro">
+/* =====================================================
+   BlockForge — Monochrome Pro
+   سیاه و سفید + سبک‌سازی لایه‌های گرافیکی (رفع بخش سیاه/خالی)
+===================================================== */
+:root{
+  --bg:#000;--bg2:#070707;
+  --gold:#fff;--gold2:#fff;
+  --purple:#fff;--purple2:#fff;--purple3:#fff;
+  --green:#fff;--green2:#fff;--blue:#fff;--blue2:#fff;
+  --orange:#fff;--orange2:#fff;--pink:#fff;--cyan:#fff;--token:#fff;--red:#bbb;
+  --text:#f5f5f5;--text2:#a8a8a8;--text3:#6b6b6b;
+  --border:rgba(255,255,255,.12);--border2:rgba(255,255,255,.2);
+}
+
+/* --- پس‌زمینه: یک لایه ساده، بدون عنصر fixed و بدون blur --- */
+html{
+  background-color:#000 !important;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) !important;
+  background-size:32px 32px !important;
+}
+body{background:transparent !important}
+body::before,#app::before,#app::after{display:none !important}
+.loader{background:#000 !important}
+
+/* --- حذف همه‌ی عوامل سنگین که باعث نیمه‌سیاه شدن صفحه می‌شدند --- */
+*,*::before,*::after{
+  will-change:auto !important;
+  backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
+}
+.logo-text i,.c-discount,.help-fab,.help-fab .ripple{animation:none !important}
+.card,.v-card,.fl-card,.server-card,.saved-item,.slider-container,
+.h-scroll>.card,.h-scroll>.v-card,.h-scroll>.server-card{
+  contain:none !important;box-shadow:none !important;
+}
+.card:hover,.v-card:hover,.fl-card:hover,.cat:hover{transform:none !important}
+.bf-rv,.bf-rv:not(.bf-in){opacity:1 !important;visibility:visible !important}
+#mainContent,#homePage{opacity:1 !important;visibility:visible !important}
+
+/* --- هدر --- */
+.header{background:#000 !important;border-bottom:1px solid rgba(255,255,255,.18) !important}
+.header::after{display:none}
+.logo-text,.logo-text span,.logo-text i{color:#fff !important;filter:none !important}
+.token-chip{background:#0a0a0a !important;border:1px solid rgba(255,255,255,.28) !important;color:#fff !important;box-shadow:none !important}
+.h-btn{background:#0a0a0a !important;border:1px solid rgba(255,255,255,.2) !important;color:#fff !important}
+.profile-btn-header{background:#fff !important;color:#000 !important;border:1px solid #fff !important;box-shadow:none !important}
+.buttonupgrade{background:#fff !important;color:#000 !important;text-shadow:none !important;box-shadow:none !important;border:1px solid #fff !important}
+.buttonupgrade svg{fill:#000 !important}
+.nav-pro-icon{fill:#fff !important}
+
+/* --- کارت‌ها و بخش‌ها --- */
+.slider-container,.card,.v-card,.server-card,.fl-card,.saved-item,.rubika-banner,.cat,.lottery,.stats-row{
+  background:#0a0a0a !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  border-radius:14px !important;
+}
+.stats-row{background:transparent !important;border:0 !important;padding-left:12px;padding-right:12px}
+.stat-chip{background:#0a0a0a !important;border:1px solid rgba(255,255,255,.16) !important;color:#d8d8d8 !important}
+.stat-chip i,.stat-chip span{color:#fff !important}
+.cat::before{background:#fff !important;opacity:.75 !important;height:1px !important}
+.cat::after{display:none}
+.cat i,.cat.mods i,.cat.skins i,.cat.maps i,.cat.shaders i,.cat.textures i,.cat.dlc i,
+.cat.servers i,.cat.commands i,.cat.skin-url i,.cat.zip-comp i,.cat.compare i,.cat.enchant i{color:#fff !important}
+.cat-name{color:#fff !important}
+.cat-num{color:#7a7a7a !important}
+.ind.mods,.ind.skins,.ind.maps,.ind.dlc{background:#fff !important;color:#fff !important;box-shadow:none !important}
+.section-head h3{color:#fff}
+.section-head .more{background:transparent !important;border:1px solid rgba(255,255,255,.22) !important;color:#fff !important}
+
+/* --- اسلایدر --- */
+.slider-info .tag{background:#fff !important;color:#000 !important;box-shadow:none !important}
+.slider-dots span{background:rgba(255,255,255,.3) !important;box-shadow:none !important}
+.slider-dots span.active{background:#fff !important}
+
+/* --- روبیکا --- */
+.rubika-icon{background:#fff !important;color:#000 !important;box-shadow:none !important}
+.rubika-banner>i{color:#888 !important}
+.rubika-info h4{color:#fff}
+.posts-under-rubika{background:#0a0a0a !important;border:1px solid rgba(255,255,255,.2) !important;color:#fff !important}
+.posts-under-rubika i{color:#fff !important}
+
+/* --- کارت‌ها --- */
+.card-img .c-badge{background:rgba(0,0,0,.75) !important;color:#fff !important;border:1px solid rgba(255,255,255,.25) !important}
+.card-img .c-discount{background:#fff !important;color:#000 !important}
+.card-img .c-save.saved{color:#000 !important;background:#fff !important;border-color:#fff !important}
+.c-rating,.fl-card-rating,.modal-rating{color:#d0d0d0 !important}
+.c-price-new,.v-card-info h4{color:#fff !important}
+
+/* --- دکمه‌های دانلود: سفید توپر؛ رایگان/خریداری‌شده: خط‌دار --- */
+.c-dl-btn,.m-dl-btn,.fl-dl-btn,.v-dl-btn,
+.c-dl-btn:not(.free):not(.purchased),.m-dl-btn:not(.free):not(.purchased),.fl-dl-btn:not(.free):not(.purchased){
+  background:#fff !important;color:#000 !important;border:1px solid #fff !important;box-shadow:none !important;
+}
+.c-dl-btn.free,.m-dl-btn.free,.fl-dl-btn.free,.v-dl-btn.free,
+.c-dl-btn.purchased,.m-dl-btn.purchased,.fl-dl-btn.purchased,.v-dl-btn.purchased{
+  background:transparent !important;color:#fff !important;border:1px solid rgba(255,255,255,.55) !important;box-shadow:none !important;
+}
+.c-dl-btn i,.m-dl-btn i,.fl-dl-btn i{color:inherit !important}
+
+/* --- قرعه‌کشی --- */
+.lottery{background:#0a0a0a !important}
+.lottery::before{display:none}
+.lottery h4,.lottery h4 i{color:#fff !important}
+.lottery-chest{filter:grayscale(1) !important}
+.lottery-btn,.reward-download{background:#fff !important;color:#000 !important;box-shadow:none !important}
+.lottery-btn:disabled{background:#161616 !important;color:#666 !important}
+.lottery-reward{background:#0a0a0a !important;border:1px solid rgba(255,255,255,.2) !important}
+.reward-icon{background:#111 !important;color:#fff !important;box-shadow:none !important}
+.reward-name{color:#fff !important}
+
+/* --- منو و ناوبری --- */
+.menu-panel{background:#000 !important;border-left:1px solid rgba(255,255,255,.18) !important}
+.menu-panel a::before{background:#fff !important}
+.menu-panel a:hover i{color:#fff !important}
+.bottom-nav{background:#000 !important;border-top:1px solid rgba(255,255,255,.18) !important}
+.bottom-nav::before{display:none}
+.bottom-nav a.active{color:#fff !important}
+.bottom-nav a.active::after{background:#fff !important;box-shadow:none !important}
+.bottom-nav a i[style]{color:inherit !important}
+
+/* --- دکمه راهنما --- */
+.faq-button{background:#fff !important;background-image:none !important;box-shadow:none !important;border:1px solid #fff !important}
+.faq-button svg{fill:#000 !important}
+.faq-button .tooltip{background:#fff !important;background-image:none !important;color:#000 !important}
+.faq-button .tooltip::before{background:#fff !important}
+
+/* --- پروفایل --- */
+.profile-card{background:#0a0a0a !important;border:1px solid rgba(255,255,255,.2) !important}
+.profile-card>div:first-of-type{background:#fff !important;color:#000 !important;box-shadow:none !important}
+.profile-details-btn,.profile-saved-btn{background:transparent !important;border:1px solid rgba(255,255,255,.25) !important;color:#fff !important}
+.profile-details-btn i,.profile-saved-btn i{color:#fff !important}
+.profile-card [onclick="saveUsername()"]{background:#fff !important;color:#000 !important}
+.profile-card [onclick="logout()"]{background:transparent !important;border:1px solid rgba(255,255,255,.25) !important;color:#ddd !important}
+
+/* --- پرداخت --- */
+.payment-result-card{background:#0a0a0a !important;border:1px solid rgba(255,255,255,.2) !important;box-shadow:none !important}
+.payment-icon.success,.payment-icon.error{color:#fff !important;background:#111 !important;border:1px solid rgba(255,255,255,.3) !important;box-shadow:none !important}
+.payment-kicker{color:#aaa !important}
+.payment-close{background:#fff !important;color:#000 !important;box-shadow:none !important}
+
+/* --- مودال‌ها --- */
+.modal-overlay,.menu-overlay,.profile-overlay,.lottery-reward-overlay{background:rgba(0,0,0,.92) !important}
+.modal{background:#0a0a0a !important}
+
+/* منوی کناری باید fixed بماند، وگرنه ارتفاع صفحه را می‌خورد */
+.menu-panel{position:fixed !important}
+.loader::before,.loader::after{display:none !important}
+</style>
 </head>
 
 <body>
@@ -5058,6 +5270,14 @@ html,body{
         <!-- MAIN -->
         <div class="main-content" id="mainContent">
             <div id="homePage">
+                <div id="bf-seo-intro" style="padding:12px 16px 4px;text-align:right;direction:rtl;">
+                    <h1 style="font-size:1.15rem;line-height:1.8;margin:0 0 6px;color:#fff;">BlockForge؛ مرجع مود و اسکین ماینکرفت</h1>
+                    <p style="font-size:.88rem;line-height:1.9;margin:0;color:#bdbdc9;">
+                        در BlockForge می‌توانید مودها، اسکین‌ها، مپ‌ها و محتوای مرتبط با Minecraft را پیدا کنید.
+                        این صفحه راهنمای شروع برای آشنایی با بخش‌های مختلف سایت و آیتم‌های دنیای ماینکرفت است.
+                    </p>
+                </div>
+                
 
                 <div class="slider-section">
                     <div class="slider-container" id="slider">
@@ -5347,10 +5567,8 @@ html,body{
         document.addEventListener('scroll', function (e) {
             var el = e.target;
             if (!el || !el.classList || !el.classList.contains('main-content')) return;
-            if (!on) { on = true; document.body.classList.add('bf-scrolling'); }
-            clearTimeout(t);
-            t = setTimeout(function () { on = false; document.body.classList.remove('bf-scrolling'); }, 120);
-        }, { capture: true, passive: true });
+                        clearTimeout(t);
+                    }, { capture: true, passive: true });
     })();
     </script>
 
@@ -5365,7 +5583,7 @@ html,body{
     'use strict';
     var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var HAS_T = !!(window.CSS && CSS.supports && CSS.supports('translate', '0 1px'));
-    var cfg = { items: '', rows: '', sphere: true };
+    var cfg = { items: '', rows: '', sphere: false };
     var vDir = 0;          // +1 = scrolling down, -1 = scrolling up
     var io = null, mo = null, inited = false;
     var MAG = 30;          // reveal travel in px
@@ -5412,15 +5630,14 @@ html,body{
             if (!t.isConnected) { io.unobserve(t); continue; }
             var on = t.classList.contains('bf-in');
             if (e.isIntersecting && e.intersectionRatio >= 0.14) { if (!on) enter.push(e); }
-            else if (!e.isIntersecting || e.intersectionRatio === 0) { if (on) reset(t); }
-        }
+                    }
         if (!enter.length) return;
         enter.sort(function (a, b) {
             var ta = Math.round(a.boundingClientRect.top / 24), tb = Math.round(b.boundingClientRect.top / 24);
             if (ta !== tb) return ta - tb;
             return (a.target.compareDocumentPosition(b.target) & 4) ? -1 : 1;
         });
-        for (var i = 0; i < enter.length; i++) play(enter[i].target, i);
+        for (var i = 0; i < enter.length; i++) { play(enter[i].target, i); io.unobserve(enter[i].target); }
     }
 
     /* ---------- horizontal rows (3D sphere + direction) ---------- */
@@ -5442,7 +5659,7 @@ html,body{
 
     function pad(row) {
         var kids = row.children;
-        if (!kids.length || !kids[0].offsetWidth) return;
+        if (!cfg.sphere || !kids.length || !kids[0].offsetWidth) return;
         var p = Math.max(12, Math.round((row.clientWidth - kids[0].offsetWidth) / 2));
         if (row.__bfPad !== p) {
             row.__bfPad = p;
@@ -5508,10 +5725,10 @@ html,body{
             for (var b = 0; b < is.length; b++) tag(is[b]);
         }
         var par = n.parentElement;
-        if (par && par.__bfRowSt) refreshRow(par);
+        if (cfg.sphere && par && par.__bfRowSt) refreshRow(par);
         if (cfg.rows) {
             var rr = n.querySelectorAll(cfg.rows);
-            for (var c = 0; c < rr.length; c++) refreshRow(rr[c]);
+            if (cfg.sphere) for (var c = 0; c < rr.length; c++) refreshRow(rr[c]);
         }
     }
 
@@ -5565,9 +5782,9 @@ html,body{
 })();
 
     BFMotion.init({
-        items: '.slider-section, .rubika-banner, .stats-row, .lottery, .section-head, .cats > .cat, .footer, .back-bar, .fl-card, .saved-item, .h-scroll > .card, .h-scroll > .v-card, .h-scroll > .server-card',
+        items: '',
         rows: '.h-scroll',
-        sphere: true
+        sphere: false
     });
     </script>
 
@@ -5729,6 +5946,11 @@ html,body{
                                 <i class="fa-solid fa-puzzle-piece"></i>
                                 <span class="cat-name">مودها</span>
                                 <span class="cat-num"><span id="cntMods">0</span></span>
+                            </div>
+                            <div class="cat enchant" onclick="window.location.href='./enchantments.html'">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span class="cat-name">انچنت‌ها</span>
+                                <span class="cat-num">✨</span>
                             </div>
                             <div class="cat skins" onclick="showList('skins')">
                                 <i class="fa-solid fa-user-astronaut"></i>
@@ -6502,9 +6724,7 @@ html,body{
             updateTokenDisplay();
             updateLotteryUI();
 
-            requestAnimationFrame(() => {
-                ['rowMods','rowSkins','rowMaps'].forEach(id => makeInfinite(document.getElementById(id)));
-            });
+            // Infinite row cloning disabled: keep the original item count and content.
 
             // ⭐ انیمیشن rise
             requestAnimationFrame(() => playRise(document.getElementById('homePage') || document));
