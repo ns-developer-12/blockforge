@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" id="linkCanon" href="items.html">
 
-<link rel="preconnect" href="https://lottie.host" crossorigin>
+
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -88,10 +88,6 @@ button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none
     background-size:260% 100%;animation:glassSweep 3s ease-in-out infinite;
 }
 @keyframes glassSweep{from{background-position:140% 0}to{background-position:-140% 0}}
-.pl-lottie{
-    width:170px;height:170px;flex:none;border:0;background:transparent;color-scheme:normal;
-    position:relative;z-index:1;
-}
 .pl-skel{width:100%;display:flex;flex-direction:column;gap:11px;position:relative;z-index:1}
 .sk{
     border-radius:11px;
@@ -108,14 +104,12 @@ button{font-family:inherit;cursor:pointer;border:0;color:inherit;background:none
 .sk-grid .sk:nth-child(2){animation-delay:.15s}.sk-grid .sk:nth-child(3){animation-delay:.3s}
 .sk-line{height:11px}.sk-line.w80{width:80%}.sk-line.w55{width:55%}
 .sk-btn{height:42px;border-radius:13px;margin-top:3px}
-@media (max-height:660px){.sk-img{display:none}.pl-lottie{width:120px;height:120px}}
+@media (max-height:660px){.sk-img{display:none}}
 @media (max-height:520px){.pl-skel{display:none}}
 
 /* ============ صفحه ============ */
-#view{max-width:720px;margin:0 auto;padding:0 14px calc(104px + var(--safe))}
+#view{max-width:690px;margin:0 auto;padding:0 14px calc(104px + var(--safe))}
 html{scroll-behavior:auto !important;overscroll-behavior-y:contain}
-body.bf-scrolling *,body.bf-scrolling *::before,body.bf-scrolling *::after{animation-play-state:paused !important}
-body.bf-scrolling #view *{pointer-events:none !important}
 @media (hover:none){.rel-card:hover{box-shadow:none}}
 .topbar{
     position:sticky;top:0;z-index:50;margin:0 -14px;
@@ -133,11 +127,6 @@ body.bf-scrolling #view *{pointer-events:none !important}
 .tb-btn:active{transform:scale(.88)}
 .tb-btn.on{color:var(--gold2);background:rgba(212,165,74,.14);border-color:rgba(212,165,74,.4)}
 .tb-title{flex:1;min-width:0;font-weight:800;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.token-chip{
-    display:flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:13px;flex:none;
-    background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.22);font-weight:800;font-size:.8rem;color:#7fe6ff;
-}
-
 .hero{
     position:relative;margin-top:14px;border-radius:22px;overflow:hidden;aspect-ratio:16/10;
     background:linear-gradient(135deg,#1a1a38,#0f0f24);border:1px solid var(--border2);
@@ -173,14 +162,8 @@ body.bf-scrolling #view *{pointer-events:none !important}
 .tile .l{font-size:.68rem;color:var(--text3);margin-top:4px}
 .tile .v{font-size:.82rem;font-weight:800;margin-top:1px;word-break:break-word}
 
-.price-box{
-    margin-top:12px;display:flex;align-items:center;gap:10px;padding:13px 16px;border-radius:16px;
-    background:linear-gradient(135deg,rgba(212,165,74,.1),rgba(212,165,74,.03));border:1px solid rgba(212,165,74,.25);
-}
 .price-old{text-decoration:line-through;color:var(--text3);font-size:.85rem}
 .price-new{font-size:1.15rem;font-weight:900;color:var(--gold2);display:flex;align-items:center;gap:6px}
-.price-disc{margin-right:auto;padding:2px 10px;border-radius:99px;background:var(--red);font-size:.75rem;font-weight:800}
-
 .desc{padding:15px 16px;border-radius:16px;background:var(--surface);border:1px solid var(--border);color:#d4d4e0;font-size:.9rem;line-height:2;white-space:pre-line}
 
 .dl-card{
@@ -215,10 +198,10 @@ body.bf-scrolling #view *{pointer-events:none !important}
 }
 .hrow::-webkit-scrollbar{display:none}
 .hrow>.rel-card{
-    flex:none;width:168px;scroll-snap-align:center;position:relative;border-radius:16px;overflow:hidden;will-change:transform;
+    flex:none;width:136px;scroll-snap-align:center;position:relative;border-radius:16px;overflow:hidden;will-change:transform;
     background:var(--surface2);border:1px solid var(--border2);box-shadow:0 8px 18px rgba(0,0,0,.35);
 }
-.rel-card .im{aspect-ratio:4/3;background:#15152b center/cover no-repeat}
+.rel-card .im{aspect-ratio:16/11;background:#15152b center/cover no-repeat}
 .rel-card .bd{padding:9px 10px 11px}
 .rel-card h5{font-size:.8rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rel-card .m{font-size:.68rem;color:var(--text3)}
@@ -285,32 +268,75 @@ body.bf-scrolling #view *{pointer-events:none !important}
 .notfound{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px}
 .notfound i{font-size:2.6rem;color:var(--gold)}
 .nf-wrap{position:relative;width:min(380px,94vw);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
-.nf-lottie{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;color-scheme:normal;
-  -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 38%,rgba(0,0,0,.55) 62%,transparent 86%);
-          mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 38%,rgba(0,0,0,.55) 62%,transparent 86%);
-  filter:saturate(1.05) brightness(.96)}
-
 /* موتور انیمیشن */
 .bf-rv:not(.bf-in){opacity:0}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
-</head>
+<link rel="stylesheet" href="theme.css">
+<style>
+#pageLoader{background:var(--bf-bg,#050505)!important}
+#pageLoader .pl-glass.bf-loader-clean{width:auto;min-width:190px;max-height:none;overflow:visible;gap:18px;padding:26px 30px;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+#pageLoader .pl-glass.bf-loader-clean::before{display:none}
+.follow-the-leader-line{height:14px;position:relative;width:14px;margin:0 auto 14px}
+.follow-the-leader-line div{position:absolute;top:0;left:0;-webkit-animation:follow-the-leader 1.25s infinite backwards;animation:follow-the-leader 1.25s infinite backwards;background-color:#fff;border-radius:100%;height:100%;width:100%}
+@-webkit-keyframes follow-the-leader{0%{-webkit-transform:rotate(0deg) translateY(-200%);transform:rotate(0deg) translateY(-200%)}60%,100%{-webkit-transform:rotate(360deg) translateY(-200%);transform:rotate(360deg) translateY(-200%)}}
+@keyframes follow-the-leader{0%{-webkit-transform:rotate(0deg) translateY(-200%);transform:rotate(0deg) translateY(-200%)}60%,100%{-webkit-transform:rotate(360deg) translateY(-200%);transform:rotate(360deg) translateY(-200%)}}
+.follow-the-leader-line div:nth-child(1){-webkit-animation-delay:.15s;animation-delay:.15s;background-color:rgba(255,255,255,.9)}
+.follow-the-leader-line div:nth-child(2){-webkit-animation-delay:.3s;animation-delay:.3s;background-color:rgba(255,255,255,.8)}
+.follow-the-leader-line div:nth-child(3){-webkit-animation-delay:.45s;animation-delay:.45s;background-color:rgba(255,255,255,.7)}
+.follow-the-leader-line div:nth-child(4){-webkit-animation-delay:.6s;animation-delay:.6s;background-color:rgba(255,255,255,.6)}
+.follow-the-leader-line div:nth-child(5){-webkit-animation-delay:.75s;animation-delay:.75s;background-color:rgba(255,255,255,.5)}
+.bf-loading-label{font:700 13px/1.5 system-ui,sans-serif;letter-spacing:1.2px;color:#fff!important;text-transform:lowercase}
+html[data-theme="light"] #pageLoader{background:#000!important}
+/* Loader footer: frosted glass specs panel */
+#pageLoader .pl-specs{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;justify-content:center;padding:0 18px calc(22px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.pl-specs-in{position:relative;overflow:hidden;width:min(420px,100%);padding:14px 14px 16px;border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.18);box-shadow:0 20px 44px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%)}
+.pl-specs-in::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.14) 50%,transparent 65%);background-size:260% 100%;animation:glassSweep 3.2s ease-in-out infinite}
+.pl-specs-title{font:800 10px/1 system-ui,sans-serif;letter-spacing:2px;color:rgba(255,255,255,.55);margin:0 2px 12px;text-align:right}
+.pl-specs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.pl-spec{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px 11px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)}
+.pl-spec i{width:28px;height:28px;display:grid;place-items:center;border-radius:10px;background:rgba(255,255,255,.09);color:rgba(255,255,255,.7);font-size:11px}
+.pl-spec span,.pl-spec b{display:block;height:7px;border-radius:9px;background:rgba(255,255,255,.16)}
+.pl-spec span{width:62%;animation:plSpecPulse 1.6s ease-in-out infinite}
+.pl-spec b{width:82%;opacity:.5;animation:plSpecPulse 1.6s ease-in-out .3s infinite}
+@keyframes plSpecPulse{50%{opacity:.35}}
+@media(max-width:700px){.pl-specs-in{padding:12px 10px 13px}.pl-spec{padding:10px 4px 9px}}
+html[data-theme="light"] .follow-the-leader-line div{background:#fff!important}
+html[data-theme="light"] .bf-loading-label{color:#fff!important}
+
+/* Detail page theme-safe animation surfaces and compact proportions */
+html[data-theme="dark"] { --bg:#050505;--surface:#101010;--surface2:#181818;--border:rgba(255,255,255,.15);--border2:rgba(255,255,255,.22);--gold:#fff;--gold2:#fff;--text:#f7f7f7;--text2:#aaa;--text3:#777;--green:#fff;--purple:#fff; }
+html[data-theme="light"] { --bg:#fff;--surface:#fff;--surface2:#f5f5f5;--border:rgba(0,0,0,.12);--border2:rgba(0,0,0,.18);--gold:#111;--gold2:#111;--text:#111;--text2:#555;--text3:#777;--green:#111;--purple:#111; }
+html[data-theme="light"] body {background:#fff!important;color:#111!important}
+html[data-theme="light"] .topbar {background:rgba(255,255,255,.94)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+html[data-theme="dark"] .topbar {background:rgba(5,5,5,.94)!important}
+html[data-theme="light"] .hero {background:#f2f2f2!important;box-shadow:0 10px 26px rgba(0,0,0,.08)!important}
+html[data-theme="light"] .hero::after {background:linear-gradient(180deg,transparent,rgba(0,0,0,.48))!important}
+html[data-theme="light"] .chip.gold,html[data-theme="light"] .badge,html[data-theme="light"] .cl-new {background:#111!important;color:#fff!important;border-color:#111!important}
+html[data-theme="light"] .btn {background:#111!important;color:#fff!important;box-shadow:0 6px 16px rgba(0,0,0,.12)!important}
+html[data-theme="light"] .btn.free,html[data-theme="light"] .btn.purchased {background:#111!important;color:#fff!important}
+html[data-theme="light"] .sheet,html[data-theme="light"] .pay-card,html[data-theme="light"] .toast {background:#fff!important;color:#111!important;border-color:rgba(0,0,0,.14)!important}
+html[data-theme="light"] .dlbar {background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.96) 38%)!important}
+.hero {max-height:310px}
+@media(max-width:700px){.hero{max-height:220px;aspect-ratio:16/9}.title{font-size:1.25rem}.grid3{gap:7px}.tile{padding:10px 6px}.tile .v{font-size:.74rem}.desc{padding:12px;font-size:.84rem;line-height:1.85}.cl-item{padding:10px 11px}.hrow>.rel-card{width:124px}}
+
+</style></head>
 <body class="loading-page">
 
 <!-- لودینگ سفید با لوگو + اسکلت مشخصات -->
 <div id="pageLoader" aria-live="polite" aria-label="در حال بارگذاری">
-    <div class="pl-glass">
-        <iframe class="pl-lottie" id="plLottie" title="" tabindex="-1" allowtransparency="true" loading="eager"
-                src="https://lottie.host/embed/ec9ebf91-e045-4c6e-adca-821968446e9e/WyYfwjbKCb.lottie"></iframe>
-        <div class="pl-skel" aria-hidden="true">
-            <div class="sk sk-img"></div>
-            <div class="sk-row"><div class="sk sk-badge"></div></div>
-            <div class="sk sk-title"></div>
-            <div class="sk-grid"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
-            <div class="sk sk-line"></div>
-            <div class="sk sk-line w80"></div>
-            <div class="sk sk-line w55"></div>
-            <div class="sk sk-btn"></div>
+    <div class="pl-glass bf-loader-clean">
+        <div class="follow-the-leader-line" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div></div>
+        <span class="bf-loading-label">loading item</span>
+    </div>
+    <div class="pl-specs" aria-hidden="true">
+        <div class="pl-specs-in">
+            <div class="pl-specs-title">مشخصات</div>
+            <div class="pl-specs-grid">
+                <div class="pl-spec"><i class="fa-solid fa-user"></i><span></span><b></b></div>
+                <div class="pl-spec"><i class="fa-solid fa-code-branch"></i><span></span><b></b></div>
+                <div class="pl-spec"><i class="fa-solid fa-weight-hanging"></i><span></span><b></b></div>
+            </div>
         </div>
     </div>
 </div>
@@ -334,15 +360,7 @@ body.bf-scrolling #view *{pointer-events:none !important}
     </div>
 </div>
 
-<div class="pay-ov" id="payOv">
-    <div class="pay-card">
-        <div class="pay-ic" id="payIc"></div>
-        <h2 id="payTitle"></h2>
-        <p id="payText"></p>
-        <div class="pay-cost" id="payCost"></div>
-        <button class="btn" id="payBtn"></button>
-    </div>
-</div>
+
 
 <div class="toast" id="toast"></div>
 
@@ -532,7 +550,7 @@ body.bf-scrolling #view *{pointer-events:none !important}
     }
     function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
-    /* ===================== کاربر / توکن / خرید (هم‌کلید با index) ===================== */
+    /* ===================== کاربر / دانلود ===================== */
     function getCur() {
         var a = {}; try { a = JSON.parse(localStorage.getItem('bf_auth') || '{}'); } catch (e) {}
         return { username: a.username || 'کاربر', email: a.email || '---' };
@@ -545,26 +563,6 @@ body.bf-scrolling #view *{pointer-events:none !important}
         var set = getPurchased(); set.add(Number(id));
         var s = purchaseStore(); s[userKey()] = Array.from(set).map(Number);
         localStorage.setItem('bf_purchases', JSON.stringify(s));
-    }
-    function tokenData() {
-        try { return JSON.parse(localStorage.getItem('bf_tokens') || '{"tokens":2000,"last":' + Date.now() + '}'); }
-        catch (e) { return { tokens: 2000, last: Date.now() }; }
-    }
-    function getTokens() {
-        var d = tokenData(), e = Date.now() - d.last;
-        if (e >= 21600000) {
-            d.tokens = Math.min(50000, d.tokens + Math.floor(e / 21600000) * 2000);
-            d.last = Date.now() - (e % 21600000);
-            localStorage.setItem('bf_tokens', JSON.stringify(d));
-        }
-        return d.tokens;
-    }
-    function spendTokens(a) {
-        a = Math.max(0, Number(a) || 0);
-        var c = getTokens(); if (c < a) return false;
-        var d = tokenData(); d.tokens = c - a;
-        localStorage.setItem('bf_tokens', JSON.stringify(d));
-        return true;
     }
     function savedSet() { try { return new Set(JSON.parse(localStorage.getItem('bf_saved') || '[]')); } catch (e) { return new Set(); } }
     function toggleSave(id) {
@@ -582,18 +580,7 @@ body.bf-scrolling #view *{pointer-events:none !important}
         }
         return f;
     }
-    function rawPrice(item) {
-        var r = item && item.price;
-        if (r === 0 || r === '0' || r == null || r === '') return 0;
-        if (typeof r === 'object') { var x = r.final != null ? r.final : (r.fn != null ? r.fn : (r.price != null ? r.price : (r.amount != null ? r.amount : (r.cost != null ? r.cost : r.value)))); return toNumber(x, 0); }
-        return toNumber(r, 0);
-    }
-    function getPrice(item) {
-        var og = rawPrice(item), d = Math.max(0, Math.min(100, toNumber(item && item.discount, 0)));
-        var fn = og <= 0 ? 0 : Math.max(0, Math.round(og - og * d / 100));
-        return { og: og, fn: fn, hasD: og > 0 && d > 0, d: d };
-    }
-    function getCost(item) { return getPrice(item).fn; }
+    function getCost(item) { return 0; }
     function fa(n) { return Number(n).toLocaleString('fa'); }
 
     function directUrl(url) {
@@ -665,13 +652,8 @@ body.bf-scrolling #view *{pointer-events:none !important}
     /* ===================== رندر ===================== */
     var CAT = { mods: 'ماد', skins: 'اسکین', maps: 'مپ', shaders: 'شیدر', textures: 'تکسچر', dlc: 'DLC' };
 
-    function btnLabel(item) {
-        var cost = getCost(item);
-        if (isPurchased(item.id)) return '<i class="fa-solid fa-download"></i> دانلود';
-        if (cost === 0) return '<i class="fa-solid fa-download"></i> دانلود رایگان';
-        return '<i class="fa-solid fa-cart-shopping"></i> خرید ' + fa(cost);
-    }
-    function btnClass(item) { return isPurchased(item.id) ? 'purchased' : (getCost(item) === 0 ? 'free' : ''); }
+    function btnLabel(item) { return '<i class="fa-solid fa-download"></i> دانلود'; }
+    function btnClass(item) { return 'free'; }
 
 
     function makeInfinite(row) {
@@ -731,17 +713,15 @@ body.bf-scrolling #view *{pointer-events:none !important}
         var v = $('#view');
         if (!item) {
             v.innerHTML = '<div class="topbar"><button class="tb-btn" id="tbBack" aria-label="بازگشت"><i class="fa-solid fa-arrow-right"></i></button><div class="tb-title">BlockForge</div></div>' +
-                '<div class="notfound rvx"><div class="nf-wrap"><iframe class="nf-lottie" title="404" tabindex="-1" allowtransparency="true" loading="eager" src="https://lottie.host/embed/0c21a67e-5966-4646-a728-487ca77404fa/JrhlKsIlHH.lottie"></iframe></div>' +
+                '<div class="notfound rvx"><div class="nf-wrap"><svg class="nf-face" viewBox="0 0 320 380" aria-label="404"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="25"><g class="face__eyes" transform="translate(0,112.5)"><g transform="translate(15,0)"><polyline class="face__eye-lid" points="37,0 0,120 75,120"></polyline><polyline class="face__pupil" points="55,120 55,155" stroke-dasharray="35 35"></polyline></g><g transform="translate(230,0)"><polyline class="face__eye-lid" points="37,0 0,120 75,120"></polyline><polyline class="face__pupil" points="55,120 55,155" stroke-dasharray="35 35"></polyline></g></g><rect class="face__nose" x="132.5" y="112.5" width="55" height="155" rx="4"></rect><g transform="translate(65,334)" stroke-dasharray="102 102"><path class="face__mouth-left" d="M0 30C0 30 40 0 95 0"></path><path class="face__mouth-right" d="M95 0C150 0 190 30 190 30"></path></g></g></svg><h2>۴۰۴؛ مود پیدا نشد</h2><p>لینک واردشده معتبر نیست یا این آیتم وجود ندارد.</p></div>' +
                 '<a class="btn" href="index.html"><i class="fa-solid fa-house"></i> بازگشت به صفحه اصلی</a></div>';
             $('#tbBack').onclick = goBack;
             return;
         }
-        var p = getPrice(item), cost = getCost(item), saved = savedSet().has(item.id);
+        var cost = 0, saved = savedSet().has(item.id);
         var rel = related(item, 5), cl = item.changelog || [];
 
-        var priceHTML = p.hasD
-            ? '<div class="price-box rvx"><span class="price-old">' + fa(p.og) + '</span><span class="price-new"><i class="fa-solid fa-coins"></i>' + fa(p.fn) + '</span><span class="price-disc">-' + fa(p.d) + '٪</span></div>'
-            : (cost > 0 ? '<div class="price-box rvx"><span>💰 قیمت:</span><span class="price-new"><i class="fa-solid fa-coins"></i>' + fa(p.og) + '</span></div>' : '');
+        var priceHTML = '';
 
         var clHTML = cl.length ? '<div class="label rvx"><i class="fa-solid fa-clock-rotate-left"></i>تاریخچه نسخه‌ها</div><div class="cl-tree">' +
             cl.map(function (ver, idx) {
@@ -754,22 +734,21 @@ body.bf-scrolling #view *{pointer-events:none !important}
                 var rc = getCost(r);
                 return '<a class="rel-card" href="' + esc(itemUrl(r)) + '" data-slug="' + esc(r._slug) + '">' +
                     '<div class="im" style="background-image:url(\'' + esc(r.img) + '\')"></div><div class="bd"><h5>' + esc(r.title) + '</h5>' +
-                    '<div class="m">' + esc(r.author || 'ناشناس') + '</div><div class="p ' + (rc === 0 ? 'free' : '') + '">' + (rc === 0 ? 'رایگان' : fa(rc)) + '</div></div></a>';
+                    '<div class="m">' + esc(r.author || 'ناشناس') + '</div><div class="p ' + (rc === 0 ? 'free' : '') + '">' + (rc === 0 ? 'دانلود' : fa(rc)) + '</div></div></a>';
             }).join('') + '</div>' : '';
 
         v.innerHTML =
             '<div class="topbar">' +
                 '<button class="tb-btn" id="tbBack" aria-label="بازگشت"><i class="fa-solid fa-arrow-right"></i></button>' +
                 '<div class="tb-title">' + esc(item.title) + '</div>' +
-                '<div class="token-chip"><i class="fa-solid fa-coins"></i><span id="tokenNum">' + fa(getTokens()) + '</span></div>' +
                 '<button class="tb-btn ' + (saved ? 'on' : '') + '" id="tbSave" aria-label="ذخیره"><i class="fa-solid fa-bookmark"></i></button>' +
                 '<button class="tb-btn" id="tbShare" aria-label="اشتراک‌گذاری"><i class="fa-solid fa-share-nodes"></i></button>' +
             '</div>' +
             '<div class="hero rvx"><img src="' + esc(item.img) + '" alt="' + esc(item.title) + '" decoding="async" onerror="this.style.display=\'none\'">' +
                 '<div class="hero-chips"><span class="chip gold">' + esc(CAT[item.cat] || 'آیتم') + '</span>' +
-                (p.hasD ? '<span class="chip disc">-' + fa(p.d) + '٪</span>' : '') + '</div></div>' +
+                 '</div></div>' +
             '<div class="intro">' +
-                '<span class="badge ' + (cost === 0 ? 'free' : '') + ' rvx">' + (cost === 0 ? '🆓 رایگان' : '🛒 آماده خرید') + '</span>' +
+                '<span class="badge ' + (cost === 0 ? 'free' : '') + ' rvx">' + 'آماده دانلود' + '</span>' +
                 '<h1 class="title rvx">' + esc(item.title) + '</h1>' +
                 (item.rating ? '<div class="rating rvx"><i class="fa-solid fa-star"></i>' + esc(item.rating) + '</div>' : '') +
             '</div>' +
@@ -808,7 +787,6 @@ body.bf-scrolling #view *{pointer-events:none !important}
     function refreshActions() {
         var b = $('#dlBtn'); if (!b || !cur) return;
         b.className = 'btn main ' + btnClass(cur); b.innerHTML = btnLabel(cur);
-        var t = $('#tokenNum'); if (t) t.textContent = fa(getTokens());
     }
 
     /* ===================== ناوبری و لودینگ ===================== */
@@ -830,14 +808,12 @@ body.bf-scrolling #view *{pointer-events:none !important}
         var L = $('#pageLoader');
         document.body.classList.add('loading-page');
         L.classList.remove('hide');
-        $('#metaTheme').setAttribute('content', '#ffffff');
-        var f = $('#plLottie'), src = f.getAttribute('src');
-        try { f.contentWindow.location.replace(src); } catch (e) { f.setAttribute('src', src); }
+        $('#metaTheme').setAttribute('content', document.documentElement.dataset.theme === 'light' ? '#ffffff' : '#050505');
     }
     function hideLoader() {
         $('#pageLoader').classList.add('hide');
         document.body.classList.remove('loading-page');
-        $('#metaTheme').setAttribute('content', '#050510');
+        $('#metaTheme').setAttribute('content', document.documentElement.dataset.theme === 'light' ? '#ffffff' : '#050505');
     }
 
     function show(item, pushUrl) {
@@ -872,31 +848,17 @@ body.bf-scrolling #view *{pointer-events:none !important}
 
     /* ===================== دانلود / پرداخت ===================== */
     function startDownload() {
-        var item = cur; if (!item) return;
-        var cost = getCost(item);
-        function go() {
-            if (item.downloadUrl) location.href = directUrl(item.downloadUrl);
-            else toast('لینک دانلود هنوز موجود نیست');
+        var item = cur;
+        if (!item) return;
+        if (item.downloadUrl) {
+            markPurchased(item.id);
+            refreshActions();
+            location.href = directUrl(item.downloadUrl);
+        } else {
+            toast('لینک دانلود هنوز موجود نیست');
         }
-        if (isPurchased(item.id)) { go(); return; }
-        if (cost === 0) { markPurchased(item.id); refreshActions(); go(); return; }
-        if (getTokens() < cost || !spendTokens(cost)) { pay(false, cost); return; }
-        markPurchased(item.id); refreshActions(); pay(true, cost);
     }
-    function pay(ok, cost) {
-        var ic = $('#payIc');
-        ic.className = 'pay-ic ' + (ok ? 'ok' : 'no');
-        ic.innerHTML = '<i class="fa-solid ' + (ok ? 'fa-check' : 'fa-xmark') + '"></i>';
-        $('#payTitle').textContent = ok ? 'پرداخت با موفقیت انجام شد' : 'پرداخت انجام نشد';
-        $('#payText').textContent = ok ? 'مود خریداری شد و اکنون برای شما فعال است.' : 'توکن کافی نیست؛ این مود خریداری نشد.';
-        $('#payCost').innerHTML = '<i class="fa-solid fa-coins"></i> ' + fa(cost) + (ok ? ' توکن پرداخت شد' : ' توکن نیاز است');
-        $('#payBtn').innerHTML = ok ? '<i class="fa-solid fa-download"></i> ادامه و دریافت مود' : '<i class="fa-solid fa-arrow-right"></i> بازگشت';
-        $('#payBtn').onclick = function () {
-            $('#payOv').classList.remove('show');
-            if (ok && cur && cur.downloadUrl) location.href = directUrl(cur.downloadUrl);
-        };
-        $('#payOv').classList.add('show');
-    }
+
 
     /* ===================== اشتراک‌گذاری ===================== */
     var toastT;
@@ -968,5 +930,46 @@ body.bf-scrolling #view *{pointer-events:none !important}
     boot();
 })();
 </script>
+<script src="theme.js"></script>
+<style id="bf-theme-final">
+html[data-theme="light"]{color-scheme:light!important;--bf-bg:#fff;--bf-panel:#fff;--bf-panel2:#f5f5f5;--bf-text:#111;--bf-muted:#666;--bf-border:rgba(0,0,0,.14);--bg:#fff;--bg2:#fafafa;--surface:#fff;--surface2:#f5f5f5;--text:#111;--text2:#555;--text3:#777;--gold:#111;--gold2:#111;--purple:#111;--purple2:#111;--purple3:#111;--blue:#111;--green:#111;--orange:#111;--pink:#111;--cyan:#111}
+html[data-theme="dark"]{color-scheme:dark!important;--bf-bg:#050505;--bf-panel:#101010;--bf-panel2:#181818;--bf-text:#f7f7f7;--bf-muted:#aaa;--bf-border:rgba(255,255,255,.16);--bg:#050505;--bg2:#0b0b0b;--surface:#101010;--surface2:#181818;--text:#f7f7f7;--text2:#aaa;--text3:#777}
+html[data-theme="light"],html[data-theme="light"] body,html[data-theme="light"] #app{background:#fff!important;color:#111!important;background-image:none!important}
+html[data-theme="dark"],html[data-theme="dark"] body,html[data-theme="dark"] #app{background:#050505!important;color:#f7f7f7!important}
+html[data-theme="light"] body::before,html[data-theme="light"] #app::before,html[data-theme="light"] #app::after{display:none!important}
+html[data-theme="light"] .header,html[data-theme="light"] .bottom-nav,html[data-theme="light"] .menu-panel,html[data-theme="light"] .card,html[data-theme="light"] .v-card,html[data-theme="light"] .server-card,html[data-theme="light"] .section,html[data-theme="light"] .settings-card,html[data-theme="light"] .modal,html[data-theme="light"] .search-box,html[data-theme="light"] .cat,html[data-theme="light"] .rubika-banner,html[data-theme="light"] .stat-chip,html[data-theme="light"] .profile-card,html[data-theme="light"] .payment-result-card,html[data-theme="light"] .saved-item,html[data-theme="light"] .simple-page,html[data-theme="light"] .hero,html[data-theme="light"] .intro,html[data-theme="light"] .dl-card,html[data-theme="light"] .cl-item,html[data-theme="light"] .rel-card,html[data-theme="light"] .sheet,html[data-theme="light"] .tile,html[data-theme="light"] .topbar,html[data-theme="light"] .pay-card,html[data-theme="light"] .chip,html[data-theme="light"] .desc,html[data-theme="light"] .linkbox,html[data-theme="light"] .pl-glass,html[data-theme="light"] .nf-wrap,html[data-theme="light"] .bf-list-page{background:#fff!important;color:#111!important;border-color:rgba(0,0,0,.14)!important;box-shadow:0 4px 16px rgba(0,0,0,.045)!important}
+html[data-theme="light"] h1,html[data-theme="light"] h2,html[data-theme="light"] h3,html[data-theme="light"] h4,html[data-theme="light"] p,html[data-theme="light"] label,html[data-theme="light"] small,html[data-theme="light"] span,html[data-theme="light"] li,html[data-theme="light"] td,html[data-theme="light"] th,html[data-theme="light"] .cat-name,html[data-theme="light"] .section-head h3,html[data-theme="light"] .setting-label,html[data-theme="light"] .brand,html[data-theme="light"] .saved-item-body h4{color:#111!important}
+html[data-theme="light"] .muted,html[data-theme="light"] .setting-hint,html[data-theme="light"] .cat-num,html[data-theme="light"] .text-muted,html[data-theme="light"] .c-author,html[data-theme="light"] .c-date,html[data-theme="light"] .bf-list-count{color:#666!important}
+html[data-theme="light"] input,html[data-theme="light"] select,html[data-theme="light"] textarea,html[data-theme="light"] .setting-select,html[data-theme="light"] .category-select{background:#fff!important;color:#111!important;border-color:rgba(0,0,0,.2)!important}
+html[data-theme="light"] button:not(.c-save):not(.bf-quick-save),html[data-theme="light"] .button,html[data-theme="light"] .btn,html[data-theme="light"] .c-dl-btn,html[data-theme="light"] .m-dl-btn,html[data-theme="light"] .fl-dl-btn,html[data-theme="light"] .v-dl-btn,html[data-theme="light"] .payment-close,html[data-theme="light"] .home-link{background:#111!important;color:#fff!important;border-color:#111!important;box-shadow:none!important}
+html[data-theme="light"] .more,html[data-theme="light"] .bf-more{background:#fff!important;color:#111!important;border:1px solid rgba(0,0,0,.2)!important}
+html[data-theme="light"] .c-save,html[data-theme="light"] .bf-quick-save{background:rgba(0,0,0,.68)!important;color:#fff!important;border-color:rgba(255,255,255,.55)!important}
+html[data-theme="light"] .c-save.saved,html[data-theme="light"] .bf-quick-save.saved{background:#fff!important;color:#111!important;border-color:#111!important}
+html[data-theme="light"] .card-img::after{background:linear-gradient(to top,rgba(0,0,0,.30),transparent 55%)!important}
+html[data-theme="light"] .modal-overlay,html[data-theme="light"] .menu-overlay,html[data-theme="light"] .profile-overlay{background:rgba(0,0,0,.32)!important}
+html[data-theme="dark"] .header,html[data-theme="dark"] .bottom-nav,html[data-theme="dark"] .menu-panel,html[data-theme="dark"] .card,html[data-theme="dark"] .v-card,html[data-theme="dark"] .server-card,html[data-theme="dark"] .settings-card,html[data-theme="dark"] .modal,html[data-theme="dark"] .search-box,html[data-theme="dark"] .cat,html[data-theme="dark"] .profile-card{background:#101010!important;color:#f7f7f7!important;border-color:rgba(255,255,255,.16)!important}
+html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3,html[data-theme="dark"] h4,html[data-theme="dark"] p,html[data-theme="dark"] label,html[data-theme="dark"] small,html[data-theme="dark"] span{color:inherit}
+html[data-theme="dark"] .c-save,html[data-theme="dark"] .bf-quick-save{background:rgba(0,0,0,.68)!important;color:#fff!important}
+/* Animation colors follow theme; do not disable animation on scroll or theme changes. */
+html[data-theme="light"] .follow-the-leader-line div{background-color:#111!important}
+html[data-theme="dark"] .follow-the-leader-line div{background-color:#fff!important}
+</style>
 </body>
 </html>
+
+<style id="bf-detail-glass-specs">
+/* Premium glass finish for the information/specification tiles */
+#view .grid3{gap:11px;margin-top:2px}
+#view .grid3 .tile{position:relative;overflow:hidden;isolation:isolate;min-width:0;padding:16px 9px 15px;border-radius:19px;background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.025))!important;border:1px solid rgba(255,255,255,.17)!important;box-shadow:0 12px 30px rgba(0,0,0,.13),inset 0 1px rgba(255,255,255,.13)!important;backdrop-filter:blur(16px) saturate(135%);-webkit-backdrop-filter:blur(16px) saturate(135%);transition:transform .25s ease,border-color .25s ease}
+#view .grid3 .tile:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.10),transparent 48%);pointer-events:none}
+#view .grid3 .tile i{display:inline-grid;place-items:center;width:34px;height:34px;margin-bottom:7px;border-radius:11px;background:rgba(255,255,255,.09);color:var(--text)!important;font-size:14px}
+#view .grid3 .tile .l{font-size:11px;letter-spacing:.15px;color:var(--text2)!important}
+#view .grid3 .tile .v{font-size:13px;font-weight:850;color:var(--text)!important;line-height:1.6}
+html[data-theme="light"] #view .grid3 .tile{background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(245,245,245,.58))!important;border-color:rgba(0,0,0,.12)!important;box-shadow:0 12px 28px rgba(0,0,0,.065),inset 0 1px #fff!important}
+html[data-theme="light"] #view .grid3 .tile:before{background:linear-gradient(120deg,rgba(255,255,255,.9),transparent 52%)}
+html[data-theme="light"] #view .grid3 .tile i{background:rgba(0,0,0,.055);color:#111!important}
+html[data-theme="light"] #pageLoader,html[data-theme="light"] #pageLoader .pl-glass{background:#000!important;color:#fff!important}
+html[data-theme="light"] #pageLoader .follow-the-leader-line div{background:#fff!important}
+html[data-theme="light"] #pageLoader .bf-loading-label{color:#fff!important}
+@media(max-width:700px){#view{max-width:660px}#view .grid3{gap:8px}#view .grid3 .tile{padding:13px 6px;border-radius:16px}#view .grid3 .tile .v{font-size:11px}}
+</style>

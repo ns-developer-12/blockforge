@@ -1,32 +1,14 @@
 
 const SITE_STATUS = {
-    status: "online", // "online" | "offline" | "maintenance" | "error"
+    status: "online", // online or maintenance
     
     messages: {
-        offline: {
-            title: "شما آفلاین هستید! 📡",
-            desc: "اتصال اینترنتت رو چک کن و دوباره تلاش کن.",
-            icon: "fa-wifi",
-            color: "#e74c3c"
-        },
-        maintenance: {
+maintenance: {
             title: "سایت در حال بروزرسانی است 🔧",
             desc: "داریم سایت رو بهتر می‌کنیم. چند دقیقه دیگه برگرد!",
             icon: "fa-gear",
             color: "#ff9800"
         },
-        error: {
-            title: "مشکلی پیش اومده 🚨",
-            desc: "تیم فنی در حال بررسی مشکل هستن.",
-            icon: "fa-triangle-exclamation",
-            color: "#e74c3c"
-        },
-        online: {
-            title: "همه چی اوکیه! ✅",
-            desc: "به BlockForge خوش اومدی.",
-            icon: "fa-circle-check",
-            color: "#2ecc71"
-        }
     },
     
     // اطلاعات نسخه
@@ -35,8 +17,7 @@ const SITE_STATUS = {
     
     // لینک‌های مفید
     links: {
-        rubika: "https://rubika.ir/zolbiao",
-        youtube: "https://youtube.com",
+        rubika: "https://rubika.ir/noxarys",
         discord: ""
     },
     

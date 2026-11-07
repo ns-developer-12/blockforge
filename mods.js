@@ -1,4 +1,4 @@
-const MY_CONTENT = [
+var MY_CONTENT = [
     {
         title: 'ماشین شکلات',
         slug: 'Vending_Machines',
